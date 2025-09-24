@@ -23,11 +23,14 @@
     <loc>http://localhost:1313/posts/oracle-patch-avdf/</loc>
     <lastmod>2025-09-24T13:39:51+07:00</lastmod>
   </url><url>
+    <loc>http://localhost:1313/tags/odg/</loc>
+    <lastmod>2025-09-24T13:39:27+07:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/posts/oracle-siha-odg/</loc>
     <lastmod>2025-09-24T13:39:27+07:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/siha-odg/</loc>
-    <lastmod>2025-09-24T13:14:19+07:00</lastmod>
+    <loc>http://localhost:1313/tags/siha/</loc>
+    <lastmod>2025-09-24T13:39:27+07:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/me/</loc>
     <lastmod>2025-06-01T14:42:18+07:00</lastmod>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Ha on Arch-Kidtz</title>
+    <link>http://localhost:1313/tags/ha/</link>
+    <description>Recent content in Ha on Arch-Kidtz</description>
+    <image>
+      <title>Arch-Kidtz</title>
+      <url>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- 0.150.0</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 24 Sep 2025 13:39:27 +0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/ha/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Oracle Siha Odg</title>
+      <link>http://localhost:1313/posts/oracle-siha-odg/</link>
+      <pubDate>Wed, 24 Sep 2025 13:39:27 +0700</pubDate>
+      <guid>http://localhost:1313/posts/oracle-siha-odg/</guid>
+      <description>&lt;hr&gt;
+&lt;h2 id=&#34;summary-step-by-step-guide-for-setting-up-oracle-data-guard-in-a-rac-environment-covering-prerequisites-parameter-configuration-network-setup-standby-instance-creation-managed-recovery-and-verification&#34;&gt;title: &amp;ldquo;Setup Oracle Data Guard in RAC&amp;rdquo;
+date: 2025-09-24
+draft: false
+tags: [&amp;ldquo;Oracle&amp;rdquo;,&amp;ldquo;Data Guard&amp;rdquo;,&amp;ldquo;RAC&amp;rdquo;,&amp;ldquo;High Availability&amp;rdquo;]
+categories: [&amp;ldquo;Database&amp;rdquo;,&amp;ldquo;Operations&amp;rdquo;]
+summary: &amp;ldquo;Step-by-step guide for setting up Oracle Data Guard in a RAC environment, covering prerequisites, parameter configuration, network setup, standby instance creation, managed recovery, and verification.&amp;rdquo;&lt;/h2&gt;
+&lt;h1 id=&#34;setup-oracle-data-guard-in-rac&#34;&gt;Setup Oracle Data Guard in RAC&lt;/h1&gt;
+&lt;h2 id=&#34;-summary&#34;&gt;🔑 Summary&lt;/h2&gt;
+&lt;p&gt;This guide provides a structured procedure for configuring &lt;strong&gt;Oracle Data Guard&lt;/strong&gt; in a &lt;strong&gt;Real Application Clusters (RAC)&lt;/strong&gt; environment. It includes prerequisites, database and parameter setup, listener and network configuration, preparing the standby instance, enabling managed recovery, and final verification. Following these steps ensures a robust disaster recovery solution with synchronized primary and standby databases.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
