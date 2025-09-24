@@ -7,7 +7,7 @@
     go install github.com/gohugoio/hugo@latest
 
 2. create new page:
-    hugo new site MyFreshWebsite --format yaml
+    hugo new site mypagev4 --format yaml
     
 3. pada config.yml copy paster dari oldversion ke newversion
 4. ubah file berkut 
@@ -35,11 +35,12 @@ pada github push:
     
 2. buat new repository di github
 3. setup remote
-    git init
-    git commit -m "first commit"
-    git branch -M main
-    git remote add origin https://github.com/kidtzz/mypagev3.git
-    git push -u origin main
+	git init
+	git remote add origin https://github.com/kidtzz/mypagev4.git
+	git branch -M main
+	git add . 
+	git commit -m "first commit"
+	git push -u origin main
 
 pada netlify:
 1. ganti oldurl 
