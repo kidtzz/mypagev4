@@ -11,20 +11,34 @@
     </image>
     <generator>Hugo -- 0.150.0</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 01 Jun 2025 14:42:18 +0700</lastBuildDate>
+    <lastBuildDate>Wed, 24 Sep 2025 13:39:51 +0700</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Me</title>
-      <link>http://localhost:1313/tags/me/</link>
-      <pubDate>Sun, 01 Jun 2025 14:42:18 +0700</pubDate>
-      <guid>http://localhost:1313/tags/me/</guid>
+      <title>Avdf</title>
+      <link>http://localhost:1313/tags/avdf/</link>
+      <pubDate>Wed, 24 Sep 2025 13:39:51 +0700</pubDate>
+      <guid>http://localhost:1313/tags/avdf/</guid>
       <description></description>
     </item>
     <item>
       <title>Database</title>
       <link>http://localhost:1313/tags/database/</link>
-      <pubDate>Mon, 17 Feb 2025 13:12:16 +0700</pubDate>
+      <pubDate>Wed, 24 Sep 2025 13:39:51 +0700</pubDate>
       <guid>http://localhost:1313/tags/database/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Oracledb</title>
+      <link>http://localhost:1313/tags/oracledb/</link>
+      <pubDate>Wed, 24 Sep 2025 13:39:51 +0700</pubDate>
+      <guid>http://localhost:1313/tags/oracledb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Me</title>
+      <link>http://localhost:1313/tags/me/</link>
+      <pubDate>Sun, 01 Jun 2025 14:42:18 +0700</pubDate>
+      <guid>http://localhost:1313/tags/me/</guid>
       <description></description>
     </item>
     <item>
@@ -39,13 +53,6 @@
       <link>http://localhost:1313/tags/postgres/</link>
       <pubDate>Mon, 17 Feb 2025 13:12:16 +0700</pubDate>
       <guid>http://localhost:1313/tags/postgres/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Oracledb</title>
-      <link>http://localhost:1313/tags/oracledb/</link>
-      <pubDate>Tue, 07 Jan 2025 09:56:12 +0700</pubDate>
-      <guid>http://localhost:1313/tags/oracledb/</guid>
       <description></description>
     </item>
     <item>

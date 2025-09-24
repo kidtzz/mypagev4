@@ -58,4 +58,4 @@ pada netlify:
 verification:
 buka url:
 new : https://kidtz.netlify.app
-old : https://kidtzoldv2.netlify.app
+old : https://kidtzoldv3.netlify.app

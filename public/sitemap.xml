@@ -3,10 +3,28 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2025-09-24T13:14:19+07:00</lastmod>
+    <lastmod>2025-09-24T13:39:51+07:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/avdf/</loc>
+    <lastmod>2025-09-24T13:39:51+07:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/database/</loc>
+    <lastmod>2025-09-24T13:39:51+07:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/oracledb/</loc>
+    <lastmod>2025-09-24T13:39:51+07:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2025-09-24T13:14:19+07:00</lastmod>
+    <lastmod>2025-09-24T13:39:51+07:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2025-09-24T13:39:51+07:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/oracle-patch-avdf/</loc>
+    <lastmod>2025-09-24T13:39:51+07:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/oracle-siha-odg/</loc>
+    <lastmod>2025-09-24T13:39:27+07:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/siha-odg/</loc>
     <lastmod>2025-09-24T13:14:19+07:00</lastmod>
@@ -16,12 +34,6 @@
   </url><url>
     <loc>http://localhost:1313/posts/melihat-dunia/</loc>
     <lastmod>2025-06-01T14:42:18+07:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2025-06-01T14:42:18+07:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/database/</loc>
-    <lastmod>2025-02-17T13:12:16+07:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/edb/</loc>
     <lastmod>2025-02-17T13:12:16+07:00</lastmod>
@@ -36,9 +48,6 @@
     <lastmod>2025-02-17T13:11:53+07:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/hugo-command/</loc>
-    <lastmod>2025-01-07T09:56:12+07:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/oracledb/</loc>
     <lastmod>2025-01-07T09:56:12+07:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/oracle-explain-gap/</loc>

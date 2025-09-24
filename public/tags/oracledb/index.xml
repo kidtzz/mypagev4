@@ -11,8 +11,34 @@
     </image>
     <generator>Hugo -- 0.150.0</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 07 Jan 2025 09:56:12 +0700</lastBuildDate>
+    <lastBuildDate>Wed, 24 Sep 2025 13:39:51 +0700</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/oracledb/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Upgrade In-place AVDF 20.12 to 20.15</title>
+      <link>http://localhost:1313/posts/oracle-patch-avdf/</link>
+      <pubDate>Wed, 24 Sep 2025 13:39:51 +0700</pubDate>
+      <guid>http://localhost:1313/posts/oracle-patch-avdf/</guid>
+      <description>&lt;h2 id=&#34;summary&#34;&gt;Summary&lt;/h2&gt;
+&lt;p&gt;This runbook provides a clear and ordered sequence for upgrading &lt;strong&gt;Oracle Audit Vault &amp;amp; Database Firewall (AVDF)&lt;/strong&gt; from &lt;strong&gt;20.12 to 20.15&lt;/strong&gt;. It covers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Preparing the environment and downloads.&lt;/li&gt;
+&lt;li&gt;Performing pre-checks.&lt;/li&gt;
+&lt;li&gt;Upgrading AVS in HA mode (standby first, then primary).&lt;/li&gt;
+&lt;li&gt;Post-upgrade steps for AVS including password hardening.&lt;/li&gt;
+&lt;li&gt;Verifying agent upgrades.&lt;/li&gt;
+&lt;li&gt;Upgrading Database Firewall nodes, handling certificates, and re-registering if needed.&lt;/li&gt;
+&lt;li&gt;Applying post-upgrade hardening patch and optional kernel cleanup.&lt;/li&gt;
+&lt;li&gt;Final validation with pre/post comparisons and useful monitoring commands.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Following this guide ensures minimal downtime, verified HA functionality, and secured configuration after the upgrade.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Oracle Siha Odg</title>
+      <link>http://localhost:1313/posts/oracle-siha-odg/</link>
+      <pubDate>Wed, 24 Sep 2025 13:39:27 +0700</pubDate>
+      <guid>http://localhost:1313/posts/oracle-siha-odg/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Hugo Command</title>
       <link>http://localhost:1313/posts/hugo-command/</link>
