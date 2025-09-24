@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Me on Arch-Kidtz</title>
+    <link>http://localhost:1313/tags/me/</link>
+    <description>Recent content in Me on Arch-Kidtz</description>
+    <image>
+      <title>Arch-Kidtz</title>
+      <url>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- 0.150.0</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 01 Jun 2025 14:42:18 +0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/me/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Melihat Dunia Lebih Luas Lewat Google Maps</title>
+      <link>http://localhost:1313/posts/melihat-dunia/</link>
+      <pubDate>Sun, 01 Jun 2025 14:42:18 +0700</pubDate>
+      <guid>http://localhost:1313/posts/melihat-dunia/</guid>
+      <description>&lt;p&gt;Pernah nggak kamu buka Google Maps, lalu coba zoom out?&lt;/p&gt;
+&lt;p&gt;Awalnya kamu lihat rumahmu.
+Lalu lingkungan tempat kamu biasa bermain.
+Kemudian kotamu.
+Provinsimu.
+Pulau tempat kamu tinggal.
+Lalu&amp;hellip; seluruh Indonesia.
+Dan kalau kamu terus zoom out, kamu akan melihat Asia, benua lain, bahkan seluruh dunia.&lt;/p&gt;
+&lt;p&gt;Dan saat kamu melihat semua itu, kamu akan sadar satu hal:
+Dunia ini jauh lebih besar dari yang kamu kira.&lt;/p&gt;
+&lt;p&gt;Kita sering tumbuh di satu tempat dengan kebiasaan yang sama setiap hari.
+Sekolah di tempat yang sama, teman yang itu-itu saja, dan berpikir bahwa hidup hanya berputar di situ.
+Tapi ketika kamu membuka Google Maps dan melihat dari atas, kamu jadi sadar:
+Kamu hanya satu titik kecil dari peta dunia yang sangat luas.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Learn by Doing</title>
+      <link>http://localhost:1313/posts/learn-by-doing/</link>
+      <pubDate>Tue, 12 Sep 2023 19:34:25 +0700</pubDate>
+      <guid>http://localhost:1313/posts/learn-by-doing/</guid>
+      <description>&lt;p&gt;Berdasarkan artikel&amp;quot; yang saya baca &amp;amp; pengalaman saya dalam belajar:&lt;/p&gt;
+&lt;p&gt;Ada 2 tahapan dalam belajar: INPUT &amp;amp; OUTPUT.&lt;/p&gt;
+&lt;p&gt;Misalkan, Anda ingin belajar ber-sepatu roda,&lt;/p&gt;
+&lt;p&gt;Anda melihat tutorial ber-sepatu roda di YouTube (INPUT).&lt;/p&gt;
+&lt;p&gt;Setelah melihat tutorial&amp;quot; di YouTube, Anda mem-praktek-kan-nya (OUTPUT).&lt;/p&gt;
+&lt;p&gt;Ketika Anda mem-praktek-kan-nya, Anda membuat kesalahan: Beberapa kali kehilangan keseimbangan &amp;amp; jatuh.&lt;/p&gt;
+&lt;p&gt;Anda berusaha menganalisa kesalahan&amp;quot; tersebut, sehingga Anda tidak terjatuh lagi.&lt;/p&gt;
+&lt;p&gt;Semakin sering Anda mem-praktek-kan apa yang Anda pelajari, semakin cepat Anda menguasai skill ini.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>my note :-v</title>
+      <link>http://localhost:1313/posts/mynote/</link>
+      <pubDate>Mon, 11 Sep 2023 00:02:08 +0700</pubDate>
+      <guid>http://localhost:1313/posts/mynote/</guid>
+      <description>&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34; Fokus Sama Proses, Bukan Hasil&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34; Berhentilah Menyesali, mulailah mesyukuri
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;  Berhentilah Meragukan, dan mulailah melakukan&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34; Ketika kamu lelah dan semakin ingin menyerah ketahuilah 
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;  bahwa sesungguhnya, pertolongan Allah hanya berjarak
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;  kening dan sajadah &amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34; You thinking  so much, &amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+  </channel>
+</rss>

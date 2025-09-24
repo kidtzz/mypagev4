@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Oracle19c on Arch-Kidtz</title>
+    <link>http://localhost:1313/tags/oracle19c/</link>
+    <description>Recent content in Oracle19c on Arch-Kidtz</description>
+    <image>
+      <title>Arch-Kidtz</title>
+      <url>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- 0.139.3</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 03 Dec 2024 12:31:29 +0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/oracle19c/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Install Rac Oracle19c with ASM</title>
+      <link>http://localhost:1313/posts/install-rac-oracle19c/</link>
+      <pubDate>Tue, 03 Dec 2024 12:31:29 +0700</pubDate>
+      <guid>http://localhost:1313/posts/install-rac-oracle19c/</guid>
+      <description>&lt;p&gt;ubahkernel ke CHK
+grub2-set-default 1
+uname -r
+reboot&lt;/p&gt;
+&lt;p&gt;/etc/selinux/config&lt;/p&gt;
+&lt;p&gt;SELINUX=disabled&lt;/p&gt;
+&lt;p&gt;hostnamectl set-hostname db1.db.com
+hostnamectl set-hostname db2.db.com&lt;/p&gt;
+&lt;p&gt;vi /etc/hosts
+masukan IP berikut&lt;/p&gt;
+&lt;p&gt;127.0.0.1 localhost.db.com localhost&lt;/p&gt;
+&lt;h1 id=&#34;public&#34;&gt;Public&lt;/h1&gt;
+&lt;p&gt;192.168.8.201 db1.db.com db1
+192.168.8.202 db2.db.com db2&lt;/p&gt;
+&lt;h1 id=&#34;private&#34;&gt;Private&lt;/h1&gt;
+&lt;p&gt;192.168.9.201 db1-priv.db.com db1-priv
+192.168.9.202 db2-priv.db.com db2-priv&lt;/p&gt;
+&lt;h1 id=&#34;virtual&#34;&gt;Virtual&lt;/h1&gt;
+&lt;p&gt;192.168.8.211 db1-vip.db.com db1-vip
+192.168.8.212 db2-vip.db.com db2-vip&lt;/p&gt;
+&lt;h1 id=&#34;scan&#34;&gt;SCAN&lt;/h1&gt;
+&lt;p&gt;192.168.8.221 db-scan.db.com db-scan
+192.168.8.222 db-scan.db.com db-scan
+192.168.8.223 db-scan.db.com db-scan&lt;/p&gt;
+&lt;p&gt;yum install -y oracle-database-preinstall-19c
+yum install oracleasm-support
+sudo yum install kmod-oracleasm
+sudo yum install chrony
+yum install bind* -y
+sysctl -p&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

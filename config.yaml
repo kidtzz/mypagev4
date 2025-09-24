@@ -1,0 +1,149 @@
+baseURL: "https://kidtz.netlify.app"
+title: Arch-Kidtz
+theme:
+  - hugo-embed-pdf-shortcode
+  - PaperMod
+
+ignoreLogs:
+  - warning-goldmark-raw-html
+
+enableInlineShortcodes: true
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+
+minify:
+  disableXML: true
+  minifyOutput: true
+
+taxonomies:
+  tag: tags
+  category: categories
+
+pagination:
+  pagerSize: 5
+
+params:
+  env: production # enables analytics, opengraph, twitter-cards and schema
+  title: Kidtz
+  description: "Personal Website"
+  keywords: [Devops, Web Developer, Software Developer]
+  author: kidtz
+  # author: ["Me", "You"] # multiple authors
+  images: ["<link or path of image for opengraph, twitter-cards>"]
+  DateFormat: "January 2, 2006"
+  defaultTheme: auto # dark, light
+  disableThemeToggle: false
+
+  ShowShareButtons: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: false
+  ShowCodeCopyButtons: false
+  ShowWordCount: true
+  ShowRssButtonInSectionTermList: true
+  UseHugoToc: true
+  disableSpecial1stPost: false
+  disableScrollToTop: false
+  comments: false
+  hideSummary: false
+  showtoc: false
+  tocopen: false
+
+  assets:
+    # disableHLJS: true
+    # disableFingerprinting: true
+    favicon: "./favicon.ico"
+    favicon16x16: "<link / abs url>"
+    favicon32x32: "<link / abs url>"
+    apple_touch_icon: "<link / abs url>"
+    safari_pinned_tab: "<link / abs url>"
+
+  label:
+    text: "Kidtz.dev"
+    icon: /apple-touch-icon.png
+    iconHeight: 35
+
+  profileMode:
+    enabled: true
+    title: Rasty
+    subtitle: "Database Administrator | Software Product | Software Engineer | Software Support Engineer"
+    imageUrl: "coding.gif"
+    imageWidth: 150
+    imageHeight: 150
+    imageTitle: my image
+    buttons:
+      - name: Posts
+        url: /posts/
+      - name: Tags
+        url: /tags/
+
+  homeInfoParams:
+    Title: "Hi there 👋"
+    Content: >
+      Recent college graduate with a degree in informatics engineering. I am very passionate about IT and Web programming. I am an energetic programmer skilled in web design and development with a strong curiosity. I like to learn something new in my life, especially about IT and programming languages.
+
+  socialIcons:
+    - name: LinkedIn
+      url: "https://linkedin.com/in/kidtzz/"
+    - name: Instagram
+      url: "https://instagram.com/kidtzz_"
+    - name: GitHub
+      url: "https://github.com/kidtzz"
+
+  analytics:
+    google:
+      SiteVerificationTag: "XYZabc"
+    bing:
+      SiteVerificationTag: "XYZabc"
+    yandex:
+      SiteVerificationTag: "XYZabc"
+
+  cover:
+    hidden: true
+    hiddenInList: true
+    hiddenInSingle: true
+
+  editPost:
+    URL: "https://github.com/<path_to_repo>/content"
+    Text: "" # edit text
+    appendFilePath: true
+
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    keys: ["title", "permalink", "summary", "content"]
+
+menu:
+  main:
+    - identifier: About
+      name: About
+      url: /about/
+      weight: 10
+    - identifier: posts
+      name: Posts
+      url: /posts/
+      weight: 20
+    - identifier: Arts
+      name: Arts
+      url: /Arts/
+      weight: 20
+    - identifier: resume
+      name: Resume
+      url: /resume/
+      weight: 20
+
+pygmentsUseClasses: true
+
+markup:
+  highlight:
+    noClasses: false
+    # anchorLineNos: true
+    # codeFences: true
+    # guessSyntax: true
+    # lineNos: true
+    # style: monokai

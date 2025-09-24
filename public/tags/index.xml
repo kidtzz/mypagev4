@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Tags on Arch-Kidtz</title>
+    <link>http://localhost:1313/tags/</link>
+    <description>Recent content in Tags on Arch-Kidtz</description>
+    <image>
+      <title>Arch-Kidtz</title>
+      <url>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- 0.150.0</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 01 Jun 2025 14:42:18 +0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Me</title>
+      <link>http://localhost:1313/tags/me/</link>
+      <pubDate>Sun, 01 Jun 2025 14:42:18 +0700</pubDate>
+      <guid>http://localhost:1313/tags/me/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Database</title>
+      <link>http://localhost:1313/tags/database/</link>
+      <pubDate>Mon, 17 Feb 2025 13:12:16 +0700</pubDate>
+      <guid>http://localhost:1313/tags/database/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Edb</title>
+      <link>http://localhost:1313/tags/edb/</link>
+      <pubDate>Mon, 17 Feb 2025 13:12:16 +0700</pubDate>
+      <guid>http://localhost:1313/tags/edb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Postgres</title>
+      <link>http://localhost:1313/tags/postgres/</link>
+      <pubDate>Mon, 17 Feb 2025 13:12:16 +0700</pubDate>
+      <guid>http://localhost:1313/tags/postgres/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Oracledb</title>
+      <link>http://localhost:1313/tags/oracledb/</link>
+      <pubDate>Tue, 07 Jan 2025 09:56:12 +0700</pubDate>
+      <guid>http://localhost:1313/tags/oracledb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mysql</title>
+      <link>http://localhost:1313/tags/mysql/</link>
+      <pubDate>Thu, 12 Dec 2024 10:57:33 +0700</pubDate>
+      <guid>http://localhost:1313/tags/mysql/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Docker</title>
+      <link>http://localhost:1313/tags/docker/</link>
+      <pubDate>Tue, 10 Dec 2024 11:28:50 +0700</pubDate>
+      <guid>http://localhost:1313/tags/docker/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Asm</title>
+      <link>http://localhost:1313/tags/asm/</link>
+      <pubDate>Tue, 03 Dec 2024 12:31:29 +0700</pubDate>
+      <guid>http://localhost:1313/tags/asm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rac</title>
+      <link>http://localhost:1313/tags/rac/</link>
+      <pubDate>Tue, 03 Dec 2024 12:31:29 +0700</pubDate>
+      <guid>http://localhost:1313/tags/rac/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sql Server</title>
+      <link>http://localhost:1313/tags/sql-server/</link>
+      <pubDate>Tue, 03 Dec 2024 11:51:25 +0700</pubDate>
+      <guid>http://localhost:1313/tags/sql-server/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linux</title>
+      <link>http://localhost:1313/tags/linux/</link>
+      <pubDate>Wed, 03 Jan 2024 10:57:33 +0700</pubDate>
+      <guid>http://localhost:1313/tags/linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Python</title>
+      <link>http://localhost:1313/tags/python/</link>
+      <pubDate>Thu, 23 Nov 2023 09:52:07 +0700</pubDate>
+      <guid>http://localhost:1313/tags/python/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Javascript</title>
+      <link>http://localhost:1313/tags/javascript/</link>
+      <pubDate>Thu, 23 Nov 2023 09:36:45 +0700</pubDate>
+      <guid>http://localhost:1313/tags/javascript/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cheatsheet</title>
+      <link>http://localhost:1313/tags/cheatsheet/</link>
+      <pubDate>Sun, 10 Sep 2023 20:21:11 +0700</pubDate>
+      <guid>http://localhost:1313/tags/cheatsheet/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Git</title>
+      <link>http://localhost:1313/tags/git/</link>
+      <pubDate>Sun, 10 Sep 2023 20:21:11 +0700</pubDate>
+      <guid>http://localhost:1313/tags/git/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Kubernetes</title>
+      <link>http://localhost:1313/tags/kubernetes/</link>
+      <pubDate>Tue, 11 Jul 2023 20:58:18 +0700</pubDate>
+      <guid>http://localhost:1313/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Json</title>
+      <link>http://localhost:1313/tags/json/</link>
+      <pubDate>Sun, 25 Jun 2023 20:53:12 +0700</pubDate>
+      <guid>http://localhost:1313/tags/json/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Setting</title>
+      <link>http://localhost:1313/tags/setting/</link>
+      <pubDate>Sun, 25 Jun 2023 20:53:12 +0700</pubDate>
+      <guid>http://localhost:1313/tags/setting/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vscode</title>
+      <link>http://localhost:1313/tags/vscode/</link>
+      <pubDate>Sun, 25 Jun 2023 20:53:12 +0700</pubDate>
+      <guid>http://localhost:1313/tags/vscode/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bootstrap</title>
+      <link>http://localhost:1313/tags/bootstrap/</link>
+      <pubDate>Thu, 18 May 2023 11:53:31 +0700</pubDate>
+      <guid>http://localhost:1313/tags/bootstrap/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Reactjs</title>
+      <link>http://localhost:1313/tags/reactjs/</link>
+      <pubDate>Thu, 18 May 2023 11:53:31 +0700</pubDate>
+      <guid>http://localhost:1313/tags/reactjs/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rest API</title>
+      <link>http://localhost:1313/tags/rest-api/</link>
+      <pubDate>Thu, 18 May 2023 11:53:31 +0700</pubDate>
+      <guid>http://localhost:1313/tags/rest-api/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Redux</title>
+      <link>http://localhost:1313/tags/redux/</link>
+      <pubDate>Thu, 18 May 2023 11:51:21 +0700</pubDate>
+      <guid>http://localhost:1313/tags/redux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Laravel</title>
+      <link>http://localhost:1313/tags/laravel/</link>
+      <pubDate>Thu, 18 May 2023 11:49:03 +0700</pubDate>
+      <guid>http://localhost:1313/tags/laravel/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>CSS</title>
+      <link>http://localhost:1313/tags/css/</link>
+      <pubDate>Thu, 18 May 2023 11:46:05 +0700</pubDate>
+      <guid>http://localhost:1313/tags/css/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>HTML</title>
+      <link>http://localhost:1313/tags/html/</link>
+      <pubDate>Thu, 18 May 2023 11:46:05 +0700</pubDate>
+      <guid>http://localhost:1313/tags/html/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Node.js</title>
+      <link>http://localhost:1313/tags/node.js/</link>
+      <pubDate>Thu, 18 May 2023 11:42:56 +0700</pubDate>
+      <guid>http://localhost:1313/tags/node.js/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Scss</title>
+      <link>http://localhost:1313/tags/scss/</link>
+      <pubDate>Thu, 18 May 2023 11:40:42 +0700</pubDate>
+      <guid>http://localhost:1313/tags/scss/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Wordpress</title>
+      <link>http://localhost:1313/tags/wordpress/</link>
+      <pubDate>Thu, 18 May 2023 11:14:10 +0700</pubDate>
+      <guid>http://localhost:1313/tags/wordpress/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

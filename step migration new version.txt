@@ -1,0 +1,60 @@
+
+###Migration new version###
+
+
+1. install hugo new version:
+    hugo version
+    go install github.com/gohugoio/hugo@latest
+
+2. create new page:
+    hugo new site MyFreshWebsite --format yaml
+    
+3. pada config.yml copy paster dari oldversion ke newversion
+4. ubah file berkut 
+    mv hugo.yaml config.yaml
+    
+5. add teheme papermod:
+    git init
+    git submodule add --depth=1 https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
+    git submodule update --init --recursive
+
+6. add plugin pdf:
+    git submodule add  https://github.com/anvithks/hugo-embed-pdf-shortcode.git themes/hugo-embed-pdf-shortcode
+
+7. buka folder mypagev2 dan mypagev3
+8. pindahkan folder/file yang dari page lama ke yang baru
+    - folder content
+    - folder static
+    - folder public ---skip file jgn replace
+    - mypagev 3/4 file disini
+
+
+pada github push:
+1. remove old remote
+    rm -rf .git 
+    
+2. buat new repository di github
+3. setup remote
+    git init
+    git commit -m "first commit"
+    git branch -M main
+    git remote add origin https://github.com/kidtzz/mypagev3.git
+    git push -u origin main
+
+pada netlify:
+1. ganti oldurl 
+    masuk ke project->pilih project->domain management -> edit project name ->"oldv2"
+2. import new from new repository mypagev3
+    build setting:
+     -main
+     -git submodule update --init --recursive && hugo
+     -public
+     -Environment variable(HUGO_VERSION, 0.80.0)
+3. klik deploy
+4. tunggu prosess selesai
+
+
+verification:
+buka url:
+new : https://kidtz.netlify.app
+old : https://kidtzoldv2.netlify.app

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Arts on Arch-Kidtz</title>
+    <link>http://localhost:1313/arts/</link>
+    <description>Recent content in Arts on Arch-Kidtz</description>
+    <image>
+      <title>Arch-Kidtz</title>
+      <url>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- 0.150.0</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 18 May 2023 11:53:31 +0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/arts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Todo List ReactJS</title>
+      <link>http://localhost:1313/arts/todo-list-reactjs/</link>
+      <pubDate>Thu, 18 May 2023 11:53:31 +0700</pubDate>
+      <guid>http://localhost:1313/arts/todo-list-reactjs/</guid>
+      <description>&lt;p&gt;Repository -&amp;gt; &lt;a href=&#34;https://github.com/kidtzz/todo-list-redux-skyshi&#34;&gt;https://github.com/kidtzz/todo-list-redux-skyshi&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;Todo-List-ReactJS&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/arts/todo-list-reactjs/Todo-List-React.png&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Mpustaka Admin Reactjs</title>
+      <link>http://localhost:1313/arts/mpustaka-admin-reactjs/</link>
+      <pubDate>Thu, 18 May 2023 11:51:21 +0700</pubDate>
+      <guid>http://localhost:1313/arts/mpustaka-admin-reactjs/</guid>
+      <description>&lt;p&gt;Repository -&amp;gt; &lt;a href=&#34;https://github.com/kidtzz/manggala-pustaka-admin&#34;&gt;https://github.com/kidtzz/manggala-pustaka-admin&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;Mpustaka-Admin-Reactjs&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/arts/mpustaka-admin-reactjs/mpustaka-admin-reactjs.png&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Mpustaka Admin Laravel</title>
+      <link>http://localhost:1313/arts/mpustakaadminlaravel/</link>
+      <pubDate>Thu, 18 May 2023 11:49:03 +0700</pubDate>
+      <guid>http://localhost:1313/arts/mpustakaadminlaravel/</guid>
+      <description>&lt;p&gt;Repository -&amp;gt; &lt;a href=&#34;https://github.com/kidtzz/Laravel-Mpustaka-Admin&#34;&gt;https://github.com/kidtzz/Laravel-Mpustaka-Admin&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;MpustakaAdminLaravel&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/arts/mpustakaadminlaravel/mpustaka-admin-laravel.png&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Triv Gift</title>
+      <link>http://localhost:1313/arts/trivgift/</link>
+      <pubDate>Thu, 18 May 2023 11:46:05 +0700</pubDate>
+      <guid>http://localhost:1313/arts/trivgift/</guid>
+      <description>&lt;p&gt;Repository -&amp;gt; &lt;a href=&#34;https://github.com/arywr/triv-gift/tree/main&#34;&gt;https://github.com/arywr/triv-gift/tree/main&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;TrivGift&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/arts/trivgift/TrivGift.png&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Improduction</title>
+      <link>http://localhost:1313/arts/improduction/</link>
+      <pubDate>Thu, 18 May 2023 11:44:28 +0700</pubDate>
+      <guid>http://localhost:1313/arts/improduction/</guid>
+      <description>&lt;p&gt;Website -&amp;gt; &lt;a href=&#34;https://improduction.io/&#34;&gt;https://improduction.io/&lt;/a&gt;
+&lt;!-- raw HTML omitted --&gt;
+Repository -&amp;gt; &lt;a href=&#34;https://github.com/arywr/dreamteam-new&#34;&gt;https://github.com/arywr/dreamteam-new&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;Improduction&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/arts/improduction/Improduction.png&#34;&gt;
+&lt;img alt=&#34;Improduction-home&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/arts/improduction/improduction0.png&#34;&gt;
+&lt;img alt=&#34;Improduction-news&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/arts/improduction/improduction2.png&#34;&gt;
+&lt;img alt=&#34;Improduction-chard&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/arts/improduction/improduction3.png&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Mpustaka Full Page v1.2</title>
+      <link>http://localhost:1313/arts/mpustakafullpagev1.2/</link>
+      <pubDate>Thu, 18 May 2023 11:42:56 +0700</pubDate>
+      <guid>http://localhost:1313/arts/mpustakafullpagev1.2/</guid>
+      <description>&lt;p&gt;Demo -&amp;gt; &lt;a href=&#34;https://manggala-pustaka.netlify.app/&#34;&gt;https://manggala-pustaka.netlify.app/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;MpustakaFullPagev1.2&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/arts/mpustakafullpagev1.2/MpustakaFullPagev1.2.png&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Modern Building Box</title>
+      <link>http://localhost:1313/arts/modernbuildingbox/</link>
+      <pubDate>Thu, 18 May 2023 11:40:42 +0700</pubDate>
+      <guid>http://localhost:1313/arts/modernbuildingbox/</guid>
+      <description>&lt;p&gt;![ModernBuildingBox]/(./ModernBuildingBox.png)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Summit</title>
+      <link>http://localhost:1313/arts/summit/</link>
+      <pubDate>Thu, 18 May 2023 11:39:33 +0700</pubDate>
+      <guid>http://localhost:1313/arts/summit/</guid>
+      <description>&lt;p&gt;&lt;img alt=&#34;Summit&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/arts/summit/Summit.jpg&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Calculator JavaScript</title>
+      <link>http://localhost:1313/arts/calculatorjavascript/</link>
+      <pubDate>Thu, 18 May 2023 11:18:37 +0700</pubDate>
+      <guid>http://localhost:1313/arts/calculatorjavascript/</guid>
+      <description>&lt;p&gt;Demo =&amp;gt; &lt;a href=&#34;https://kidtzz.github.io/Fe-Calculator-js/&#34;&gt;https://kidtzz.github.io/Fe-Calculator-js/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;CalculatorJavaScript&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/arts/calculatorjavascript/CalculatorJavaScript.png&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Legacy Semarang</title>
+      <link>http://localhost:1313/arts/legacysemarang/</link>
+      <pubDate>Thu, 18 May 2023 11:14:10 +0700</pubDate>
+      <guid>http://localhost:1313/arts/legacysemarang/</guid>
+      <description>&lt;p&gt;Demo =&amp;gt; &lt;a href=&#34;http://home.legacysemarang.com/&#34;&gt;http://home.legacysemarang.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;LegacySemarang&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/arts/legacysemarang/LegacySemarang.png&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Classic And Modern</title>
+      <link>http://localhost:1313/arts/classicandmodern/</link>
+      <pubDate>Thu, 18 May 2023 11:12:59 +0700</pubDate>
+      <guid>http://localhost:1313/arts/classicandmodern/</guid>
+      <description>&lt;p&gt;&lt;img alt=&#34;ClassicAndModern&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/arts/classicandmodern/ClassicAndModern.jpg&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Modern Market Game</title>
+      <link>http://localhost:1313/arts/modernmarketgame/</link>
+      <pubDate>Thu, 18 May 2023 11:00:35 +0700</pubDate>
+      <guid>http://localhost:1313/arts/modernmarketgame/</guid>
+      <description>&lt;p&gt;&lt;img alt=&#34;ModernMarketGame&#34; loading=&#34;lazy&#34; src=&#34;,/ModernMarketGame.jpg&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Astronaut Page</title>
+      <link>http://localhost:1313/arts/astronautpage/</link>
+      <pubDate>Thu, 18 May 2023 10:58:39 +0700</pubDate>
+      <guid>http://localhost:1313/arts/astronautpage/</guid>
+      <description>&lt;p&gt;&lt;img alt=&#34;AstronautPage&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/arts/astronautpage/AstronautPage.jpg&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Music Insturements</title>
+      <link>http://localhost:1313/arts/music-insturements/</link>
+      <pubDate>Sat, 13 May 2023 10:20:11 +0700</pubDate>
+      <guid>http://localhost:1313/arts/music-insturements/</guid>
+      <description>&lt;p&gt;&lt;img alt=&#34;MusicInsturements&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/arts/music-insturements/MusicInsturements.jpg&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>New Era Living Room</title>
+      <link>http://localhost:1313/arts/new-era-living-room/</link>
+      <pubDate>Sat, 13 May 2023 10:20:05 +0700</pubDate>
+      <guid>http://localhost:1313/arts/new-era-living-room/</guid>
+      <description>&lt;p&gt;&lt;img alt=&#34;MusicInsturements&#34; loading=&#34;lazy&#34; src=&#34;./MusicInsturements.jpg&#34;&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
