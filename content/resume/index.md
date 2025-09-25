@@ -83,42 +83,14 @@ Become a programming professional & Highly motivated to learn something new. int
 
 -   New installation oracle enterprise monitor for integraton with mysqld
 
-
-**PT. Bank Mandiri**\
-*July 2022 – Desember 2022*\
-    *Product: BMC Remedy IT Service Management Suite v19.08*\
-    *Responsibility: Team Member*\
-    *Location : Plaza Mandiri*
-
--   Provide BMC Remedy IT Service Management based on new requirement
--   Integrate Asset Management to other system
-
-**PT. Bank Negara Indonesia**\
-*Desember 2022 – Present*\
-    *Product: BMC Remedy v20.02*\
-    *Responsibility: Team Member*\
-    *Location : Menara BNI Pejompongan*
-
--   Implementasi Piloting IT Asset Management & Configuration Management Database
-
-**PT. Bank Rakyat Indonesia**\
-*August 2022 – juni 2023*\
-    *Product: BMC Remedy v20.02*\
-    *Responsibility: Team Member*\
-    *Location : GTI Ragunan*
-
--   Procurement of IT Asset Management (ITAM) and Configuration Management Database (CMDB) Solutions
--   Integrate BMC Remedy IT Service Management to the other System using Restful API and SOAP Web Service
-
-**Direktorat Jendral Pajak (DJP)**\
-*Juli 2023 – Oktober 2023*\
-    *Product: BMC Remedy v20.01, BMC Discovery 21.0*\
+**SMART Sinarmas**\
+*Maret 2024 – Juni 2024*\
+    *Product: BMC Helix Remedy v24.0 Saas Platform, BMC Helix Discovery 23.0 Saas Platform*\
     *Responsibility: Team Member*\
     *Location : DKI Jakarta*
 
--   Procurement of IT Service Management (ITSM) Solutions
--   Development of BMC Discovery
-
+-   Migration to BMC Helix Saas
+-   Development of BMC Helix Discovery and Service Model
 
 **BPJS Kesehatan**\
 *Januari 2024 – April 2024*\
@@ -129,23 +101,50 @@ Become a programming professional & Highly motivated to learn something new. int
 -   Procurement of Renewal Maintenance Subscription and ITSM Tools Application Support
 -   Development of BMC Helix Discovery and Service Model
 
-**SMART Sinarmas**\
-*Maret 2024 – Juni 2024*\
-    *Product: BMC Helix Remedy v24.0 Saas Platform, BMC Helix Discovery 23.0 Saas Platform*\
+**Direktorat Jendral Pajak (DJP)**\
+*Juli 2023 – Oktober 2023*\
+    *Product: BMC Remedy v20.01, BMC Discovery 21.0*\
     *Responsibility: Team Member*\
     *Location : DKI Jakarta*
 
--   Migration to BMC Helix Saas
--   Development of BMC Helix Discovery and Service Model
+-   Procurement of IT Service Management (ITSM) Solutions
+-   Development of BMC Discovery
+
+**PT. Bank Rakyat Indonesia**\
+*August 2022 – juni 2023*\
+    *Product: BMC Remedy v20.02, BMC Discovery*\
+    *Responsibility: Team Member*\
+    *Location : GTI Ragunan*
+
+-   Procurement of IT Asset Management (ITAM) and Configuration Management Database (CMDB) Solutions
+-   Integrate BMC Remedy IT Service Management to the other System using Restful API and SOAP Web Service
+
+**PT. Bank Negara Indonesia**\
+*Desember 2022 – Present*\
+    *Product: BMC Remedy v20.02*\
+    *Responsibility: Team Member*\
+    *Location : Menara BNI Pejompongan*
+
+-   Implementasi Piloting IT Asset Management & Configuration Management Database
+
+**PT. Bank Mandiri**\
+*July 2022 – Desember 2022*\
+    *Product: BMC Remedy IT Service Management Suite v19.08*\
+    *Responsibility: Team Member*\
+    *Location : Plaza Mandiri*
+
+-   Provide BMC Remedy IT Service Management based on new requirement
+-   Integrate Asset Management to other system
+
 
 
 ## Founder
 Founder Library - **Manggala Pustaka**
 *August 2021 - Present*
 
-*The Manggala Pustaka Library is the brainchild of the people in the Manggal hamlet, especially the village youths. TBM itself is engaged in the field, especially children. The activities of TBM include coloring classes, recitation classes, archery classes, art classes, as well as emergency classes which are held when school children are online, not only for children, activities that lead to the community, such as health checks, discussions about modern agriculture. as well as other positive activities in order to improve the economy and community empowerment*\
+*The Manggala Pustaka Library is the brainchild of the people in the Manggal hamlet, especially the village youths. TBM itself is engaged in the field, especially children. The activities of TBM include coloring classes, recitation classes, archery classes, art classes, as well as emergency classes which are held when school children are online, not only for children, activities that lead to the community, such as health checks, discussions about modern agriculture. as well as other positive activities in order to improve the economy and community empowerment*
 
-To become a library that cultivates people's love of reading and enriches people's insight through books.\
+To become a library that cultivates people's love of reading and enriches people's insight through books.
 
 -   Providing quality books
 -   As a container for creative ideas from the community
@@ -157,7 +156,7 @@ To become a library that cultivates people's love of reading and enriches people
 **Profile**:
 [Profile Here](https://linktr.ee/manggalapustaka?fbclid=PAY2xjawHpeLlleHRuA2FlbQIxMQABpmrxCeqf99BjQkgWFsa7tNW2XXCqWOSN0BHiw_JWjvyXKoVUoPAeCbuGeA_aem_QsfMUaQ_zMPqKU6rUC5k2Q).
 
-**Wesbite**:
+**Website**:
 [Digital Library](https://desasimo.perpustakaan.co.id/m/home.dg)
 
 ## Organization Experiance
