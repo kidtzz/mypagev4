@@ -26,7 +26,7 @@ Become a programming professional & Highly motivated to learn something new. int
 ## Experiences
 
 **Database Administrator**, PT. Mitra Integrasi Informatika (MII)\
-*July 2024 – present*
+*July 2024 – June 2025*
 - Oracle Data Guard (ODG), Real Applications Clusters (RAC) Such as Installation, Maintenance, troubleshoot
 - Standalone Instance, Master-Slave Replication, Master-Master Replication , INNODB Cluster Such as Installation, Maintenance troubleshoot 
 - AlwaysOn Availability Groups (AG), Failover Cluster Instance(FCI), Logshipping, Mirroring Such as Installation, Maintenance, troubleshoot
@@ -34,7 +34,7 @@ Become a programming professional & Highly motivated to learn something new. int
 
 
 **IT Service Management**, PT. Mitra Integrasi Informatika (MII)\
-*July 2022 – juni 2024*
+*July 2022 – june 2024*
 
 -   Make design and implementation for clients.
 -   Meeting with clients to determine requirements.
