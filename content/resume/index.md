@@ -180,6 +180,14 @@ To become a library that cultivates people's love of reading and enriches people
 
 ## Certificate
 
+-   **Oracle Cloud Infrastructure 2025 Certified Multicloud Architect Professional** - *September 2025*
+-   **MySQL HeatWave Implementation Associate** - *August 2025*
+-   **Oracle Autonomous Database Cloud 2025 Professional** - *August 2025*
+-   **Oracle Certified Professional - Oracle 19c Database Administrator** - *July 2025*
+-   **Oracle Certified Professional - MySQL 8.0 Database Administrator** - *June 2025*
+-   **Oracle Cloud Infrastructure 2025 Certified - AI Foundations Associate** - *May 2025*
+-   **Oracle Cloud Infrastructure 2025 Certified - Foundations Associate** - *May 2025*
+-   **Oracle Data Platform 2025 Certified - Foundations Associate** - *March 2025*
 -   **Oracle Certified Associate, MySQL 8** - *Jan 2025*
 -   **DevNet Associate in Cisco Networking Academy** - *March 2024* 
 -   **Alibaba Cloud Certified Associate in Alibaba Cloud** - *July 2023*
