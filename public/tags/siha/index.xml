@@ -15,9 +15,9 @@
     <atom:link href="http://localhost:1313/tags/siha/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Setup Oracle Data Guard in RAC</title>
-      <link>http://localhost:1313/posts/oracle-siha-odg/</link>
+      <link>http://localhost:1313/posts/oracle-odg-rac/</link>
       <pubDate>Wed, 24 Sep 2025 13:39:27 +0700</pubDate>
-      <guid>http://localhost:1313/posts/oracle-siha-odg/</guid>
+      <guid>http://localhost:1313/posts/oracle-odg-rac/</guid>
       <description>&lt;hr&gt;
 &lt;h2 id=&#34;summary&#34;&gt;Summary&lt;/h2&gt;
 &lt;p&gt;This guide provides a structured procedure for configuring &lt;strong&gt;Oracle Data Guard&lt;/strong&gt; in a &lt;strong&gt;Real Application Clusters (RAC)&lt;/strong&gt; environment. It includes prerequisites, database and parameter setup, listener and network configuration, preparing the standby instance (with pfile details), enabling managed recovery, and final verification. Following these steps ensures a robust disaster recovery solution with synchronized primary and standby databases.&lt;/p&gt;

@@ -3,30 +3,36 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2025-09-24T13:39:51+07:00</lastmod>
+    <lastmod>2025-10-06T15:13:39+07:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/avdf/</loc>
-    <lastmod>2025-09-24T13:39:51+07:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/database/</loc>
-    <lastmod>2025-09-24T13:39:51+07:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/oracledb/</loc>
-    <lastmod>2025-09-24T13:39:51+07:00</lastmod>
+    <loc>http://localhost:1313/posts/oracle-odg-siha/</loc>
+    <lastmod>2025-10-06T15:13:39+07:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2025-09-24T13:39:51+07:00</lastmod>
+    <lastmod>2025-10-06T15:13:39+07:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/database/</loc>
+    <lastmod>2025-10-06T14:47:16+07:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/odg/</loc>
+    <lastmod>2025-10-06T14:47:16+07:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/oracle-switchover-back/</loc>
+    <lastmod>2025-10-06T14:47:16+07:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/oracledb/</loc>
+    <lastmod>2025-10-06T14:47:16+07:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2025-10-06T14:47:16+07:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/avdf/</loc>
     <lastmod>2025-09-24T13:39:51+07:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/oracle-patch-avdf/</loc>
     <lastmod>2025-09-24T13:39:51+07:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/odg/</loc>
-    <lastmod>2025-09-24T13:39:27+07:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/oracle-siha-odg/</loc>
+    <loc>http://localhost:1313/posts/oracle-odg-rac/</loc>
     <lastmod>2025-09-24T13:39:27+07:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/siha/</loc>

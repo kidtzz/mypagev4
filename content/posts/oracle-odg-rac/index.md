@@ -1,7 +1,7 @@
 ---
 date: '2025-09-24T13:39:27+07:00'
 draft: False
-title: 'Setup Oracle Data Guard in RAC'
+title: 'Oracle Data Guard in RAC'
 tags:
 - database
 - oracledb

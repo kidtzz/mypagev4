@@ -11,34 +11,34 @@
     </image>
     <generator>Hugo -- 0.150.0</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 24 Sep 2025 13:39:51 +0700</lastBuildDate>
+    <lastBuildDate>Mon, 06 Oct 2025 14:47:16 +0700</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Avdf</title>
-      <link>http://localhost:1313/tags/avdf/</link>
-      <pubDate>Wed, 24 Sep 2025 13:39:51 +0700</pubDate>
-      <guid>http://localhost:1313/tags/avdf/</guid>
-      <description></description>
-    </item>
     <item>
       <title>Database</title>
       <link>http://localhost:1313/tags/database/</link>
-      <pubDate>Wed, 24 Sep 2025 13:39:51 +0700</pubDate>
+      <pubDate>Mon, 06 Oct 2025 14:47:16 +0700</pubDate>
       <guid>http://localhost:1313/tags/database/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Oracledb</title>
-      <link>http://localhost:1313/tags/oracledb/</link>
-      <pubDate>Wed, 24 Sep 2025 13:39:51 +0700</pubDate>
-      <guid>http://localhost:1313/tags/oracledb/</guid>
       <description></description>
     </item>
     <item>
       <title>Odg</title>
       <link>http://localhost:1313/tags/odg/</link>
-      <pubDate>Wed, 24 Sep 2025 13:39:27 +0700</pubDate>
+      <pubDate>Mon, 06 Oct 2025 14:47:16 +0700</pubDate>
       <guid>http://localhost:1313/tags/odg/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Oracledb</title>
+      <link>http://localhost:1313/tags/oracledb/</link>
+      <pubDate>Mon, 06 Oct 2025 14:47:16 +0700</pubDate>
+      <guid>http://localhost:1313/tags/oracledb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Avdf</title>
+      <link>http://localhost:1313/tags/avdf/</link>
+      <pubDate>Wed, 24 Sep 2025 13:39:51 +0700</pubDate>
+      <guid>http://localhost:1313/tags/avdf/</guid>
       <description></description>
     </item>
     <item>

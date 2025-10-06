@@ -11,13 +11,24 @@
     </image>
     <generator>Hugo -- 0.150.0</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 24 Sep 2025 13:39:27 +0700</lastBuildDate>
+    <lastBuildDate>Mon, 06 Oct 2025 14:47:16 +0700</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/odg/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Oracle Data Guard Switchover and Switchback Manual</title>
+      <link>http://localhost:1313/posts/oracle-switchover-back/</link>
+      <pubDate>Mon, 06 Oct 2025 14:47:16 +0700</pubDate>
+      <guid>http://localhost:1313/posts/oracle-switchover-back/</guid>
+      <description>&lt;h2 id=&#34;summary&#34;&gt;Summary&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Switchover:&lt;/strong&gt;&lt;br&gt;
+Switchover in Oracle Data Guard is a planned role transition between primary and standby databases without data loss or downtime. It is used for maintenance, testing, or planned failover. After switchover, the standby becomes the primary and the original primary becomes the standby.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Switchback:&lt;/strong&gt;&lt;br&gt;
+Switchback is the reverse process of switchover, restoring the original primary as the primary database. It involves coordinated role changes ensuring no data loss and maintaining synchronization between databases.&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>Setup Oracle Data Guard in RAC</title>
-      <link>http://localhost:1313/posts/oracle-siha-odg/</link>
+      <link>http://localhost:1313/posts/oracle-odg-rac/</link>
       <pubDate>Wed, 24 Sep 2025 13:39:27 +0700</pubDate>
-      <guid>http://localhost:1313/posts/oracle-siha-odg/</guid>
+      <guid>http://localhost:1313/posts/oracle-odg-rac/</guid>
       <description>&lt;hr&gt;
 &lt;h2 id=&#34;summary&#34;&gt;Summary&lt;/h2&gt;
 &lt;p&gt;This guide provides a structured procedure for configuring &lt;strong&gt;Oracle Data Guard&lt;/strong&gt; in a &lt;strong&gt;Real Application Clusters (RAC)&lt;/strong&gt; environment. It includes prerequisites, database and parameter setup, listener and network configuration, preparing the standby instance (with pfile details), enabling managed recovery, and final verification. Following these steps ensures a robust disaster recovery solution with synchronized primary and standby databases.&lt;/p&gt;
