@@ -44,7 +44,7 @@ alter database flashback on;
 
 ---
 
-## 2. Konfigurasi Parameter Data Guard (Primary)
+## 2. Configure Parameter Data Guard (Primary)
 
 ```sql
 ALTER SYSTEM SET LOG_ARCHIVE_CONFIG='DG_CONFIG=(dbsiha,dbsihadrc)' SCOPE=BOTH SID='*';
@@ -56,7 +56,7 @@ ALTER SYSTEM SET FAL_CLIENT=dbsiha SCOPE=BOTH SID='*';
 ALTER SYSTEM SET STANDBY_FILE_MANAGEMENT=AUTO scope=both sid='*';
 ```
 
-Tambahkan standby redo logs:
+add standby redo logs:
 
 ```sql
 select thread#,group#,bytes,status from v$log;
@@ -71,7 +71,7 @@ SELECT group#, thread#, bytes, status FROM v$standby_log;
 
 ---
 
-## 3. Konfigurasi Network Listener
+## 3. Configure Network Listener
 
 ### On both servers
 
@@ -128,7 +128,7 @@ DBSIHADRC =
 
 ---
 
-## 4. Konfigurasi Instance on Standby
+## 4. Configure Instance on Standby
 
 1. Copy password file and control file from primary:
 
@@ -211,7 +211,7 @@ ALTER DATABASE RECOVER MANAGED STANDBY DATABASE DISCONNECT FROM SESSION;
 
 ---
 
-## 6. Verifikasi
+## 6. Verification
 
 Check archived log apply:
 
