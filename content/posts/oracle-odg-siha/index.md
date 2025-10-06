@@ -34,9 +34,9 @@ alter database flashback on;
 
 ---
 
-### 2. Konfigurasi Parameter Data Guard
+### 2. Configure Parameter Data Guard
 
-#### Di Primary Database
+#### On Primary Database
 ```sql
 ALTER SYSTEM SET LOG_ARCHIVE_CONFIG='DG_CONFIG=(dbrest,dbrestdrc)' SCOPE=BOTH SID='*';
 ALTER SYSTEM SET LOG_ARCHIVE_DEST_1='LOCATION=USE_DB_RECOVERY_FILE_DEST VALID_FOR=(ALL_LOGFILES,ALL_ROLES) DB_UNIQUE_NAME=dbrest' SCOPE=BOTH SID='*';
@@ -58,7 +58,7 @@ SELECT group#, thread#, bytes, status FROM v$standby_log;
 
 ---
 
-### 3. Konfigurasi Network Listener (Both Server)
+### 3. Configure Network Listener (Both Server)
 
 #### tnsnames.ora
 ```bash
@@ -86,7 +86,7 @@ LISTENER_DBREST =
 
 ---
 
-### 4. Opsional: Jalankan ASM di Grid User
+### 4. Optional: run ASM in Grid User
 
 ```bash
 export ORACLE_HOME=/u01/app/grid/19.3/gridhome_1
@@ -97,9 +97,9 @@ asmcmd
 
 ---
 
-### 5. Konfigurasi Instance di Standby
+### 5. Configure Instance in Standby
 
-#### Di Primary
+#### On Primary
 ```bash
 srvctl config database -d dbrest | grep 'Password file'
 asmcmd cp --local +DATA01/DBREST/PASSWORD/pwddbrest /home/oracle/backup
@@ -111,7 +111,7 @@ cd /home/oracle/backup/
 scp * oracle@192.168.200.117:/home/oracle/backup
 ```
 
-#### Tambahkan Database Standby di Grid
+#### Add Database Standby in Grid
 ```bash
 srvctl add database \
   -db dbrestdrc \
@@ -122,7 +122,7 @@ srvctl add database \
   -role PHYSICAL_STANDBY
 ```
 
-#### Buat Struktur ASM di Standby
+#### Create Structure ASM in Standby
 ```bash
 asmcmd mkdir +DATA01/DBRESTDRC
 asmcmd mkdir +DATA01/DBRESTDRC/PASSWORD
@@ -133,7 +133,7 @@ asmcmd cp --local /home/oracle/backup/dbrestdrc.ctl +DATA01/DBRESTDRC/CONTROLFIL
 
 ---
 
-### 6. Buat dan Modifikasi PFILE/SPFILE Standby
+### 6. Create and Modify Standby PFILE/SPFILE 
 
 ```bash
 mkdir -p /u01/app/oracle/admin/dbrestdrc/adump
@@ -167,9 +167,9 @@ lsnrctl status
 
 ---
 
-### 8. RMAN Restore Database dari Primary
+### 8. RMAN Restore Database from Primary
 
-#### Pada Standby
+#### On Standby
 ```bash
 rman target /
 CONFIGURE DEFAULT DEVICE TYPE TO DISK;
@@ -204,7 +204,7 @@ end;
 
 ---
 
-### 10. Start Managed Recovery di Standby
+### 10. Start Managed Recovery in Standby
 
 ```sql
 ALTER DATABASE RECOVER MANAGED STANDBY DATABASE DISCONNECT FROM SESSION;
@@ -212,7 +212,7 @@ ALTER DATABASE RECOVER MANAGED STANDBY DATABASE DISCONNECT FROM SESSION;
 
 ---
 
-### 11. Verifikasi
+### 11. Verification
 
 ```sql
 SELECT SEQUENCE#, APPLIED FROM V$ARCHIVED_LOG ORDER BY SEQUENCE#;
@@ -220,7 +220,7 @@ SELECT NAME, DB_UNIQUE_NAME, OPEN_MODE, DATABASE_ROLE FROM V$DATABASE;
 ALTER SYSTEM SWITCH LOGFILE;
 ```
 
-#### Cek Status Sinkronisasi
+#### Synchronization Status Check
 ```sql
 SELECT al.thrd "Thread", almax "Last Seq Received", lhmax "Last Seq Applied",
        almax-lhmax "Gap", decode(almax-lhmax, 0, 'Sync', 'Gap') "Result"
@@ -233,7 +233,7 @@ SELECT PROCESS, STATUS, SEQUENCE#, INST_ID FROM GV$MANAGED_STANDBY ORDER BY 1,3,
 
 ---
 
-### Appendix (Contoh Config di Standby)
+### Appendix (Sample Config on Standby)
 
 ```sql
 ALTER SYSTEM SET LOG_ARCHIVE_CONFIG='DG_CONFIG=(dbrest,dbrestdrc)' SCOPE=BOTH SID='*';
