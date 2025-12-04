@@ -1,7 +1,7 @@
 ---
 date: '2025-10-06T15:13:39+07:00'
 draft: false
-title: 'Oracle Data Guard on SIHA'
+title: 'Oracle Data Guard in SIHA with wallet TDE'
 ---
 
 ## Summary
@@ -9,6 +9,9 @@ title: 'Oracle Data Guard on SIHA'
 A comprehensive guide for installing and configuring **Oracle Data Guard** in an **Oracle Single Instance High Availability (SIHA)** environment.  
 
 This document covers all key stages, including **prerequisites**, **Data Guard parameter configuration**, **network listener setup**, **standby instance creation**, and **replication/synchronization verification** between databases.  
+
+In addition, the guide includes the proper handling of **Transparent Data Encryption (TDE)** in a Data Guard setup, covering keystore preparation, wallet transfer, wallet opening on the standby, and enabling autologin to ensure encrypted datafiles can be restored and applied seamlessly.
+
 Main reference: *Doc ID 2283978.1 — Setup Oracle Data Guard in RAC*.
 
 ---
@@ -97,7 +100,7 @@ asmcmd
 
 ---
 
-### 5. Configure Instance in Standby
+### 5. Configure Instance
 
 #### On Primary
 ```bash
@@ -106,6 +109,19 @@ asmcmd cp --local +DATA01/DBREST/PASSWORD/pwddbrest /home/oracle/backup
 
 create pfile='/home/oracle/backup/primary.pfile' from spfile;
 ALTER DATABASE CREATE STANDBY CONTROLFILE AS '/home/oracle/backup/dbrestdrc.ctl';
+
+#Backup Wallet tde
+ADMINISTER KEY MANAGEMENT CREATE KEYSTORE '/home/oracle/backup' IDENTIFIED BY "xxxxxxx"; 
+
+ADMINISTER KEY MANAGEMENT MERGE KEYSTORE '+DATA01/DBREST/WALLET/tde' 
+IDENTIFIED BY "xxxxxx" 
+INTO EXISTING KEYSTORE '/home/oracle/backup' 
+IDENTIFIED BY "xxxxxx" 
+WITH BACKUP USING "bkup";
+
+#Check Encrypted
+orapki wallet display -wallet /home/oracle/backup/wallet/tde -pwd xxxxx
+
 
 cd /home/oracle/backup/
 scp * oracle@192.168.200.117:/home/oracle/backup
@@ -127,8 +143,10 @@ srvctl add database \
 asmcmd mkdir +DATA01/DBRESTDRC
 asmcmd mkdir +DATA01/DBRESTDRC/PASSWORD
 asmcmd mkdir +DATA01/DBRESTDRC/CONTROLFILE
+asmcmd mkdir +DATA01/DBRESTDRC/WALLET
 asmcmd cp --local /home/oracle/backup/pwddbrest +DATA01/DBRESTDRC/PASSWORD/orapwdbrestdrc
 asmcmd cp --local /home/oracle/backup/dbrestdrc.ctl +DATA01/DBRESTDRC/CONTROLFILE/dbrestdrc.ctl
+asmcmd cp --local /home/oracle/backup/wallet/ewallet.p12 +DATA01/DBRESTDRC/WALLET/tde
 ```
 
 ---
@@ -167,7 +185,17 @@ lsnrctl status
 
 ---
 
-### 8. RMAN Restore Database from Primary
+### 8. Open wallet tde on Standby
+
+```bash
+select * from v$encryption_wallet;
+#open wallet
+administer key management set keystore open identified by "xxxxx";
+#enable autologin
+administer key management create auto_login keystore from keystore '+DATA01/DBRESTDRC/WALLET/tde' identified by "xxxx";
+```
+
+### 9. RMAN Restore Database from Primary
 
 #### On Standby
 ```bash
@@ -182,7 +210,7 @@ srvctl start database -d dbrestdrc -o mount;
 
 ---
 
-### 9. Clear Standby Log Files
+### 10. Clear Standby Log Files
 
 ```sql
 begin
@@ -204,7 +232,7 @@ end;
 
 ---
 
-### 10. Start Managed Recovery in Standby
+### 11. Start Managed Recovery in Standby
 
 ```sql
 ALTER DATABASE RECOVER MANAGED STANDBY DATABASE DISCONNECT FROM SESSION;
@@ -212,7 +240,7 @@ ALTER DATABASE RECOVER MANAGED STANDBY DATABASE DISCONNECT FROM SESSION;
 
 ---
 
-### 11. Verification
+### 12. Verification
 
 ```sql
 SELECT SEQUENCE#, APPLIED FROM V$ARCHIVED_LOG ORDER BY SEQUENCE#;
@@ -242,3 +270,7 @@ ALTER SYSTEM SET LOG_ARCHIVE_DEST_STATE_2=ENABLE SCOPE=BOTH SID='*';
 ALTER SYSTEM SET FAL_SERVER=dbrest SCOPE=BOTH SID='*';
 ALTER SYSTEM SET FAL_CLIENT=dbrestdrc SCOPE=BOTH SID='*';
 ```
+
+### Refence
+- Doc ID 2283978.1 — Setup Oracle Data Guard in RAC
+- https://docs.oracle.com/en/database/oracle/oracle-database/21/asoag/managing-keystore-and-tde-master-encryption-key.html#GUID-6CB2C353-44C5-46B5-9CDB-2B4D9D0841BC
