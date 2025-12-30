@@ -25,6 +25,21 @@ Become a programming professional & Highly motivated to learn something new. int
 
 ## Experiences
 
+**Oracle Database Presales & Implementation Consultantr**, PT. Metrocom Global Solusi\
+*Jul 2025 – Present*
+- Serve as Oracle Database Presales Consultant, supporting sales teams with technical solution design and customer requirement analysis.
+- Design enterprise Oracle Database architectures including:
+    - Single Instance
+    - Oracle RAC
+    - Oracle Data Guard
+    - Database security (TDE, AVDF, OKV)
+- Deliver technical presentations, solution briefings, and Proof of Concept (PoC) to customers.
+- Perform Oracle Database implementation, including installation, configuration, and initial tuning.
+- Collaborate with internal engineers and customers during project execution and go-live phases.
+- Provide post-implementation support, troubleshooting, and knowledge transfer.
+- Produce technical document and implementation reports.
+
+
 **Database Administrator**, PT. Mitra Integrasi Informatika (MII)\
 *July 2024 – June 2025*
 - Oracle Data Guard (ODG), Real Applications Clusters (RAC) Such as Installation, Maintenance, troubleshoot
