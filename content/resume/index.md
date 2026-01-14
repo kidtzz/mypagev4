@@ -25,7 +25,7 @@ Become a programming professional & Highly motivated to learn something new. int
 
 ## Experiences
 
-**Database Consultant (Implementation & Presales Support)**, PT. Metrocom Global Solusi\
+**Database Consultant (Implementation & Presales Support)**, PT. Metrocom Global Solusi (MGS)\
 *Jul 2025 – Present*
 
 - Deliver database and infrastructure implementation projects, including installation, configuration, and initial performance tuning.
