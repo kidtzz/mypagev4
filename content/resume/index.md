@@ -18,26 +18,22 @@ title: ""
 
 Hello
 
-Become a programming professional & Highly motivated to learn something new. interested in Database, Web/apps, programming (Js, Python, Shell), Linux, Security, Infrastructure especially about Database ( OracleDB, MYSQL, SQL Server, Postgres ).
+Become a programming professional & Highly motivated to learn something new. interested in Database, Web/apps, programming (Js, Python, Shell), Linux, Security, Infrastructure, especially about programming & database.
 
 &nbsp;
 
 
 ## Experiences
 
-**Oracle Database Presales & Implementation Consultantr**, PT. Metrocom Global Solusi\
+**Database Consultant (Implementation & Presales Support)**, PT. Metrocom Global Solusi\
 *Jul 2025 – Present*
-- Serve as Oracle Database Presales Consultant, supporting sales teams with technical solution design and customer requirement analysis.
-- Design enterprise Oracle Database architectures including:
-    - Single Instance
-    - Oracle RAC
-    - Oracle Data Guard
-    - Database security (TDE, AVDF, OKV)
-- Deliver technical presentations, solution briefings, and Proof of Concept (PoC) to customers.
-- Perform Oracle Database implementation, including installation, configuration, and initial tuning.
-- Collaborate with internal engineers and customers during project execution and go-live phases.
-- Provide post-implementation support, troubleshooting, and knowledge transfer.
-- Produce technical document and implementation reports.
+
+- Deliver database and infrastructure implementation projects, including installation, configuration, and initial performance tuning.
+- Design and implement enterprise database architectures, primarily using Oracle Database and related enterprise platforms.
+- Support database security and compliance-related implementations in enterprise environments.
+- Support presales activities by providing technical input, solution design, and requirement analysis when required.
+- Collaborate with internal teams and customer stakeholders during project execution and go-live phases.
+- Prepare technical documentation, implementation reports, and provide post-implementation support.
 
 
 **Database Administrator**, PT. Mitra Integrasi Informatika (MII)\
@@ -80,6 +76,36 @@ Become a programming professional & Highly motivated to learn something new. int
 &nbsp;
 
 ***---- Experience Project Based as Technical Consultant -----***
+
+
+
+**PT. Bank Negara Indonesia**\
+*January 2026*\
+    *Product: Octopai Cloudera & Oracle Database 19c*\
+    *Responsibility: Team Member*\
+    *Location : BNI Midplaza 1*
+
+- Implemented Octopai metadata management for data governance and lineage
+- Performed stored procedure migration, query tuning, and table partitioning to improve slow-performing queries
+
+
+**PT. Bank Tabungan Negara**\
+*September 2025*\
+    *Product: Oracle Database 19c*\
+    *Responsibility: Team Member*\
+    *Location : Harmoni BTN*
+
+-  Implemented Oracle Restart to support Paylater system availability and resilience
+
+**BPJS Ketenagakerjaan**\
+*Juni 2025*\
+    *Product: Oracle Database security*\
+    *Responsibility: Team Member*\
+    *Location : BPJS Ketenagakerjaan*
+
+-  Corrective and Preventive maintance for Oracle Database Security environments
+-  Audit Vault & database firewall (AVDF) and Oracle Key Vault (OKV) for database security and compliance
+
 
 **PT. Hana Bank**\
 *April 2025*\
@@ -150,6 +176,13 @@ Become a programming professional & Highly motivated to learn something new. int
 
 -   Provide BMC Remedy IT Service Management based on new requirement
 -   Integrate Asset Management to other system
+
+**PT Vale Indonesia**\
+*July 2022 – Desember 2022*\
+    *Product: Servicenow*\
+    *Responsibil Sequis Center*
+
+-  Implemented IT Service Management (ITSM) processes using ServiceNow platform
 
 
 
