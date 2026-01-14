@@ -227,6 +227,8 @@ To become a library that cultivates people's love of reading and enriches people
 
 ## Certificate
 
+-   **Oracle Database@AWS Certified Architect Professional** - *November 2025*
+-   **Oracle Cloud Infrastructure 2025 Certified Data Science Professional** - *October 2025*
 -   **Oracle Cloud Infrastructure 2025 Certified Multicloud Architect Professional** - *September 2025*
 -   **MySQL HeatWave Implementation Associate** - *August 2025*
 -   **Oracle Autonomous Database Cloud 2025 Professional** - *August 2025*
