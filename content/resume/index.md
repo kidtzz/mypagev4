@@ -36,7 +36,7 @@ Become a programming professional & Highly motivated to learn something new. int
 - Prepare technical documentation, implementation reports, and provide post-implementation support.
 
 
-**Database Administrator**, PT. Mitra Integrasi Informatika (MII)\
+**Database Consultant**, PT. Mitra Integrasi Informatika (MII)\
 *July 2024 – June 2025*
 - Oracle Data Guard (ODG), Real Applications Clusters (RAC) Such as Installation, Maintenance, troubleshoot
 - Standalone Instance, Master-Slave Replication, Master-Master Replication , INNODB Cluster Such as Installation, Maintenance troubleshoot 
