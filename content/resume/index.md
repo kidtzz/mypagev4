@@ -75,9 +75,15 @@ Become a programming professional & Highly motivated to learn something new. int
 
 &nbsp;
 
-***---- Experience Project Based as Technical Consultant -----***
+***---- Experience Project Based as Database Engineer MGS -----***
 
+**PT. Telkomsel**\
+*January 2026*\
+    *Product: Oracle ZLDRA*\
+    *Responsibility: Team Member*\
+    *Location : Telkomsel Smart Office*
 
+- Implemented Zero Data Loss Recovery Appliance (ZDLRA) Modernization in telkomsel
 
 **PT. Bank Negara Indonesia**\
 *January 2026*\
@@ -105,6 +111,10 @@ Become a programming professional & Highly motivated to learn something new. int
 
 -  Corrective and Preventive maintance for Oracle Database Security environments
 -  Audit Vault & database firewall (AVDF) and Oracle Key Vault (OKV) for database security and compliance
+
+
+
+***---- Experience Project Based as Technical Consultant MII -----***
 
 
 **PT. Hana Bank**\
