@@ -35,14 +35,13 @@ Become a programming professional & Highly motivated to learn something new. int
 - Collaborate with internal teams and customer stakeholders during project execution and go-live phases.
 - Prepare technical documentation, implementation reports, and provide post-implementation support.
 
-
 **Database Consultant**, PT. Mitra Integrasi Informatika (MII)\
 *July 2024 – June 2025*
-- Oracle Data Guard (ODG), Real Applications Clusters (RAC) Such as Installation, Maintenance, troubleshoot
-- Standalone Instance, Master-Slave Replication, Master-Master Replication , INNODB Cluster Such as Installation, Maintenance troubleshoot 
-- AlwaysOn Availability Groups (AG), Failover Cluster Instance(FCI), Logshipping, Mirroring Such as Installation, Maintenance, troubleshoot
-- Preventive Maintenance, Corrertive Maintenance Oracle Database, MYSQL, SQL server, EDB Postgres
-
+- Managed and supported production database environments including Oracle Database, MySQL, and EDB PostgreSQL.
+- Implemented and maintained high availability and replication solutions such as Oracle RAC, Oracle Data Guard,
+- MySQL Master-Slave replication, and MySQL InnoDB Cluster.
+- Performed preventive and corrective maintenance, troubleshooting, and performance optimization in production environments.
+- Worked closely with application, infrastructure, and customer teams to ensure database reliability, stability, and scalability.
 
 **IT Service Management**, PT. Mitra Integrasi Informatika (MII)\
 *July 2022 – june 2024*
