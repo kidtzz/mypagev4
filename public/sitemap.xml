@@ -3,7 +3,13 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2025-10-06T15:13:39+07:00</lastmod>
+    <lastmod>2026-05-28T10:21:35+07:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/arts/</loc>
+    <lastmod>2026-05-28T10:21:35+07:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/arts/job-apply-website/</loc>
+    <lastmod>2026-05-28T10:21:35+07:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/oracle-odg-siha/</loc>
     <lastmod>2025-10-06T15:13:39+07:00</lastmod>
@@ -154,9 +160,6 @@
   </url><url>
     <loc>http://localhost:1313/tags/vscode/</loc>
     <lastmod>2023-06-25T20:53:12+07:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/arts/</loc>
-    <lastmod>2023-05-18T11:53:31+07:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/bootstrap/</loc>
     <lastmod>2023-05-18T11:53:31+07:00</lastmod>

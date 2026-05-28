@@ -11,8 +11,24 @@
     </image>
     <generator>Hugo -- 0.150.0</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 06 Oct 2025 15:13:39 +0700</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2026 10:21:35 +0700</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Job Apply Website</title>
+      <link>http://localhost:1313/arts/job-apply-website/</link>
+      <pubDate>Thu, 28 May 2026 10:21:35 +0700</pubDate>
+      <guid>http://localhost:1313/arts/job-apply-website/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;Deloitte&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://jobs.sea.deloitte.com/search/?createNewAlert=false&amp;amp;q=&amp;amp;locationsearch=&amp;amp;optionsFacetsDD_country=ID&amp;amp;optionsFacetsDD_customfield2=&amp;amp;optionsFacetsDD_dept=&#34;&gt;https://jobs.sea.deloitte.com/search/?createNewAlert=false&amp;amp;q=&amp;amp;locationsearch=&amp;amp;optionsFacetsDD_country=ID&amp;amp;optionsFacetsDD_customfield2=&amp;amp;optionsFacetsDD_dept=&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;PWC&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.pwc.com/id/en/careers/experienced/job-search/results.html?wdlocation=Jakarta_JPL&amp;amp;wdcountry=IDN&amp;amp;wdjobsite=Global_Experienced_Careers&#34;&gt;https://www.pwc.com/id/en/careers/experienced/job-search/results.html?wdlocation=Jakarta_JPL&amp;amp;wdcountry=IDN&amp;amp;wdjobsite=Global_Experienced_Careers&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;EY&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://careers.ey.com/ey/search/?createNewAlert=false&amp;amp;q=&amp;amp;optionsFacetsDD_customfield1=Consulting&amp;amp;optionsFacetsDD_country=ID&amp;amp;optionsFacetsDD_city=&#34;&gt;https://careers.ey.com/ey/search/?createNewAlert=false&amp;amp;q=&amp;amp;optionsFacetsDD_customfield1=Consulting&amp;amp;optionsFacetsDD_country=ID&amp;amp;optionsFacetsDD_city=&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;KPMDG&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://careersatadvisory.kpmg.co.id/search/?createNewAlert=false&amp;amp;q=indonesia&#34;&gt;https://careersatadvisory.kpmg.co.id/search/?createNewAlert=false&amp;amp;q=indonesia&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Astra&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://career.astra.co.id/lowongan&#34;&gt;https://career.astra.co.id/lowongan&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Oracle Data Guard in SIHA with wallet TDE</title>
       <link>http://localhost:1313/posts/oracle-odg-siha/</link>
