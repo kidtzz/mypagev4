@@ -1,0 +1,605 @@
+{
+  "title": "AP3 Present Tenses B1-B2",
+  "questions": [
+    {
+      "id": 1,
+      "type": "SIMPLE PRESENT",
+      "text": "My father ____ the newspaper every morning.",
+      "options": [
+        "read",
+        "reads",
+        "reading",
+        "reads to"
+      ],
+      "answer": "reads"
+    },
+    {
+      "id": 2,
+      "type": "SIMPLE PRESENT",
+      "text": "The library ____ at 8 a.m. every weekday.",
+      "options": [
+        "open",
+        "opens",
+        "opening",
+        "opened"
+      ],
+      "answer": "opens"
+    },
+    {
+      "id": 3,
+      "type": "SIMPLE PRESENT",
+      "text": "Students usually ____ notes during lectures.",
+      "options": [
+        "take",
+        "takes",
+        "taking",
+        "took"
+      ],
+      "answer": "take"
+    },
+    {
+      "id": 4,
+      "type": "SIMPLE PRESENT",
+      "text": "He ____ his phone before going to bed.",
+      "options": [
+        "check",
+        "checks",
+        "checking",
+        "checked"
+      ],
+      "answer": "checks"
+    },
+    {
+      "id": 5,
+      "type": "SIMPLE PRESENT",
+      "text": "____ your sister work from home?",
+      "options": [
+        "Do",
+        "Does",
+        "Is",
+        "Has"
+      ],
+      "answer": "Does"
+    },
+    {
+      "id": 6,
+      "type": "SIMPLE PRESENT",
+      "text": "The Earth ____ around the Sun.",
+      "options": [
+        "move",
+        "moves",
+        "moving",
+        "moved"
+      ],
+      "answer": "moves"
+    },
+    {
+      "id": 7,
+      "type": "SIMPLE PRESENT",
+      "text": "We ____ our grandparents every weekend.",
+      "options": [
+        "visit",
+        "visits",
+        "visiting",
+        "visited"
+      ],
+      "answer": "visit"
+    },
+    {
+      "id": 8,
+      "type": "SIMPLE PRESENT",
+      "text": "She ____ speak Spanish fluently.",
+      "options": [
+        "don't",
+        "doesn't",
+        "isn't",
+        "hasn't"
+      ],
+      "answer": "doesn't"
+    },
+    {
+      "id": 9,
+      "type": "SIMPLE PRESENT",
+      "text": "The store ____ fresh bread every morning.",
+      "options": [
+        "sell",
+        "sells",
+        "selling",
+        "sold"
+      ],
+      "answer": "sells"
+    },
+    {
+      "id": 10,
+      "type": "SIMPLE PRESENT",
+      "text": "How many languages ____ he speak?",
+      "options": [
+        "do",
+        "does",
+        "is",
+        "has"
+      ],
+      "answer": "does"
+    },
+    {
+      "id": 11,
+      "type": "PRESENT CONTINUOUS",
+      "text": "They ____ dinner right now.",
+      "options": [
+        "cook",
+        "cooks",
+        "are cooking",
+        "have cooked"
+      ],
+      "answer": "are cooking"
+    },
+    {
+      "id": 12,
+      "type": "PRESENT CONTINUOUS",
+      "text": "I ____ for an important interview this week.",
+      "options": [
+        "prepare",
+        "prepared",
+        "am preparing",
+        "have prepared"
+      ],
+      "answer": "am preparing"
+    },
+    {
+      "id": 13,
+      "type": "PRESENT CONTINUOUS",
+      "text": "Why ____ she crying?",
+      "options": [
+        "do",
+        "does",
+        "is",
+        "has"
+      ],
+      "answer": "is"
+    },
+    {
+      "id": 14,
+      "type": "PRESENT CONTINUOUS",
+      "text": "The company ____ new employees this month.",
+      "options": [
+        "hire",
+        "hired",
+        "is hiring",
+        "has hired"
+      ],
+      "answer": "is hiring"
+    },
+    {
+      "id": 15,
+      "type": "PRESENT CONTINUOUS",
+      "text": "We ____ a new software system at the moment.",
+      "options": [
+        "test",
+        "tested",
+        "are testing",
+        "have tested"
+      ],
+      "answer": "are testing"
+    },
+    {
+      "id": 16,
+      "type": "PRESENT CONTINUOUS",
+      "text": "The baby ____ peacefully now.",
+      "options": [
+        "sleep",
+        "sleeps",
+        "is sleeping",
+        "has slept"
+      ],
+      "answer": "is sleeping"
+    },
+    {
+      "id": 17,
+      "type": "PRESENT CONTINUOUS",
+      "text": "I ____ to music while studying.",
+      "options": [
+        "listen",
+        "am listening",
+        "listened",
+        "have listened"
+      ],
+      "answer": "am listening"
+    },
+    {
+      "id": 18,
+      "type": "PRESENT CONTINUOUS",
+      "text": "Our team ____ on a challenging project these days.",
+      "options": [
+        "works",
+        "worked",
+        "is working",
+        "has worked"
+      ],
+      "answer": "is working"
+    },
+    {
+      "id": 19,
+      "type": "PRESENT CONTINUOUS",
+      "text": "Who ____ in the meeting room?",
+      "options": [
+        "sit",
+        "sits",
+        "is sitting",
+        "has sat"
+      ],
+      "answer": "is sitting"
+    },
+    {
+      "id": 20,
+      "type": "PRESENT CONTINUOUS",
+      "text": "The prices ____ rapidly this year.",
+      "options": [
+        "increase",
+        "increased",
+        "are increasing",
+        "have increased"
+      ],
+      "answer": "are increasing"
+    },
+    {
+      "id": 21,
+      "type": "PRESENT PERFECT",
+      "text": "I ____ that book twice.",
+      "options": [
+        "read",
+        "have read",
+        "am reading",
+        "had read"
+      ],
+      "answer": "have read"
+    },
+    {
+      "id": 22,
+      "type": "PRESENT PERFECT",
+      "text": "She ____ her assignment already.",
+      "options": [
+        "finished",
+        "has finished",
+        "finishes",
+        "is finishing"
+      ],
+      "answer": "has finished"
+    },
+    {
+      "id": 23,
+      "type": "PRESENT PERFECT",
+      "text": "____ they ever visited Singapore?",
+      "options": [
+        "Did",
+        "Do",
+        "Have",
+        "Are"
+      ],
+      "answer": "Have"
+    },
+    {
+      "id": 24,
+      "type": "PRESENT PERFECT",
+      "text": "We ____ all the documents you requested.",
+      "options": [
+        "sent",
+        "send",
+        "have sent",
+        "are sending"
+      ],
+      "answer": "have sent"
+    },
+    {
+      "id": 25,
+      "type": "PRESENT PERFECT",
+      "text": "He ____ his wallet and cannot find it.",
+      "options": [
+        "lost",
+        "loses",
+        "has lost",
+        "is losing"
+      ],
+      "answer": "has lost"
+    },
+    {
+      "id": 26,
+      "type": "PRESENT PERFECT",
+      "text": "The teacher ____ the exam papers yet.",
+      "options": [
+        "hasn't checked",
+        "didn't check",
+        "doesn't check",
+        "isn't checking"
+      ],
+      "answer": "hasn't checked"
+    },
+    {
+      "id": 27,
+      "type": "PRESENT PERFECT",
+      "text": "I ____ never ____ such a difficult task.",
+      "options": [
+        "have / faced",
+        "am / facing",
+        "did / face",
+        "do / face"
+      ],
+      "answer": "have / faced"
+    },
+    {
+      "id": 28,
+      "type": "PRESENT PERFECT",
+      "text": "They ____ in this apartment since 2021.",
+      "options": [
+        "live",
+        "lived",
+        "have lived",
+        "are living"
+      ],
+      "answer": "have lived"
+    },
+    {
+      "id": 29,
+      "type": "PRESENT PERFECT",
+      "text": "The company ____ its profits significantly this year.",
+      "options": [
+        "increased",
+        "increases",
+        "has increased",
+        "is increasing"
+      ],
+      "answer": "has increased"
+    },
+    {
+      "id": 30,
+      "type": "PRESENT PERFECT",
+      "text": "She ____ not ____ the news yet.",
+      "options": [
+        "has / heard",
+        "is / hearing",
+        "did / hear",
+        "does / hear"
+      ],
+      "answer": "has / heard"
+    },
+    {
+      "id": 31,
+      "type": "PRESENT PERFECT CONTINUOUS",
+      "text": "I ____ at this company for three years.",
+      "options": [
+        "work",
+        "worked",
+        "have been working",
+        "am working"
+      ],
+      "answer": "have been working"
+    },
+    {
+      "id": 32,
+      "type": "PRESENT PERFECT CONTINUOUS",
+      "text": "She ____ the piano since she was six.",
+      "options": [
+        "practices",
+        "practiced",
+        "has been practicing",
+        "is practicing"
+      ],
+      "answer": "has been practicing"
+    },
+    {
+      "id": 33,
+      "type": "PRESENT PERFECT CONTINUOUS",
+      "text": "They ____ for hours and need a break.",
+      "options": [
+        "drive",
+        "drove",
+        "have been driving",
+        "are driving"
+      ],
+      "answer": "have been driving"
+    },
+    {
+      "id": 34,
+      "type": "PRESENT PERFECT CONTINUOUS",
+      "text": "The children ____ outside all afternoon.",
+      "options": [
+        "play",
+        "played",
+        "have been playing",
+        "are playing"
+      ],
+      "answer": "have been playing"
+    },
+    {
+      "id": 35,
+      "type": "PRESENT PERFECT CONTINUOUS",
+      "text": "How long ____ you been waiting here?",
+      "options": [
+        "have",
+        "has",
+        "are",
+        "do"
+      ],
+      "answer": "have"
+    },
+    {
+      "id": 36,
+      "type": "PRESENT PERFECT CONTINUOUS",
+      "text": "He ____ harder recently to improve his grades.",
+      "options": [
+        "studies",
+        "studied",
+        "has been studying",
+        "is studying"
+      ],
+      "answer": "has been studying"
+    },
+    {
+      "id": 37,
+      "type": "PRESENT PERFECT CONTINUOUS",
+      "text": "We ____ the issue since last week.",
+      "options": [
+        "investigate",
+        "investigated",
+        "have been investigating",
+        "are investigating"
+      ],
+      "answer": "have been investigating"
+    },
+    {
+      "id": 38,
+      "type": "PRESENT PERFECT CONTINUOUS",
+      "text": "It ____ all day, so the roads are wet.",
+      "options": [
+        "rains",
+        "rained",
+        "has been raining",
+        "is raining"
+      ],
+      "answer": "has been raining"
+    },
+    {
+      "id": 39,
+      "type": "PRESENT PERFECT CONTINUOUS",
+      "text": "The team ____ to reach the deadline.",
+      "options": [
+        "tries",
+        "tried",
+        "has been trying",
+        "is trying"
+      ],
+      "answer": "has been trying"
+    },
+    {
+      "id": 40,
+      "type": "PRESENT PERFECT CONTINUOUS",
+      "text": "I ____ my pronunciation lately.",
+      "options": [
+        "improve",
+        "improved",
+        "have been improving",
+        "am improving"
+      ],
+      "answer": "have been improving"
+    },
+    {
+      "id": 41,
+      "type": "MIXED PRESENT TENSES",
+      "text": "She usually ____ at home, but today she ____ in the office.",
+      "options": [
+        "works / is working",
+        "work / works",
+        "is working / works",
+        "worked / works"
+      ],
+      "answer": "works / is working"
+    },
+    {
+      "id": 42,
+      "type": "MIXED PRESENT TENSES",
+      "text": "I ____ this movie before.",
+      "options": [
+        "see",
+        "saw",
+        "have seen",
+        "am seeing"
+      ],
+      "answer": "have seen"
+    },
+    {
+      "id": 43,
+      "type": "MIXED PRESENT TENSES",
+      "text": "Look! The dog ____ across the street.",
+      "options": [
+        "runs",
+        "ran",
+        "is running",
+        "has run"
+      ],
+      "answer": "is running"
+    },
+    {
+      "id": 44,
+      "type": "MIXED PRESENT TENSES",
+      "text": "We ____ this problem for several weeks.",
+      "options": [
+        "discuss",
+        "discussed",
+        "have been discussing",
+        "are discussing"
+      ],
+      "answer": "have been discussing"
+    },
+    {
+      "id": 45,
+      "type": "MIXED PRESENT TENSES",
+      "text": "The manager ____ the final decision yet.",
+      "options": [
+        "hasn't made",
+        "didn't make",
+        "doesn't make",
+        "isn't making"
+      ],
+      "answer": "hasn't made"
+    },
+    {
+      "id": 46,
+      "type": "MIXED PRESENT TENSES",
+      "text": "She ____ English classes every Saturday.",
+      "options": [
+        "attend",
+        "attends",
+        "attending",
+        "attended"
+      ],
+      "answer": "attends"
+    },
+    {
+      "id": 47,
+      "type": "MIXED PRESENT TENSES",
+      "text": "The scientists ____ a vaccine for many months.",
+      "options": [
+        "develop",
+        "developed",
+        "have been developing",
+        "are developing"
+      ],
+      "answer": "have been developing"
+    },
+    {
+      "id": 48,
+      "type": "MIXED PRESENT TENSES",
+      "text": "He ____ already ____ the presentation.",
+      "options": [
+        "has / prepared",
+        "is / preparing",
+        "did / prepare",
+        "does / prepare"
+      ],
+      "answer": "has / prepared"
+    },
+    {
+      "id": 49,
+      "type": "MIXED PRESENT TENSES",
+      "text": "Why ____ you looking at me like that?",
+      "options": [
+        "do",
+        "does",
+        "are",
+        "have"
+      ],
+      "answer": "are"
+    },
+    {
+      "id": 50,
+      "type": "MIXED PRESENT TENSES",
+      "text": "They ____ their business successfully since 2018.",
+      "options": [
+        "run",
+        "ran",
+        "have run",
+        "are running"
+      ],
+      "answer": "have run"
+    }
+  ]
+}

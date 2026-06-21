@@ -1,0 +1,605 @@
+{
+  "title": "AP1 Present Tense",
+  "questions": [
+    {
+      "id": 1,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "She ____ to school every day.",
+      "options": [
+        "go",
+        "goes",
+        "going",
+        "gone"
+      ],
+      "answer": "goes"
+    },
+    {
+      "id": 2,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "They ____ football every weekend.",
+      "options": [
+        "play",
+        "plays",
+        "playing",
+        "played"
+      ],
+      "answer": "play"
+    },
+    {
+      "id": 3,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "My father ____ coffee every morning.",
+      "options": [
+        "drink",
+        "drinks",
+        "drinking",
+        "drank"
+      ],
+      "answer": "drinks"
+    },
+    {
+      "id": 4,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "We ____ English at school.",
+      "options": [
+        "study",
+        "studies",
+        "studying",
+        "studied"
+      ],
+      "answer": "study"
+    },
+    {
+      "id": 5,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "He ____ his homework after dinner.",
+      "options": [
+        "do",
+        "does",
+        "doing",
+        "done"
+      ],
+      "answer": "does"
+    },
+    {
+      "id": 6,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "The sun ____ in the east.",
+      "options": [
+        "rise",
+        "rises",
+        "rising",
+        "rose"
+      ],
+      "answer": "rises"
+    },
+    {
+      "id": 7,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "I ____ my teeth twice a day.",
+      "options": [
+        "brush",
+        "brushes",
+        "brushing",
+        "brushed"
+      ],
+      "answer": "brush"
+    },
+    {
+      "id": 8,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "She ____ TV in the evening.",
+      "options": [
+        "watch",
+        "watches",
+        "watching",
+        "watched"
+      ],
+      "answer": "watches"
+    },
+    {
+      "id": 9,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "They ____ in Jakarta.",
+      "options": [
+        "live",
+        "lives",
+        "living",
+        "lived"
+      ],
+      "answer": "live"
+    },
+    {
+      "id": 10,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "My brother ____ a motorcycle.",
+      "options": [
+        "have",
+        "has",
+        "having",
+        "had"
+      ],
+      "answer": "has"
+    },
+    {
+      "id": 11,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "The train ____ at 8 a.m.",
+      "options": [
+        "leave",
+        "leaves",
+        "leaving",
+        "left"
+      ],
+      "answer": "leaves"
+    },
+    {
+      "id": 12,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "Cats ____ milk.",
+      "options": [
+        "like",
+        "likes",
+        "liking",
+        "liked"
+      ],
+      "answer": "like"
+    },
+    {
+      "id": 13,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "He ____ very hard.",
+      "options": [
+        "work",
+        "works",
+        "working",
+        "worked"
+      ],
+      "answer": "works"
+    },
+    {
+      "id": 14,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "We ____ lunch at noon.",
+      "options": [
+        "eat",
+        "eats",
+        "eating",
+        "ate"
+      ],
+      "answer": "eat"
+    },
+    {
+      "id": 15,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "She ____ her room every Saturday.",
+      "options": [
+        "clean",
+        "cleans",
+        "cleaning",
+        "cleaned"
+      ],
+      "answer": "cleans"
+    },
+    {
+      "id": 16,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "I ____ to music when I relax.",
+      "options": [
+        "listen",
+        "listens",
+        "listening",
+        "listened"
+      ],
+      "answer": "listen"
+    },
+    {
+      "id": 17,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "The baby ____ a lot.",
+      "options": [
+        "cry",
+        "cries",
+        "crying",
+        "cried"
+      ],
+      "answer": "cries"
+    },
+    {
+      "id": 18,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "They ____ to work by bus.",
+      "options": [
+        "go",
+        "goes",
+        "going",
+        "went"
+      ],
+      "answer": "go"
+    },
+    {
+      "id": 19,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "My mother ____ delicious cakes.",
+      "options": [
+        "make",
+        "makes",
+        "making",
+        "made"
+      ],
+      "answer": "makes"
+    },
+    {
+      "id": 20,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "We ____ basketball after school.",
+      "options": [
+        "play",
+        "plays",
+        "playing",
+        "played"
+      ],
+      "answer": "play"
+    },
+    {
+      "id": 21,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "He ____ his car every Sunday.",
+      "options": [
+        "wash",
+        "washes",
+        "washing",
+        "washed"
+      ],
+      "answer": "washes"
+    },
+    {
+      "id": 22,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "I ____ a book before bed.",
+      "options": [
+        "read",
+        "reads",
+        "reading",
+        "readingly"
+      ],
+      "answer": "read"
+    },
+    {
+      "id": 23,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "The shop ____ at 9 a.m.",
+      "options": [
+        "open",
+        "opens",
+        "opening",
+        "opened"
+      ],
+      "answer": "opens"
+    },
+    {
+      "id": 24,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "She ____ her friends every weekend.",
+      "options": [
+        "visit",
+        "visits",
+        "visiting",
+        "visited"
+      ],
+      "answer": "visits"
+    },
+    {
+      "id": 25,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "We ____ our grandparents often.",
+      "options": [
+        "see",
+        "sees",
+        "seeing",
+        "saw"
+      ],
+      "answer": "see"
+    },
+    {
+      "id": 26,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "The teacher ____ the lesson clearly.",
+      "options": [
+        "explain",
+        "explains",
+        "explaining",
+        "explained"
+      ],
+      "answer": "explains"
+    },
+    {
+      "id": 27,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "Birds ____ in the sky.",
+      "options": [
+        "fly",
+        "flies",
+        "flying",
+        "flew"
+      ],
+      "answer": "fly"
+    },
+    {
+      "id": 28,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "He ____ his email every morning.",
+      "options": [
+        "check",
+        "checks",
+        "checking",
+        "checked"
+      ],
+      "answer": "checks"
+    },
+    {
+      "id": 29,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "I ____ water after exercise.",
+      "options": [
+        "drink",
+        "drinks",
+        "drinking",
+        "drank"
+      ],
+      "answer": "drink"
+    },
+    {
+      "id": 30,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "She ____ her keys in her bag.",
+      "options": [
+        "keep",
+        "keeps",
+        "keeping",
+        "kept"
+      ],
+      "answer": "keeps"
+    },
+    {
+      "id": 31,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "The dog ____ loudly at strangers.",
+      "options": [
+        "bark",
+        "barks",
+        "barking",
+        "barked"
+      ],
+      "answer": "barks"
+    },
+    {
+      "id": 32,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "We ____ emails every day.",
+      "options": [
+        "send",
+        "sends",
+        "sending",
+        "sent"
+      ],
+      "answer": "send"
+    },
+    {
+      "id": 33,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "My sister ____ the piano well.",
+      "options": [
+        "play",
+        "plays",
+        "playing",
+        "played"
+      ],
+      "answer": "plays"
+    },
+    {
+      "id": 34,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "They ____ breakfast together.",
+      "options": [
+        "have",
+        "has",
+        "having",
+        "had"
+      ],
+      "answer": "have"
+    },
+    {
+      "id": 35,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "The river ____ into the sea.",
+      "options": [
+        "flow",
+        "flows",
+        "flowing",
+        "flowed"
+      ],
+      "answer": "flows"
+    },
+    {
+      "id": 36,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "He ____ English and Japanese.",
+      "options": [
+        "speak",
+        "speaks",
+        "speaking",
+        "spoke"
+      ],
+      "answer": "speaks"
+    },
+    {
+      "id": 37,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "I ____ my phone every day.",
+      "options": [
+        "use",
+        "uses",
+        "using",
+        "used"
+      ],
+      "answer": "use"
+    },
+    {
+      "id": 38,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "She ____ a blue uniform.",
+      "options": [
+        "wear",
+        "wears",
+        "wearing",
+        "wore"
+      ],
+      "answer": "wears"
+    },
+    {
+      "id": 39,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "The bus ____ near my house.",
+      "options": [
+        "stop",
+        "stops",
+        "stopping",
+        "stopped"
+      ],
+      "answer": "stops"
+    },
+    {
+      "id": 40,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "We ____ online classes on Monday.",
+      "options": [
+        "take",
+        "takes",
+        "taking",
+        "took"
+      ],
+      "answer": "take"
+    },
+    {
+      "id": 41,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "My uncle ____ in a hospital.",
+      "options": [
+        "work",
+        "works",
+        "working",
+        "worked"
+      ],
+      "answer": "works"
+    },
+    {
+      "id": 42,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "Children ____ cartoons after school.",
+      "options": [
+        "watch",
+        "watches",
+        "watching",
+        "watched"
+      ],
+      "answer": "watch"
+    },
+    {
+      "id": 43,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "She ____ her lessons carefully.",
+      "options": [
+        "study",
+        "studies",
+        "studying",
+        "studied"
+      ],
+      "answer": "studies"
+    },
+    {
+      "id": 44,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "I ____ dinner with my family.",
+      "options": [
+        "eat",
+        "eats",
+        "eating",
+        "ate"
+      ],
+      "answer": "eat"
+    },
+    {
+      "id": 45,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "The manager ____ meetings every week.",
+      "options": [
+        "hold",
+        "holds",
+        "holding",
+        "held"
+      ],
+      "answer": "holds"
+    },
+    {
+      "id": 46,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "We ____ the office at 5 p.m.",
+      "options": [
+        "leave",
+        "leaves",
+        "leaving",
+        "left"
+      ],
+      "answer": "leave"
+    },
+    {
+      "id": 47,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "He ____ his shoes before entering.",
+      "options": [
+        "remove",
+        "removes",
+        "removing",
+        "removed"
+      ],
+      "answer": "removes"
+    },
+    {
+      "id": 48,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "They ____ their tasks on time.",
+      "options": [
+        "finish",
+        "finishes",
+        "finishing",
+        "finished"
+      ],
+      "answer": "finish"
+    },
+    {
+      "id": 49,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "The clock ____ loudly every hour.",
+      "options": [
+        "tick",
+        "ticks",
+        "ticking",
+        "ticked"
+      ],
+      "answer": "ticks"
+    },
+    {
+      "id": 50,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "She ____ her grandparents every month.",
+      "options": [
+        "call",
+        "calls",
+        "calling",
+        "called"
+      ],
+      "answer": "calls"
+    }
+  ]
+}

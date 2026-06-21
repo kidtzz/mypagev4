@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global English Placement Framework</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Anti-cheat text selection lockout */
+        /* .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        } */
+
+        /* Custom print styling for high-quality certificate printing to PDF */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #certificatePrintArea,
+            #certificatePrintArea * {
+                visibility: visible;
+            }
+
+            #certificatePrintArea {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen no-select" oncontextmenu="return false;">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-indigo-600 text-white p-2 rounded-lg">
+                    <i data-lucide="award" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">YAS KIDTZ</h1>
+                    <p class="text-xs text-slate-500">CEFR Level </p>
+                </div>
+            </div>
+            <div id="topNavStats" class="hidden sm:flex items-center space-x-6">
+                <div class="text-right">
+                    <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Progress Tracker</p>
+                    <p id="navProgressText" class="text-sm font-medium text-slate-700">0 / 50 Completed</p>
+                </div>
+                <div class="w-24 bg-slate-200 rounded-full h-2">
+                    <div id="navProgressBar" class="bg-indigo-600 h-2 rounded-full transition-all duration-300"
+                        style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- VIEW 1: WELCOME / LANDING DASHBOARD -->
+        <div id="welcomeView" class="max-area space-y-8 max-w-3xl mx-auto">
+            <div class="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm space-y-6">
+                <div class="space-y-2">
+                    <span
+                        class="bg-indigo-50 text-indigo-700 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Standardized
+                        Testing Suite</span>
+                    <h2 class="text-3xl font-bold text-slate-900">Adaptive English Proficiency Examination</h2>
+                    <p class="text-slate-600 leading-relaxed">This diagnostic framework evaluates your performance
+                        across 50 highly specific linguistic variables to accurately estimate your baseline standing on
+                        the Common European Framework of Reference for Languages (CEFR) scale from A1 to C2.</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="border border-slate-100 bg-slate-50 p-4 rounded-xl flex items-start space-x-3">
+                        <i data-lucide="sliders" class="text-indigo-600 w-5 h-5 mt-0.5"></i>
+                        <div>
+                            <h4 class="text-sm font-semibold text-slate-900">Psychometric Categorization</h4>
+                            <p class="text-xs text-slate-500">Evaluates Tenses, Vocabulary, Reading Comprehension, and
+                                Advanced Syntax Structures.</p>
+                        </div>
+                    </div>
+                    <div class="border border-slate-100 bg-slate-50 p-4 rounded-xl flex items-start space-x-3">
+                        <i data-lucide="shield-alert" class="text-indigo-600 w-5 h-5 mt-0.5"></i>
+                        <div>
+                            <h4 class="text-sm font-semibold text-slate-900">Exam Proctored Environment</h4>
+                            <p class="text-xs text-slate-500">System clipboard security and browser option locking
+                                models are fully active.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-100 pt-6 flex items-center justify-between">
+                    <div class="flex items-center space-x-2 text-amber-600">
+                        <i data-lucide="timer" class="w-5 h-5"></i>
+                        <span class="text-sm font-medium">Auto-save active via LocalStorage</span>
+                    </div>
+                    <button onclick="startExam()"
+                        class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-3 rounded-xl shadow-md transition-all duration-150 flex items-center space-x-2">
+                        <span>Initialize Examination</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 2: EXAM INTERFACE -->
+        <div id="examView" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column: Current Question Card -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm relative">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
+                        <div class="flex items-center space-x-2">
+                            <span
+                                class="text-xs uppercase font-bold tracking-wider px-2.5 py-1 rounded bg-slate-100 text-slate-600"
+                                id="questionCategoryBadge">Category</span>
+                            <span class="text-xs text-slate-400" id="questionIndexBadge">Item 0 of 50</span>
+                        </div>
+                        <button onclick="clearCurrentProgress()"
+                            class="text-xs text-rose-600 hover:underline flex items-center space-x-1">
+                            <i data-lucide="trash-2" class="w-3 h-3"></i>
+                            <span>Reset Board</span>
+                        </button>
+                    </div>
+
+                    <!-- Question Prompt Content Area -->
+                    <div class="mb-8">
+                        <p id="questionPrompt" class="text-lg font-medium text-slate-900 leading-relaxed"></p>
+                    </div>
+
+                    <!-- Multiple Choice Radio Options Wrapper container -->
+                    <div id="optionsContainer" class="space-y-3">
+                        <!-- Populated programmatically -->
+                    </div>
+
+                    <!-- Card Footer Control Buttons -->
+                    <div class="border-t border-slate-100 pt-6 mt-8 flex justify-between items-center">
+                        <button id="prevBtn" onclick="navigateQuestion(-1)"
+                            class="border border-slate-200 text-slate-600 hover:bg-slate-50 font-medium px-4 py-2 rounded-xl transition flex items-center space-x-2 disabled:opacity-40 disabled:hover:bg-white">
+                            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                            <span>Previous</span>
+                        </button>
+                        <button id="nextBtn" onclick="navigateQuestion(1)"
+                            class="bg-slate-900 hover:bg-slate-800 text-white font-medium px-5 py-2 rounded-xl transition flex items-center space-x-2">
+                            <span>Next Item</span>
+                            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Exam Status, Navigation Grid, and Submission Panel -->
+            <div class="space-y-6">
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-6">
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base mb-1">Matrix Map Index</h3>
+                        <p class="text-xs text-slate-500">Jump directly to any specific evaluation question vector index
+                            at any time.</p>
+                    </div>
+
+                    <!-- 50-Question Structural Grid Box Map -->
+                    <div id="questionGridMap" class="grid grid-cols-5 gap-2 text-center">
+                        <!-- Generated programmatically via loadGrid() -->
+                    </div>
+
+                    <div class="border-t border-slate-100 pt-6">
+                        <button onclick="calculateFinalMetrics()"
+                            class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl shadow-md transition duration-150 flex items-center justify-center space-x-2">
+                            <i data-lucide="check-circle" class="w-5 h-5"></i>
+                            <span>Complete & Submit </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 3: REPORT DASHBOARD & PERFORMANCE METRICS -->
+        <div id="reportView" class="hidden space-y-8">
+            <!-- Summary Profile Dashboard Banner -->
+            <div class="bg-slate-900 text-white rounded-3xl p-8 shadow-xl relative overflow-hidden">
+                <div
+                    class="absolute right-0 top-0 translate-x-12 -translate-y-12 w-64 h-64 bg-indigo-600 opacity-20 rounded-full blur-3xl">
+                </div>
+                <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div class="space-y-2">
+                        <span
+                            class="text-xs font-bold uppercase tracking-wider bg-indigo-500/30 text-indigo-300 px-3 py-1 rounded-full">Psychometric
+                            Performance Portfolio</span>
+                        <h2 class="text-3xl font-extrabold tracking-tight">Diagnostics Examination Dashboard</h2>
+                        <p class="text-slate-400 text-sm max-w-xl">Linguistic analytical performance metrics processed
+                            down to distinct categorical functional units aligned with global standards.</p>
+                    </div>
+                    <div
+                        class="bg-white/10 backdrop-blur-md rounded-2xl px-8 py-6 text-center border border-white/10 min-w-[180px]">
+                        <p class="text-xs uppercase font-bold tracking-widest text-indigo-300">CEFR Metric Placement</p>
+                        <p id="cefrPlacementBadge" class="text-5xl font-black text-white mt-1">--</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Functional Metrics Section Grid Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <!-- Score Breakdown Cards loaded programmatically dynamically -->
+                <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm">
+                    <div class="flex justify-between items-start mb-2"><span
+                            class="text-sm font-semibold text-slate-500">Grammar Score</span><i data-lucide="book-open"
+                            class="w-4 h-4 text-indigo-500"></i></div>
+                    <p id="scoreGrammar" class="text-2xl font-bold text-slate-900">0/0</p>
+                    <div class="w-full bg-slate-100 h-2 rounded-full mt-3">
+                        <div id="barGrammar" class="bg-indigo-600 h-2 rounded-full" style="width:0%"></div>
+                    </div>
+                </div>
+                <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm">
+                    <div class="flex justify-between items-start mb-2"><span
+                            class="text-sm font-semibold text-slate-500">Vocabulary Score</span><i
+                            data-lucide="languages" class="w-4 h-4 text-emerald-500"></i></div>
+                    <p id="scoreVocabulary" class="text-2xl font-bold text-slate-900">0/0</p>
+                    <div class="w-full bg-slate-100 h-2 rounded-full mt-3">
+                        <div id="barVocabulary" class="bg-emerald-600 h-2 rounded-full" style="width:0%"></div>
+                    </div>
+                </div>
+                <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm">
+                    <div class="flex justify-between items-start mb-2"><span
+                            class="text-sm font-semibold text-slate-500">Reading Score</span><i data-lucide="file-text"
+                            class="w-4 h-4 text-amber-500"></i></div>
+                    <p id="scoreReading" class="text-2xl font-bold text-slate-900">0/0</p>
+                    <div class="w-full bg-slate-100 h-2 rounded-full mt-3">
+                        <div id="barReading" class="bg-amber-500 h-2 rounded-full" style="width:0%"></div>
+                    </div>
+                </div>
+                <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm">
+                    <div class="flex justify-between items-start mb-2"><span
+                            class="text-sm font-semibold text-slate-500">Tenses Score</span><i data-lucide="clock"
+                            class="w-4 h-4 text-rose-500"></i></div>
+                    <p id="scoreTenses" class="text-2xl font-bold text-slate-900">0/0</p>
+                    <div class="w-full bg-slate-100 h-2 rounded-full mt-3">
+                        <div id="barTenses" class="bg-rose-500 h-2 rounded-full" style="width:0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Secondary Framework Control Row Blocks Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Verification Framework and Action Box Area Panel -->
+                <div class="lg:col-span-1 space-y-4">
+                    <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4">
+                        <h4 class="font-bold text-slate-900 text-lg">Verification Framework</h4>
+                        <p class="text-slate-600 text-sm">Download your auto-generated PDF evaluation placement
+                            validation certificate directly via client vector compilation engines.</p>
+                        <button onclick="window.print()"
+                            class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-4 rounded-xl flex items-center justify-center space-x-2 text-sm shadow transition">
+                            <i data-lucide="download" class="w-4 h-4"></i>
+                            <span>Download PDF Certificate</span>
+                        </button>
+
+                        <button onclick="restartExam()"
+                            class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-4 rounded-xl flex items-center justify-center space-x-2 text-sm shadow transition">
+                            <i data-lucide="" class="w-4 h-4"></i>
+                            <span>Restart Quiz</span>
+                        </button>
+
+
+                        <button onclick="goBackToQuizList()"
+                            class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-4 rounded-xl flex items-center justify-center space-x-2 text-sm shadow transition">
+                            <i data-lucide="" class="w-4 h-4"></i>
+                            <span>Back to Quiz List</span>
+                        </button>
+
+
+                    </div>
+                    <div
+                        class="bg-amber-50 border border-amber-200 p-4 rounded-2xl text-amber-900 space-y-1.5 text-xs leading-relaxed">
+                        <div class="flex items-center space-x-1.5 font-bold"><i data-lucide="info"
+                                class="w-4 h-4"></i><span>System Printing Instructions</span></div>
+                        <p>To print clear, clean certificates to local document files, ensure the "Background graphics"
+                            option is toggled to active in your native browser printer configuration module.</p>
+                    </div>
+                </div>
+
+                <!-- Answer Key Framework Evaluation Grid Review -->
+                <div class="lg:col-span-2 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-900 text-lg">Itemized Evaluation Matrix Review</h3>
+                    <div id="reviewMatrixContainer" class="space-y-4 max-h-[480px] overflow-y-auto pr-2">
+                        <!-- Populated programmatically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- CERTIFICATE EMBEDDED RENDER ZONE -->
+            <div class="border-t border-slate-200 pt-8">
+                <h3 class="text-slate-400 text-xs font-bold uppercase tracking-wider text-center mb-4 no-print">
+                    Certificate Print Layout Target Interface</h3>
+                <div id="certificatePrintArea"
+                    class="bg-white border-[12px] border-double border-slate-800 p-12 max-w-4xl mx-auto rounded-none shadow-sm flex flex-col justify-between text-center space-y-8 relative min-h-[550px]">
+                    <div class="space-y-2">
+                        <p class="text-xs tracking-[0.3em] font-bold text-slate-400 uppercase">Universal Framework
+                            Validation Registry</p>
+                        <h2 class="text-4xl font-serif font-black text-slate-900 tracking-tight">Certificate of
+                            Competency</h2>
+                    </div>
+                    <div class="space-y-1">
+                        <p class="text-xs italic text-slate-400 font-serif">This diagnostic document confirms that the
+                            anonymous candidate has completed the comprehensive evaluation matrix</p>
+                        <p class="text-sm font-semibold text-slate-600">English Language Placement Examination Suite</p>
+                    </div>
+                    <div class="my-6 border-y border-slate-200 py-6 max-w-md mx-auto">
+                        <p class="text-xs uppercase tracking-widest text-slate-400">Assessed Metrics Proficiency
+                            Designation</p>
+                        <p id="certCefrLevel" class="text-6xl font-black text-indigo-900 my-2">--</p>
+                        <p id="certScoreMeta" class="text-sm font-mono text-slate-500 font-bold">Total Composite Score:
+                            00 / 50 Standard Points</p>
+                    </div>
+                    <div class="flex items-end justify-between px-6 pt-4">
+                        <div class="text-left border-t border-slate-300 pt-2 w-44">
+                            <p id="certDateStamp" class="text-xs font-mono text-slate-600">June 21, 2026</p>
+                            <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Date of Processing
+                            </p>
+                        </div>
+                        <div
+                            class="text-center bg-slate-100 border border-slate-200 text-slate-400 px-3 py-1 font-mono text-[9px] uppercase tracking-wider rounded">
+                            ID: PLMT-X92F-KM48
+                        </div>
+                        <div class="text-right border-t border-slate-300 pt-2 w-44 flex flex-col items-end">
+                            <div
+                                class="text-xs font-serif font-bold italic tracking-wider text-indigo-800 border-b border-indigo-100 pb-0.5 mb-0.5">
+                                Global Board Matrix</div>
+                            <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Authorized
+                                Signatory</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- EXAM LOGIC ENGINE CODE INTERPRETER SCRIPT -->
+    <script>
+        // Full Complete 50-Question Master Psychometric Database Array Grouped cleanly by explicit Core Competency Metrics
+        let MASTER_QUESTION_BANK = [];
+        let randomizedQuestionsOrder = [];
+        let userResponsesMatrix = {}; // Format: { question_id: "selected_string_option" }
+        let currentActivePointerIndex = 0;
+
+        // Anti-Cheat System Hardening Engine Event Listeners
+        // window.addEventListener('keydown', function (e) {
+        //     // Block Ctrl+C, Cmd+C, Ctrl+U, F12 Developer Tools
+        //     if ((e.ctrlKey || e.metaKey) && (e.keyCode === 67 || e.keyCode === 85)) {
+        //         e.preventDefault();
+        //         alert("Security Alert: System text compilation and clipboard capture features are completely disabled within this proctored environment.");
+        //         return false;
+        //     }
+        //     if (e.keyCode === 123) {
+        //         e.preventDefault();
+        //         return false;
+        //     }
+        // });
+
+        async function loadQuestionBank() {
+
+            const params = new URLSearchParams(window.location.search);
+            const quizId = params.get('quiz') || 'ap1';
+            const response = await fetch(
+                `/english-quiz/data/${quizId}.json`
+            );
+
+            const data = await response.json();
+            MASTER_QUESTION_BANK = data.questions;
+            console.log(
+                'Question Bank Loaded:',
+                MASTER_QUESTION_BANK.length
+            );
+            initializeSystemExamState();
+        }
+
+
+        // Application Initialization Lifecycle Hook Controller
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            loadQuestionBank();
+        });
+
+        // Initializes or restores exam state from local storage
+        function initializeSystemExamState() {
+            showView('welcomeView');
+        }
+
+        // Activates deployment session processing framework parameters
+        function startExam() {
+
+            let tempArray = [...MASTER_QUESTION_BANK];
+
+            for (let i = tempArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [tempArray[i], tempArray[j]] = [tempArray[j], tempArray[i]];
+            }
+
+            randomizedQuestionsOrder = tempArray;
+            userResponsesMatrix = {};
+            currentActivePointerIndex = 0;
+
+            showExamInterfaceView();
+        }
+
+        // Handles switching between interface views
+        function showView(viewId) {
+            ['welcomeView', 'examView', 'reportView'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(viewId).classList.remove('hidden');
+        }
+
+        // Activates the exam UI elements
+        function showExamInterfaceView() {
+            showView('examView');
+            document.getElementById('topNavStats').classList.remove('hidden');
+            loadCurrentQuestionIndexItem();
+            loadInteractiveGridMap();
+        }
+
+        // Synchronizes data markers with visual navigation UI trackers
+        function updateGlobalProgressTrackers() {
+            const answeredCount = Object.keys(userResponsesMatrix).length;
+            const percentage =
+                (answeredCount / MASTER_QUESTION_BANK.length) * 100;
+
+            document.getElementById('navProgressText').innerText = `${answeredCount} / ${MASTER_QUESTION_BANK.length} Completed`;
+            document.getElementById('navProgressBar').style.width = `${percentage}%`;
+        }
+
+        // Renders the index map box navigation layout
+        function loadInteractiveGridMap() {
+            const mapContainer = document.getElementById('questionGridMap');
+            mapContainer.innerHTML = '';
+
+            randomizedQuestionsOrder.forEach((question, index) => {
+                const mapCell = document.createElement('button');
+                mapCell.innerText = (index + 1).toString();
+                mapCell.className = `p-2 text-xs font-mono font-bold rounded-lg transition border duration-150`;
+
+                const isCurrent = index === currentActivePointerIndex;
+                const isAnswered = userResponsesMatrix[question.id] !== undefined;
+
+                if (isCurrent) {
+                    mapCell.className += ' bg-indigo-600 text-white border-indigo-700 ring-2 ring-indigo-300 ring-offset-1';
+                } else if (isAnswered) {
+                    mapCell.className += ' bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100';
+                } else {
+                    mapCell.className += ' bg-white text-slate-400 border-slate-200 hover:bg-slate-100 text-slate-700';
+                }
+
+                mapCell.onclick = () => { jumpToQuestionIndex(index); };
+                mapContainer.appendChild(mapCell);
+            });
+        }
+
+        // Loads a question into the workspace card container view
+        function loadCurrentQuestionIndexItem() {
+            if (randomizedQuestionsOrder.length === 0) return;
+
+            const question = randomizedQuestionsOrder[currentActivePointerIndex];
+
+            // Build text context templates
+            document.getElementById('questionCategoryBadge').innerText = question.type;
+            document.getElementById('questionIndexBadge').innerText = `Item ${currentActivePointerIndex + 1} of ${MASTER_QUESTION_BANK.length}`;
+            document.getElementById('questionPrompt').innerText = question.text;
+
+            // Generate options HTML layout framework
+            const optionsWrapper = document.getElementById('optionsContainer');
+            optionsWrapper.innerHTML = '';
+
+            question.options.forEach(option => {
+                const isSelected = userResponsesMatrix[question.id] === option;
+
+                const optionLabelRow = document.createElement('label');
+                optionLabelRow.className = `flex items-center p-4 rounded-xl border transition cursor-pointer text-sm font-medium select-none ${isSelected
+                    ? 'border-indigo-600 bg-indigo-50 text-indigo-950 shadow-sm'
+                    : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
+                    }`;
+
+                const radioInput = document.createElement('input');
+                radioInput.type = 'radio';
+                radioInput.name = `question_option_choice_${question.id}`;
+                radioInput.value = option;
+                radioInput.checked = isSelected;
+                radioInput.className = 'w-4 h-4 text-indigo-600 border-slate-300 focus:ring-indigo-500 mr-3';
+
+                radioInput.onchange = () => { selectOptionChoiceValue(question.id, option); };
+
+                optionLabelRow.appendChild(radioInput);
+                const spanText = document.createElement('span');
+                spanText.innerText = option;
+                optionLabelRow.appendChild(spanText);
+
+                optionsWrapper.appendChild(optionLabelRow);
+            });
+
+            // Update footer controls
+            document.getElementById('prevBtn').disabled = currentActivePointerIndex === 0;
+            const nextBtn = document.getElementById('nextBtn');
+            if (currentActivePointerIndex === randomizedQuestionsOrder.length - 1) {
+                nextBtn.innerHTML = `<span>Submit Matrix</span><i data-lucide="check" class="w-4 h-4"></i>`;
+                nextBtn.onclick = calculateFinalMetrics;
+            } else {
+                nextBtn.innerHTML = `<span>Next Item</span><i data-lucide="chevron-right" class="w-4 h-4"></i>`;
+                nextBtn.onclick = () => { navigateQuestion(1); };
+            }
+            lucide.createIcons();
+        }
+
+        // Capture user choice and commit progress to cache local store files
+        function selectOptionChoiceValue(questionId, selectedValue) {
+            userResponsesMatrix[questionId] = selectedValue;
+            updateGlobalProgressTrackers();
+            loadInteractiveGridMap();
+            setTimeout(() => {
+                loadCurrentQuestionIndexItem();
+            }, 180);
+        }
+
+        // Direction navigation controls stepper
+        function navigateQuestion(directionOffset) {
+            const targetIndex = currentActivePointerIndex + directionOffset;
+            if (targetIndex >= 0 && targetIndex < randomizedQuestionsOrder.length) {
+                jumpToQuestionIndex(targetIndex);
+            }
+        }
+
+        // Jump straight to indexed targeted position coordinate values directly
+        function jumpToQuestionIndex(targetIndex) {
+            currentActivePointerIndex = targetIndex;
+            loadCurrentQuestionIndexItem();
+            loadInteractiveGridMap();
+        }
+
+        // Wipes systemic progress cache logs cleanly
+        function clearCurrentProgress() {
+            if (confirm("Are you certain you want to clear your answers? This will reset all your current progress.")) {
+                localStorage.clear();
+                window.location.reload();
+            }
+        }
+
+        // Metrics Calculation Engine Core Framework
+        function calculateFinalMetrics() {
+            const totalAnswered = Object.keys(userResponsesMatrix).length;
+            if (
+                totalAnswered < MASTER_QUESTION_BANK.length
+            ) {
+                if (
+                    !confirm(
+                        `Warning: You have only answered ${totalAnswered} out of ${MASTER_QUESTION_BANK.length} questions. Unanswered questions count as incorrect. Do you want to submit anyway?`
+                    )
+                ) {
+                    return;
+                }
+            }
+
+            let aggregateScore = 0;
+            let metricCategories = {
+                Grammar: { correct: 0, total: 0 },
+                Vocabulary: { correct: 0, total: 0 },
+                Reading: { correct: 0, total: 0 },
+                Tenses: { correct: 0, total: 0 }
+            };
+
+            MASTER_QUESTION_BANK.forEach(item => {
+
+                if (!metricCategories[item.type]) {
+                    metricCategories[item.type] = {
+                        correct: 0,
+                        total: 0
+                    };
+                }
+
+                metricCategories[item.type].total++;
+
+                if (userResponsesMatrix[item.id] === item.answer) {
+                    metricCategories[item.type].correct++;
+                    aggregateScore++;
+                }
+
+            });
+
+            // Map standard placement metrics to CEFR bands
+            let cefrLevel = "A1";
+            if (aggregateScore >= 48) cefrLevel = "C2";
+            else if (aggregateScore >= 41) cefrLevel = "C1";
+            else if (aggregateScore >= 33) cefrLevel = "B2";
+            else if (aggregateScore >= 22) cefrLevel = "B1";
+            else if (aggregateScore >= 11) cefrLevel = "A2";
+            else cefrLevel = "A1";
+
+            // Push calculation metrics results to analytical dashboard interface view components
+            document.getElementById('cefrPlacementBadge').innerText = cefrLevel;
+
+            // Set dynamic visual card elements stats rendering properties block updates
+            ['Grammar', 'Vocabulary', 'Reading', 'Tenses'].forEach(cat => {
+                const correct = metricCategories[cat].correct;
+                const total = metricCategories[cat].total;
+                const percentage = (correct / total) * 100;
+
+                document.getElementById(`score${cat}`).innerText = `${correct} / ${total}`;
+                document.getElementById(`bar${cat}`).style.width = `${percentage}%`;
+            });
+
+            // Certificate configuration parameters setup text values insertions
+            document.getElementById('certCefrLevel').innerText = cefrLevel;
+            document.getElementById('certScoreMeta').innerText = `Total Composite Score: Total Composite Score:
+${aggregateScore} / ${MASTER_QUESTION_BANK.length} Standard Points`;
+
+            const liveDate = new Date();
+            document.getElementById('certDateStamp').innerText = liveDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            // Generate review layout framework itemized list cards blocks rendering updates
+            generateItemizedReviewMatrixLayout();
+
+            // Shift browser focus onto performance report view interface panel
+            showView('reportView');
+            document.getElementById('topNavStats').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            localStorage.clear();
+        }
+
+        // Build interactive validation review card dashboard panel components rows
+        function generateItemizedReviewMatrixLayout() {
+            const container = document.getElementById('reviewMatrixContainer');
+            container.innerHTML = '';
+
+            MASTER_QUESTION_BANK.forEach((item, idx) => {
+                const userChoice = userResponsesMatrix[item.id] || "[No Option Answered Selected]";
+                const isCorrect = userChoice === item.answer;
+
+                const card = document.createElement('div');
+                card.className = `p-4 rounded-xl border text-sm transition ${isCorrect ? 'bg-emerald-50/50 border-emerald-100' : 'bg-rose-50/50 border-rose-100'}`;
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-mono uppercase font-bold tracking-wider text-slate-400">Item Vector #${idx + 1} - ${item.type}</span>
+                        <span class="flex items-center space-x-1 font-bold ${isCorrect ? 'text-emerald-700' : 'text-rose-700'}">
+                            <i data-lucide="${isCorrect ? 'check-circle-2' : 'x-circle'}" class="w-4 h-4"></i>
+                            <span class="text-xs uppercase tracking-wide">${isCorrect ? 'Correct Metric' : 'Variance Error'}</span>
+                        </span>
+                    </div>
+                    <p class="font-medium text-slate-900 mb-3">${item.text}</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        <div class="p-2.5 rounded bg-white border border-slate-200">
+                            <span class="text-slate-400 block font-bold uppercase tracking-widest text-[9px] mb-0.5">Your Choice Response</span>
+                            <span class="font-mono text-slate-800 font-bold">${userChoice}</span>
+                        </div>
+                        <div class="p-2.5 rounded bg-white border border-slate-200">
+                            <span class="text-slate-400 block font-bold uppercase tracking-widest text-[9px] mb-0.5">Valid System Reference Target</span>
+                            <span class="font-mono text-emerald-700 font-bold">${item.answer}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+
+        function restartExam() {
+
+            if (!confirm('Are you sure you want to restart this quiz?')) {
+                return;
+            }
+            Object.keys(localStorage).forEach(key => {
+                if (
+                    key.includes('exam_')
+                ) {
+                    localStorage.removeItem(key);
+                }
+            });
+            location.reload();
+        }
+
+        function goBackToQuizList() {
+            window.location.href = '/arts/';
+
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,605 @@
+{
+  "title": "AP5 Past Tenses B1-B2",
+  "questions": [
+    {
+      "id": 1,
+      "type": "PAST SIMPLE",
+      "text": "She ____ to Bali last year.",
+      "options": [
+        "go",
+        "went",
+        "gone",
+        "was going"
+      ],
+      "answer": "went"
+    },
+    {
+      "id": 2,
+      "type": "PAST SIMPLE",
+      "text": "I ____ my homework before dinner yesterday.",
+      "options": [
+        "finish",
+        "finished",
+        "had finished",
+        "finishing"
+      ],
+      "answer": "finished"
+    },
+    {
+      "id": 3,
+      "type": "PAST SIMPLE",
+      "text": "They ____ a new car two months ago.",
+      "options": [
+        "buy",
+        "bought",
+        "had bought",
+        "buying"
+      ],
+      "answer": "bought"
+    },
+    {
+      "id": 4,
+      "type": "PAST SIMPLE",
+      "text": "He ____ the email yesterday morning.",
+      "options": [
+        "send",
+        "sent",
+        "sending",
+        "had sent"
+      ],
+      "answer": "sent"
+    },
+    {
+      "id": 5,
+      "type": "PAST SIMPLE",
+      "text": "____ you attend the meeting last Friday?",
+      "options": [
+        "Did",
+        "Do",
+        "Had",
+        "Were"
+      ],
+      "answer": "Did"
+    },
+    {
+      "id": 6,
+      "type": "PAST SIMPLE",
+      "text": "The movie ____ at 9 p.m.",
+      "options": [
+        "end",
+        "ended",
+        "ending",
+        "had ended"
+      ],
+      "answer": "ended"
+    },
+    {
+      "id": 7,
+      "type": "PAST SIMPLE",
+      "text": "We ____ breakfast at a small café yesterday.",
+      "options": [
+        "have",
+        "had",
+        "having",
+        "have had"
+      ],
+      "answer": "had"
+    },
+    {
+      "id": 8,
+      "type": "PAST SIMPLE",
+      "text": "She ____ not understand the question.",
+      "options": [
+        "did",
+        "didn't",
+        "wasn't",
+        "hadn't"
+      ],
+      "answer": "didn't"
+    },
+    {
+      "id": 9,
+      "type": "PAST SIMPLE",
+      "text": "My friends ____ me on my birthday.",
+      "options": [
+        "call",
+        "called",
+        "calling",
+        "had called"
+      ],
+      "answer": "called"
+    },
+    {
+      "id": 10,
+      "type": "PAST SIMPLE",
+      "text": "When ____ he arrive?",
+      "options": [
+        "did",
+        "was",
+        "had",
+        "does"
+      ],
+      "answer": "did"
+    },
+    {
+      "id": 11,
+      "type": "PAST CONTINUOUS",
+      "text": "I ____ TV when you called me.",
+      "options": [
+        "watched",
+        "was watching",
+        "had watched",
+        "watch"
+      ],
+      "answer": "was watching"
+    },
+    {
+      "id": 12,
+      "type": "PAST CONTINUOUS",
+      "text": "They ____ football at 5 p.m. yesterday.",
+      "options": [
+        "played",
+        "were playing",
+        "had played",
+        "play"
+      ],
+      "answer": "were playing"
+    },
+    {
+      "id": 13,
+      "type": "PAST CONTINUOUS",
+      "text": "She ____ dinner while her husband was working.",
+      "options": [
+        "cooked",
+        "was cooking",
+        "had cooked",
+        "cooks"
+      ],
+      "answer": "was cooking"
+    },
+    {
+      "id": 14,
+      "type": "PAST CONTINUOUS",
+      "text": "We ____ for the bus when it started raining.",
+      "options": [
+        "waited",
+        "were waiting",
+        "had waited",
+        "wait"
+      ],
+      "answer": "were waiting"
+    },
+    {
+      "id": 15,
+      "type": "PAST CONTINUOUS",
+      "text": "What ____ you doing at 10 p.m. last night?",
+      "options": [
+        "were",
+        "did",
+        "had",
+        "have"
+      ],
+      "answer": "were"
+    },
+    {
+      "id": 16,
+      "type": "PAST CONTINUOUS",
+      "text": "The children ____ in the garden all afternoon.",
+      "options": [
+        "played",
+        "were playing",
+        "had played",
+        "play"
+      ],
+      "answer": "were playing"
+    },
+    {
+      "id": 17,
+      "type": "PAST CONTINUOUS",
+      "text": "He ____ a shower when the phone rang.",
+      "options": [
+        "took",
+        "was taking",
+        "had taken",
+        "takes"
+      ],
+      "answer": "was taking"
+    },
+    {
+      "id": 18,
+      "type": "PAST CONTINUOUS",
+      "text": "The company ____ a new product at that time.",
+      "options": [
+        "developed",
+        "was developing",
+        "had developed",
+        "develops"
+      ],
+      "answer": "was developing"
+    },
+    {
+      "id": 19,
+      "type": "PAST CONTINUOUS",
+      "text": "While I ____ home, I saw an accident.",
+      "options": [
+        "drove",
+        "was driving",
+        "had driven",
+        "drive"
+      ],
+      "answer": "was driving"
+    },
+    {
+      "id": 20,
+      "type": "PAST CONTINUOUS",
+      "text": "They ____ not paying attention during the lesson.",
+      "options": [
+        "was",
+        "were",
+        "did",
+        "had"
+      ],
+      "answer": "were"
+    },
+    {
+      "id": 21,
+      "type": "PAST PERFECT",
+      "text": "She ____ already left before I arrived.",
+      "options": [
+        "has",
+        "had",
+        "was",
+        "did"
+      ],
+      "answer": "had"
+    },
+    {
+      "id": 22,
+      "type": "PAST PERFECT",
+      "text": "By the time we reached the station, the train ____.",
+      "options": [
+        "left",
+        "had left",
+        "was leaving",
+        "has left"
+      ],
+      "answer": "had left"
+    },
+    {
+      "id": 23,
+      "type": "PAST PERFECT",
+      "text": "I ____ never seen such a beautiful beach before.",
+      "options": [
+        "was",
+        "did",
+        "had",
+        "have"
+      ],
+      "answer": "had"
+    },
+    {
+      "id": 24,
+      "type": "PAST PERFECT",
+      "text": "They ____ the project before the deadline.",
+      "options": [
+        "completed",
+        "had completed",
+        "were completing",
+        "have completed"
+      ],
+      "answer": "had completed"
+    },
+    {
+      "id": 25,
+      "type": "PAST PERFECT",
+      "text": "He was tired because he ____ all day.",
+      "options": [
+        "worked",
+        "had worked",
+        "was working",
+        "has worked"
+      ],
+      "answer": "had worked"
+    },
+    {
+      "id": 26,
+      "type": "PAST PERFECT",
+      "text": "After she ____ the report, she sent it to her manager.",
+      "options": [
+        "finished",
+        "had finished",
+        "was finishing",
+        "has finished"
+      ],
+      "answer": "had finished"
+    },
+    {
+      "id": 27,
+      "type": "PAST PERFECT",
+      "text": "We ____ not met before that conference.",
+      "options": [
+        "did",
+        "were",
+        "had",
+        "have"
+      ],
+      "answer": "had"
+    },
+    {
+      "id": 28,
+      "type": "PAST PERFECT",
+      "text": "The movie had already started when we ____.",
+      "options": [
+        "arrived",
+        "had arrived",
+        "were arriving",
+        "arrive"
+      ],
+      "answer": "arrived"
+    },
+    {
+      "id": 29,
+      "type": "PAST PERFECT",
+      "text": "She realized that she ____ her wallet at home.",
+      "options": [
+        "left",
+        "had left",
+        "was leaving",
+        "has left"
+      ],
+      "answer": "had left"
+    },
+    {
+      "id": 30,
+      "type": "PAST PERFECT",
+      "text": "The company ____ significant progress before the merger.",
+      "options": [
+        "made",
+        "had made",
+        "was making",
+        "has made"
+      ],
+      "answer": "had made"
+    },
+    {
+      "id": 31,
+      "type": "MIXED PAST TENSES",
+      "text": "While I ____ dinner, my friend called me.",
+      "options": [
+        "cooked",
+        "was cooking",
+        "had cooked",
+        "cook"
+      ],
+      "answer": "was cooking"
+    },
+    {
+      "id": 32,
+      "type": "MIXED PAST TENSES",
+      "text": "They ____ the office before the manager arrived.",
+      "options": [
+        "left",
+        "had left",
+        "were leaving",
+        "leave"
+      ],
+      "answer": "had left"
+    },
+    {
+      "id": 33,
+      "type": "MIXED PAST TENSES",
+      "text": "She ____ a book when the lights went out.",
+      "options": [
+        "read",
+        "was reading",
+        "had read",
+        "reads"
+      ],
+      "answer": "was reading"
+    },
+    {
+      "id": 34,
+      "type": "MIXED PAST TENSES",
+      "text": "I ____ that movie last weekend.",
+      "options": [
+        "saw",
+        "had seen",
+        "was seeing",
+        "see"
+      ],
+      "answer": "saw"
+    },
+    {
+      "id": 35,
+      "type": "MIXED PAST TENSES",
+      "text": "After we ____ lunch, we went back to work.",
+      "options": [
+        "had eaten",
+        "ate",
+        "were eating",
+        "eat"
+      ],
+      "answer": "had eaten"
+    },
+    {
+      "id": 36,
+      "type": "MIXED PAST TENSES",
+      "text": "What ____ you doing when I sent the message?",
+      "options": [
+        "did",
+        "were",
+        "had",
+        "was"
+      ],
+      "answer": "were"
+    },
+    {
+      "id": 37,
+      "type": "MIXED PAST TENSES",
+      "text": "The customer complained because we ____ the wrong item.",
+      "options": [
+        "sent",
+        "had sent",
+        "were sending",
+        "send"
+      ],
+      "answer": "had sent"
+    },
+    {
+      "id": 38,
+      "type": "MIXED PAST TENSES",
+      "text": "We ____ through the city when we found a nice restaurant.",
+      "options": [
+        "walked",
+        "were walking",
+        "had walked",
+        "walk"
+      ],
+      "answer": "were walking"
+    },
+    {
+      "id": 39,
+      "type": "MIXED PAST TENSES",
+      "text": "She ____ her work before she went home.",
+      "options": [
+        "finished",
+        "had finished",
+        "was finishing",
+        "finishes"
+      ],
+      "answer": "had finished"
+    },
+    {
+      "id": 40,
+      "type": "MIXED PAST TENSES",
+      "text": "The meeting ____ at 2 p.m. yesterday.",
+      "options": [
+        "started",
+        "had started",
+        "was starting",
+        "starts"
+      ],
+      "answer": "started"
+    },
+    {
+      "id": 41,
+      "type": "MIXED PAST TENSES",
+      "text": "I ____ asleep when the storm began.",
+      "options": [
+        "fell",
+        "was falling",
+        "had fallen",
+        "fall"
+      ],
+      "answer": "had fallen"
+    },
+    {
+      "id": 42,
+      "type": "MIXED PAST TENSES",
+      "text": "They ____ tennis when it suddenly started raining.",
+      "options": [
+        "played",
+        "were playing",
+        "had played",
+        "play"
+      ],
+      "answer": "were playing"
+    },
+    {
+      "id": 43,
+      "type": "MIXED PAST TENSES",
+      "text": "She ____ the email before the deadline.",
+      "options": [
+        "sent",
+        "had sent",
+        "was sending",
+        "send"
+      ],
+      "answer": "sent"
+    },
+    {
+      "id": 44,
+      "type": "MIXED PAST TENSES",
+      "text": "By 2024, the company ____ more than 1,000 employees.",
+      "options": [
+        "employed",
+        "had employed",
+        "was employing",
+        "employs"
+      ],
+      "answer": "had employed"
+    },
+    {
+      "id": 45,
+      "type": "MIXED PAST TENSES",
+      "text": "While they ____ the problem, the system crashed.",
+      "options": [
+        "discussed",
+        "were discussing",
+        "had discussed",
+        "discuss"
+      ],
+      "answer": "were discussing"
+    },
+    {
+      "id": 46,
+      "type": "MIXED PAST TENSES",
+      "text": "He ____ his passport, so he couldn't travel.",
+      "options": [
+        "lost",
+        "had lost",
+        "was losing",
+        "loses"
+      ],
+      "answer": "had lost"
+    },
+    {
+      "id": 47,
+      "type": "MIXED PAST TENSES",
+      "text": "We ____ the presentation yesterday afternoon.",
+      "options": [
+        "gave",
+        "had given",
+        "were giving",
+        "give"
+      ],
+      "answer": "gave"
+    },
+    {
+      "id": 48,
+      "type": "MIXED PAST TENSES",
+      "text": "The engineers ____ the server when the power went out.",
+      "options": [
+        "tested",
+        "were testing",
+        "had tested",
+        "test"
+      ],
+      "answer": "were testing"
+    },
+    {
+      "id": 49,
+      "type": "MIXED PAST TENSES",
+      "text": "After he ____ the instructions, he started the machine.",
+      "options": [
+        "read",
+        "had read",
+        "was reading",
+        "reads"
+      ],
+      "answer": "had read"
+    },
+    {
+      "id": 50,
+      "type": "MIXED PAST TENSES",
+      "text": "They ____ the event successfully last month.",
+      "options": [
+        "organized",
+        "had organized",
+        "were organizing",
+        "organize"
+      ],
+      "answer": "organized"
+    }
+  ]
+}

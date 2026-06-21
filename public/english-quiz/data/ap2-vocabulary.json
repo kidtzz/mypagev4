@@ -1,0 +1,605 @@
+{
+  "title": "AP7 Vocabulary Assessment B1-B2",
+  "questions": [
+    {
+      "id": 1,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'essential'.",
+      "options": [
+        "optional",
+        "necessary",
+        "useless",
+        "minor"
+      ],
+      "answer": "necessary"
+    },
+    {
+      "id": 2,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'purchase'.",
+      "options": [
+        "borrow",
+        "buy",
+        "sell",
+        "return"
+      ],
+      "answer": "buy"
+    },
+    {
+      "id": 3,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'rapid'.",
+      "options": [
+        "slow",
+        "fast",
+        "careful",
+        "quiet"
+      ],
+      "answer": "fast"
+    },
+    {
+      "id": 4,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'assist'.",
+      "options": [
+        "ignore",
+        "help",
+        "stop",
+        "prevent"
+      ],
+      "answer": "help"
+    },
+    {
+      "id": 5,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'accurate'.",
+      "options": [
+        "correct",
+        "wrong",
+        "confusing",
+        "unclear"
+      ],
+      "answer": "correct"
+    },
+    {
+      "id": 6,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'increase'.",
+      "options": [
+        "grow",
+        "reduce",
+        "hide",
+        "remove"
+      ],
+      "answer": "grow"
+    },
+    {
+      "id": 7,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'difficult'.",
+      "options": [
+        "simple",
+        "challenging",
+        "easy",
+        "basic"
+      ],
+      "answer": "challenging"
+    },
+    {
+      "id": 8,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'achieve'.",
+      "options": [
+        "fail",
+        "accomplish",
+        "avoid",
+        "delay"
+      ],
+      "answer": "accomplish"
+    },
+    {
+      "id": 9,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'reliable'.",
+      "options": [
+        "trustworthy",
+        "dangerous",
+        "weak",
+        "uncertain"
+      ],
+      "answer": "trustworthy"
+    },
+    {
+      "id": 10,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'opportunity'.",
+      "options": [
+        "chance",
+        "problem",
+        "mistake",
+        "risk"
+      ],
+      "answer": "chance"
+    },
+    {
+      "id": 11,
+      "type": "ANTONYM",
+      "text": "Choose the opposite of 'generous'.",
+      "options": [
+        "kind",
+        "selfish",
+        "friendly",
+        "helpful"
+      ],
+      "answer": "selfish"
+    },
+    {
+      "id": 12,
+      "type": "ANTONYM",
+      "text": "Choose the opposite of 'ancient'.",
+      "options": [
+        "old",
+        "modern",
+        "historic",
+        "traditional"
+      ],
+      "answer": "modern"
+    },
+    {
+      "id": 13,
+      "type": "ANTONYM",
+      "text": "Choose the opposite of 'expand'.",
+      "options": [
+        "increase",
+        "develop",
+        "shrink",
+        "grow"
+      ],
+      "answer": "shrink"
+    },
+    {
+      "id": 14,
+      "type": "ANTONYM",
+      "text": "Choose the opposite of 'accept'.",
+      "options": [
+        "approve",
+        "reject",
+        "agree",
+        "receive"
+      ],
+      "answer": "reject"
+    },
+    {
+      "id": 15,
+      "type": "ANTONYM",
+      "text": "Choose the opposite of 'visible'.",
+      "options": [
+        "clear",
+        "obvious",
+        "hidden",
+        "bright"
+      ],
+      "answer": "hidden"
+    },
+    {
+      "id": 16,
+      "type": "ANTONYM",
+      "text": "Choose the opposite of 'success'.",
+      "options": [
+        "victory",
+        "failure",
+        "achievement",
+        "progress"
+      ],
+      "answer": "failure"
+    },
+    {
+      "id": 17,
+      "type": "ANTONYM",
+      "text": "Choose the opposite of 'maximum'.",
+      "options": [
+        "highest",
+        "largest",
+        "minimum",
+        "greatest"
+      ],
+      "answer": "minimum"
+    },
+    {
+      "id": 18,
+      "type": "ANTONYM",
+      "text": "Choose the opposite of 'optimistic'.",
+      "options": [
+        "positive",
+        "hopeful",
+        "confident",
+        "pessimistic"
+      ],
+      "answer": "pessimistic"
+    },
+    {
+      "id": 19,
+      "type": "ANTONYM",
+      "text": "Choose the opposite of 'frequent'.",
+      "options": [
+        "common",
+        "rare",
+        "usual",
+        "regular"
+      ],
+      "answer": "rare"
+    },
+    {
+      "id": 20,
+      "type": "ANTONYM",
+      "text": "Choose the opposite of 'temporary'.",
+      "options": [
+        "short-term",
+        "brief",
+        "permanent",
+        "limited"
+      ],
+      "answer": "permanent"
+    },
+    {
+      "id": 21,
+      "type": "PHRASAL VERB",
+      "text": "What does 'give up' mean?",
+      "options": [
+        "continue",
+        "quit",
+        "discover",
+        "improve"
+      ],
+      "answer": "quit"
+    },
+    {
+      "id": 22,
+      "type": "PHRASAL VERB",
+      "text": "What does 'look after' mean?",
+      "options": [
+        "search for",
+        "take care of",
+        "ignore",
+        "follow"
+      ],
+      "answer": "take care of"
+    },
+    {
+      "id": 23,
+      "type": "PHRASAL VERB",
+      "text": "What does 'find out' mean?",
+      "options": [
+        "hide",
+        "discover",
+        "lose",
+        "forget"
+      ],
+      "answer": "discover"
+    },
+    {
+      "id": 24,
+      "type": "PHRASAL VERB",
+      "text": "What does 'turn down' mean in 'turn down an offer'?",
+      "options": [
+        "accept",
+        "reject",
+        "improve",
+        "discuss"
+      ],
+      "answer": "reject"
+    },
+    {
+      "id": 25,
+      "type": "PHRASAL VERB",
+      "text": "What does 'run out of' mean?",
+      "options": [
+        "have plenty of",
+        "waste",
+        "use completely",
+        "buy"
+      ],
+      "answer": "use completely"
+    },
+    {
+      "id": 26,
+      "type": "PHRASAL VERB",
+      "text": "What does 'put off' mean?",
+      "options": [
+        "postpone",
+        "start",
+        "finish",
+        "organize"
+      ],
+      "answer": "postpone"
+    },
+    {
+      "id": 27,
+      "type": "PHRASAL VERB",
+      "text": "What does 'pick up' mean in 'pick up a new skill'?",
+      "options": [
+        "learn",
+        "drop",
+        "lose",
+        "forget"
+      ],
+      "answer": "learn"
+    },
+    {
+      "id": 28,
+      "type": "PHRASAL VERB",
+      "text": "What does 'carry on' mean?",
+      "options": [
+        "stop",
+        "continue",
+        "complain",
+        "change"
+      ],
+      "answer": "continue"
+    },
+    {
+      "id": 29,
+      "type": "PHRASAL VERB",
+      "text": "What does 'look forward to' mean?",
+      "options": [
+        "avoid",
+        "expect with pleasure",
+        "fear",
+        "delay"
+      ],
+      "answer": "expect with pleasure"
+    },
+    {
+      "id": 30,
+      "type": "PHRASAL VERB",
+      "text": "What does 'come across' mean?",
+      "options": [
+        "meet by chance",
+        "run away",
+        "argue",
+        "return"
+      ],
+      "answer": "meet by chance"
+    },
+    {
+      "id": 31,
+      "type": "IDIOM",
+      "text": "What does 'break the ice' mean?",
+      "options": [
+        "cause trouble",
+        "start a conversation",
+        "feel cold",
+        "end a meeting"
+      ],
+      "answer": "start a conversation"
+    },
+    {
+      "id": 32,
+      "type": "IDIOM",
+      "text": "What does 'piece of cake' mean?",
+      "options": [
+        "very easy",
+        "very expensive",
+        "very tasty",
+        "very difficult"
+      ],
+      "answer": "very easy"
+    },
+    {
+      "id": 33,
+      "type": "IDIOM",
+      "text": "What does 'once in a blue moon' mean?",
+      "options": [
+        "very often",
+        "very rarely",
+        "every month",
+        "at night"
+      ],
+      "answer": "very rarely"
+    },
+    {
+      "id": 34,
+      "type": "IDIOM",
+      "text": "What does 'hit the nail on the head' mean?",
+      "options": [
+        "make a mistake",
+        "be exactly right",
+        "work hard",
+        "build something"
+      ],
+      "answer": "be exactly right"
+    },
+    {
+      "id": 35,
+      "type": "IDIOM",
+      "text": "What does 'under the weather' mean?",
+      "options": [
+        "sick",
+        "outside",
+        "happy",
+        "successful"
+      ],
+      "answer": "sick"
+    },
+    {
+      "id": 36,
+      "type": "IDIOM",
+      "text": "What does 'cost an arm and a leg' mean?",
+      "options": [
+        "very cheap",
+        "very expensive",
+        "dangerous",
+        "illegal"
+      ],
+      "answer": "very expensive"
+    },
+    {
+      "id": 37,
+      "type": "IDIOM",
+      "text": "What does 'spill the beans' mean?",
+      "options": [
+        "cook dinner",
+        "reveal a secret",
+        "make a mess",
+        "waste money"
+      ],
+      "answer": "reveal a secret"
+    },
+    {
+      "id": 38,
+      "type": "IDIOM",
+      "text": "What does 'burn the midnight oil' mean?",
+      "options": [
+        "sleep early",
+        "work late at night",
+        "save electricity",
+        "travel far"
+      ],
+      "answer": "work late at night"
+    },
+    {
+      "id": 39,
+      "type": "IDIOM",
+      "text": "What does 'the ball is in your court' mean?",
+      "options": [
+        "it's your decision",
+        "play sports",
+        "wait for help",
+        "lose a chance"
+      ],
+      "answer": "it's your decision"
+    },
+    {
+      "id": 40,
+      "type": "IDIOM",
+      "text": "What does 'bite off more than you can chew' mean?",
+      "options": [
+        "eat too much",
+        "take on too much responsibility",
+        "speak loudly",
+        "waste food"
+      ],
+      "answer": "take on too much responsibility"
+    },
+    {
+      "id": 41,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "The manager was very ____ with the team's performance.",
+      "options": [
+        "satisfied",
+        "ordinary",
+        "nervous",
+        "ancient"
+      ],
+      "answer": "satisfied"
+    },
+    {
+      "id": 42,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "The company plans to ____ its business internationally.",
+      "options": [
+        "expand",
+        "hide",
+        "avoid",
+        "reduce"
+      ],
+      "answer": "expand"
+    },
+    {
+      "id": 43,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "He made a ____ decision after careful consideration.",
+      "options": [
+        "wise",
+        "lazy",
+        "weak",
+        "careless"
+      ],
+      "answer": "wise"
+    },
+    {
+      "id": 44,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "The instructions were very ____ and easy to understand.",
+      "options": [
+        "clear",
+        "complex",
+        "confusing",
+        "uncertain"
+      ],
+      "answer": "clear"
+    },
+    {
+      "id": 45,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "We need to find an ____ solution to this problem.",
+      "options": [
+        "effective",
+        "useless",
+        "slow",
+        "ordinary"
+      ],
+      "answer": "effective"
+    },
+    {
+      "id": 46,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "The employee received a ____ for his excellent work.",
+      "options": [
+        "reward",
+        "punishment",
+        "warning",
+        "complaint"
+      ],
+      "answer": "reward"
+    },
+    {
+      "id": 47,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "She is very ____ and always arrives on time.",
+      "options": [
+        "reliable",
+        "careless",
+        "selfish",
+        "weak"
+      ],
+      "answer": "reliable"
+    },
+    {
+      "id": 48,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "The project was a great ____.",
+      "options": [
+        "failure",
+        "challenge",
+        "success",
+        "mistake"
+      ],
+      "answer": "success"
+    },
+    {
+      "id": 49,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "The scientist conducted several ____ before publishing the results.",
+      "options": [
+        "experiments",
+        "arguments",
+        "vacations",
+        "celebrations"
+      ],
+      "answer": "experiments"
+    },
+    {
+      "id": 50,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "Learning English can create many career ____.",
+      "options": [
+        "opportunities",
+        "failures",
+        "complaints",
+        "obstacles"
+      ],
+      "answer": "opportunities"
+    }
+  ]
+}

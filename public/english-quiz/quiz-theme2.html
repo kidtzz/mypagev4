@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global English Placement Framework</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* Custom print styling for high-quality certificate printing to PDF */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+
+      #certificatePrintArea,
+      #certificatePrintArea * {
+        visibility: visible;
+      }
+
+      #certificatePrintArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: white !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen antialiased">
+
+  <header class="bg-white border-b border-slate-100 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="bg-indigo-600 text-white p-2 rounded-xl shadow-md shadow-indigo-100">
+          <i data-lucide="award" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h1 class="text-md font-bold text-slate-900 tracking-tight leading-none">YAS KIDTZ</h1>
+          <p class="text-[11px] text-slate-400 mt-1 font-medium">CEFR Placement Test</p>
+        </div>
+      </div>
+      <div id="topNavStats" class="flex items-center space-x-4">
+        <div class="text-right hidden sm:block">
+          <p id="navProgressText" class="text-xs font-semibold text-slate-600">0 / 50 Completed</p>
+        </div>
+        <div class="w-24 bg-slate-100 rounded-full h-2 overflow-hidden">
+          <div id="navProgressBar" class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: 0%">
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-6 md:py-10">
+
+    <div id="welcomeView" class="hidden"></div>
+
+    <div id="examView" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 items-start">
+
+      <div class="lg:col-span-2 space-y-4">
+        <div class="bg-white border border-slate-200/80 rounded-2xl p-5 md:p-8 shadow-sm relative">
+
+          <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
+            <div class="flex items-center space-x-2">
+              <span
+                class="text-[11px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-md bg-indigo-50 text-indigo-700"
+                id="questionCategoryBadge">Category</span>
+              <span class="text-xs font-medium text-slate-400" id="questionIndexBadge">Item 0 of 50</span>
+            </div>
+            <button onclick="clearCurrentProgress()"
+              class="text-xs text-rose-500 hover:text-rose-700 font-medium flex items-center space-x-1 transition">
+              <i data-lucide="refresh-cw" class="w-3 h-3"></i>
+              <span>Reset Board</span>
+            </button>
+          </div>
+
+          <div class="mb-6 md:mb-8">
+            <p id="questionPrompt" class="text-lg md:text-xl font-semibold text-slate-900 leading-relaxed"></p>
+          </div>
+
+          <div id="optionsContainer" class="space-y-3">
+          </div>
+
+          <div class="border-t border-slate-100 pt-6 mt-8 flex justify-between items-center gap-4">
+            <button id="prevBtn" onclick="navigateQuestion(-1)"
+              class="border border-slate-200 text-slate-600 hover:bg-slate-50 font-semibold px-4 py-2.5 rounded-xl transition flex items-center space-x-2 disabled:opacity-40 disabled:hover:bg-white text-sm">
+              <i data-lucide="chevron-left" class="w-4 h-4"></i>
+              <span>Previous</span>
+            </button>
+            <button id="nextBtn" onclick="navigateQuestion(1)"
+              class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-5 py-2.5 rounded-xl transition flex items-center space-x-2 text-sm shadow-md shadow-indigo-100">
+              <span>Next Item</span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-6 lg:sticky lg:top-24">
+        <div class="bg-white border border-slate-200/80 rounded-2xl p-5 md:p-6 shadow-sm space-y-6">
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm tracking-tight mb-1">Matrix Map Index</h3>
+            <p class="text-xs text-slate-400">Jump directly to any specific question item.</p>
+          </div>
+
+          <div id="questionGridMap" class="grid grid-cols-5 gap-2 text-center max-h-[220px] overflow-y-auto pr-1">
+          </div>
+
+          <div class="border-t border-slate-100 pt-5">
+            <button onclick="calculateFinalMetrics()"
+              class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl shadow-md shadow-emerald-100 transition duration-150 flex items-center justify-center space-x-2 text-sm">
+              <i data-lucide="check-circle" class="w-4 h-4"></i>
+              <span>Complete & Submit Test</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="reportView" class="hidden space-y-6 md:space-y-8">
+      <div class="bg-slate-900 text-white rounded-2xl p-6 md:p-8 shadow-xl relative overflow-hidden">
+        <div
+          class="absolute right-0 top-0 translate-x-12 -translate-y-12 w-64 h-64 bg-indigo-600 opacity-20 rounded-full blur-3xl">
+        </div>
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="space-y-2">
+            <span
+              class="text-[10px] font-bold uppercase tracking-widest bg-indigo-500/30 text-indigo-200 px-3 py-1 rounded-full">Performance
+              Portfolio</span>
+            <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight">Diagnostics Examination Dashboard</h2>
+            <p class="text-slate-400 text-xs md:text-sm max-w-xl">Linguistic analytical performance metrics processed
+              down to distinct categorical functional units aligned with global standards.</p>
+          </div>
+          <div
+            class="bg-white/10 backdrop-blur-md rounded-2xl px-6 py-4 md:py-6 text-center border border-white/10 min-w-[160px]">
+            <p class="text-[10px] uppercase font-bold tracking-widest text-indigo-200">CEFR Placement</p>
+            <p id="cefrPlacementBadge" class="text-4xl md:text-5xl font-black text-white mt-1">--</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-white border border-slate-200 p-4 md:p-5 rounded-2xl shadow-sm">
+          <div class="flex justify-between items-start mb-2"><span
+              class="text-xs md:text-sm font-semibold text-slate-500">Grammar</span><i data-lucide="book-open"
+              class="w-4 h-4 text-indigo-500"></i></div>
+          <p id="scoreGrammar" class="text-xl md:text-2xl font-bold text-slate-900">0/0</p>
+          <div class="w-full bg-slate-100 h-1.5 rounded-full mt-3">
+            <div id="barGrammar" class="bg-indigo-600 h-1.5 rounded-full" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="bg-white border border-slate-200 p-4 md:p-5 rounded-2xl shadow-sm">
+          <div class="flex justify-between items-start mb-2"><span
+              class="text-xs md:text-sm font-semibold text-slate-500">Vocabulary</span><i data-lucide="languages"
+              class="w-4 h-4 text-emerald-500"></i></div>
+          <p id="scoreVocabulary" class="text-xl md:text-2xl font-bold text-slate-900">0/0</p>
+          <div class="w-full bg-slate-100 h-1.5 rounded-full mt-3">
+            <div id="barVocabulary" class="bg-emerald-600 h-1.5 rounded-full" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="bg-white border border-slate-200 p-4 md:p-5 rounded-2xl shadow-sm">
+          <div class="flex justify-between items-start mb-2"><span
+              class="text-xs md:text-sm font-semibold text-slate-500">Reading</span><i data-lucide="file-text"
+              class="w-4 h-4 text-amber-500"></i></div>
+          <p id="scoreReading" class="text-xl md:text-2xl font-bold text-slate-900">0/0</p>
+          <div class="w-full bg-slate-100 h-1.5 rounded-full mt-3">
+            <div id="barReading" class="bg-amber-500 h-1.5 rounded-full" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="bg-white border border-slate-200 p-4 md:p-5 rounded-2xl shadow-sm">
+          <div class="flex justify-between items-start mb-2"><span
+              class="text-xs md:text-sm font-semibold text-slate-500">Tenses</span><i data-lucide="clock"
+              class="w-4 h-4 text-rose-500"></i></div>
+          <p id="scoreTenses" class="text-xl md:text-2xl font-bold text-slate-900">0/0</p>
+          <div class="w-full bg-slate-100 h-1.5 rounded-full mt-3">
+            <div id="barTenses" class="bg-rose-500 h-1.5 rounded-full" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-1 space-y-4">
+          <div class="bg-white border border-slate-200 p-5 md:p-6 rounded-2xl shadow-sm space-y-3">
+            <h4 class="font-bold text-slate-900 text-base">Actions Dashboard</h4>
+            <p class="text-slate-500 text-xs leading-relaxed">Download your auto-generated PDF evaluation placement
+              validation certificate directly via client vector compilation engines.</p>
+
+            <button onclick="window.print()"
+              class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-4 rounded-xl flex items-center justify-center space-x-2 text-sm shadow transition mt-2">
+              <i data-lucide="download" class="w-4 h-4"></i>
+              <span>Download PDF Certificate</span>
+            </button>
+
+            <button onclick="restartExam()"
+              class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-4 rounded-xl flex items-center justify-center space-x-2 text-sm transition">
+              <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+              <span>Restart Quiz</span>
+            </button>
+
+            <button onclick="goBackToQuizList()"
+              class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-4 rounded-xl flex items-center justify-center space-x-2 text-sm transition">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              <span>Back to Quiz List</span>
+            </button>
+          </div>
+
+          <div
+            class="bg-amber-50 border border-amber-100 p-4 rounded-2xl text-amber-800 space-y-1 text-xs leading-relaxed">
+            <div class="flex items-center space-x-1.5 font-bold"><i data-lucide="info"
+                class="w-3.5 h-3.5 text-amber-600"></i><span>System Printing Instructions</span></div>
+            <p class="text-amber-700">To print clear, clean certificates to local document files, ensure the "Background
+              graphics" option is toggled to active in your native browser printer configuration module.</p>
+          </div>
+        </div>
+
+        <div class="lg:col-span-2 bg-white border border-slate-200 rounded-2xl p-5 md:p-6 shadow-sm space-y-4">
+          <h3 class="font-bold text-slate-900 text-base">Itemized Evaluation Matrix Review</h3>
+          <div id="reviewMatrixContainer" class="space-y-4 max-h-[480px] overflow-y-auto pr-1">
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-slate-200 pt-8">
+        <h3 class="text-slate-400 text-[10px] font-bold uppercase tracking-widest text-center mb-4 no-print">Certificate
+          Print Layout Target Interface</h3>
+        <div id="certificatePrintArea"
+          class="bg-white border-[12px] border-double border-slate-800 p-8 md:p-12 max-w-4xl mx-auto rounded-none shadow-sm flex flex-col justify-between text-center space-y-8 relative min-h-[520px]">
+          <div class="space-y-2">
+            <p class="text-[10px] tracking-[0.3em] font-bold text-slate-400 uppercase">Universal Framework Validation
+              Registry</p>
+            <h2 class="text-3xl md:text-4xl font-serif font-black text-slate-900 tracking-tight">Certificate of
+              Competency</h2>
+          </div>
+          <div class="space-y-1">
+            <p class="text-xs italic text-slate-400 font-serif">This diagnostic document confirms that the anonymous
+              candidate has completed the comprehensive evaluation matrix</p>
+            <p class="text-sm font-semibold text-slate-600">English Language Placement Examination Suite</p>
+          </div>
+          <div class="my-6 border-y border-slate-200 py-6 max-w-md mx-auto w-full">
+            <p class="text-[10px] uppercase tracking-widest text-slate-400 font-bold">Assessed Metrics Proficiency
+              Designation</p>
+            <p id="certCefrLevel" class="text-5xl md:text-6xl font-black text-indigo-900 my-2">--</p>
+            <p id="certScoreMeta" class="text-xs font-mono text-slate-500 font-bold">Total Composite Score: 00 / 50
+              Standard Points</p>
+          </div>
+          <div class="flex flex-row items-end justify-between px-2 md:px-6 pt-4 gap-2">
+            <div class="text-left border-t border-slate-300 pt-2 w-32 md:w-44">
+              <p id="certDateStamp" class="text-[11px] font-mono text-slate-600">June 21, 2026</p>
+              <p class="text-[9px] text-slate-400 uppercase tracking-widest font-bold">Date of Processing</p>
+            </div>
+            <div
+              class="text-center bg-slate-100 border border-slate-200 text-slate-400 px-2 py-1 font-mono text-[8px] md:text-[9px] uppercase tracking-wider rounded hidden sm:block">
+              ID: PLMT-X92F-KM48
+            </div>
+            <div class="text-right border-t border-slate-300 pt-2 w-32 md:w-44 flex flex-col items-end">
+              <div
+                class="text-[11px] font-serif font-bold italic tracking-wider text-indigo-800 border-b border-indigo-100 pb-0.5 mb-0.5">
+                Global Board Matrix</div>
+              <p class="text-[9px] text-slate-400 uppercase tracking-widest font-bold">Authorized Signatory</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // Full Complete 50-Question Master Psychometric Database Array Grouped cleanly by explicit Core Competency Metrics
+    let MASTER_QUESTION_BANK = [];
+    let randomizedQuestionsOrder = [];
+    let userResponsesMatrix = {}; // Format: { question_id: "selected_string_option" }
+    let currentActivePointerIndex = 0;
+
+    async function loadQuestionBank() {
+      const params = new URLSearchParams(window.location.search);
+      const quizId = params.get('quiz') || 'ap1';
+      const response = await fetch(`/english-quiz/data/${quizId}.json`);
+      const data = await response.json();
+      MASTER_QUESTION_BANK = data.questions;
+      console.log('Question Bank Loaded:', MASTER_QUESTION_BANK.length);
+      initializeSystemExamState();
+    }
+
+    // Application Initialization Lifecycle Hook Controller
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      loadQuestionBank();
+    });
+
+    // Initializes or restores exam state from local storage
+    function initializeSystemExamState() {
+      // Langsung otomatis trigger startExam tanpa perlu klik welcome screen
+      startExam();
+    }
+
+    // Activates deployment session processing framework parameters
+    function startExam() {
+      let tempArray = [...MASTER_QUESTION_BANK];
+
+      for (let i = tempArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [tempArray[i], tempArray[j]] = [tempArray[j], tempArray[i]];
+      }
+
+      randomizedQuestionsOrder = tempArray;
+      userResponsesMatrix = {};
+      currentActivePointerIndex = 0;
+
+      showExamInterfaceView();
+    }
+
+    // Handles switching between interface views
+    function showView(viewId) {
+      ['welcomeView', 'examView', 'reportView'].forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+      document.getElementById(viewId).classList.remove('hidden');
+    }
+
+    // Activates the exam UI elements
+    function showExamInterfaceView() {
+      showView('examView');
+      document.getElementById('topNavStats').classList.remove('hidden');
+      loadCurrentQuestionIndexItem();
+      loadInteractiveGridMap();
+    }
+
+    // Synchronizes data markers with visual navigation UI trackers
+    function updateGlobalProgressTrackers() {
+      const answeredCount = Object.keys(userResponsesMatrix).length;
+      const percentage = (answeredCount / MASTER_QUESTION_BANK.length) * 100;
+
+      document.getElementById('navProgressText').innerText = `${answeredCount} / ${MASTER_QUESTION_BANK.length} Completed`;
+      document.getElementById('navProgressBar').style.width = `${percentage}%`;
+    }
+
+    // Renders the index map box navigation layout
+    function loadInteractiveGridMap() {
+      const mapContainer = document.getElementById('questionGridMap');
+      mapContainer.innerHTML = '';
+
+      randomizedQuestionsOrder.forEach((question, index) => {
+        const mapCell = document.createElement('button');
+        mapCell.innerText = (index + 1).toString();
+        mapCell.className = `p-2 text-xs font-mono font-bold rounded-xl transition border duration-150 h-9 w-9 flex items-center justify-center mx-auto`;
+
+        const isCurrent = index === currentActivePointerIndex;
+        const isAnswered = userResponsesMatrix[question.id] !== undefined;
+
+        if (isCurrent) {
+          mapCell.className += ' bg-indigo-600 text-white border-indigo-700 ring-4 ring-indigo-100';
+        } else if (isAnswered) {
+          mapCell.className += ' bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100';
+        } else {
+          mapCell.className += ' bg-white text-slate-500 border-slate-200 hover:bg-slate-100';
+        }
+
+        mapCell.onclick = () => { jumpToQuestionIndex(index); };
+        mapContainer.appendChild(mapCell);
+      });
+    }
+
+    // Loads a question into the workspace card container view
+    function loadCurrentQuestionIndexItem() {
+      if (randomizedQuestionsOrder.length === 0) return;
+
+      const question = randomizedQuestionsOrder[currentActivePointerIndex];
+
+      // Build text context templates
+      document.getElementById('questionCategoryBadge').innerText = question.type;
+      document.getElementById('questionIndexBadge').innerText = `Item ${currentActivePointerIndex + 1} of ${MASTER_QUESTION_BANK.length}`;
+      document.getElementById('questionPrompt').innerText = question.text;
+
+      // Generate options HTML layout framework
+      const optionsWrapper = document.getElementById('optionsContainer');
+      optionsWrapper.innerHTML = '';
+
+      question.options.forEach(option => {
+        const isSelected = userResponsesMatrix[question.id] === option;
+
+        const optionLabelRow = document.createElement('label');
+        optionLabelRow.className = `flex items-center p-4 rounded-xl border transition cursor-pointer text-sm font-semibold select-none ${isSelected
+          ? 'border-indigo-600 bg-indigo-50 text-indigo-950 shadow-sm ring-1 ring-indigo-600'
+          : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50/80 hover:border-slate-300'
+          }`;
+
+        const radioInput = document.createElement('input');
+        radioInput.type = 'radio';
+        radioInput.name = `question_option_choice_${question.id}`;
+        radioInput.value = option;
+        radioInput.checked = isSelected;
+        radioInput.className = 'w-4 h-4 text-indigo-600 border-slate-300 focus:ring-indigo-500 mr-3 accent-indigo-600';
+
+        radioInput.onchange = () => { selectOptionChoiceValue(question.id, option); };
+
+        optionLabelRow.appendChild(radioInput);
+        const spanText = document.createElement('span');
+        spanText.innerText = option;
+        optionLabelRow.appendChild(spanText);
+
+        optionsWrapper.appendChild(optionLabelRow);
+      });
+
+      // Update footer controls
+      document.getElementById('prevBtn').disabled = currentActivePointerIndex === 0;
+      const nextBtn = document.getElementById('nextBtn');
+      if (currentActivePointerIndex === randomizedQuestionsOrder.length - 1) {
+        nextBtn.innerHTML = `<span>Submit Matrix</span><i data-lucide="check" class="w-4 h-4"></i>`;
+        nextBtn.className = "bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-2.5 rounded-xl transition flex items-center space-x-2 text-sm shadow-md shadow-emerald-100";
+        nextBtn.onclick = calculateFinalMetrics;
+      } else {
+        nextBtn.innerHTML = `<span>Next Item</span><i data-lucide="chevron-right" class="w-4 h-4"></i>`;
+        nextBtn.className = "bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-5 py-2.5 rounded-xl transition flex items-center space-x-2 text-sm shadow-md shadow-indigo-100";
+        nextBtn.onclick = () => { navigateQuestion(1); };
+      }
+      lucide.createIcons();
+    }
+
+    // Capture user choice and commit progress to cache local store files
+    function selectOptionChoiceValue(questionId, selectedValue) {
+      userResponsesMatrix[questionId] = selectedValue;
+      updateGlobalProgressTrackers();
+      loadInteractiveGridMap();
+      setTimeout(() => {
+        loadCurrentQuestionIndexItem();
+      }, 180);
+    }
+
+    // Direction navigation controls stepper
+    function navigateQuestion(directionOffset) {
+      const targetIndex = currentActivePointerIndex + directionOffset;
+      if (targetIndex >= 0 && targetIndex < randomizedQuestionsOrder.length) {
+        jumpToQuestionIndex(targetIndex);
+      }
+    }
+
+    // Jump straight to indexed targeted position coordinate values directly
+    function jumpToQuestionIndex(targetIndex) {
+      currentActivePointerIndex = targetIndex;
+      loadCurrentQuestionIndexItem();
+      loadInteractiveGridMap();
+    }
+
+    // Wipes systemic progress cache logs cleanly
+    function clearCurrentProgress() {
+      if (confirm("Are you certain you want to clear your answers? This will reset all your current progress.")) {
+        localStorage.clear();
+        window.location.reload();
+      }
+    }
+
+    // Metrics Calculation Engine Core Framework
+    function calculateFinalMetrics() {
+      const totalAnswered = Object.keys(userResponsesMatrix).length;
+      if (totalAnswered < MASTER_QUESTION_BANK.length) {
+        if (!confirm(`Warning: You have only answered ${totalAnswered} out of ${MASTER_QUESTION_BANK.length} questions. Unanswered questions count as incorrect. Do you want to submit anyway?`)) {
+          return;
+        }
+      }
+
+      let aggregateScore = 0;
+      let metricCategories = {
+        Grammar: { correct: 0, total: 0 },
+        Vocabulary: { correct: 0, total: 0 },
+        Reading: { correct: 0, total: 0 },
+        Tenses: { correct: 0, total: 0 }
+      };
+
+      MASTER_QUESTION_BANK.forEach(item => {
+        if (!metricCategories[item.type]) {
+          metricCategories[item.type] = { correct: 0, total: 0 };
+        }
+        metricCategories[item.type].total++;
+
+        if (userResponsesMatrix[item.id] === item.answer) {
+          metricCategories[item.type].correct++;
+          aggregateScore++;
+        }
+      });
+
+      // Map standard placement metrics to CEFR bands
+      let cefrLevel = "A1";
+      if (aggregateScore >= 48) cefrLevel = "C2";
+      else if (aggregateScore >= 41) cefrLevel = "C1";
+      else if (aggregateScore >= 33) cefrLevel = "B2";
+      else if (aggregateScore >= 22) cefrLevel = "B1";
+      else if (aggregateScore >= 11) cefrLevel = "A2";
+      else cefrLevel = "A1";
+
+      // Push calculation metrics results to analytical dashboard interface view components
+      document.getElementById('cefrPlacementBadge').innerText = cefrLevel;
+
+      // Set dynamic visual card elements stats rendering properties block updates
+      ['Grammar', 'Vocabulary', 'Reading', 'Tenses'].forEach(cat => {
+        const correct = metricCategories[cat].correct;
+        const total = metricCategories[cat].total;
+        const percentage = (correct / total) * 100;
+
+        document.getElementById(`score${cat}`).innerText = `${correct} / ${total}`;
+        document.getElementById(`bar${cat}`).style.width = `${percentage}%`;
+      });
+
+      // Certificate configuration parameters setup text values insertions
+      document.getElementById('certCefrLevel').innerText = cefrLevel;
+      document.getElementById('certScoreMeta').innerText = `Total Composite Score: ${aggregateScore} / ${MASTER_QUESTION_BANK.length} Standard Points`;
+
+      const liveDate = new Date();
+      document.getElementById('certDateStamp').innerText = liveDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+      // Generate review layout framework itemized list cards blocks rendering updates
+      generateItemizedReviewMatrixLayout();
+
+      // Shift browser focus onto performance report view interface panel
+      showView('reportView');
+      document.getElementById('topNavStats').classList.add('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      localStorage.clear();
+    }
+
+    // Build interactive validation review card dashboard panel components rows
+    function generateItemizedReviewMatrixLayout() {
+      const container = document.getElementById('reviewMatrixContainer');
+      container.innerHTML = '';
+
+      MASTER_QUESTION_BANK.forEach((item, idx) => {
+        const userChoice = userResponsesMatrix[item.id] || "[No Option Answered Selected]";
+        const isCorrect = userChoice === item.answer;
+
+        const card = document.createElement('div');
+        card.className = `p-4 rounded-xl border text-sm transition ${isCorrect ? 'bg-emerald-50/40 border-emerald-100' : 'bg-rose-50/40 border-rose-100'}`;
+
+        card.innerHTML = `
+                    <div class="flex items-center justify-between mb-2 gap-2">
+                        <span class="text-[10px] font-mono uppercase font-bold tracking-wider text-slate-400">Item Vector #${idx + 1} - ${item.type}</span>
+                        <span class="flex items-center space-x-1 font-bold ${isCorrect ? 'text-emerald-700' : 'text-rose-700'}">
+                            <i data-lucide="${isCorrect ? 'check-circle-2' : 'x-circle'}" class="w-3.5 h-3.5"></i>
+                            <span class="text-[10px] uppercase tracking-wide">${isCorrect ? 'Correct' : 'Incorrect'}</span>
+                        </span>
+                    </div>
+                    <p class="font-semibold text-slate-900 mb-3 leading-relaxed">${item.text}</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        <div class="p-2.5 rounded-lg bg-white border border-slate-150">
+                            <span class="text-slate-400 block font-bold uppercase tracking-widest text-[9px] mb-0.5">Your Choice Response</span>
+                            <span class="font-mono text-slate-800 font-bold">${userChoice}</span>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-white border border-slate-150">
+                            <span class="text-slate-400 block font-bold uppercase tracking-widest text-[9px] mb-0.5">Valid System Reference Target</span>
+                            <span class="font-mono text-emerald-700 font-bold">${item.answer}</span>
+                        </div>
+                    </div>
+                `;
+        container.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    function restartExam() {
+      if (!confirm('Are you sure you want to restart this quiz?')) {
+        return;
+      }
+      Object.keys(localStorage).forEach(key => {
+        if (key.includes('exam_')) {
+          localStorage.removeItem(key);
+        }
+      });
+      location.reload();
+    }
+
+    function goBackToQuizList() {
+      window.location.href = '/arts/';
+    }
+  </script>
+</body>
+
+</html>

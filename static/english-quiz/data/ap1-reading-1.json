@@ -1,0 +1,395 @@
+{
+  "title": "AP8 Reading Comprehension B1-B2",
+  "questions": [
+    {
+      "id": 1,
+      "type": "READING",
+      "passage": "Many companies now allow employees to work remotely. This arrangement helps workers save commuting time and provides more flexibility. However, some employees miss face-to-face interaction with colleagues.",
+      "text": "What is one benefit of remote work mentioned in the passage?",
+      "options": [
+        "Higher salaries",
+        "More flexibility",
+        "Free meals",
+        "Shorter vacations"
+      ],
+      "answer": "More flexibility"
+    },
+    {
+      "id": 2,
+      "type": "READING",
+      "passage": "Many companies now allow employees to work remotely. This arrangement helps workers save commuting time and provides more flexibility. However, some employees miss face-to-face interaction with colleagues.",
+      "text": "What drawback is mentioned?",
+      "options": [
+        "Less interaction with colleagues",
+        "Longer working hours",
+        "Lower productivity",
+        "More meetings"
+      ],
+      "answer": "Less interaction with colleagues"
+    },
+    {
+      "id": 3,
+      "type": "READING",
+      "passage": "Sarah decided to learn Japanese because she wanted to travel around Japan more comfortably. She practiced every day using language apps and online videos. After a year, she was able to hold basic conversations.",
+      "text": "Why did Sarah start learning Japanese?",
+      "options": [
+        "For a new job",
+        "To teach others",
+        "To travel more comfortably",
+        "To move to China"
+      ],
+      "answer": "To travel more comfortably"
+    },
+    {
+      "id": 4,
+      "type": "READING",
+      "passage": "Sarah decided to learn Japanese because she wanted to travel around Japan more comfortably. She practiced every day using language apps and online videos. After a year, she was able to hold basic conversations.",
+      "text": "How long did it take Sarah to hold basic conversations?",
+      "options": [
+        "Six months",
+        "One month",
+        "One year",
+        "Two years"
+      ],
+      "answer": "One year"
+    },
+    {
+      "id": 5,
+      "type": "READING",
+      "passage": "A local library introduced digital books that members can borrow online. As a result, more people started reading because they could access books anytime and anywhere.",
+      "text": "What did the library introduce?",
+      "options": [
+        "Language classes",
+        "Digital books",
+        "New computers",
+        "Video games"
+      ],
+      "answer": "Digital books"
+    },
+    {
+      "id": 6,
+      "type": "READING",
+      "passage": "A local library introduced digital books that members can borrow online. As a result, more people started reading because they could access books anytime and anywhere.",
+      "text": "Why did more people start reading?",
+      "options": [
+        "Books became cheaper",
+        "Reading was mandatory",
+        "Books were easier to access",
+        "Libraries stayed open longer"
+      ],
+      "answer": "Books were easier to access"
+    },
+    {
+      "id": 7,
+      "type": "READING",
+      "passage": "Tom wanted to improve his health, so he started walking for 30 minutes every morning. After three months, he felt more energetic and lost several kilograms.",
+      "text": "What habit did Tom start?",
+      "options": [
+        "Running",
+        "Cycling",
+        "Walking every morning",
+        "Swimming"
+      ],
+      "answer": "Walking every morning"
+    },
+    {
+      "id": 8,
+      "type": "READING",
+      "passage": "Tom wanted to improve his health, so he started walking for 30 minutes every morning. After three months, he felt more energetic and lost several kilograms.",
+      "text": "What was the result after three months?",
+      "options": [
+        "He became taller",
+        "He felt more energetic",
+        "He changed jobs",
+        "He moved house"
+      ],
+      "answer": "He felt more energetic"
+    },
+    {
+      "id": 9,
+      "type": "READING",
+      "passage": "Online learning has become increasingly popular. Students can study from home and access lessons at their own pace. However, it requires strong self-discipline.",
+      "text": "What is an advantage of online learning?",
+      "options": [
+        "Students can study at their own pace",
+        "No exams are required",
+        "It is always free",
+        "Teachers are unnecessary"
+      ],
+      "answer": "Students can study at their own pace"
+    },
+    {
+      "id": 10,
+      "type": "READING",
+      "passage": "Online learning has become increasingly popular. Students can study from home and access lessons at their own pace. However, it requires strong self-discipline.",
+      "text": "What does online learning require?",
+      "options": [
+        "Expensive equipment",
+        "Strong self-discipline",
+        "Daily travel",
+        "Private tutors"
+      ],
+      "answer": "Strong self-discipline"
+    },
+    {
+      "id": 11,
+      "type": "READING",
+      "passage": "A technology company launched a new smartphone with a longer battery life. Customers appreciated the improvement because they could use their phones throughout the day without frequent charging.",
+      "text": "What improvement was made to the smartphone?",
+      "options": [
+        "Better camera",
+        "Longer battery life",
+        "Larger screen",
+        "Faster internet"
+      ],
+      "answer": "Longer battery life"
+    },
+    {
+      "id": 12,
+      "type": "READING",
+      "passage": "A technology company launched a new smartphone with a longer battery life. Customers appreciated the improvement because they could use their phones throughout the day without frequent charging.",
+      "text": "Why did customers like the new feature?",
+      "options": [
+        "It reduced charging frequency",
+        "It made phones cheaper",
+        "It improved sound quality",
+        "It added new games"
+      ],
+      "answer": "It reduced charging frequency"
+    },
+    {
+      "id": 13,
+      "type": "READING",
+      "passage": "Emma enjoys reading books before bed. She believes that reading helps her relax and sleep better than watching television.",
+      "text": "Why does Emma read before bed?",
+      "options": [
+        "To learn mathematics",
+        "To relax",
+        "To save money",
+        "To exercise"
+      ],
+      "answer": "To relax"
+    },
+    {
+      "id": 14,
+      "type": "READING",
+      "passage": "Emma enjoys reading books before bed. She believes that reading helps her relax and sleep better than watching television.",
+      "text": "What does Emma compare reading to?",
+      "options": [
+        "Working",
+        "Exercising",
+        "Watching television",
+        "Cooking"
+      ],
+      "answer": "Watching television"
+    },
+    {
+      "id": 15,
+      "type": "READING",
+      "passage": "Many cities are investing in public transportation to reduce traffic congestion and pollution. Better transportation systems encourage people to use buses and trains instead of private cars.",
+      "text": "Why are cities investing in public transportation?",
+      "options": [
+        "To increase traffic",
+        "To reduce congestion and pollution",
+        "To raise taxes",
+        "To build airports"
+      ],
+      "answer": "To reduce congestion and pollution"
+    },
+    {
+      "id": 16,
+      "type": "READING",
+      "passage": "Many cities are investing in public transportation to reduce traffic congestion and pollution. Better transportation systems encourage people to use buses and trains instead of private cars.",
+      "text": "What do improved transportation systems encourage?",
+      "options": [
+        "Buying more cars",
+        "Walking less",
+        "Using buses and trains",
+        "Working from home"
+      ],
+      "answer": "Using buses and trains"
+    },
+    {
+      "id": 17,
+      "type": "READING",
+      "passage": "James recently started a small online business selling handmade accessories. Through social media marketing, he attracted customers from different cities.",
+      "text": "What does James sell?",
+      "options": [
+        "Books",
+        "Handmade accessories",
+        "Electronics",
+        "Furniture"
+      ],
+      "answer": "Handmade accessories"
+    },
+    {
+      "id": 18,
+      "type": "READING",
+      "passage": "James recently started a small online business selling handmade accessories. Through social media marketing, he attracted customers from different cities.",
+      "text": "How did James attract customers?",
+      "options": [
+        "Television ads",
+        "Social media marketing",
+        "Radio programs",
+        "Newspapers"
+      ],
+      "answer": "Social media marketing"
+    },
+    {
+      "id": 19,
+      "type": "READING",
+      "passage": "Scientists are studying renewable energy sources such as solar and wind power. These sources can help reduce dependence on fossil fuels.",
+      "text": "What energy sources are mentioned?",
+      "options": [
+        "Coal and oil",
+        "Solar and wind",
+        "Gas and coal",
+        "Nuclear and coal"
+      ],
+      "answer": "Solar and wind"
+    },
+    {
+      "id": 20,
+      "type": "READING",
+      "passage": "Scientists are studying renewable energy sources such as solar and wind power. These sources can help reduce dependence on fossil fuels.",
+      "text": "What is a benefit of renewable energy?",
+      "options": [
+        "Higher pollution",
+        "Reduced dependence on fossil fuels",
+        "More traffic",
+        "Less electricity"
+      ],
+      "answer": "Reduced dependence on fossil fuels"
+    },
+    {
+      "id": 21,
+      "type": "READING",
+      "passage": "Lisa joined a photography club to improve her skills. By sharing ideas with other members, she learned new techniques and became more confident.",
+      "text": "Why did Lisa join the club?",
+      "options": [
+        "To make money",
+        "To improve her skills",
+        "To travel abroad",
+        "To find a job"
+      ],
+      "answer": "To improve her skills"
+    },
+    {
+      "id": 22,
+      "type": "READING",
+      "passage": "Lisa joined a photography club to improve her skills. By sharing ideas with other members, she learned new techniques and became more confident.",
+      "text": "What helped Lisa become more confident?",
+      "options": [
+        "Watching movies",
+        "Sharing ideas with members",
+        "Buying a camera",
+        "Reading newspapers"
+      ],
+      "answer": "Sharing ideas with members"
+    },
+    {
+      "id": 23,
+      "type": "READING",
+      "passage": "A restaurant reduced food waste by donating unsold meals to local charities. This initiative benefited both the community and the environment.",
+      "text": "What did the restaurant do with unsold meals?",
+      "options": [
+        "Sold them cheaply",
+        "Stored them",
+        "Donated them to charities",
+        "Exported them"
+      ],
+      "answer": "Donated them to charities"
+    },
+    {
+      "id": 24,
+      "type": "READING",
+      "passage": "A restaurant reduced food waste by donating unsold meals to local charities. This initiative benefited both the community and the environment.",
+      "text": "What was the result of this initiative?",
+      "options": [
+        "It benefited the community and environment",
+        "It increased waste",
+        "It reduced customers",
+        "It raised prices"
+      ],
+      "answer": "It benefited the community and environment"
+    },
+    {
+      "id": 25,
+      "type": "READING",
+      "passage": "Many employees prefer flexible working hours because they can better balance their professional and personal lives.",
+      "text": "Why do employees prefer flexible working hours?",
+      "options": [
+        "Higher salaries",
+        "More holidays",
+        "Better work-life balance",
+        "Less responsibility"
+      ],
+      "answer": "Better work-life balance"
+    },
+    {
+      "id": 26,
+      "type": "READING",
+      "passage": "Many employees prefer flexible working hours because they can better balance their professional and personal lives.",
+      "text": "What can employees balance more easily?",
+      "options": [
+        "Travel and education",
+        "Professional and personal lives",
+        "Sports and hobbies",
+        "Friends and family"
+      ],
+      "answer": "Professional and personal lives"
+    },
+    {
+      "id": 27,
+      "type": "READING",
+      "passage": "A university introduced free career workshops to help students prepare for job interviews and improve their communication skills.",
+      "text": "Why were the workshops introduced?",
+      "options": [
+        "To teach sports",
+        "To prepare students for jobs",
+        "To reduce tuition fees",
+        "To improve grades"
+      ],
+      "answer": "To prepare students for jobs"
+    },
+    {
+      "id": 28,
+      "type": "READING",
+      "passage": "A university introduced free career workshops to help students prepare for job interviews and improve their communication skills.",
+      "text": "What skills were students expected to improve?",
+      "options": [
+        "Driving skills",
+        "Cooking skills",
+        "Communication skills",
+        "Art skills"
+      ],
+      "answer": "Communication skills"
+    },
+    {
+      "id": 29,
+      "type": "READING",
+      "passage": "David saved a small amount of money every month. After several years, he had enough savings to start his own business.",
+      "text": "How did David build his savings?",
+      "options": [
+        "By winning a lottery",
+        "By saving money every month",
+        "By borrowing money",
+        "By selling his house"
+      ],
+      "answer": "By saving money every month"
+    },
+    {
+      "id": 30,
+      "type": "READING",
+      "passage": "David saved a small amount of money every month. After several years, he had enough savings to start his own business.",
+      "text": "What did David eventually do?",
+      "options": [
+        "Bought a car",
+        "Moved overseas",
+        "Started his own business",
+        "Retired"
+      ],
+      "answer": "Started his own business"
+    }
+  ]
+}

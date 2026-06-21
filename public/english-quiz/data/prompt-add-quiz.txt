@@ -1,0 +1,38 @@
+{
+  "title": "AP1 Present Tense",
+  "questions": [
+    {
+      "id": 1,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "She ____ to school every day.",
+      "options": [
+        "go",
+        "goes",
+        "going",
+        "gone"
+      ],
+      "answer": "goes"
+    },
+
+    {
+      "id": 50,
+      "type": "GRAMMAR PRESENT TENSE",
+      "text": "She ____ her grandparents every month.",
+      "options": [
+        "call",
+        "calls",
+        "calling",
+        "called"
+      ],
+      "answer": "calls"
+    }
+  ]
+}
+
+
+tolong buatkan 50 soal dalam json untuk level b1-b2 english, tentang tense yang cakupannya sebagai berikut:
+Simple Present, Present Continuous, Present Perfect, dan Present Perfect Continuous.
+
+tolong:
+
+okeh good, buatkan lagi 50 soal bang,
