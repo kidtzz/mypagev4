@@ -1,0 +1,605 @@
+{
+  "title": "AP7 Vocabulary Assessment B1-B2",
+  "questions": [
+    {
+      "id": 1,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'essential'.",
+      "options": [
+        "optional",
+        "necessary",
+        "useless",
+        "minor"
+      ],
+      "answer": "necessary"
+    },
+    {
+      "id": 2,
+      "type": "ANTONYM",
+      "text": "What is the opposite of 'vague'?",
+      "options": [
+        "clear",
+        "unclear",
+        "confusing",
+        "distant"
+      ],
+      "answer": "clear"
+    },
+    {
+      "id": 3,
+      "type": "PHRASAL VERB",
+      "text": "The meeting was ____ until next week because the manager was sick.",
+      "options": [
+        "put off",
+        "called off",
+        "brought up",
+        "taken over"
+      ],
+      "answer": "put off"
+    },
+    {
+      "id": 4,
+      "type": "IDIOM",
+      "text": "Passing the exam was a ____. It was much easier than I expected.",
+      "options": [
+        "piece of cake",
+        "blessing in disguise",
+        "bitter pill",
+        "hot potato"
+      ],
+      "answer": "piece of cake"
+    },
+    {
+      "id": 5,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "The company decided to ____ more staff to handle the new project.",
+      "options": [
+        "hire",
+        "fire",
+        "dismiss",
+        "reject"
+      ],
+      "answer": "hire"
+    },
+    {
+      "id": 6,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'accurate'.",
+      "options": [
+        "correct",
+        "faulty",
+        "approximate",
+        "biased"
+      ],
+      "answer": "correct"
+    },
+    {
+      "id": 7,
+      "type": "ANTONYM",
+      "text": "What is the opposite of 'generous'?",
+      "options": [
+        "mean",
+        "kind",
+        "wealthy",
+        "thoughtful"
+      ],
+      "answer": "mean"
+    },
+    {
+      "id": 8,
+      "type": "PHRASAL VERB",
+      "text": "I need to ____ the main points of the lecture before the test.",
+      "options": [
+        "go over",
+        "go through with",
+        "give up",
+        "get away with"
+      ],
+      "answer": "go over"
+    },
+    {
+      "id": 9,
+      "type": "IDIOM",
+      "text": "I'm feeling a bit ____ today, so I think I will stay in bed.",
+      "options": [
+        "under the weather",
+        "over the moon",
+        "on cloud nine",
+        "in the loop"
+      ],
+      "answer": "under the weather"
+    },
+    {
+      "id": 10,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "She has a very ____ attitude; she always looks on the bright side of things.",
+      "options": [
+        "optimistic",
+        "pessimistic",
+        "indifferent",
+        "cautious"
+      ],
+      "answer": "optimistic"
+    },
+    {
+      "id": 11,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'abundant'.",
+      "options": [
+        "plentiful",
+        "scarce",
+        "limited",
+        "valuable"
+      ],
+      "answer": "plentiful"
+    },
+    {
+      "id": 12,
+      "type": "ANTONYM",
+      "text": "What is the opposite of 'permanent'?",
+      "options": [
+        "temporary",
+        "lasting",
+        "eternal",
+        "fixed"
+      ],
+      "answer": "temporary"
+    },
+    {
+      "id": 13,
+      "type": "PHRASAL VERB",
+      "text": "They had to ____ the football match due to heavy rain.",
+      "options": [
+        "call off",
+        "carry on",
+        "hold on",
+        "turn down"
+      ],
+      "answer": "call off"
+    },
+    {
+      "id": 14,
+      "type": "IDIOM",
+      "text": "Don't worry about it. It's no use crying over ____.",
+      "options": [
+        "spilt milk",
+        "broken glass",
+        "lost time",
+        "burnt toast"
+      ],
+      "answer": "spilt milk"
+    },
+    {
+      "id": 15,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "The new government policy aims to reduce ____ and create more jobs.",
+      "options": [
+        "unemployment",
+        "employment",
+        "investment",
+        "production"
+      ],
+      "answer": "unemployment"
+    },
+    {
+      "id": 16,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'reluctant'.",
+      "options": [
+        "unwilling",
+        "eager",
+        "ready",
+        "excited"
+      ],
+      "answer": "unwilling"
+    },
+    {
+      "id": 17,
+      "type": "ANTONYM",
+      "text": "What is the opposite of 'compulsory'?",
+      "options": [
+        "voluntary",
+        "mandatory",
+        "required",
+        "essential"
+      ],
+      "answer": "voluntary"
+    },
+    {
+      "id": 18,
+      "type": "PHRASAL VERB",
+      "text": "Can you ____ the volume? I can't hear the news properly.",
+      "options": [
+        "turn up",
+        "turn down",
+        "turn into",
+        "turn off"
+      ],
+      "answer": "turn up"
+    },
+    {
+      "id": 19,
+      "type": "IDIOM",
+      "text": "We should ____ and start studying for the finals; time is running out.",
+      "options": [
+        "get down to business",
+        "bark up the wrong tree",
+        "beat around the bush",
+        "bite the bullet"
+      ],
+      "answer": "get down to business"
+    },
+    {
+      "id": 20,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "The internet has had a profound ____ on how we communicate with each other.",
+      "options": [
+        "impact",
+        "source",
+        "reason",
+        "purpose"
+      ],
+      "answer": "impact"
+    },
+    {
+      "id": 21,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'obvious'.",
+      "options": [
+        "clear",
+        "hidden",
+        "complex",
+        "secret"
+      ],
+      "answer": "clear"
+    },
+    {
+      "id": 22,
+      "type": "ANTONYM",
+      "text": "What is the opposite of 'arrogant'?",
+      "options": [
+        "humble",
+        "proud",
+        "confident",
+        "selfish"
+      ],
+      "answer": "humble"
+    },
+    {
+      "id": 23,
+      "type": "PHRASAL VERB",
+      "text": "She managed to ____ her fears and gave an excellent presentation.",
+      "options": [
+        "get over",
+        "get along",
+        "get by",
+        "get away"
+      ],
+      "answer": "get over"
+    },
+    {
+      "id": 24,
+      "type": "IDIOM",
+      "text": "I don't really see ____ with my brother on political issues.",
+      "options": [
+        "eye to eye",
+        "face to face",
+        "heart to heart",
+        "mind to mind"
+      ],
+      "answer": "eye to eye"
+    },
+    {
+      "id": 25,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "Regular exercise is highly ____ for both physical and mental health.",
+      "options": [
+        "beneficial",
+        "harmful",
+        "damaging",
+        "unnecessary"
+      ],
+      "answer": "beneficial"
+    },
+    {
+      "id": 26,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'baffle'.",
+      "options": [
+        "confuse",
+        "clarify",
+        "explain",
+        "support"
+      ],
+      "answer": "confuse"
+    },
+    {
+      "id": 27,
+      "type": "ANTONYM",
+      "text": "What is the opposite of 'amateur'?",
+      "options": [
+        "professional",
+        "beginner",
+        "novice",
+        "learner"
+      ],
+      "answer": "professional"
+    },
+    {
+      "id": 28,
+      "type": "PHRASAL VERB",
+      "text": "The dynamic duo decided to ____ a new business venture together.",
+      "options": [
+        "set up",
+        "set off",
+        "set back",
+        "set in"
+      ],
+      "answer": "set up"
+    },
+    {
+      "id": 29,
+      "type": "IDIOM",
+      "text": "Stop ____ and just tell me exactly what happened!",
+      "options": [
+        "beating around the bush",
+        "hitting the nail on the head",
+        "cutting corners",
+        "breaking the ice"
+      ],
+      "answer": "beating around the bush"
+    },
+    {
+      "id": 30,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "The dynamic tech industry requires workers to constantly adapt to ____ changes.",
+      "options": [
+        "rapid",
+        "gradual",
+        "sluggish",
+        "insignificant"
+      ],
+      "answer": "rapid"
+    },
+    {
+      "id": 31,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'genuine'.",
+      "options": [
+        "authentic",
+        "fake",
+        "artificial",
+        "imitation"
+      ],
+      "answer": "authentic"
+    },
+    {
+      "id": 32,
+      "type": "ANTONYM",
+      "text": "What is the opposite of 'lenient'?",
+      "options": [
+        "strict",
+        "mild",
+        "tolerant",
+        "gentle"
+      ],
+      "answer": "strict"
+    },
+    {
+      "id": 33,
+      "type": "PHRASAL VERB",
+      "text": "Don't make up excuses; you can't ____ lying to us.",
+      "options": [
+        "get away with",
+        "get along with",
+        "get down to",
+        "get through to"
+      ],
+      "answer": "get away with"
+    },
+    {
+      "id": 34,
+      "type": "IDIOM",
+      "text": "We only see our distant relatives ____; they rarely visit us.",
+      "options": [
+        "once in a blue moon",
+        "at the drop of a hat",
+        "by the skin of our teeth",
+        "against the clock"
+      ],
+      "answer": "once in a blue moon"
+    },
+    {
+      "id": 35,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "Due to inflation, the ____ of living has significantly increased this year.",
+      "options": [
+        "cost",
+        "value",
+        "price",
+        "expense"
+      ],
+      "answer": "cost"
+    },
+    {
+      "id": 36,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'diligent'.",
+      "options": [
+        "hard-working",
+        "lazy",
+        "careless",
+        "indifferent"
+      ],
+      "answer": "hard-working"
+    },
+    {
+      "id": 37,
+      "type": "ANTONYM",
+      "text": "What is the opposite of 'scarcity'?",
+      "options": [
+        "abundance",
+        "shortage",
+        "lack",
+        "poverty"
+      ],
+      "answer": "abundance"
+    },
+    {
+      "id": 38,
+      "type": "PHRASAL VERB",
+      "text": "She had to ____ the invitation because she already had other plans.",
+      "options": [
+        "turn down",
+        "turn away",
+        "turn up",
+        "turn into"
+      ],
+      "answer": "turn down"
+    },
+    {
+      "id": 39,
+      "type": "IDIOM",
+      "text": "I have to ____ tonight because the big exam is tomorrow morning.",
+      "options": [
+        "hit the books",
+        "hit the sack",
+        "break a leg",
+        "bite the bullet"
+      ],
+      "answer": "hit the books"
+    },
+    {
+      "id": 40,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "Smoke from the factories will seriously ____ the air quality of the city.",
+      "options": [
+        "contaminate",
+        "purify",
+        "enhance",
+        "improve"
+      ],
+      "answer": "contaminate"
+    },
+    {
+      "id": 41,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'prohibit'.",
+      "options": [
+        "ban",
+        "allow",
+        "permit",
+        "encourage"
+      ],
+      "answer": "ban"
+    },
+    {
+      "id": 42,
+      "type": "ANTONYM",
+      "text": "What is the opposite of 'expand'?",
+      "options": [
+        "shrink",
+        "grow",
+        "increase",
+        "extend"
+      ],
+      "answer": "shrink"
+    },
+    {
+      "id": 43,
+      "type": "PHRASAL VERB",
+      "text": "He always promises to help, but he usually ____ at the last minute.",
+      "options": [
+        "backs out",
+        "backs up",
+        "breaks down",
+        "brings up"
+      ],
+      "answer": "backs out"
+    },
+    {
+      "id": 44,
+      "type": "IDIOM",
+      "text": "The police caught the thief ____ while he was stealing the car.",
+      "options": [
+        "red-handed",
+        "blue-blooded",
+        "green-thumbed",
+        "black-listed"
+      ],
+      "answer": "red-handed"
+    },
+    {
+      "id": 45,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "The detective looked for clues to solve the ____ disappearance of the artist.",
+      "options": [
+        "mysterious",
+        "predictable",
+        "ordinary",
+        "apparent"
+      ],
+      "answer": "mysterious"
+    },
+    {
+      "id": 46,
+      "type": "SYNONYM",
+      "text": "Choose the word closest in meaning to 'hazard'.",
+      "options": [
+        "danger",
+        "safety",
+        "protection",
+        "benefit"
+      ],
+      "answer": "danger"
+    },
+    {
+      "id": 47,
+      "type": "ANTONYM",
+      "text": "What is the opposite of 'hostile'?",
+      "options": [
+        "friendly",
+        "aggressive",
+        "bitter",
+        "unfavorable"
+      ],
+      "answer": "friendly"
+    },
+    {
+      "id": 48,
+      "type": "PHRASAL VERB",
+      "text": "We ran out of gas, so we had to ____ pushing the car to the station.",
+      "options": [
+        "resort to",
+        "rely on",
+        "result from",
+        "run into"
+      ],
+      "answer": "resort to"
+    },
+    {
+      "id": 49,
+      "type": "IDIOM",
+      "text": "Good luck with your performance tonight! Go out there and ____!",
+      "options": [
+        "break a leg",
+        "spill the beans",
+        "bite the dust",
+        "burn bridges"
+      ],
+      "answer": "break a leg"
+    },
+    {
+      "id": 50,
+      "type": "VOCABULARY IN CONTEXT",
+      "text": "Learning English can create many career ____.",
+      "options": [
+        "opportunities",
+        "failures",
+        "complaints",
+        "obstacles"
+      ],
+      "answer": "opportunities"
+    }
+  ]
+}

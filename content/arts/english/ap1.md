@@ -31,7 +31,8 @@ Perkaya kosakata, phrasal verbs, dan idiom umum.
 * **Vocabulary Assessment**
     * *Deskripsi:* Latihan sinonim, antonim, dan kosakata standar CEFR B1-B2.
     * Link Soal:
-        * [AP3 - Vocabulary (Quiz 1)](/english-quiz/quiz-theme1-tense.html?quiz=ap1-vocabulary-1)
+        * [AP1 - Vocabulary (Quiz 1)](/english-quiz/quiz-theme1-tense.html?quiz=ap1-vocabulary-1)
+        * [AP1 - Vocabulary (Quiz 2)](/english-quiz/quiz-theme1-tense.html?quiz=ap1-vocabulary-2)
 
 ### Reading Comprehension
 Latihan membaca cepat dan memahami konteks artikel.

@@ -30,7 +30,11 @@
 }
 
 
-tolong buatkan 50 soal dalam json untuk level b1-b2 english, tentang tense yang cakupannya sebagai berikut:
+tolong buatkan 50 soal dalam json untuk level b1-b2 english tentang,
+
+ tense 
+
+yang cakupannya sebagai berikut:
 Simple Present, Present Continuous, Present Perfect, dan Present Perfect Continuous.
 
 tolong:
