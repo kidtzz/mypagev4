@@ -1,0 +1,655 @@
+{
+  "title": "AP8 Reading Comprehension B1-B2",
+  "questions": [
+    {
+      "id": 1,
+      "type": "READING",
+      "passage": "Many companies now allow employees to work remotely. This arrangement helps workers save commuting time and provides more flexibility. However, some employees miss face-to-face interaction with colleagues.",
+      "text": "What is one benefit of remote work mentioned in the passage?",
+      "options": [
+        "Higher salaries",
+        "More flexibility",
+        "Free meals",
+        "Shorter vacations"
+      ],
+      "answer": "More flexibility"
+    },
+    {
+      "id": 2,
+      "type": "READING",
+      "passage": "Electric vehicles (EVs) are becoming increasingly popular as battery technology improves. They offer a cleaner alternative to traditional gasoline-powered cars, helping to reduce urban air pollution. However, the availability of charging stations remains a concern for long-distance travelers.",
+      "text": "According to the passage, what is a current challenge for EV drivers?",
+      "options": [
+        "High cost of electricity",
+        "Poor battery durability",
+        "Lack of charging infrastructure for long trips",
+        "Increased urban pollution"
+      ],
+      "answer": "Lack of charging infrastructure for long trips"
+    },
+    {
+      "id": 3,
+      "type": "READING",
+      "passage": "The Mediterranean diet, which emphasizes fruits, vegetables, whole grains, and olive oil, has been linked to numerous health benefits. Studies suggest it can lower the risk of heart disease and improve cognitive function in older adults.",
+      "text": "What is the main focus of the Mediterranean diet based on the text?",
+      "options": [
+        "High protein intake from red meat",
+        "Plant-based foods and healthy fats",
+        "Avoiding grains entirely",
+        "Fast-food consumption"
+      ],
+      "answer": "Plant-based foods and healthy fats"
+    },
+    {
+      "id": 4,
+      "type": "READING",
+      "passage": "Artificial Intelligence is transforming the healthcare industry by helping doctors diagnose diseases more accurately. AI algorithms can analyze medical images, such as X-rays and MRIs, much faster than humans, catching subtle anomalies that might be missed.",
+      "text": "How does AI primarily assist doctors according to the passage?",
+      "options": [
+        "By performing surgeries independently",
+        "By replacing nurses in patient care",
+        "By analyzing medical images quickly and accurately",
+        "By reducing the cost of medicine"
+      ],
+      "answer": "By analyzing medical images quickly and accurately"
+    },
+    {
+      "id": 5,
+      "type": "READING",
+      "passage": "Urban green spaces, such as public parks and community gardens, play a vital role in combatting the 'heat island effect' in large cities. The vegetation absorbs heat and provides shade, making surrounding areas noticeably cooler.",
+      "text": "What is the primary environmental purpose of urban green spaces mentioned?",
+      "options": [
+        "To increase property taxes",
+        "To create space for new buildings",
+        "To cool down cities by absorbing heat",
+        "To encourage traffic congestion"
+      ],
+      "answer": "To cool down cities by absorbing heat"
+    },
+    {
+      "id": 6,
+      "type": "READING",
+      "passage": "While regular exercise is essential for physical health, getting enough sleep is equally important. During deep sleep, the body repairs tissues and consolidates memories. Chronic sleep deprivation can weaken the immune system.",
+      "text": "What major bodily function occurs during deep sleep?",
+      "options": [
+        "Tissue repair and memory consolidation",
+        "Immediate weight loss",
+        "Digestion of heavy meals",
+        "An increase in stress levels"
+      ],
+      "answer": "Tissue repair and memory consolidation"
+    },
+    {
+      "id": 7,
+      "type": "READING",
+      "passage": "The rise of e-commerce has severely impacted traditional brick-and-mortar retail stores. Consumers prefer shopping online due to convenience, lower prices, and home delivery options, forcing many physical shops to close.",
+      "text": "Why do consumers prefer online shopping over physical stores?",
+      "options": [
+        "It takes longer to receive goods",
+        "Convenience, better prices, and delivery",
+        "It supports local small businesses",
+        "The return policies are always strict"
+      ],
+      "answer": "Convenience, better prices, and delivery"
+    },
+    {
+      "id": 8,
+      "type": "READING",
+      "passage": "Plastic pollution in oceans poses a severe threat to marine wildlife. Turtles and seabirds often mistake plastic debris for food, leading to internal injuries and starvation. Microplastics are now found in the smallest marine organisms.",
+      "text": "What is a major consequence of ocean plastic pollution?",
+      "options": [
+        "Animals getting healthier",
+        "Marine life mistaking trash for food",
+        "Cleaner beaches for tourists",
+        "An increase in fish populations"
+      ],
+      "answer": "Marine life mistaking trash for food"
+    },
+    {
+      "id": 9,
+      "type": "READING",
+      "passage": "Learning a second language improves brain plasticity and can delay the onset of dementia in older age. It forces the brain to switch between different structures and vocabularies, sharpening problem-solving skills.",
+      "text": "What cognitive benefit of bilingualism is mentioned?",
+      "options": [
+        "Instant photographic memory",
+        "Slowing down the aging process of the skin",
+        "Sharpening problem-solving and delaying dementia",
+        "Eliminating the need to study other subjects"
+      ],
+      "answer": "Sharpening problem-solving and delaying dementia"
+    },
+    {
+      "id": 10,
+      "type": "READING",
+      "passage": "Renewable energy sources, like solar and wind power, are key to reducing global carbon emissions. Unlike fossil fuels, they do not emit greenhouse gases during operation, though building the infrastructure still carries an initial environmental cost.",
+      "text": "What makes renewable energy better than fossil fuels during operation?",
+      "options": [
+        "It produces zero greenhouse gas emissions",
+        "It requires absolutely no infrastructure",
+        "It is completely free to install",
+        "It replaces the need for electricity"
+      ],
+      "answer": "It produces zero greenhouse gas emissions"
+    },
+    {
+      "id": 11,
+      "type": "READING",
+      "passage": "The practice of mindfulness meditation involves focusing on the present moment without judgment. Research shows it can reduce cortisol levels, the hormone responsible for stress, leading to better emotional regulation.",
+      "text": "How does mindfulness meditation help reduce stress according to the text?",
+      "options": [
+        "By increasing heart rate",
+        "By lowering cortisol levels",
+        "By forcing people to forget their past",
+        "By making individuals work faster"
+      ],
+      "answer": "By lowering cortisol levels"
+    },
+    {
+      "id": 12,
+      "type": "READING",
+      "passage": "Microloans have empowered millions of female entrepreneurs in developing countries. By receiving small amounts of capital without traditional collateral, these women can start small businesses, improving their family's living standard.",
+      "text": "Who is the primary beneficiary of microloans in the context provided?",
+      "options": [
+        "Large multinational corporations",
+        "Female entrepreneurs in developing nations",
+        "Commercial banks in wealthy countries",
+        "Government manufacturing factories"
+      ],
+      "answer": "Female entrepreneurs in developing nations"
+    },
+    {
+      "id": 13,
+      "type": "READING",
+      "passage": "Coral reefs are often called the rainforests of the sea because of their vast biodiversity. Although they cover less than one percent of the ocean floor, they support more than one-quarter of all marine life.",
+      "text": "Why are coral reefs compared to rainforests?",
+      "options": [
+        "Because they grow tall like trees",
+        "Because they receive high amounts of rainfall",
+        "Because of their immense biodiversity",
+        "Because they are located in deep trenches"
+      ],
+      "answer": "Because of their immense biodiversity"
+    },
+    {
+      "id": 14,
+      "type": "READING",
+      "passage": "Public transportation systems are essential for sustainable urban growth. Expanding subway lines and bus networks reduces individual car usage, which directly decreases traffic congestion and lowers overall carbon footprints.",
+      "text": "What is a direct result of expanding public transportation systems?",
+      "options": [
+        "Higher individual car usage",
+        "Increased urban sprawl",
+        "Reduced traffic congestion and carbon footprints",
+        "Cheaper automobile manufacturing"
+      ],
+      "answer": "Reduced traffic congestion and carbon footprints"
+    },
+    {
+      "id": 15,
+      "type": "READING",
+      "passage": "Coffee is one of the most heavily traded commodities in the world. While moderate consumption provides antioxidants and boosts alertness, excessive intake can lead to jitteriness, insomnia, and an elevated heart rate.",
+      "text": "What is a potential negative side effect of drinking too much coffee?",
+      "options": [
+        "Improved concentration",
+        "Insomnia and elevated heart rate",
+        "Higher antioxidant absorption",
+        "Increased muscle strength"
+      ],
+      "answer": "Insomnia and elevated heart rate"
+    },
+    {
+      "id": 16,
+      "type": "READING",
+      "passage": "The transition to a cashless society is accelerating due to mobile payment apps. While digital transactions offer unparalleled speed and convenience, they also raise concerns regarding data privacy and cybersecurity.",
+      "text": "What main risk is associated with a cashless society in this text?",
+      "options": [
+        "Physical wallet theft",
+        "Data privacy and cybersecurity issues",
+        "Slower checkout times",
+        "Higher printing costs for money"
+      ],
+      "answer": "Data privacy and cybersecurity issues"
+    },
+    {
+      "id": 17,
+      "type": "READING",
+      "passage": "Volcanoes play a dual role in Earth's ecosystem. While eruptions can cause immediate devastation to nearby communities, volcanic ash eventually enriches the soil with minerals, making the surrounding land highly fertile for farming.",
+      "text": "What long-term benefit do volcanic eruptions provide?",
+      "options": [
+        "Immediate evacuation routes",
+        "Enriched and highly fertile agricultural soil",
+        "Lower global temperatures",
+        "Destruction of nearby communities"
+      ],
+      "answer": "Enriched and highly fertile agricultural soil"
+    },
+    {
+      "id": 18,
+      "type": "READING",
+      "passage": "The concept of 'fast fashion' relies on producing cheap clothing rapidly to match current trends. However, this model results in massive environmental waste, as garments are often discarded after only a few wears.",
+      "text": "What is the primary environmental problem with fast fashion?",
+      "options": [
+        "The clothes are too expensive to buy",
+        "It creates massive textile waste from discarded garments",
+        "It takes too long for trends to change",
+        "The fabrics are too durable"
+      ],
+      "answer": "It creates massive textile waste from discarded garments"
+    },
+    {
+      "id": 19,
+      "type": "READING",
+      "passage": "Many universities are offering Massive Open Online Courses (MOOCs) for free. These platforms democratize education, allowing anyone with an internet connection to learn from top professors, though completion rates remain quite low.",
+      "text": "What is an advantage of MOOCs according to the passage?",
+      "options": [
+        "They have exceptionally high graduation rates",
+        "They allow access to high-quality education for free",
+        "They require students to attend physical classes",
+        "They are only available to top university students"
+      ],
+      "answer": "They allow access to high-quality education for free"
+    },
+    {
+      "id": 20,
+      "type": "READING",
+      "passage": "Deep-sea exploration is notoriously difficult due to extreme hydrostatic pressure and total darkness. Scientists must rely on specialized Remotely Operated Vehicles (ROVs) to study unique ecosystems surrounding hydrothermal vents.",
+      "text": "Why do scientists use ROVs for deep-sea exploration?",
+      "options": [
+        "Because ROVs are cheap to manufacture",
+        "Because humans cannot survive the extreme pressure and darkness",
+        "Because hydrothermal vents are close to the surface",
+        "Because marine life avoids organic materials"
+      ],
+      "answer": "Because humans cannot survive the extreme pressure and darkness"
+    },
+    {
+      "id": 21,
+      "type": "READING",
+      "passage": "Honeybees are essential pollinators for agriculture; a third of the food we eat depends on them. Unfortunately, pesticide misuse and habitat loss have caused bee populations to decline drastically worldwide.",
+      "text": "What is causing the decline in honeybee populations?",
+      "options": [
+        "An increase in natural food sources",
+        "Pesticide misuse and habitat loss",
+        "Overpopulation of rival insect species",
+        "Changes in crop pollination techniques"
+      ],
+      "answer": "Pesticide misuse and habitat loss"
+    },
+    {
+      "id": 22,
+      "type": "READING",
+      "passage": "An executive's decision-making ability is often tested during a corporate crisis. Leaders who communicate transparently with the public and stakeholders tend to preserve their brand's reputation better than those who conceal problems.",
+      "text": "According to the passage, how should corporate leaders handle a crisis?",
+      "options": [
+        "By ignoring public inquiries",
+        "By communicating transparently",
+        "By hiding errors from stakeholders",
+        "By shifting blame to lower employees"
+      ],
+      "answer": "By communicating transparently"
+    },
+    {
+      "id": 23,
+      "type": "READING",
+      "passage": "Genetically Modified Organisms (GMOs) can be engineered to resist pests, reducing the need for chemical chemical sprays. Critics, however, voice concerns over the long-term ecological impacts and potential loss of native seed varieties.",
+      "text": "What is one argument against the use of GMOs mentioned in the text?",
+      "options": [
+        "They require more chemical pesticides",
+        "They increase the cost of farming drastically",
+        "They may cause long-term ecological impacts",
+        "They are completely unable to resist pests"
+      ],
+      "answer": "They may cause long-term ecological impacts"
+    },
+    {
+      "id": 24,
+      "type": "READING",
+      "passage": "The invention of the printing press in the 15th century revolutionized society. It allowed information to be copied quickly and cheaply, leading to a massive increase in literacy rates across Europe.",
+      "text": "What was a direct historical impact of the printing press?",
+      "options": [
+        "A decline in books production",
+        "A sharp increase in literacy rates",
+        "The immediate discovery of new lands",
+        "An increase in the cost of education"
+      ],
+      "answer": "A sharp increase in literacy rates"
+    },
+    {
+      "id": 25,
+      "type": "READING",
+      "passage": "Aerobic exercise, such as running or swimming, strengthens the heart muscle and improves lung capacity. Over time, consistent cardio training reduces resting heart rate and lowers blood pressure.",
+      "text": "What physiological change occurs over time due to consistent aerobic exercise?",
+      "options": [
+        "Increased resting heart rate",
+        "Reduced lung capacity",
+        "Lowered blood pressure",
+        "Weakened heart muscles"
+      ],
+      "answer": "Lowered blood pressure"
+    },
+    {
+      "id": 26,
+      "type": "READING",
+      "passage": "Tourism is a major source of income for many developing nations, but it can be a double-edged sword. Unregulated tourism leads to overcrowding, cultural degradation, and severe strain on local infrastructure.",
+      "text": "Why is tourism described as a 'double-edged sword'?",
+      "options": [
+        "It only causes economic harm",
+        "It brings financial benefits but causes environmental and cultural issues",
+        "It requires tourists to carry security weapons",
+        "It is completely managed by foreign governments"
+      ],
+      "answer": "It brings financial benefits but causes environmental and cultural issues"
+    },
+    {
+      "id": 27,
+      "type": "READING",
+      "passage": "Passive income is money earned with minimal active effort, such as rental income or stock dividends. While it sounds appealing, building reliable passive income streams usually requires significant upfront time or capital.",
+      "text": "What is generally required before one can earn passive income?",
+      "options": [
+        "Constant daily monitoring and heavy labor",
+        "A degree in real estate management",
+        "Significant upfront time or capital investment",
+        "A guarantee of zero financial risk"
+      ],
+      "answer": "Significant upfront time or capital investment"
+    },
+    {
+      "id": 28,
+      "type": "READING",
+      "passage": "Glaciers are melting at an unprecedented rate due to rising global temperatures. This phenomenon contributes directly to global sea-level rise, threatening coastal cities and low-lying islands with frequent flooding.",
+      "text": "What is a direct threat caused by melting glaciers?",
+      "options": [
+        "Lower ocean temperatures",
+        "Flooding in coastal cities and low-lying islands",
+        "A decrease in rainfall worldwide",
+        "An expansion of dry land"
+      ],
+      "answer": "Flooding in coastal cities and low-lying islands"
+    },
+    {
+      "id": 29,
+      "type": "READING",
+      "passage": "Introverts tend to recharge their energy by spending time alone or in quiet environments. In contrast, extraverts thrive in highly social situations, gaining energy from interacting with large groups of people.",
+      "text": "How do introverts typically restore their energy compared to extraverts?",
+      "options": [
+        "By attending crowded parties",
+        "By spending time alone in quiet settings",
+        "By participating in public debates",
+        "By changing their career paths"
+      ],
+      "answer": "By spending time alone in quiet settings"
+    },
+    {
+      "id": 30,
+      "type": "READING",
+      "passage": "Cybersecurity experts warn that using the same password across multiple accounts creates a massive security vulnerability. If hackers breach one weak database, they gain access to all of the user's personal profiles.",
+      "text": "Why is reusing passwords considered dangerous?",
+      "options": [
+        "It makes passwords harder to remember",
+        "A single data breach can compromise multiple accounts",
+        "It slows down internet connection speeds",
+        "Companies charge extra for multiple passwords"
+      ],
+      "answer": "A single data breach can compromise multiple accounts"
+    },
+    {
+      "id": 31,
+      "type": "READING",
+      "passage": "Dehydration can impair cognitive functions, leading to poor concentration, mood swings, and headaches. Drinking an adequate amount of water daily is crucial for optimal brain health and fluid balance.",
+      "text": "What is a potential symptom of dehydration mentioned in the text?",
+      "options": [
+        "Improved memory recall",
+        "Poor concentration and headaches",
+        "Increased physical stamina",
+        "Better emotional regulation"
+      ],
+      "answer": "Poor concentration and headaches"
+    },
+    {
+      "id": 32,
+      "type": "READING",
+      "passage": "Organic farming avoids synthetic fertilizers and pesticides, relying instead on crop rotation and natural compost. While better for the environment, organic farming typically yields fewer crops per acre compared to conventional farming.",
+      "text": "What is one downside of organic farming mentioned in the passage?",
+      "options": [
+        "It ruins soil fertility completely",
+        "It uses too many synthetic chemicals",
+        "It produces lower crop yields per acre",
+        "It is worse for local ecosystems"
+      ],
+      "answer": "It produces lower crop yields per acre"
+    },
+    {
+      "id": 33,
+      "type": "READING",
+      "passage": "The International Space Station (ISS) serves as a microgravity laboratory where astronauts conduct scientific experiments. These studies help researchers understand how long-term space travel affects the human body's bones and muscles.",
+      "text": "What is the primary function of the ISS according to the text?",
+      "options": [
+        "To act as a luxury space hotel for tourists",
+        "To serve as a lab for microgravity experiments",
+        "To manufacture advanced satellites",
+        "To monitor weather patterns exclusively"
+      ],
+      "answer": "To serve as a lab for microgravity experiments"
+    },
+    {
+      "id": 34,
+      "type": "READING",
+      "passage": "Deforestation in the Amazon rainforest accelerates climate change because trees absorb carbon dioxide. When forest acreage is cleared for cattle ranching, huge volumes of stored carbon are released back into the atmosphere.",
+      "text": "Why does clearing the Amazon rainforest worsen global warming?",
+      "options": [
+        "It increases the amount of oxygen in the air",
+        "It prevents cattle from roaming freely",
+        "It releases stored carbon dioxide back into the atmosphere",
+        "It makes the area too cold for plants to grow"
+      ],
+      "answer": "It releases stored carbon dioxide back into the atmosphere"
+    },
+    {
+      "id": 35,
+      "type": "READING",
+      "passage": "A gap year is a break taken by students, usually between high school and university, to travel or work. Proponents argue it helps young adults gain maturity and financial independence before choosing a career path.",
+      "text": "What do advocates claim is a benefit of taking a gap year?",
+      "options": [
+        "It guarantees a high-paying job offer",
+        "Students can avoid going to university permanently",
+        "It helps students gain maturity and independence",
+        "It reduces the cost of college tuition"
+      ],
+      "answer": "It helps students gain maturity and independence"
+    },
+    {
+      "id": 36,
+      "type": "READING",
+      "passage": "Microplastics have been detected in clouds, suggesting that synthetic fibers can be transported through the water cycle. Scientists fear this could lead to plastic contamination in rainfall, affecting clean drinking sources.",
+      "text": "How might microplastics travel into clouds based on the passage?",
+      "options": [
+        "Through standard industrial smoke stacks",
+        "By being carried through the natural water cycle",
+        "Via international aviation emissions",
+        "Through direct agricultural spraying"
+      ],
+      "answer": "By being carried through the natural water cycle"
+    },
+    {
+      "id": 37,
+      "type": "READING",
+      "passage": "The slow food movement emerged as a protest against fast-food culture. It encourages the preservation of local agricultural traditions, the use of organic ingredients, and taking time to enjoy home-cooked meals with family.",
+      "text": "What does the slow food movement actively encourage?",
+      "options": [
+        "Eating meals as quickly as possible",
+        "The expansion of global fast-food franchises",
+        "Preserving local food traditions and enjoying home-cooked meals",
+        "Replacing home cooking with automated delivery"
+      ],
+      "answer": "Preserving local food traditions and enjoying home-cooked meals"
+    },
+    {
+      "id": 38,
+      "type": "READING",
+      "passage": "Emotional intelligence (EQ) is the ability to understand and manage your own emotions, as well as recognize those of others. In corporate settings, individuals with high EQ often make better managers because they handle workplace conflicts constructively.",
+      "text": "Why do high EQ individuals excel as managers?",
+      "options": [
+        "They prioritize profits over employee well-being",
+        "They are skilled at resolving workplace conflicts constructively",
+        "They avoid interacting with lower-level staff",
+        "They have technical computer engineering expertise"
+      ],
+      "answer": "By being skilled at resolving workplace conflicts constructively"
+    },
+    {
+      "id": 39,
+      "type": "READING",
+      "passage": "Overfishing is depleting global fish stocks faster than populations can naturally recover. This imbalance disrupts marine food chains and threatens the livelihoods of coastal communities dependent on artisanal fishing.",
+      "text": "What is a major threat posed by commercial overfishing?",
+      "options": [
+        "An overabundance of aquatic predators",
+        "The disruption of marine food chains",
+        "Faster natural fish reproduction rates",
+        "Lower operating costs for local fishermen"
+      ],
+      "answer": "The disruption of marine food chains"
+    },
+    {
+      "id": 40,
+      "type": "READING",
+      "passage": "Electric bicycles (e-bikes) are transforming urban transport. They offer motorized assistance, making cycling accessible to older demographics or those with longer commutes, while still producing zero direct carbon emissions.",
+      "text": "According to the text, why are e-bikes useful for older individuals?",
+      "options": [
+        "They are much faster than cars",
+        "They provide motorized assistance for easier riding",
+        "They do not require any physical steering",
+        "They are completely free to purchase"
+      ],
+      "answer": "They provide motorized assistance for easier riding"
+    },
+    {
+      "id": 41,
+      "type": "READING",
+      "passage": "The term 'burnout' describes physical or mental exhaustion caused by prolonged work-related stress. Experts recommend setting firm boundaries between professional duties and personal hours to prevent this condition.",
+      "text": "What solution is suggested to prevent work-related burnout?",
+      "options": [
+        "Working longer overtime hours to finish tasks",
+        "Setting strict boundaries between work and personal life",
+        "Ignoring signs of extreme fatigue",
+        "Changing companies every single year"
+      ],
+      "answer": "Setting strict boundaries between work and personal life"
+    },
+    {
+      "id": 42,
+      "type": "READING",
+      "passage": "Desertification is the process where fertile land becomes desert, often due to drought and deforestation. Implementing sustainable agricultural practices, like planting windbreaks, can stop topsoil erosion and arrest this environmental crisis.",
+      "text": "How can sustainable agriculture help combat desertification?",
+      "options": [
+        "By cutting down existing forests for field space",
+        "By implementing techniques that prevent topsoil erosion",
+        "By relying exclusively on artificial chemical sprays",
+        "By leaving fields completely abandoned"
+      ],
+      "answer": "By implementing techniques that prevent topsoil erosion"
+    },
+    {
+      "id": 43,
+      "type": "READING",
+      "passage": "Volunteering offers more than altruistic satisfaction. Studies reveal that regular volunteers experience lower levels of depression, expanded social networks, and a stronger sense of purpose in life.",
+      "text": "What personal benefit of volunteering is highlighted in the text?",
+      "options": [
+        "A guaranteed financial bonus",
+        "Lower depression levels and a stronger sense of purpose",
+        "An immediate promotion at work",
+        "A reduction in physical exercise requirements"
+      ],
+      "answer": "Lower depression levels and a stronger sense of purpose"
+    },
+    {
+      "id": 44,
+      "type": "READING",
+      "passage": "Critical thinking skills enable students to analyze information objectively rather than accepting claims at face value. This competency is vital in the modern era to identify misinformation and fake news online.",
+      "text": "Why is critical thinking particularly important nowadays?",
+      "options": [
+        "It helps students memorize facts faster for exams",
+        "It allows people to filter out online misinformation",
+        "It guarantees high grades in creative writing",
+        "It discourages students from reading digital articles"
+      ],
+      "answer": "It allows people to filter out online misinformation"
+    },
+    {
+      "id": 45,
+      "type": "READING",
+      "passage": "To cut down on plastic waste, several countries have banned single-use plastic bags. Consumers are urged to adopt reusable canvas bags, which, despite a higher production footprint, become eco-friendly over repeated uses.",
+      "text": "What must happen for canvas bags to be genuinely eco-friendly?",
+      "options": [
+        "They must be thrown away after one week",
+        "They need to be used repeatedly over time",
+        "They must be manufactured inside local schools",
+        "They should be cheaper than plastic options"
+      ],
+      "answer": "They need to be used repeatedly over time"
+    },
+    {
+      "id": 46,
+      "type": "READING",
+      "passage": "An internship can bridge the gap between academic theory and real-world execution. While some internships are unpaid, the professional connections and practical experience gained are highly prized by future employers.",
+      "text": "What makes an internship valuable according to the text?",
+      "options": [
+        "The high immediate salary it provides",
+        "The short working hours it demands",
+        "The practical experience and professional connections gained",
+        "The exemption it offers from university graduation"
+      ],
+      "answer": "The practical experience and professional connections gained"
+    },
+    {
+      "id": 47,
+      "type": "READING",
+      "passage": "The migration of monarch butterflies is a spectacular natural event. Traveling thousands of miles from North America to Mexico, they rely on specific environmental cues, such as temperature drops, to initiate their journey.",
+      "text": "What triggers the monarch butterflies' long migration?",
+      "options": [
+        "An increase in competitor insects",
+        "Specific environmental cues like falling temperatures",
+        "Human intervention and tracking devices",
+        "Changes in ocean current directions"
+      ],
+      "answer": "Specific environmental cues like falling temperatures"
+    },
+    {
+      "id": 48,
+      "type": "READING",
+      "passage": "Urban rooftop farming turns unused building tops into green productive spaces. These farms supply fresh, hyper-local produce to city dwellers, cutting down on transportation emissions associated with rural food shipping.",
+      "text": "What environmental advantage do rooftop farms offer?",
+      "options": [
+        "They replace the need for public parks",
+        "They decrease food transportation emissions",
+        "They require zero water for cultivation",
+        "They make buildings completely waterproof"
+      ],
+      "answer": "They decrease food transportation emissions"
+    },
+    {
+      "id": 49,
+      "type": "READING",
+      "passage": "Public museums face financial constraints as government funding diminishes. To survive, many institutions are relying on corporate sponsorships and hosting private ticketed exhibitions to balance their budgets.",
+      "text": "How are public museums adapting to lower government funding?",
+      "options": [
+        "By closing down their main galleries permanently",
+        "By relying on corporate sponsors and private exhibitions",
+        "By selling off their historical collections",
+        "By charging citizens a mandatory entry tax"
+      ],
+      "answer": "By relying on corporate sponsors and private exhibitions"
+    },
+    {
+      "id": 50,
+      "type": "READING",
+      "passage": "Journaling can serve as a powerful therapeutic tool. Writing down personal thoughts and anxieties allows individuals to organize their emotions, offering clarity and lowering overall levels of psychological distress.",
+      "text": "According to the passage, how does journaling benefit mental health?",
+      "options": [
+        "By helping people forget their daily responsibilities",
+        "By allowing them to organize emotions and gain clarity",
+        "By automatically solving external work problems",
+        "By increasing physical sleep duration"
+      ],
+      "answer": "By allowing them to organize emotions and gain clarity"
+    }
+  ]
+}

@@ -20,7 +20,7 @@ Latihan soal untuk menguasai struktur kalimat dan tata bahasa.
         * [AP1 - Present Tense (Quiz 3)](/english-quiz/quiz-theme1-tense.html?quiz=ap1-tense-present-3)
 
 * **Past Tense**
-    * *Deskripsi:* Fokus pada materi masa lalu (Past Tense) dan menceritakan kejadian lampau meilputi: Past Simple, Past Continuous, Past Perfect 
+    * *Deskripsi:* Fokus pada materi masa lalu (Past Tense) dan menceritakan kejadian lampau meliputi: Past Simple, Past Continuous, Past Perfect 
     * Link Soal:
         * [AP1 - Past Tense (Quiz 1)](/english-quiz/quiz-theme1-tense.html?quiz=ap1-tense-past-1)
         * [AP1 - Past Tense (Quiz 2)](/english-quiz/quiz-theme1-tense.html?quiz=ap1-tense-past-2)
@@ -41,3 +41,4 @@ Latihan membaca cepat dan memahami konteks artikel.
     * *Deskripsi:* Membaca artikel pendek dan menjawab pertanyaan berdasarkan teks.
     * Link Soal:
         * [AP4 - Reading (Quiz 1)](/english-quiz/quiz-theme2-reading.html?quiz=ap1-reading-1)
+        * [AP4 - Reading (Quiz 2)](/english-quiz/quiz-theme2-reading.html?quiz=ap1-reading-2)

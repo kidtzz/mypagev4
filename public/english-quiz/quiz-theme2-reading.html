@@ -277,14 +277,8 @@
         const isCurrentPage = index >= startRange && index < endRange;
         const isAnswered = userResponsesMatrix[question.id] !== undefined;
 
-        if (isCurrentPage) {
-          if (isAnswered) {
-            mapCell.className += ' bg-indigo-100 dark:bg-indigo-950/80 text-indigo-800 dark:text-indigo-300 border-indigo-400 ring-2 ring-indigo-200 dark:ring-indigo-900/50';
-          } else {
-            mapCell.className += ' bg-indigo-600 text-white border-indigo-700 ring-4 ring-indigo-100 dark:ring-indigo-950/50';
-          }
-        } else if (isAnswered) {
-          mapCell.className += ' bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/50';
+        if (isAnswered) {
+          mapCell.className += ' bg-orange-100 dark:bg-orange-950/40 text-orange-700 dark:text-orange-300 border-orange-300 dark:border-orange-700 font-bold';
         } else {
           mapCell.className += ' bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700/80';
         }
@@ -481,7 +475,7 @@
       const container = document.getElementById('reviewMatrixContainer');
       container.innerHTML = '';
 
-      MASTER_QUESTION_BANK.forEach((item, idx) => {
+      randomizedQuestionsOrder.forEach((item, idx) => {
         const userChoice = userResponsesMatrix[item.id] || "[No Option Answered Selected]";
         const isCorrect = userChoice === item.answer;
 
