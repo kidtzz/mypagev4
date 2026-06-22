@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimalist English Flashcards</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style>
+    /* DEFINISI CSS VARIABLES UNTUK 3 TEMA */
+    body[data-theme="light"] {
+      --bg-main: #f8fafc;
+      /* slate-50 */
+      --text-main: #1e293b;
+      /* slate-800 */
+      --text-title: #0f172a;
+      /* slate-900 */
+      --card-bg: rgba(255, 255, 255, 0.9);
+      /* Semi-transparan agar efek bg tembus */
+      --card-border: #e2e8f0;
+      /* slate-200 */
+      --subcard-bg: #f1f5f9;
+      /* slate-100 */
+      --accent-color: #4f46e5;
+      /* indigo-600 */
+      --accent-bg: #e0e7ff;
+      /* indigo-100 */
+      --font-family: font-sans, ui-sans-serif, system-ui;
+      --anime-opacity: 0.04;
+      /* Sangat tipis di mode terang */
+      --particle-color: rgba(79, 70, 229, 0.1);
+    }
+
+    body[data-theme="night"] {
+      --bg-main: #020617;
+      /* slate-950 */
+      --text-main: #e2e8f0;
+      /* slate-200 */
+      --text-title: #f8fafc;
+      /* slate-50 */
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --card-border: #1e293b;
+      /* slate-800 */
+      --subcard-bg: #020617;
+      /* slate-950 */
+      --accent-color: #818cf8;
+      /* indigo-400 */
+      --accent-bg: #312e81;
+      /* indigo-900 */
+      --font-family: font-sans, ui-sans-serif, system-ui;
+      --anime-opacity: 0.06;
+      /* Pas untuk mode malam */
+      --particle-color: rgba(129, 140, 248, 0.15);
+    }
+
+    body[data-theme="sunset-kids"] {
+      --bg-main: #fef3c7;
+      /* amber-100 */
+      --text-main: #451a03;
+      /* amber-950 */
+      --text-title: #c2410c;
+      /* orange-700 */
+      --card-bg: rgba(255, 247, 237, 0.9);
+      --card-border: #fed7aa;
+      /* orange-200 */
+      --subcard-bg: #fef3c7;
+      /* amber-100 */
+      --accent-color: #ea580c;
+      /* orange-600 */
+      --accent-bg: #ffedd5;
+      /* orange-100 */
+      --font-family: ui-rounded, 'Hiragino Maru Gothic ProN', Quicksand, 'Nunito', sans-serif;
+      --anime-opacity: 0.08;
+      /* Anak-anak suka gambar lebih kelihatan */
+      --particle-color: rgba(234, 88, 12, 0.15);
+    }
+
+    /* Terapkan variabel warna ke elemen secara global */
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .theme-title {
+      color: var(--text-title);
+    }
+
+    .theme-card {
+      background-color: var(--card-bg);
+      border-color: var(--card-border);
+      backdrop-filter: blur(8px);
+    }
+
+    .theme-subcard {
+      background-color: var(--subcard-bg);
+      border-color: var(--card-border);
+    }
+
+    .theme-border {
+      border-color: var(--card-border);
+    }
+
+    .theme-input {
+      background-color: var(--subcard-bg);
+      border-color: var(--card-border);
+      color: var(--text-main);
+    }
+
+    .theme-text-accent {
+      color: var(--accent-color);
+    }
+
+    /* DEKORASI ANIME BACKGROUND (Garis Estetik Sketsa Tanpa Warna) */
+    .anime-bg-overlay {
+      position: fixed;
+      bottom: -40px;
+      right: -20px;
+      width: 550px;
+      height: 550px;
+      background-image: url('https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=1000&auto=format&fit=crop');
+      /* Placeholder anime art komparabel */
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: bottom right;
+      opacity: var(--anime-opacity);
+      filter: grayscale(100%) contrast(120%);
+      pointer-events: none;
+      z-index: -1;
+      transition: opacity 0.3s ease;
+    }
+
+    /* ANIMASI BACKDROP BERGERAK (Partikel Mengambang Halus) */
+    .particle-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    .particle {
+      position: absolute;
+      background-color: var(--particle-color);
+      border-radius: 50%;
+      animation: float-around infinite ease-in-out;
+    }
+
+    /* Variasi Kecepatan & Ukuran Animasi Bergerak */
+    .p-1 {
+      width: 40px;
+      height: 40px;
+      left: 10%;
+      top: 20%;
+      animation-duration: 25s;
+    }
+
+    .p-2 {
+      width: 80px;
+      height: 80px;
+      left: 75%;
+      top: 15%;
+      animation-duration: 35s;
+      animation-delay: -5s;
+    }
+
+    .p-3 {
+      width: 60px;
+      height: 60px;
+      left: 45%;
+      top: 75%;
+      animation-duration: 28s;
+      animation-delay: -12s;
+    }
+
+    .p-4 {
+      width: 110px;
+      height: 110px;
+      left: 5%;
+      top: 65%;
+      animation-duration: 42s;
+      animation-delay: -3s;
+    }
+
+    @keyframes float-around {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-40px) translateX(30px) rotate(180deg);
+      }
+
+      100% {
+        transform: translateY(0) translateX(0) rotate(360deg);
+      }
+    }
+
+    /* Card Flip Transition Utilities */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+
+    .transform-style-3d {
+      transform-style: preserve-3d;
+    }
+
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+  </style>
+</head>
+
+<body class="antialiased min-h-screen transition-colors duration-300" data-theme="light">
+
+  <div class="particle-container">
+    <div class="particle p-1"></div>
+    <div class="particle p-2"></div>
+    <div class="particle p-3"></div>
+    <div class="particle p-4"></div>
+  </div>
+
+  <div class="anime-bg-overlay" id="anime-backdrop"></div>
+
+  <div class="max-w-4xl mx-auto px-4 py-8 relative">
+
+    <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b pb-6 mb-8 theme-border">
+      <div>
+        <h1 id="app-title" class="text-3xl font-extrabold tracking-tight theme-title">English Flashcards</h1>
+        <p id="app-subtitle" class="text-sm mt-1 opacity-70">Fokus tingkatkan kosakata esensial tanpa distraksi.</p>
+      </div>
+
+      <div class="flex items-center gap-1.5 mt-4 sm:mt-0 bg-black/5 dark:bg-white/10 p-1 rounded-xl w-fit">
+        <button onclick="setTheme('light')" id="btn-theme-light"
+          class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer">
+          ☀️ Siang
+        </button>
+        <button onclick="setTheme('sunset-kids')" id="btn-theme-sunset"
+          class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer">
+          🎨 Sore (Anak)
+        </button>
+        <button onclick="setTheme('night')" id="btn-theme-night"
+          class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer">
+          🌙 Malam
+        </button>
+      </div>
+    </header>
+
+    <div id="loading" class="flex flex-col items-center justify-center py-20">
+      <div class="animate-spin rounded-full h-10 w-10 border-4 border-indigo-600 border-t-transparent mb-4"></div>
+      <p class="font-medium text-sm opacity-70">Memuat aset vocabulary...</p>
+    </div>
+
+    <main id="main-content" class="hidden grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <div class="md:col-span-1 space-y-4">
+        <div class="p-5 rounded-2xl shadow-xs border space-y-4 theme-card theme-border">
+          <div class="flex items-center justify-between border-b pb-2 theme-border">
+            <h3 class="font-bold text-sm">Pencarian & Filter</h3>
+            <span id="stat-total" class="text-xs px-2 py-0.5 rounded-md font-mono theme-subcard border">0/0</span>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider opacity-60 mb-1.5">Pilih Set Flashcard</label>
+            <select id="filter-json-source" onchange="changeJsonSource(this.value)"
+              class="w-full border rounded-xl px-3 py-2 text-sm font-semibold text-indigo-600 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer theme-input">
+              <option value="1">Flashcard Set 1</option>
+              <option value="2">Flashcard Set 2</option>
+              <option value="3">Flashcard Set 3</option>
+              </select>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider opacity-60 mb-1.5">Cari Kata</label>
+            <div class="relative">
+              <input type="text" id="search-input" oninput="applyFilters()" placeholder="Ketik kata / arti..."
+                class="w-full border rounded-xl pl-9 pr-3 py-2 text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 theme-input">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none opacity-50">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z">
+                  </path>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider opacity-60 mb-1.5">Level CEFR</label>
+            <select id="filter-level" onchange="applyFilters()"
+              class="w-full border rounded-xl px-3 py-2 text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer theme-input">
+              <option value="all">Semua Level</option>
+              <option value="B1">B1 (Intermediate)</option>
+              <option value="B2">B2 (Upper Intermediate)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider opacity-60 mb-1.5">Domain
+              Kategori</label>
+            <select id="filter-category" onchange="applyFilters()"
+              class="w-full border rounded-xl px-3 py-2 text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer theme-input">
+              <option value="all">Semua Domain</option>
+              <option value="daily life">Daily Life</option>
+              <option value="business">Business</option>
+              <option value="technology">Technology</option>
+              <option value="it">IT</option>
+              <option value="travel">Travel</option>
+              <option value="social">Social</option>
+            </select>
+          </div>
+
+          <div class="pt-2 border-t flex items-center justify-between theme-border">
+            <span class="text-sm font-medium">Tampilkan Favorit Saja</span>
+            <button id="fav-toggle" onclick="toggleFavFilter()"
+              class="w-11 h-6 bg-gray-300 dark:bg-slate-700 rounded-full p-0.5 transition-colors duration-200 focus:outline-hidden relative cursor-pointer">
+              <span id="fav-toggle-dot"
+                class="block w-5 h-5 bg-white rounded-full shadow-xs transform duration-200 translate-x-0"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="md:col-span-2 space-y-6">
+
+        <div class="perspective-1000 w-full h-[380px] relative">
+
+          <div id="flashcard-object"
+            class="transform-style-3d transition-transform duration-500 ease-in-out w-full h-full relative cursor-pointer"
+            onclick="flipCard()">
+
+            <div
+              class="backface-hidden absolute inset-0 border rounded-2xl p-8 flex flex-col justify-between shadow-xs theme-card theme-border">
+              <div class="flex justify-between items-center">
+                <div class="flex gap-2">
+                  <span id="card-front-pos"
+                    class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md">Part of Speech</span>
+                  <span id="card-front-level"
+                    class="font-extrabold text-xs px-2.5 py-1 rounded-md theme-subcard border theme-text-accent">B1</span>
+                </div>
+                <button id="card-fav-btn" onclick="event.stopPropagation();"
+                  class="p-2 rounded-full transition-colors cursor-pointer text-slate-400" title="Simpan ke Favorit">
+                </button>
+              </div>
+
+              <div class="text-center my-auto">
+                <h2 id="card-front-word" class="text-4xl md:text-5xl font-extrabold tracking-tight theme-title">
+                  Vocabulary</h2>
+                <span id="card-front-cat"
+                  class="inline-block mt-3.5 text-xs border font-medium px-3 py-1 rounded-full theme-subcard">Category</span>
+              </div>
+
+              <div class="text-center text-xs opacity-50 font-medium">
+                Klik kartu atau tekan <kbd class="px-1.5 py-0.5 rounded border shadow-2xs theme-subcard">Space</kbd>
+                untuk melihat arti kata
+              </div>
+            </div>
+
+            <div id="card-back-frame"
+              class="backface-hidden rotate-y-180 absolute inset-0 border-2 rounded-2xl p-6 md:p-8 flex flex-col justify-between shadow-md overflow-y-auto theme-card">
+              <div class="flex justify-between items-center border-b pb-3 theme-border">
+                <div>
+                  <span id="card-back-word" class="font-extrabold text-xl tracking-tight theme-title">Word</span>
+                  <span id="card-back-pron"
+                    class="text-xs font-mono ml-2 font-medium theme-text-accent">/pronunciation/</span>
+                </div>
+                <span id="card-back-pos"
+                  class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md">PoS</span>
+              </div>
+
+              <div class="my-auto space-y-4">
+                <div>
+                  <label class="block text-[10px] uppercase font-bold tracking-widest opacity-50 mb-0.5">Definisi
+                    Inggris</label>
+                  <p id="card-back-def" class="font-medium leading-relaxed text-sm md:text-base">English definition
+                    description.</p>
+                </div>
+                <div class="p-3.5 rounded-xl border theme-subcard">
+                  <label class="block text-[10px] uppercase font-bold tracking-widest mb-0.5 theme-text-accent">Arti
+                    Indonesia</label>
+                  <p id="card-back-trans" class="font-bold text-base tracking-wide">Terjemahan Indonesia.</p>
+                </div>
+                <div class="space-y-1">
+                  <label class="block text-[10px] uppercase font-bold tracking-widest opacity-50">Contoh Penggunaan
+                    Kalimat</label>
+                  <p id="card-back-ex" class="text-sm italic font-serif leading-relaxed">"Example sentence goes here."
+                  </p>
+                  <p id="card-back-ex-trans" class="text-xs opacity-70">"Terjemahan contoh kalimat."</p>
+                </div>
+              </div>
+
+              <div class="text-center text-xs opacity-50 font-medium border-t pt-2 theme-border">
+                Klik kartu untuk membalikkan kembali
+              </div>
+            </div>
+
+          </div>
+
+          <div id="empty-state"
+            class="hidden absolute inset-0 border rounded-2xl p-8 flex flex-col items-center justify-center text-center theme-card theme-border">
+            <svg class="w-10 h-10 opacity-30 mb-2" fill="none" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <h3 class="text-base font-bold">Tidak ada kata yang cocok</h3>
+            <p class="text-xs opacity-50 mt-1 max-w-xs">Ubah kata kunci pencarian atau ganti pilihan domain kategori
+              Anda.</p>
+          </div>
+
+        </div>
+
+        <div id="action-buttons" class="grid grid-cols-3 gap-3">
+          <button onclick="prevCard()"
+            class="py-3 px-4 border font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer shadow-2xs theme-card hover:opacity-80">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Prev
+          </button>
+          <button onclick="flipCard()" id="btn-flip-action"
+            class="py-3 px-4 font-extrabold text-sm rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer shadow-2xs text-white hover:opacity-90">
+            Flip
+          </button>
+          <button onclick="nextCard()"
+            class="py-3 px-4 border font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer shadow-2xs theme-card hover:opacity-80">
+            Next
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div id="hotkeys-info"
+          class="hidden sm:flex justify-center items-center gap-6 text-[11px] font-medium py-2 px-4 rounded-xl border theme-card theme-border">
+          <div class="flex items-center gap-1.5"><kbd
+              class="px-1.5 py-0.5 rounded border shadow-2xs theme-subcard">◀</kbd> Kartu Sebelumnya</div>
+          <div class="flex items-center gap-1.5"><kbd
+              class="px-1.5 py-0.5 rounded border shadow-2xs theme-subcard">Space</kbd> Balik Kartu</div>
+          <div class="flex items-center gap-1.5"><kbd
+              class="px-1.5 py-0.5 rounded border shadow-2xs theme-subcard">▶</kbd> Kartu Selanjutnya</div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    let appData = { title: "English Flashcards", cards: [] };
+    let activePool = [];
+    let currentIdx = 0;
+    let filterFavsOnly = false;
+    let userProfile = { favoriteIds: [], currentTheme: "light" };
+    
+    // VARIABEL UNTUK MENYIMPAN SET FILE JSON YANG AKTIF
+    let currentSetNumber = "1";
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      initLocalStorageData();
+      getJsonSourceFromUrl(); // Deteksi set aktif dari parameter URL sebelum fetch data
+      applyThemeEngine();
+      await fetchVocabularyData();
+    });
+
+    function initLocalStorageData() {
+      const raw = localStorage.getItem("hugo_flashcard_profile");
+      if (raw) {
+        try {
+          const parsed = JSON.parse(raw);
+          if (parsed.favoriteIds) userProfile.favoriteIds = parsed.favoriteIds;
+          if (parsed.currentTheme) userProfile.currentTheme = parsed.currentTheme;
+        } catch (e) {
+          console.error("Gagal membaca storage profil.", e);
+        }
+      }
+    }
+
+    // FUNGSI DETEKSI PARAMETER URL (?set=2)
+    function getJsonSourceFromUrl() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const setParam = urlParams.get('set');
+      if (setParam) {
+        currentSetNumber = setParam;
+      }
+      
+      // Sinkronkan nilai dropdown UI dengan set aktif
+      const sourceSelector = document.getElementById("filter-json-source");
+      if (sourceSelector) {
+        sourceSelector.value = currentSetNumber;
+      }
+    }
+
+    // FUNGSI KETIKA USER MENGGANTI SET VIA DROPDOWN SELECTOR
+    function changeJsonSource(value) {
+      // Perbarui URL tanpa reload halaman penuh demi UX Hugo yang seamless
+      const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?set=' + value;
+      window.history.pushState({ path: newUrl }, '', newUrl);
+      
+      currentSetNumber = value;
+      
+      // Tampilkan kembali layar loading dan muat data baru
+      document.getElementById("loading").classList.remove("hidden");
+      document.getElementById("main-content").classList.add("hidden");
+      
+      fetchVocabularyData();
+    }
+
+    function saveProfile() {
+      localStorage.setItem("hugo_flashcard_profile", JSON.stringify(userProfile));
+    }
+
+    function setTheme(themeName) {
+      userProfile.currentTheme = themeName;
+      saveProfile();
+      applyThemeEngine();
+    }
+
+    function applyThemeEngine() {
+      const body = document.body;
+      const current = userProfile.currentTheme || "light";
+
+      body.setAttribute("data-theme", current);
+
+      const btnLight = document.getElementById("btn-theme-light");
+      const btnSunset = document.getElementById("btn-theme-sunset");
+      const btnNight = document.getElementById("btn-theme-night");
+      const btnFlip = document.getElementById("btn-flip-action");
+      const animeBackdrop = document.getElementById("anime-backdrop");
+
+      btnLight.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer opacity-50 hover:opacity-100";
+      btnSunset.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer opacity-50 hover:opacity-100";
+      btnNight.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer opacity-50 hover:opacity-100";
+
+      if (current === "light") {
+        btnLight.classList.remove("opacity-50");
+        btnLight.classList.add("bg-white", "text-indigo-600", "shadow-xs", "border", "border-slate-200");
+        if (btnFlip) btnFlip.className = "py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-sm rounded-xl transition-all shadow-sm cursor-pointer";
+        document.getElementById("card-back-frame").style.borderColor = "#4f46e5";
+        animeBackdrop.style.backgroundImage = "url('https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=1000')"; 
+      }
+      else if (current === "sunset-kids") {
+        btnSunset.classList.remove("opacity-50");
+        btnSunset.classList.add("bg-orange-600", "text-white", "shadow-xs");
+        if (btnFlip) btnFlip.className = "py-3 px-4 bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-sm rounded-xl transition-all shadow-sm cursor-pointer";
+        document.getElementById("card-back-frame").style.borderColor = "#f97316";
+        animeBackdrop.style.backgroundImage = "url('https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1000')"; 
+      }
+      else if (current === "night") {
+        btnNight.classList.remove("opacity-50");
+        btnNight.classList.add("bg-slate-800", "text-indigo-400", "shadow-xs", "border", "border-slate-700");
+        if (btnFlip) btnFlip.className = "py-3 px-4 bg-indigo-500 hover:bg-indigo-600 text-white font-extrabold text-sm rounded-xl transition-all shadow-sm cursor-pointer";
+        document.getElementById("card-back-frame").style.borderColor = "#6366f1";
+        animeBackdrop.style.backgroundImage = "url('https://images.unsplash.com/photo-1560942485-b2a11cc13456?q=80&w=1000')"; 
+      }
+
+      if (activePool.length > 0) renderFlashcardViewport();
+    }
+
+    async function fetchVocabularyData() {
+      const loadingEl = document.getElementById("loading");
+      const mainContentEl = document.getElementById("main-content");
+
+      try {
+        // PATH AKAN DIBUAT DINAMIS SESUAI VARIABEL YANG TERISI
+        const targetJsonPath = `/english-flashcards/data/flashcard-${currentSetNumber}.json`;
+        const response = await fetch(targetJsonPath);
+        if (!response.ok) throw new Error(`Status HTTP error: ${response.status}`);
+
+        appData = await response.json();
+        loadingEl.classList.add("hidden");
+        mainContentEl.classList.remove("hidden");
+
+        applyFilters();
+
+      } catch (error) {
+        console.error("Gagal memuat file JSON data: ", error);
+        loadingEl.innerHTML = `
+            <div class="bg-rose-50 border border-rose-200 text-rose-800 p-6 rounded-2xl max-w-md text-center mx-auto">
+                <p class="font-bold mb-1">Gagal Memuat Data (Set ${currentSetNumber})</p>
+                <p class="text-xs text-rose-600 mb-2">Pastikan file JSON tersedia di path: /english-flashcards/data/flashcard-${currentSetNumber}.json</p>
+                <p class="text-[11px] font-mono bg-white p-2 rounded border border-rose-100 overflow-x-auto text-left">${error.message}</p>
+            </div>
+        `;
+      }
+    }
+
+    function applyFilters() {
+      if (!appData || !appData.cards) return;
+
+      const searchVal = document.getElementById("search-input").value.toLowerCase().trim();
+      const levelVal = document.getElementById("filter-level").value;
+      const categoryVal = document.getElementById("filter-category").value.toLowerCase().trim();
+
+      activePool = appData.cards.filter(card => {
+        const word = card.word ? card.word.toLowerCase().trim() : "";
+        const definition = card.definition ? card.definition.toLowerCase().trim() : "";
+        const translation = card.translation ? card.translation.toLowerCase().trim() : "";
+        const cardCategory = card.category ? card.category.toLowerCase().trim() : "";
+
+        const matchSearch = searchVal === "" || word.includes(searchVal) || definition.includes(searchVal) || translation.includes(searchVal);
+        const matchLevel = (levelVal === 'all') || (card.level === levelVal);
+        const matchCat = (categoryVal === 'all') || (cardCategory === categoryVal);
+        const matchFav = !filterFavsOnly || userProfile.favoriteIds.includes(card.id);
+
+        return matchSearch && matchLevel && matchCat && matchFav;
+      });
+
+      currentIdx = 0;
+      resetCardUiState();
+
+      const cardObj = document.getElementById("flashcard-object");
+      const emptyStateEl = document.getElementById("empty-state");
+      const actionButtonsEl = document.getElementById("action-buttons");
+      const hotkeysInfoEl = document.getElementById("hotkeys-info");
+
+      if (activePool.length === 0) {
+        cardObj.classList.add("hidden");
+        emptyStateEl.classList.remove("hidden");
+        actionButtonsEl.classList.add("pointer-events-none", "opacity-50");
+        hotkeysInfoEl.classList.add("hidden");
+      } else {
+        cardObj.classList.remove("hidden");
+        emptyStateEl.classList.add("hidden");
+        actionButtonsEl.classList.remove("pointer-events-none", "opacity-50");
+        hotkeysInfoEl.classList.remove("hidden");
+
+        renderFlashcardViewport();
+      }
+
+      const statTotalEl = document.getElementById("stat-total");
+      if (statTotalEl) {
+        statTotalEl.textContent = `${activePool.length}/${appData.cards.length}`;
+      }
+    }
+
+    function toggleFavFilter() {
+      filterFavsOnly = !filterFavsOnly;
+      const toggleDot = document.getElementById("fav-toggle-dot");
+      const toggleBg = document.getElementById("fav-toggle");
+
+      if (filterFavsOnly) {
+        toggleDot.classList.replace("translate-x-0", "translate-x-5");
+        toggleBg.classList.replace("bg-gray-300", "bg-indigo-600");
+      } else {
+        toggleDot.classList.replace("translate-x-5", "translate-x-0");
+        toggleBg.classList.replace("bg-indigo-600", "bg-gray-300");
+      }
+      applyFilters();
+    }
+
+    function getPartOfSpeechStyle(pos) {
+      const p = pos ? pos.toLowerCase() : '';
+      const isSunset = (userProfile.currentTheme === 'sunset-kids');
+      const isNight = (userProfile.currentTheme === 'night');
+
+      if (isSunset) {
+        if (p.includes('noun')) return 'bg-emerald-600 text-white font-bold';
+        if (p.includes('verb')) return 'bg-sky-600 text-white font-bold';
+        if (p.includes('adjective') || p.includes('adj')) return 'bg-amber-600 text-white font-bold';
+        return 'bg-orange-200 text-orange-950';
+      }
+      if (isNight) {
+        if (p.includes('noun')) return 'bg-emerald-950 text-emerald-400 border border-emerald-800 font-bold';
+        if (p.includes('verb')) return 'bg-sky-950 text-sky-400 border border-sky-800 font-bold';
+        if (p.includes('adjective') || p.includes('adj')) return 'bg-amber-950 text-amber-400 border border-amber-800 font-bold';
+        return 'bg-slate-800 text-slate-400';
+      }
+      if (p.includes('noun')) return 'bg-emerald-50 text-emerald-700 border border-emerald-200/50 font-bold';
+      if (p.includes('verb')) return 'bg-sky-50 text-sky-700 border border-sky-200/50 font-bold';
+      if (p.includes('adjective') || p.includes('adj')) return 'bg-amber-50 text-amber-700 border border-amber-200/50 font-bold';
+      return 'bg-slate-100 text-slate-600';
+    }
+
+    function renderFlashcardViewport() {
+      if (!activePool || activePool.length === 0) return;
+
+      if (currentIdx >= activePool.length) currentIdx = 0;
+      const card = activePool[currentIdx];
+
+      document.getElementById("card-front-word").textContent = card.word || "";
+      document.getElementById("card-front-level").textContent = card.level || "B1";
+      document.getElementById("card-front-cat").textContent = card.category || "General";
+
+      const posBadgeFront = document.getElementById("card-front-pos");
+      posBadgeFront.textContent = card.partOfSpeech || "Word";
+      posBadgeFront.className = `text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-md ${getPartOfSpeechStyle(card.partOfSpeech)}`;
+
+      document.getElementById("card-back-word").textContent = card.word || "";
+      document.getElementById("card-back-pron").textContent = card.pronunciation ? `/${card.pronunciation}/` : "";
+      document.getElementById("card-back-def").textContent = card.definition || "";
+      document.getElementById("card-back-trans").textContent = card.translation || "";
+      document.getElementById("card-back-ex").textContent = card.example ? `"${card.example}"` : "";
+      document.getElementById("card-back-ex-trans").textContent = card.exampleTranslation ? `"${card.exampleTranslation}"` : "";
+
+      const posBadgeBack = document.getElementById("card-back-pos");
+      posBadgeBack.textContent = card.partOfSpeech || "Word";
+      posBadgeBack.className = `text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-md ${getPartOfSpeechStyle(card.partOfSpeech)}`;
+
+      const isFav = userProfile.favoriteIds.includes(card.id);
+      const favBtn = document.getElementById("card-fav-btn");
+      if (isFav) {
+        favBtn.innerHTML = `<svg class="w-5 h-5 text-rose-500 fill-current" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"></path></svg>`;
+      } else {
+        const iconColor = (userProfile.currentTheme === 'night') ? 'text-slate-500 hover:text-rose-400' : 'text-slate-400 hover:text-rose-500';
+        favBtn.innerHTML = `<svg class="w-5 h-5 ${iconColor} transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>`;
+      }
+      favBtn.onclick = (e) => { e.stopPropagation(); toggleFavorite(card.id); };
+    }
+
+    function flipCard() {
+      if (activePool.length === 0) return;
+      const cardObj = document.getElementById("flashcard-object");
+      if (cardObj) cardObj.classList.toggle("rotate-y-180");
+    }
+
+    function resetCardUiState() {
+      const cardObj = document.getElementById("flashcard-object");
+      if (cardObj) cardObj.classList.remove("rotate-y-180");
+    }
+
+    function nextCard() {
+      if (activePool.length <= 1) return;
+      currentIdx = (currentIdx + 1) % activePool.length;
+      resetCardUiState();
+      setTimeout(renderFlashcardViewport, 120);
+    }
+
+    function prevCard() {
+      if (activePool.length <= 1) return;
+      currentIdx = (currentIdx - 1 + activePool.length) % activePool.length;
+      resetCardUiState();
+      setTimeout(renderFlashcardViewport, 120);
+    }
+
+    function toggleFavorite(cardId) {
+      const idx = userProfile.favoriteIds.indexOf(cardId);
+      if (idx > -1) {
+        userProfile.favoriteIds.splice(idx, 1);
+      } else {
+        userProfile.favoriteIds.push(cardId);
+      }
+      saveProfile();
+      if (filterFavsOnly) {
+        applyFilters();
+      } else {
+        renderFlashcardViewport();
+      }
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'SELECT') return;
+      if (activePool.length === 0) return;
+
+      switch (e.code) {
+        case "Space":
+          e.preventDefault();
+          flipCard();
+          break;
+        case "ArrowRight":
+          e.preventDefault();
+          nextCard();
+          break;
+        case "ArrowLeft":
+          e.preventDefault();
+          prevCard();
+          break;
+      }
+    });
+  </script>
+</body>
+
+</html>

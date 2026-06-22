@@ -1,0 +1,71 @@
+{
+  "title": "Simple Listening Practice B1 Clean Script",
+  "audio_script": "Welcome to the Simple Listening Practice. Please listen carefully to each statement and answer the question. Number 1. Woman: I'm sorry, I cannot find the file you asked for. Next question. Number 2. Man: Could you please show me the way to the meeting room? Next question. Number 3. Woman: Don't forget to back up the data before you leave today. Next question. Number 4. Man: Wow, your presentation this morning was excellent! Next question. Number 5. Woman: Would you like some help with those heavy backup drives? This is the end of the listening practice.",
+  "questions": [
+    {
+      "id": 1,
+      "type": "LISTENING",
+      "topic": "Meaning",
+      "text": "What does the woman mean?",
+      "options": [
+        "She is lost.",
+        "She lost a file.",
+        "She wants a new job.",
+        "She is closing the folder."
+      ],
+      "answer": "She lost a file."
+    },
+    {
+      "id": 2,
+      "type": "LISTENING",
+      "topic": "Response",
+      "text": "What is the best response to the man's question?",
+      "options": [
+        "Yes, I did it yesterday.",
+        "Sure, just follow me down this hall.",
+        "No, I don't like meetings.",
+        "The room is very big."
+      ],
+      "answer": "Sure, just follow me down this hall."
+    },
+    {
+      "id": 3,
+      "type": "LISTENING",
+      "topic": "Meaning",
+      "text": "What is the woman telling the speaker to do?",
+      "options": [
+        "Save the work before leaving.",
+        "Go home early.",
+        "Delete the files.",
+        "Lock the front door."
+      ],
+      "answer": "Save the work before leaving."
+    },
+    {
+      "id": 4,
+      "type": "LISTENING",
+      "topic": "Response",
+      "text": "What is the best response to the man's compliment?",
+      "options": [
+        "Thank you, I worked hard on it.",
+        "I don't think so.",
+        "It is at ten o'clock.",
+        "Good morning to you too."
+      ],
+      "answer": "Thank you, I worked hard on it."
+    },
+    {
+      "id": 5,
+      "type": "LISTENING",
+      "topic": "Response",
+      "text": "What is the best response to the woman's offer?",
+      "options": [
+        "Yes, the weather is heavy.",
+        "That would be great, thank you!",
+        "No, I don't have a drive.",
+        "I like computers."
+      ],
+      "answer": "That would be great, thank you!"
+    }
+  ]
+}

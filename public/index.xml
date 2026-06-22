@@ -15,9 +15,9 @@
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>English Quiz</title>
-      <link>http://localhost:1313/arts/english/ap1/</link>
+      <link>http://localhost:1313/arts/english-quiz/</link>
       <pubDate>Sun, 21 Jun 2026 16:12:05 +0700</pubDate>
-      <guid>http://localhost:1313/arts/english/ap1/</guid>
+      <guid>http://localhost:1313/arts/english-quiz/</guid>
       <description>&lt;h3 id=&#34;english-assessment-center&#34;&gt;English Assessment Center&lt;/h3&gt;
 &lt;p&gt;Pilih modul di bawah ini untuk mulai belajar dan menguji kemampuan bahasa Inggris Anda.&lt;/p&gt;
 &lt;h3 id=&#34;grammar--tenses&#34;&gt;Grammar &amp;amp; Tenses&lt;/h3&gt;
@@ -29,9 +29,9 @@
 &lt;li&gt;&lt;em&gt;Deskripsi:&lt;/em&gt; Fokus pada materi masa kini meliputi: Simple Present, Present Continuous, Present Perfect, dan Present Perfect Continuous.&lt;/li&gt;
 &lt;li&gt;Link Soal:
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://localhost:1313/english-quiz/quiz-theme1-tense.html?quiz=ap1-tense-present-1&#34;&gt;AP1 - Present Tense (Quiz 1)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://localhost:1313/english-quiz/quiz-theme1-tense.html?quiz=ap1-tense-present-2&#34;&gt;AP1 - Present Tense (Quiz 2)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://localhost:1313/english-quiz/quiz-theme1-tense.html?quiz=ap1-tense-present-3&#34;&gt;AP1 - Present Tense (Quiz 3)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/english-quiz/quiz-theme1-ap1.html?quiz=ap1-tense-present-1&#34;&gt;AP1 - Present Tense (Quiz 1)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/english-quiz/quiz-theme1-ap1.html?quiz=ap1-tense-present-2&#34;&gt;AP1 - Present Tense (Quiz 2)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/english-quiz/quiz-theme1-ap1.html?quiz=ap1-tense-present-3&#34;&gt;AP1 - Present Tense (Quiz 3)&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
