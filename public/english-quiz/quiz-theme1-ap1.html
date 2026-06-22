@@ -280,7 +280,6 @@
                 const isCurrentPage = index >= startRange && index < endRange;
                 const isAnswered = userResponsesMatrix[question.id] !== undefined;
 
-
                 if (isAnswered) {
                     mapCell.className += ' bg-orange-100 dark:bg-orange-950/40 text-orange-700 dark:text-orange-300 border-orange-300 dark:border-orange-700 font-bold';
                 } else {
@@ -304,6 +303,33 @@
 
             activePageQuestions.forEach((question, subIndex) => {
                 const globalIndex = startIndex + subIndex;
+
+                let extraContent = '';
+
+                // Reading Passage
+                if (question.passage) {
+                    extraContent += `
+        <div class="mb-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+            <p class="text-sm leading-relaxed whitespace-pre-line text-slate-700 dark:text-slate-300">
+                ${question.passage}
+            </p>
+        </div>
+    `;
+                }
+
+                // Listening Audio (untuk nanti)
+                if (question.audio) {
+                    extraContent += `
+        <div class="mb-4">
+            <audio controls class="w-full">
+                <source src="${question.audio}" type="audio/mpeg">
+                Your browser does not support audio playback.
+            </audio>
+        </div>
+    `;
+                }
+
+
                 const questionCard = document.createElement('div');
                 questionCard.id = `q-card-item-${globalIndex}`;
                 questionCard.className = "bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-5 md:p-8 shadow-sm relative transition-colors duration-200";
@@ -317,6 +343,7 @@
                         <span class="text-xs font-medium text-slate-400 dark:text-slate-500">Item ${globalIndex + 1} of ${randomizedQuestionsOrder.length}</span>
                     </div>
                     <div class="mb-6">
+                       ${extraContent}
                         <p class="text-base md:text-lg font-semibold text-slate-900 dark:text-white leading-relaxed">${question.text}</p>
                     </div>
                     <div id="options-box-wrapper-${question.id}" class="space-y-3"></div>
