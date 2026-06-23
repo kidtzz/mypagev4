@@ -60,7 +60,6 @@
     /* --- SCROLLBAR STYLE --- */
     ::-webkit-scrollbar {
       width: 8px;
-      height: 8px;
     }
 
     ::-webkit-scrollbar-track {
@@ -185,26 +184,18 @@
       flex-grow: 1;
     }
 
-    /* --- NEW MODIFIED FEATURED SLIDER SECTION --- */
+    /* --- FEATURED SECTION --- */
     .featured-wrapper {
       margin-bottom: 48px;
-      position: relative;
-    }
-
-    .section-header-flex {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
     }
 
     .section-title {
       font-size: 1.5rem;
       color: var(--text-bright);
+      margin-bottom: 20px;
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 0;
     }
 
     .section-title::before {
@@ -216,50 +207,7 @@
       border-radius: 2px;
     }
 
-    .slider-controls {
-      display: flex;
-      gap: 10px;
-    }
-
-    .slider-btn {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glass);
-      color: var(--text-bright);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all var(--transition-speed);
-    }
-
-    .slider-btn:hover {
-      background: var(--gradient-primary);
-      border-color: transparent;
-      box-shadow: 0 0 15px var(--glow-purple);
-    }
-
-    /* Horizontal Carousel Wrapper */
-    .featured-slider-container {
-      display: flex;
-      gap: 24px;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      padding: 10px 4px 20px 4px;
-      scrollbar-width: none;
-      /* Hide for Firefox */
-    }
-
-    .featured-slider-container::-webkit-scrollbar {
-      display: none;
-      /* Hide for Chrome/Safari */
-    }
-
     .featured-card {
-      flex: 0 0 600px;
-      /* Lebar tetap per card highlight */
       background: linear-gradient(135deg, rgba(31, 40, 51, 0.8) 0%, rgba(20, 24, 33, 0.9) 100%);
       border: 1px solid rgba(124, 58, 237, 0.3);
       border-radius: 16px;
@@ -306,8 +254,6 @@
 
     .featured-details {
       flex-grow: 1;
-      min-width: 0;
-      /* Mencegah flexbox breaking pada teks panjang */
     }
 
     .featured-meta {
@@ -344,6 +290,7 @@
       color: #fff;
     }
 
+    /* Badge khusus untuk kategori Coming Soon */
     .badge-coming-soon {
       background: rgba(239, 68, 68, 0.15);
       color: #f87171;
@@ -355,20 +302,14 @@
       font-weight: 800;
       color: var(--text-bright);
       margin-bottom: 8px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     .featured-desc {
       font-size: 1.1rem;
       color: var(--text-muted);
       margin-bottom: 24px;
+      max-width: 600px;
       line-height: 1.5;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
     }
 
     .btn {
@@ -728,8 +669,6 @@
       }
 
       .featured-card {
-        flex: 0 0 85vw;
-        /* Lebar card menyesuaikan layar kecil */
         flex-direction: column;
         align-items: flex-start;
         padding: 24px;
@@ -827,16 +766,9 @@
 
   <main class="container dashboard-main">
 
-    <!-- MODIFIED FEATURED HIGHLIGHTS CAROUSEL -->
     <section class="featured-wrapper" id="featuredSection" style="display: none;">
-      <div class="section-header-flex">
-        <h2 class="section-title">Featured Highlights</h2>
-        <div class="slider-controls">
-          <button class="slider-btn" onclick="scrollSlider(-1)" title="Scroll Left">←</button>
-          <button class="slider-btn" onclick="scrollSlider(1)" title="Scroll Right">→</button>
-        </div>
-      </div>
-      <div class="featured-slider-container" id="featuredCardContainer"></div>
+      <h2 class="section-title">Featured Highlights</h2>
+      <div id="featuredCardContainer"></div>
     </section>
 
     <section class="controls-panel">
@@ -869,11 +801,14 @@
     </section>
 
     <section class="grid-wrapper">
+
       <div class="loading-state" id="loadingState">
         <div class="spinner"></div>
         <div class="loading-text">Loading games...</div>
       </div>
+
       <div class="games-grid" id="gamesGrid" style="display: none;"></div>
+
       <div class="empty-state" id="emptyState">
         <div class="empty-icon">🎮</div>
         <div class="empty-title">No games found</div>
@@ -905,20 +840,25 @@
 
     // DOM EVENT LISTENER ATTACHMENT ROUTINES
     function setupEventListeners() {
+      // Live Text Input Filtering Hook
       document.getElementById("searchInput").addEventListener("input", (e) => {
         currentSearchQuery = e.target.value.trim().toLowerCase();
         processUIMatrixRefresh();
       });
 
+      // Change Sorter Scheme Matrix Hook
       document.getElementById("sortSelect").addEventListener("change", (e) => {
         currentSortingStrategy = e.target.value;
         processUIMatrixRefresh();
       });
 
+      // Delegated Event Navigation Processing For Category Tab Buttons
       document.getElementById("filterTabs").addEventListener("click", (e) => {
         if (e.target.classList.contains("filter-btn")) {
+          // Update Active Visual State
           document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
           e.target.classList.add("active");
+
           currentCategoryFilter = e.target.getAttribute("data-filter").toLowerCase();
           processUIMatrixRefresh();
         }
@@ -930,6 +870,7 @@
       const loadingIndicator = document.getElementById("loadingState");
       const structuralDataGrid = document.getElementById("gamesGrid");
 
+      // Fetch from local structural sibling directory profile
       fetch("games.json")
         .then(response => {
           if (!response.ok) {
@@ -939,15 +880,19 @@
         })
         .then(parsedConfigurationData => {
           globalGamesStorage = parsedConfigurationData;
+
+          // Kill Loading Frame Sequence
           loadingIndicator.style.display = "none";
           structuralDataGrid.style.display = "grid";
 
+          // Compute, Evaluate, and Render Modules
           updateStatistics(globalGamesStorage);
-          renderFeaturedGames(globalGamesStorage);
+          renderFeaturedGame(globalGamesStorage);
           processUIMatrixRefresh();
         })
         .catch(err => {
           console.error("Dashboard engine critical processing exception failed:", err);
+          // Standard fallback implementation mock vector injection for seamless local filesystem browser testing context
           injectLocalBackupDataMock();
         });
     }
@@ -955,13 +900,12 @@
     // DECOUPLING SEAMLESS RETRY FALLBACK VECTOR
     function injectLocalBackupDataMock() {
       console.log("Injecting architectural simulation context mock framework configurations safely.");
-      // Diubah beberapa game bertipe featured: true untuk demonstrasi slider
       const localVirtualMatrixMock = [
-        { "id": "tetris", "title": "Tetris Master Extraordinare", "icon": "🧱", "category": "Arcade", "difficulty": "Medium", "description": "Classic block configuration structural logic match grid puzzle master game.", "url": "games-list/tetris.html", "featured": true },
-        { "id": "snake", "title": "Snake Classic Retro", "icon": "🐍", "category": "Arcade", "difficulty": "Easy", "description": "Classic retro implementation arcade speed movement grid simulator engine.", "url": "games-list/snake.html", "featured": true },
-        { "id": "g2048", "title": "2048 Strategy", "icon": "🔢", "category": "Puzzle", "difficulty": "Hard", "description": "Math arithmetic matching sliding value mathematical logic strategy board.", "url": "games-list/2048.html", "featured": true },
-        { "id": "minesweeper", "title": "Minesweeper Deluxe", "icon": "💣", "category": "Strategy", "difficulty": "Hard", "description": "Analytical grid strategic safety clearing mine sweeps grid matrix.", "url": "games-list/minesweeper.html", "featured": false },
-        { "id": "pong", "title": "Pong Retro Canvas", "icon": "🏓", "category": "Arcade", "difficulty": "Easy", "description": "Legacy historic virtual table paddle collision canvas vector classic arcade.", "url": "games-list/pong.html", "featured": false },
+        { "id": "tetris", "title": "Tetris", "icon": "🧱", "category": "Arcade", "difficulty": "Medium", "description": "Classic block configuration structural logic match grid puzzle master game.", "url": "games-list/tetris.html", "featured": true },
+        { "id": "snake", "title": "Snake", "icon": "🐍", "category": "Arcade", "difficulty": "Easy", "description": "Classic retro implementation arcade speed movement grid simulator engine.", "url": "games-list/snake.html", "featured": false },
+        { "id": "g2048", "title": "2048", "icon": "🔢", "category": "Puzzle", "difficulty": "Hard", "description": "Math arithmetic matching sliding value mathematical logic strategy board.", "url": "games-list/2048.html", "featured": false },
+        { "id": "minesweeper", "title": "Minesweeper", "icon": "💣", "category": "Strategy", "difficulty": "Hard", "description": "Analytical grid strategic safety clearing mine sweeps grid matrix.", "url": "games-list/minesweeper.html", "featured": false },
+        { "id": "pong", "title": "Pong", "icon": "🏓", "category": "Arcade", "difficulty": "Easy", "description": "Legacy historic virtual table paddle collision canvas vector classic arcade.", "url": "games-list/pong.html", "featured": false },
         { "id": "memory", "title": "Memory Match", "icon": "🃏", "category": "Educational", "difficulty": "Easy", "description": "Intellectual cognitive memory card pairs matching board application.", "url": "games-list/memory.html", "featured": false }
       ];
 
@@ -970,7 +914,7 @@
       document.getElementById("gamesGrid").style.display = "grid";
 
       updateStatistics(globalGamesStorage);
-      renderFeaturedGames(globalGamesStorage);
+      renderFeaturedGame(globalGamesStorage);
       processUIMatrixRefresh();
     }
 
@@ -978,7 +922,7 @@
     function updateStatistics(dataset) {
       const uniqueCategories = new Set();
       let totalComingSoonCount = 0;
-      let featuredTitles = [];
+      let currentFeaturedName = "None";
 
       dataset.forEach(game => {
         if (game.category) {
@@ -989,17 +933,18 @@
           }
         }
         if (game.featured === true || game.featured === "true") {
-          featuredTitles.push(game.title);
+          currentFeaturedName = game.title;
         }
       });
 
+      // Run Interactive Counter Transitions
       animateNumericStatValue("stat-games", dataset.length);
       animateNumericStatValue("stat-categories", uniqueCategories.size);
       animateNumericStatValue("stat-soon", totalComingSoonCount);
 
-      const displayFeaturedName = featuredTitles.length > 0 ? featuredTitles.join(", ") : "None";
-      document.getElementById("stat-featured").textContent = displayFeaturedName;
-      document.getElementById("stat-featured").title = displayFeaturedName;
+      // Set Static String Metrics
+      document.getElementById("stat-featured").textContent = currentFeaturedName;
+      document.getElementById("stat-featured").title = currentFeaturedName;
     }
 
     // STAT ANIMATION MOTOR PIPELINE
@@ -1008,8 +953,8 @@
       if (!elementReference) return;
 
       let startValue = 0;
-      const absoluteTransitionDuration = 1000;
-      const temporalStepIncrementInterval = 30;
+      const absoluteTransitionDuration = 1000; // ms
+      const temporalStepIncrementInterval = 30; // smooth tracking loops
       const computationFramesTotal = absoluteTransitionDuration / temporalStepIncrementInterval;
       const iterationStepDeltaValue = upperLimitTarget / computationFramesTotal;
 
@@ -1029,65 +974,49 @@
       }, temporalStepIncrementInterval);
     }
 
-    // MODIFIED: FEATURED CONTENT CAROUSEL GENERATOR MODULE
-    function renderFeaturedGames(dataset) {
+    // FEATURED CONTENT GENERATOR MODULE
+    function renderFeaturedGame(dataset) {
       const featuredWrapperFrame = document.getElementById("featuredSection");
       const insertionTargetNode = document.getElementById("featuredCardContainer");
 
-      // Filter semua game yang memiliki status featured = true
-      const featuredGames = dataset.filter(g => g.featured === true || g.featured === "true");
+      // Resolve Featured Asset Context
+      const discoveredFeaturedGameAsset = dataset.find(g => g.featured === true || g.featured === "true");
 
-      if (featuredGames.length === 0) {
+      if (!discoveredFeaturedGameAsset) {
         featuredWrapperFrame.style.display = "none";
         return;
       }
 
-      insertionTargetNode.innerHTML = ""; // Bersihkan container
+      // Memastikan class warna untuk badge dinamis berdasarkan kategori 'coming soon'
+      const isComingSoon = (discoveredFeaturedGameAsset.category || "").toLowerCase() === "coming soon";
+      const categoryBadgeClass = isComingSoon ? "badge-coming-soon" : "badge-category";
 
-      // Render setiap featured game ke dalam slider
-      featuredGames.forEach(game => {
-        const isComingSoon = (game.category || "").toLowerCase() === "coming soon";
-        const categoryBadgeClass = isComingSoon ? "badge-coming-soon" : "badge-category";
-
-        const cardHtml = `
-          <div class="featured-card">
-              <div class="featured-icon-container">${game.icon || '🎮'}</div>
-              <div class="featured-details">
-                  <div class="featured-meta">
-                      <span class="badge badge-featured">Featured Game</span>
-                      <span class="badge ${categoryBadgeClass}">${game.category}</span>
-                      <span class="badge badge-difficulty">${game.difficulty}</span>
-                  </div>
-                  <h3 class="featured-title">${game.title}</h3>
-                  <p class="featured-desc">${game.description}</p>
-                  <button class="btn btn-primary" onclick="launchGameTargetUri('${game.url}')">
-                      <svg style="width:20px; height:20px; fill:currentColor;" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z"/>
-                      </svg>
-                      Play Now
-                  </button>
-              </div>
-          </div>
-        `;
-        insertionTargetNode.insertAdjacentHTML('beforeend', cardHtml);
-      });
-
+      insertionTargetNode.innerHTML = `
+                <div class="featured-card">
+                    <div class="featured-icon-container">${discoveredFeaturedGameAsset.icon || '🎮'}</div>
+                    <div class="featured-details">
+                        <div class="featured-meta">
+                            <span class="badge badge-featured">Featured Game</span>
+                            <span class="badge ${categoryBadgeClass}">${discoveredFeaturedGameAsset.category}</span>
+                            <span class="badge badge-difficulty">${discoveredFeaturedGameAsset.difficulty}</span>
+                        </div>
+                        <h3 class="featured-title">${discoveredFeaturedGameAsset.title}</h3>
+                        <p class="featured-desc">${discoveredFeaturedGameAsset.description}</p>
+                        <button class="btn btn-primary" onclick="launchGameTargetUri('${discoveredFeaturedGameAsset.url}')">
+                            <svg style="width:20px; height:20px; fill:currentColor;" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                            Play Now
+                        </button>
+                    </div>
+                </div>
+            `;
       featuredWrapperFrame.style.display = "block";
     }
 
-    // SLIDER NAVIGATION MOTOR
-    function scrollSlider(direction) {
-      const container = document.getElementById("featuredCardContainer");
-      // Scroll sejauh ukuran card (600px) ditambah gap (24px)
-      const scrollAmount = 624 * direction;
-      container.scrollBy({
-        left: scrollAmount,
-        behavior: 'smooth'
-      });
-    }
-
-    // PIPELINE AGGREGATOR FUNCTION
+    // PIPELINE AGGREGATOR FUNCTION (FILTER + SORT + RENDER MATRIX REEVALUATION)
     function processUIMatrixRefresh() {
+      // 1. FILTER STEP EVALUATION
       let transformedDataset = globalGamesStorage.filter(game => {
         const searchScopeTitle = (game.title || "").toLowerCase();
         const searchScopeDesc = (game.description || "").toLowerCase();
@@ -1097,6 +1026,7 @@
           searchScopeDesc.includes(currentSearchQuery) ||
           searchScopeCategory.includes(currentSearchQuery);
 
+        // MODIFIKASI: Jika filter 'all', kecualikan 'coming soon'
         let matchesTabCategory = false;
         if (currentCategoryFilter === "all") {
           matchesTabCategory = (searchScopeCategory !== "coming soon");
@@ -1107,7 +1037,10 @@
         return matchesKeywordFilter && matchesTabCategory;
       });
 
+      // 2. SORT STEP EVALUATION
       transformedDataset = sortGames(transformedDataset, currentSortingStrategy);
+
+      // 3. DISPLAY ENGINE TRANSFER
       renderGames(transformedDataset);
     }
 
@@ -1124,6 +1057,7 @@
           case "category":
             return (alpha.category || "").localeCompare(beta.category || "");
           case "difficulty":
+            // Priority weight mappings logic matrix metrics
             const difficultyWeightsMatrix = { "easy": 1, "medium": 2, "hard": 3, "coming soon": 4 };
             const scoreAlpha = difficultyWeightsMatrix[(alpha.difficulty || "").toLowerCase()] || 99;
             const scoreBeta = difficultyWeightsMatrix[(beta.difficulty || "").toLowerCase()] || 99;
@@ -1139,21 +1073,26 @@
       const layoutGridNode = document.getElementById("gamesGrid");
       const applicationEmptyStateOverlay = document.getElementById("emptyState");
 
+      // Empty Buffer Guard Configuration Context Check
       if (activeFilteredDatasetCollection.length === 0) {
         layoutGridNode.style.display = "none";
         applicationEmptyStateOverlay.style.display = "block";
         return;
       }
 
+      // Normal Data Matrix Restructuralization Frame Refresh Setup
       applicationEmptyStateOverlay.style.display = "none";
       layoutGridNode.style.display = "grid";
-      layoutGridNode.innerHTML = "";
+      layoutGridNode.innerHTML = ""; // Reset internal template structure layout clean
 
       activeFilteredDatasetCollection.forEach((individualGameItem, calculatedElementIndexOffset) => {
         const layoutElementCardNode = document.createElement("div");
         layoutElementCardNode.classList.add("game-card");
+
+        // Introduce staggered elegant entry keyframe styling vectors programmatic adjustments
         layoutElementCardNode.style.animationDelay = `${calculatedElementIndexOffset * 0.04}s`;
 
+        // Menentukan secara dinamis class badge category jika tipenya coming soon
         const isComingSoon = (individualGameItem.category || "").toLowerCase() === "coming soon";
         const categoryBadgeClass = isComingSoon ? "badge-coming-soon" : "badge-category";
 
