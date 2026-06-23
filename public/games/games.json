@@ -7,7 +7,7 @@
     "difficulty": "Medium",
     "description": "Classic block puzzle game.",
     "url": "games-list/tetris.html",
-    "featured": false
+    "featured": true
   },
   {
     "id": "snake",
@@ -17,7 +17,7 @@
     "difficulty": "Easy",
     "description": "Eat food, grow longer, and avoid crashing into yourself.",
     "url": "games-list/snake.html",
-    "featured": false
+    "featured": true
   },
   {
     "id": "2048",
