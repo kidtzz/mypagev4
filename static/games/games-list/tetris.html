@@ -39,8 +39,8 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 15px;
-      overflow-x: hidden;
+      padding: 10px;
+      overflow: hidden;
     }
 
     /* ==========================================================================
@@ -48,19 +48,18 @@
            ========================================================================== */
     .arcade-container {
       display: grid;
-      grid-template-columns: minmax(240px, 340px) 150px;
-      gap: 20px;
+      grid-template-columns: minmax(240px, 320px) 140px;
+      gap: 15px;
       background: var(--panel-bg);
       backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
       border: 2px solid var(--panel-border);
       border-radius: 20px;
-      padding: 20px;
+      padding: 15px;
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 242, 254, 0.1);
       position: relative;
       width: 100%;
-      max-width: 530px;
-      /* Dijaga agar tidak terlalu melar/penuh */
+      max-width: 480px;
     }
 
     /* Main Arena Grid */
@@ -85,19 +84,19 @@
     .side-panels {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .panel {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px;
-      padding: 12px;
+      border-radius: 12px;
+      padding: 10px;
       text-align: center;
     }
 
     .panel-title {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       text-transform: uppercase;
       letter-spacing: 1.5px;
       color: var(--neon-cyan);
@@ -106,7 +105,7 @@
     }
 
     .panel-value {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: bold;
       font-family: monospace;
       color: #ffffff;
@@ -117,36 +116,36 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 60px;
+      height: 50px;
     }
 
     canvas.sub-canvas {
       background: rgba(0, 0, 0, 0.2);
-      border-radius: 8px;
+      border-radius: 6px;
     }
 
     .alert-text {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--neon-magenta);
       font-weight: bold;
-      min-height: 18px;
+      min-height: 16px;
       text-shadow: 0 0 5px var(--neon-magenta);
     }
 
     /* Navigation & Audio Buttons */
     .btn-utility {
       width: 100%;
-      padding: 10px;
+      padding: 8px;
       background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       color: white;
       font-weight: bold;
       cursor: pointer;
       letter-spacing: 1px;
       transition: all 0.2s ease;
-      font-size: 0.8rem;
-      margin-bottom: 8px;
+      font-size: 0.75rem;
+      margin-bottom: 6px;
     }
 
     .btn-utility:hover {
@@ -160,10 +159,10 @@
     }
 
     .controls-guide {
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       text-align: left;
       color: #888;
-      line-height: 1.5;
+      line-height: 1.4;
     }
 
     /* ==========================================================================
@@ -175,16 +174,17 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(8, 8, 20, 0.95);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(8, 8, 20, 0.85);
+      /* Dibuat sedikit lebih transparan */
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border-radius: 18px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       z-index: 10;
-      padding: 24px;
+      padding: 20px;
       text-align: center;
     }
 
@@ -193,8 +193,8 @@
     }
 
     .overlay h2 {
-      font-size: 2rem;
-      margin-bottom: 12px;
+      font-size: 1.8rem;
+      margin-bottom: 15px;
       letter-spacing: 2px;
       background: linear-gradient(to right, var(--neon-cyan), var(--neon-magenta));
       -webkit-background-clip: text;
@@ -202,17 +202,11 @@
       filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.4));
     }
 
-    .overlay p {
-      font-size: 0.9rem;
-      color: #aaa;
-      margin-bottom: 20px;
-    }
-
     .stats-summary {
       width: 85%;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       background: rgba(255, 255, 255, 0.04);
-      padding: 12px;
+      padding: 10px;
       border-radius: 12px;
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
@@ -220,8 +214,8 @@
     .stats-row {
       display: flex;
       justify-content: space-between;
-      margin: 6px 0;
-      font-size: 0.85rem;
+      margin: 4px 0;
+      font-size: 0.8rem;
     }
 
     .stats-row span:last-child {
@@ -229,33 +223,40 @@
       color: var(--neon-cyan);
     }
 
+    /* Request Simple & Transparent Start Button */
     .btn-action {
-      padding: 12px 28px;
+      padding: 12px 24px;
       font-size: 0.95rem;
       font-weight: bold;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: #fff;
-      background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-      border: none;
+      letter-spacing: 2px;
+      color: var(--neon-cyan);
+      background: transparent;
+      border: 2px solid var(--neon-cyan);
       border-radius: 25px;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
-      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      width: 80%;
+      box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+      transition: all 0.2s ease;
+      width: 75%;
     }
 
     .btn-action:hover {
-      transform: scale(1.03);
-      box-shadow: 0 6px 20px rgba(254, 1, 154, 0.5);
-      background: linear-gradient(135deg, var(--neon-magenta) 0%, var(--neon-purple) 100%);
+      color: #ffffff;
+      background: var(--neon-cyan);
+      box-shadow: 0 0 20px var(--neon-cyan);
+      transform: scale(1.02);
     }
 
     .btn-secondary {
-      background: transparent;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      box-shadow: none;
-      margin-top: 10px;
+      color: var(--neon-magenta);
+      border: 2px solid var(--neon-magenta);
+      box-shadow: 0 0 10px rgba(254, 1, 154, 0.2);
+      margin-top: 8px;
+    }
+
+    .btn-secondary:hover {
+      background: var(--neon-magenta);
+      box-shadow: 0 0 20px var(--neon-magenta);
     }
 
     /* ==========================================================================
@@ -264,19 +265,19 @@
     .mobile-controls {
       display: none;
       grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
+      gap: 8px;
       width: 100%;
-      max-width: 530px;
-      margin-top: 15px;
+      max-width: 480px;
+      margin-top: 10px;
     }
 
     .touch-btn {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 14px;
+      border-radius: 12px;
       color: white;
-      font-size: 1.2rem;
-      padding: 12px 0;
+      font-size: 1.1rem;
+      padding: 10px 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -290,55 +291,56 @@
     }
 
     .touch-btn span {
-      font-size: 0.55rem;
+      font-size: 0.5rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-top: 3px;
+      margin-top: 2px;
       color: #888;
     }
 
     /* ==========================================================================
-           RESPONSIVE MEDIA QUERIES (Mobile Comfort Mode)
+           RESPONSIVE MEDIA QUERIES (Mobile Comfort & Zoom Out Mode)
            ========================================================================== */
     @media (max-width: 600px) {
       body {
         justify-content: center;
-        padding: 10px;
+        padding: 5px;
       }
 
       .arcade-container {
         grid-template-columns: 1fr;
-        /* Responsif bertumpuk vertikal */
-        gap: 12px;
-        padding: 12px;
+        gap: 8px;
+        padding: 10px;
+        max-width: 330px;
       }
 
-      canvas #tetris {
-        max-height: 52vh;
-        /* Diatur pas agar tidak memakan layar kebawah */
+      canvas id="tetris" {
+        max-height: 42vh;
       }
 
       .side-panels {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 6px;
+        gap: 5px;
       }
 
       .panel {
-        padding: 8px 4px;
+        padding: 4px;
+        border-radius: 8px;
       }
 
       .panel-title {
-        font-size: 0.55rem;
+        font-size: 0.5rem;
+        margin-bottom: 2px;
       }
 
       .panel-value {
-        font-size: 1rem;
+        font-size: 0.9rem;
       }
 
       .preview-box,
       .hold-box {
-        height: 35px;
+        height: 30px;
       }
 
       .utility-panel,
@@ -355,24 +357,18 @@
 
 <body>
 
-  <!-- Main Game Frame -->
   <div class="arcade-container">
 
-    <!-- START SCREEN OVERLAY -->
     <div id="start-screen" class="overlay">
       <h2>NEON TETRIS</h2>
-      <p>Slide, rotate, and drop blocks in an elegant cyber grid.</p>
-      <button class="btn-action" id="btn-start-game">🚀 Start Mission</button>
+      <button class="btn-action" id="btn-start-game">START GAME</button>
     </div>
 
-    <!-- PAUSE OVERLAY -->
     <div id="pause-screen" class="overlay hide">
-      <h2>GAME PAUSED</h2>
-      <p>Matrix simulation is on standby.</p>
-      <button class="btn-action" id="btn-resume">▶ Resume Game</button>
+      <h2>PAUSED</h2>
+      <button class="btn-action" id="btn-resume">RESUME</button>
     </div>
 
-    <!-- GAME OVER OVERLAY -->
     <div id="gameover-screen" class="overlay hide">
       <h2>GAME OVER</h2>
       <div class="stats-summary">
@@ -381,16 +377,14 @@
         <div class="stats-row"><span>Lines Cleared:</span><span id="go-lines">0</span></div>
         <div class="stats-row"><span>High Score:</span><span id="go-high">0</span></div>
       </div>
-      <button class="btn-action" id="btn-restart">🔄 Play Again</button>
-      <button class="btn-action btn-secondary" id="btn-arcade-back">⬅ Arcade Menu</button>
+      <button class="btn-action" id="btn-restart">PLAY AGAIN</button>
+      <button class="btn-action btn-secondary" id="btn-arcade-back">BACK MENU</button>
     </div>
 
-    <!-- MAIN ARENA -->
     <div class="game-area">
       <canvas id="tetris" width="300" height="600"></canvas>
     </div>
 
-    <!-- INFORMATION & UTILITIES PANELS -->
     <div class="side-panels">
       <div class="panel">
         <div class="panel-title">Hold</div>
@@ -410,22 +404,22 @@
         <div class="panel-title">Score</div>
         <div id="score" class="panel-value">0</div>
 
-        <div style="margin-top: 6px;">
-          <div class="panel-title" style="font-size:0.55rem;">High Score</div>
-          <div id="high-score" class="panel-value" style="font-size:0.95rem; color: var(--neon-magenta);">0</div>
+        <div style="margin-top: 4px;">
+          <div class="panel-title" style="font-size:0.5rem;">High Score</div>
+          <div id="high-score" class="panel-value" style="font-size:0.85rem; color: var(--neon-magenta);">0</div>
         </div>
 
-        <div style="display: flex; justify-content: space-around; margin-top: 6px;">
+        <div style="display: flex; justify-content: space-around; margin-top: 4px;">
           <div>
-            <div class="panel-title" style="font-size:0.5rem;">LVL</div>
-            <div id="level" class="panel-value" style="font-size:0.95rem;">1</div>
+            <div class="panel-title" style="font-size:0.45rem;">LVL</div>
+            <div id="level" class="panel-value" style="font-size:0.85rem;">1</div>
           </div>
           <div>
-            <div class="panel-title" style="font-size:0.5rem;">Lines</div>
-            <div id="lines" class="panel-value" style="font-size:0.95rem;">0</div>
+            <div class="panel-title" style="font-size:0.45rem;">Lines</div>
+            <div id="lines" class="panel-value" style="font-size:0.85rem;">0</div>
           </div>
         </div>
-        <div id="combo-alert" class="alert-text" style="margin-top: 4px;"></div>
+        <div id="combo-alert" class="alert-text" style="margin-top: 2px;"></div>
       </div>
 
       <div class="panel utility-panel" style="border:none; background:transparent; padding:0;">
@@ -444,7 +438,6 @@
     </div>
   </div>
 
-  <!-- TOUCH CONTROLS PANEL FOR PHONE -->
   <div class="mobile-controls">
     <div class="touch-btn" id="m-left">◀<span>Left</span></div>
     <div class="touch-btn" id="m-rotate">🔄<span>Rotate</span></div>
@@ -558,7 +551,6 @@
       player.pos.y = player.type === 'I' ? -1 : 0;
       player.pos.x = Math.floor((COLS - player.matrix[0].length) / 2);
 
-      // Cek kekalahan HANYA jika game sudah beneran aktif berjalan
       if (gameStarted && collide(arena, player)) {
         triggerGameOver();
       }
@@ -760,7 +752,6 @@
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Grid Background Subtle Line
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.02)'; ctx.lineWidth = 1;
       for (let i = 0; i <= COLS; i++) { ctx.beginPath(); ctx.moveTo(i * BLOCK_SIZE, 0); ctx.lineTo(i * BLOCK_SIZE, canvas.height); ctx.stroke(); }
       for (let j = 0; j <= ROWS; j++) { ctx.beginPath(); ctx.moveTo(0, j * BLOCK_SIZE); ctx.lineTo(canvas.width, j * BLOCK_SIZE); ctx.stroke(); }
@@ -835,11 +826,15 @@
     }
 
     function startNewGame() {
+      // FIX ANTI-BUG BLUR: Hilangkan fokus HTML element agar keyboard Enter/Space tidak menembus overlay
+      if (document.activeElement) {
+        document.activeElement.blur();
+      }
+
       arena = createMatrix(COLS, ROWS);
       score = 0; level = 1; lines = 0; dropInterval = 1000; combo = 0; b2bTetris = false;
       holdPieceType = null; isGameOver = false; isPaused = false;
 
-      // Urutan krusial: generate isi balok dulu, BARU set status game running
       nextPieceType = getRandomType();
       resetPlayer();
       gameStarted = true;
@@ -854,8 +849,11 @@
        Controllers Listeners (Web & Touch)
        ========================================================================== */
     window.addEventListener('keydown', event => {
-      // Jika screen modal start/gameover sedang muncul, cegah space/enter menembus kontrol game
-      if (!gameStarted && (event.key === ' ' || event.key === 'Enter')) return;
+      // FIX ANTI-BUG ENTER: Jika game belum berjalan atau sedang over, abaikan tombol aksi game
+      if (!gameStarted && (event.key === ' ' || event.key === 'Enter')) {
+        event.preventDefault();
+        return;
+      }
 
       switch (event.key.toLowerCase()) {
         case 'arrowleft': case 'a': playerMove(-1); break;

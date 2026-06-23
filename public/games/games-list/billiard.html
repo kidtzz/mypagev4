@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Modern 2D Billiard / Pool</title>
+  <style>
+    :root {
+      --bg-color: #0d0f12;
+      --panel-bg: rgba(255, 255, 255, 0.08);
+      --panel-border: rgba(255, 255, 255, 0.12);
+      --gold: #dfb76c;
+      --text-color: #f3f4f6;
+      --text-muted: #9ca3af;
+      --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    body,
+    html {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: var(--bg-color);
+      font-family: var(--font-family);
+      color: var(--text-color);
+    }
+
+    /* Container pintar: Jika terdeteksi portrait di mobile, dipaksa rotasi otomatis lewat CSS */
+    #game-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, #1a202c 0%, #0d0f12 100%);
+    }
+
+    /* FIX KEPOTONG: Paksa ke tengah total saat posisi HP tegak (Portrait) */
+    @media screen and (max-aspect-ratio: 1/1) {
+      #game-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100vh;
+        height: 100vw;
+        transform: translate(-50%, -50%) rotate(90deg);
+      }
+    }
+
+    #canvas-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: fill;
+    }
+
+    /* Glassmorphism Panels */
+    .glass-panel {
+      background: var(--panel-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    }
+
+    /* HUD UI */
+    #hud {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 95%;
+      max-width: 960px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 20px;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .hud-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hud-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+    }
+
+    .hud-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .hud-value.gold {
+      color: var(--gold);
+    }
+
+    #btn-pause-trigger {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--panel-border);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      pointer-events: auto;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    /* Overlay Screens */
+    .screen-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      background: rgba(13, 15, 18, 0.75);
+    }
+
+    .screen-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .menu-card {
+      width: 90%;
+      max-width: 420px;
+      padding: 30px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #ffffff 0%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 24px;
+      color: var(--gold);
+    }
+
+    .menu-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: -12px;
+    }
+
+    .mode-selection {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: left;
+    }
+
+    .mode-option {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--panel-border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      cursor: pointer;
+    }
+
+    .mode-option.selected {
+      background: rgba(223, 183, 108, 0.15);
+      border-color: var(--gold);
+    }
+
+    .mode-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .mode-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #e7c27d 0%, #c59b4e 100%);
+      color: #0d0f12;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+      border: 1px solid var(--panel-border);
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .stat-box {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .stat-box .lbl {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .stat-box .val {
+      font-size: 16px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="game-container">
+
+    <div id="hud" class="glass-panel">
+      <div class="hud-item">
+        <span class="hud-label">Score</span>
+        <span id="hud-score" class="hud-value">0</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label" id="timer-label">Time Elapsed</span>
+        <span id="hud-timer" class="hud-value">00:00</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">Balls Left</span>
+        <span id="hud-balls" class="hud-value gold">15</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">High Score</span>
+        <span id="hud-highscore" class="hud-value">0</span>
+      </div>
+      <button id="btn-pause-trigger">PAUSE</button>
+    </div>
+
+    <div id="canvas-wrapper">
+      <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <div id="screen-main-menu" class="screen-overlay active">
+      <div class="menu-card glass-panel">
+        <div>
+          <h1>POOL 2D</h1>
+          <p class="menu-subtitle">Modern Fullscreen Experience</p>
+        </div>
+
+        <div class="mode-selection">
+          <div class="mode-option selected" data-mode="classic">
+            <div class="mode-title">Classic Mode</div>
+            <div class="mode-desc">Clear all 15 balls at your own pace.</div>
+          </div>
+          <div class="mode-option" data-mode="timeAttack">
+            <div class="mode-title">Time Attack</div>
+            <div class="mode-desc">Race against a 3-minute timer.</div>
+          </div>
+        </div>
+
+        <button id="btn-play" class="btn-primary">Start Game</button>
+      </div>
+    </div>
+
+    <div id="screen-pause" class="screen-overlay">
+      <div class="menu-card glass-panel">
+        <h2>Game Paused</h2>
+        <button id="btn-resume" class="btn-primary">Resume</button>
+        <button id="btn-restart" class="btn-secondary">Restart</button>
+        <button id="btn-menu" class="btn-secondary">Main Menu</button>
+      </div>
+    </div>
+
+    <div id="screen-end" class="screen-overlay">
+      <div class="menu-card glass-panel">
+        <h2 id="end-title">Table Cleared!</h2>
+        <p id="end-subtitle" class="menu-subtitle">Excellent performance</p>
+
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="lbl">Final Score</div>
+            <div id="end-score" class="val gold">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="lbl" id="end-time-lbl">Time Taken</div>
+            <div id="end-time" class="val">00:00</div>
+          </div>
+        </div>
+
+        <button id="btn-play-again" class="btn-primary">Play Again</button>
+        <button id="btn-end-menu" class="btn-secondary">Main Menu</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // --- AUDIO ENGINE ---
+    class AudioEngine {
+      constructor() { this.ctx = null; }
+      init() { if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); }
+      playClick() {
+        this.init(); if (!this.ctx) return;
+        let t = this.ctx.currentTime;
+        let osc = this.ctx.createOscillator(), gain = this.ctx.createGain();
+        osc.type = 'sine'; osc.frequency.setValueAtTime(400, t);
+        osc.frequency.exponentialRampToValueAtTime(120, t + 0.05);
+        gain.gain.setValueAtTime(0.1, t); gain.gain.linearRampToValueAtTime(0.01, t + 0.05);
+        osc.connect(gain); gain.connect(this.ctx.destination); osc.start(t); osc.stop(t + 0.05);
+      }
+      playCollision(volume) {
+        this.init(); if (!this.ctx) return;
+        let vol = Math.min(Math.max(volume, 0.01), 1.0);
+        let t = this.ctx.currentTime;
+        let osc = this.ctx.createOscillator(), gain = this.ctx.createGain();
+        osc.type = 'triangle'; osc.frequency.setValueAtTime(180, t);
+        osc.frequency.exponentialRampToValueAtTime(90, t + 0.08);
+        gain.gain.setValueAtTime(vol * 0.3, t); gain.gain.linearRampToValueAtTime(0.01, t + 0.08);
+        osc.connect(gain); gain.connect(this.ctx.destination); osc.start(t); osc.stop(t + 0.08);
+      }
+      playCushion(volume) {
+        this.init(); if (!this.ctx) return;
+        let vol = Math.min(Math.max(volume, 0.01), 1.0);
+        let t = this.ctx.currentTime;
+        let osc = this.ctx.createOscillator(), gain = this.ctx.createGain();
+        osc.type = 'sine'; osc.frequency.setValueAtTime(95, t);
+        gain.gain.setValueAtTime(vol * 0.4, t); gain.gain.linearRampToValueAtTime(0.01, t + 0.1);
+        osc.connect(gain); gain.connect(this.ctx.destination); osc.start(t); osc.stop(t + 0.1);
+      }
+      playPocket() {
+        this.init(); if (!this.ctx) return;
+        let t = this.ctx.currentTime;
+        let osc = this.ctx.createOscillator(), gain = this.ctx.createGain();
+        osc.type = 'sine'; osc.frequency.setValueAtTime(140, t);
+        osc.frequency.linearRampToValueAtTime(60, t + 0.2);
+        gain.gain.setValueAtTime(0.3, t); gain.gain.linearRampToValueAtTime(0.01, t + 0.2);
+        osc.connect(gain); gain.connect(this.ctx.destination); osc.start(t); osc.stop(t + 0.2);
+      }
+    }
+    const audio = new AudioEngine();
+
+    // --- VECTOR MATH ---
+    const Vec = {
+      dist: (p1, p2) => Math.hypot(p2.x - p1.x, p2.y - p1.y),
+      dot: (v1, v2) => v1.x * v2.x + v1.y * v2.y,
+      sub: (v1, v2) => ({ x: v1.x - v2.x, y: v1.y - v2.y }),
+      add: (v1, v2) => ({ x: v1.x + v2.x, y: v1.y + v2.y }),
+      mult: (v, n) => ({ x: v.x * n, y: v.y * n }),
+      norm: (v) => {
+        let m = Math.hypot(v.x, v.y);
+        return m === 0 ? { x: 0, y: 0 } : { x: v.x / m, y: v.y / m };
+      }
+    };
+
+    // --- CONSTANTS ---
+    const BASE_WIDTH = 1000;
+    const BASE_HEIGHT = 500;
+    const BALL_RADIUS = 11.5;
+    const POCKET_RADIUS = 23;
+    const FRICTION = 0.984;
+    const MIN_SPEED = 0.08;
+    const PHYSICS_SUBSTEPS = 4;
+
+    const BALL_COLORS = [
+      '#ffffff', '#facc15', '#1d4ed8', '#dc2626', '#7c3aed', '#f97316', '#15803d', '#991b1b',
+      '#111827', '#fde047', '#3b82f6', '#ef4444', '#a78bfa', '#fb923c', '#22c55e', '#b91c1c'
+    ];
+
+    let canvas = document.getElementById('gameCanvas');
+    let ctx = canvas.getContext('2d');
+
+    let gameState = 'menu';
+    let gameMode = 'classic';
+    let score = 0;
+    let highScore = parseInt(localStorage.getItem('pool2d_high') || '0');
+    let timeElapsed = 0, timeRemaining = 180, timerInterval = null;
+    let ballsRemaining = 15;
+
+    let balls = [], cueBall = null, pockets = [], particles = [];
+    let isAiming = false, isDraggingPower = false;
+    let mousePos = { x: 0, y: 0 }, startDragPos = { x: 0, y: 0 };
+    let currentPower = 0;
+    const MAX_POWER = 22;
+    let ballsPocketedThisTurn = 0;
+
+    document.getElementById('hud-highscore').innerText = highScore;
+
+    // --- BALL CLASS ---
+    class Ball {
+      constructor(x, y, id) {
+        this.x = x; this.y = y; this.vx = 0; this.vy = 0; this.id = id;
+        this.color = BALL_COLORS[id]; this.radius = BALL_RADIUS;
+        this.isPocketed = false; this.opacity = 1; this.scale = 1;
+      }
+      moveTick() {
+        if (this.isPocketed) return;
+        this.x += this.vx / PHYSICS_SUBSTEPS;
+        this.y += this.vy / PHYSICS_SUBSTEPS;
+      }
+      applyFriction() {
+        if (this.isPocketed) {
+          if (this.scale > 0) { this.scale -= 0.1; this.opacity -= 0.1; }
+          return;
+        }
+        this.vx *= FRICTION; this.vy *= FRICTION;
+        if (Math.hypot(this.vx, this.vy) < MIN_SPEED) { this.vx = 0; this.vy = 0; }
+      }
+      draw() {
+        if (this.isPocketed && this.scale <= 0) return;
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, this.opacity);
+
+        // Shadow
+        ctx.beginPath(); ctx.arc(this.x + 2, this.y + 3, this.radius * this.scale, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.2)'; ctx.fill();
+
+        // Ball Base
+        ctx.beginPath(); ctx.arc(this.x, this.y, this.radius * this.scale, 0, Math.PI * 2);
+        ctx.fillStyle = this.color; ctx.fill();
+
+        // Number
+        if (this.id !== 0) {
+          ctx.beginPath(); ctx.arc(this.x, this.y, this.radius * 0.45 * this.scale, 0, Math.PI * 2);
+          ctx.fillStyle = '#ffffff'; ctx.fill();
+          ctx.fillStyle = '#000000'; ctx.font = `bold ${this.radius * 0.55 * this.scale}px var(--font-family)`;
+          ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(this.id, this.x, this.y + 0.5);
+        }
+
+        // Shading Gloss
+        let gradient = ctx.createRadialGradient(this.x - this.radius * 0.3, this.y - this.radius * 0.3, this.radius * 0.1, this.x, this.y, this.radius);
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.4)'); gradient.addColorStop(1, 'rgba(0, 0, 0, 0.3)');
+        ctx.beginPath(); ctx.arc(this.x, this.y, this.radius * this.scale, 0, Math.PI * 2);
+        ctx.fillStyle = gradient; ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    // --- PARTICLES ---
+    class Particle {
+      constructor(x, y, color) {
+        this.x = x; this.y = y; this.color = color; this.life = 1.0;
+        let a = Math.random() * Math.PI * 2, s = Math.random() * 2 + 1;
+        this.vx = Math.cos(a) * s; this.vy = Math.sin(a) * s;
+      }
+      update() { this.x += this.vx; this.y += this.vy; this.life -= 0.04; }
+      draw() {
+        if (this.life <= 0) return;
+        ctx.save(); ctx.globalAlpha = this.life; ctx.beginPath();
+        ctx.arc(this.x, this.y, 2.5, 0, Math.PI * 2); ctx.fillStyle = this.color; ctx.fill(); ctx.restore();
+      }
+    }
+
+    function initPockets() {
+      const W = BASE_WIDTH, H = BASE_HEIGHT, o = 6;
+      pockets = [
+        { x: o, y: o }, { x: W / 2, y: o - 2 }, { x: W - o, y: o },
+        { x: o, y: H - o }, { x: W / 2, y: H - o + 2 }, { x: W - o, y: H - o }
+      ];
+    }
+
+    function initGame() {
+      initPockets();
+      balls = []; particles = [];
+      score = 0; ballsPocketedThisTurn = 0;
+      if (gameMode === 'classic') { timeElapsed = 0; } else { timeRemaining = 180; }
+
+      cueBall = new Ball(BASE_WIDTH * 0.25, BASE_HEIGHT * 0.5, 0);
+      balls.push(cueBall);
+
+      const startX = BASE_WIDTH * 0.7, startY = BASE_HEIGHT * 0.5;
+      let poolIds = [1, 9, 2, 10, 8, 3, 11, 4, 12, 5, 13, 6, 14, 7, 15];
+      let idIdx = 0;
+
+      for (let col = 0; col < 5; col++) {
+        let currX = startX + col * (BALL_RADIUS * 1.73);
+        let topY = startY - (col * (BALL_RADIUS * 2.02)) / 2;
+        for (let row = 0; row <= col; row++) {
+          balls.push(new Ball(currX, topY + row * (BALL_RADIUS * 2.02), poolIds[idIdx++]));
+        }
+      }
+      ballsRemaining = balls.length - 1;
+      updateHUD();
+
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (gameState === 'playing') {
+          if (gameMode === 'classic') timeElapsed++;
+          else { timeRemaining--; if (timeRemaining <= 0) endGame(false); }
+          updateHUD();
+        }
+      }, 1000);
+      resizeCanvas();
+    }
+
+    function updateHUD() {
+      document.getElementById('hud-score').innerText = score;
+      document.getElementById('hud-balls').innerText = ballsRemaining;
+      document.getElementById('hud-timer').innerText = formatTime(gameMode === 'classic' ? timeElapsed : timeRemaining);
+    }
+
+    function formatTime(s) { return `${Math.floor(s / 60).toString().padStart(2, '0')}:${(s % 60).toString().padStart(2, '0')}`; }
+
+    // --- PHYSICS CORE ---
+    function processPhysics() {
+      for (let step = 0; step < PHYSICS_SUBSTEPS; step++) {
+        balls.forEach(b => b.moveTick());
+
+        for (let i = 0; i < balls.length; i++) {
+          for (let j = i + 1; j < balls.length; j++) {
+            let b1 = balls[i], b2 = balls[j];
+            if (b1.isPocketed || b2.isPocketed) continue;
+
+            let dist = Vec.dist(b1, b2);
+            let minDist = b1.radius + b2.radius;
+
+            if (dist < minDist) {
+              let overlap = minDist - dist;
+              let normal = Vec.norm(Vec.sub(b2, b1));
+
+              b1.x -= normal.x * overlap * 0.51; b1.y -= normal.y * overlap * 0.51;
+              b2.x += normal.x * overlap * 0.51; b2.y += normal.y * overlap * 0.51;
+
+              let normalVel = (b1.vx - b2.vx) * normal.x + (b1.vy - b2.vy) * normal.y;
+              if (normalVel > 0) {
+                b1.vx -= normalVel * normal.x; b1.vy -= normalVel * normal.y;
+                b2.vx += normalVel * normal.x; b2.vy += normalVel * normal.y;
+                audio.playCollision(Math.abs(normalVel) / 10);
+              }
+            }
+          }
+        }
+
+        const pad = BALL_RADIUS;
+        balls.forEach(b => {
+          if (b.isPocketed) return;
+          if (b.x < pad) { b.x = pad; b.vx *= -1; audio.playCushion(Math.abs(b.vx) / 8); }
+          else if (b.x > BASE_WIDTH - pad) { b.x = BASE_WIDTH - pad; b.vx *= -1; audio.playCushion(Math.abs(b.vx) / 8); }
+          if (b.y < pad) { b.y = pad; b.vy *= -1; audio.playCushion(Math.abs(b.vy) / 8); }
+          else if (b.y > BASE_HEIGHT - pad) { b.y = BASE_HEIGHT - pad; b.vy *= -1; audio.playCushion(Math.abs(b.vy) / 8); }
+        });
+      }
+
+      balls.forEach(b => {
+        if (b.isPocketed) return;
+        pockets.forEach(p => {
+          if (Vec.dist(b, p) < POCKET_RADIUS) {
+            b.isPocketed = true; b.vx = 0; b.vy = 0;
+            audio.playPocket();
+            for (let i = 0; i < 12; i++) particles.push(new Particle(b.x, b.y, b.color));
+
+            if (b.id === 0) {
+              score = Math.max(0, score - 50);
+              setTimeout(() => { cueBall.isPocketed = false; cueBall.opacity = 1; cueBall.scale = 1; cueBall.x = BASE_WIDTH * 0.25; cueBall.y = BASE_HEIGHT * 0.5; }, 1000);
+            } else {
+              ballsPocketedThisTurn++; ballsRemaining--; score += 100;
+              updateHUD();
+              if (ballsRemaining === 0) setTimeout(() => endGame(true), 500);
+            }
+          }
+        });
+      });
+
+      balls.forEach(b => b.applyFriction());
+      particles.forEach(p => p.update());
+      particles = particles.filter(p => p.life > 0);
+    }
+
+    function isTableMotionless() {
+      return balls.filter(b => !b.isPocketed).every(b => b.vx === 0 && b.vy === 0);
+    }
+
+    function endGame(isCleared) {
+      gameState = 'end'; clearInterval(timerInterval);
+      document.getElementById('end-score').innerText = score;
+      if (score > highScore) { highScore = score; localStorage.setItem('pool2d_high', highScore); }
+      switchScreen('screen-end');
+    }
+
+    // --- KEMBALIKAN GARIS PREDIKSI LENGKAP (RAYCASTING) ---
+    function drawAimSystem() {
+      if (!isAiming || cueBall.isPocketed) return;
+
+      let angle = Math.atan2(mousePos.y - cueBall.y, mousePos.x - cueBall.x);
+      let aimDir = Vec.norm({ x: mousePos.x - cueBall.x, y: mousePos.y - cueBall.y });
+
+      if (isDraggingPower) {
+        let dragDir = Vec.sub(mousePos, startDragPos);
+        let dist = Math.min(Math.hypot(dragDir.x, dragDir.y), 150);
+        currentPower = (dist / 150) * MAX_POWER;
+        angle = Math.atan2(dragDir.y, dragDir.x) + Math.PI;
+        aimDir = { x: Math.cos(angle), y: Math.sin(angle) };
+      }
+
+      let closestBall = null;
+      let closestT = Infinity;
+
+      // Cari bola terdekat sepanjang jalur arah tembakan
+      balls.forEach(b => {
+        if (b.id === 0 || b.isPocketed) return;
+
+        let oc = Vec.sub(b, cueBall);
+        let projection = Vec.dot(oc, aimDir);
+
+        if (projection > 0) {
+          let shortDistSq = Vec.dot(oc, oc) - projection * projection;
+          let radiusSum = cueBall.radius + b.radius;
+          if (shortDistSq < radiusSum * radiusSum) {
+            let thickness = Math.sqrt(radiusSum * radiusSum - shortDistSq);
+            let t = projection - thickness;
+            if (t > 0 && t < closestT) {
+              closestT = t;
+              closestBall = b;
+            }
+          }
+        }
+      });
+
+      // Tentukan ujung garis laser panduan utama
+      let endX = cueBall.x + aimDir.x * (closestT === Infinity ? 800 : closestT);
+      let endY = cueBall.y + aimDir.y * (closestT === Infinity ? 800 : closestT);
+
+      ctx.save();
+      // 1. Gambar Garis Putih Utama ke Bola Target
+      ctx.beginPath(); ctx.moveTo(cueBall.x, cueBall.y); ctx.lineTo(endX, endY);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)'; ctx.lineWidth = 1.5; ctx.setLineDash([5, 5]); ctx.stroke();
+
+      // 2. Jika Menargetkan Bola, Gambar Bayangan Lingkaran & Jalur Garis Pantul Targetnya
+      if (closestBall) {
+        ctx.beginPath(); ctx.arc(endX, endY, cueBall.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)'; ctx.lineWidth = 1; ctx.setLineDash([]); ctx.stroke();
+
+        // Hitung arah pantulan bola target setelah kena
+        let targetNormal = Vec.norm(Vec.sub(closestBall, { x: endX, y: endY }));
+        ctx.beginPath(); ctx.moveTo(closestBall.x, closestBall.y);
+        ctx.lineTo(closestBall.x + targetNormal.x * 50, closestBall.y + targetNormal.y * 50);
+        ctx.strokeStyle = 'rgba(223, 183, 108, 0.8)'; ctx.lineWidth = 2; ctx.stroke();
+      }
+
+      // 3. Gambar Stik Biliar
+      let stickDist = 14 + (isDraggingPower ? currentPower * 2.2 : 0);
+      let sX = cueBall.x - aimDir.x * stickDist, sY = cueBall.y - aimDir.y * stickDist;
+      ctx.beginPath(); ctx.moveTo(sX, sY); ctx.lineTo(cueBall.x - aimDir.x * (stickDist + 220), cueBall.y - aimDir.y * (stickDist + 220));
+      ctx.strokeStyle = '#c59b4e'; ctx.lineWidth = 4.5; ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawPowerMeter() {
+      if (!isDraggingPower) return;
+      let cx = 25, cy = BASE_HEIGHT / 2, w = 12, h = 120;
+      ctx.fillStyle = 'rgba(0,0,0,0.5)'; ctx.fillRect(cx, cy - h / 2, w, h);
+      let fillH = (currentPower / MAX_POWER) * h;
+      ctx.fillStyle = '#4ade80'; ctx.fillRect(cx, cy + h / 2 - fillH, w, fillH);
+    }
+
+    // --- RENDER GAME ---
+    function render() {
+      ctx.clearRect(0, 0, BASE_WIDTH, BASE_HEIGHT);
+      ctx.fillStyle = '#115e3b'; ctx.fillRect(0, 0, BASE_WIDTH, BASE_HEIGHT);
+
+      pockets.forEach(p => {
+        ctx.beginPath(); ctx.arc(p.x, p.y, POCKET_RADIUS, 0, Math.PI * 2);
+        ctx.fillStyle = '#090d16'; ctx.fill();
+      });
+
+      balls.forEach(b => b.draw());
+      particles.forEach(p => p.draw());
+
+      if (isTableMotionless() && gameState === 'playing') {
+        if (!isAiming && !cueBall.isPocketed) isAiming = true;
+        drawAimSystem(); drawPowerMeter();
+      } else {
+        isAiming = false;
+      }
+    }
+
+    function gameLoop() {
+      if (gameState === 'playing') processPhysics();
+      render(); requestAnimationFrame(gameLoop);
+    }
+
+    function getCanvasMouseCoords(e) {
+      let rect = canvas.getBoundingClientRect();
+      let clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      let clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+      // Jika rasio layar terdeteksi portrait (sedang diputar CSS), balik hitungan koordinat agar akurat
+      if (window.innerHeight > window.innerWidth) {
+        let newX = clientY - rect.top;
+        let newY = rect.right - clientX;
+        return { x: (newX / rect.height) * BASE_WIDTH, y: (newY / rect.width) * BASE_HEIGHT };
+      }
+
+      return {
+        x: ((clientX - rect.left) / rect.width) * BASE_WIDTH,
+        y: ((clientY - rect.top) / rect.height) * BASE_HEIGHT
+      };
+    }
+
+    function addInputListeners() {
+      const down = (e) => {
+        if (gameState !== 'playing' || !isTableMotionless() || cueBall.isPocketed) return;
+        let c = getCanvasMouseCoords(e); isDraggingPower = true; startDragPos = c; mousePos = c;
+      };
+      const move = (e) => { if (gameState === 'playing') mousePos = getCanvasMouseCoords(e); };
+      const up = () => {
+        if (!isDraggingPower) return; isDraggingPower = false;
+        if (currentPower > 0.6) {
+          let angle = Vec.dist(mousePos, startDragPos) < 2 ?
+            Math.atan2(mousePos.y - cueBall.y, mousePos.x - cueBall.x) :
+            Math.atan2(mousePos.y - startDragPos.y, mousePos.x - startDragPos.x) + Math.PI;
+          cueBall.vx = Math.cos(angle) * currentPower; cueBall.vy = Math.sin(angle) * currentPower;
+          ballsPocketedThisTurn = 0; isAiming = false;
+        }
+        currentPower = 0;
+      };
+      canvas.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+      canvas.addEventListener('touchstart', down); window.addEventListener('touchmove', move); window.addEventListener('touchend', up);
+    }
+
+    function resizeCanvas() { canvas.width = BASE_WIDTH; canvas.height = BASE_HEIGHT; }
+    function switchScreen(id) {
+      document.querySelectorAll('.screen-overlay').forEach(s => s.classList.remove('active'));
+      if (id) document.getElementById(id).classList.add('active');
+    }
+
+    function forceAndroidFullscreen() {
+      let el = document.documentElement;
+      let rfs = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+      if (rfs) {
+        rfs.call(el).then(() => {
+          if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => { });
+        }).catch(() => { });
+      }
+    }
+
+    document.getElementById('btn-play').addEventListener('click', () => {
+      audio.playClick(); forceAndroidFullscreen();
+      setTimeout(() => { switchScreen(null); gameState = 'playing'; initGame(); }, 150);
+    });
+
+    document.getElementById('btn-pause-trigger').addEventListener('click', () => { if (gameState === 'playing') { gameState = 'paused'; switchScreen('screen-pause'); } });
+    document.getElementById('btn-resume').addEventListener('click', () => { gameState = 'playing'; switchScreen(null); });
+    document.getElementById('btn-restart').addEventListener('click', () => { switchScreen(null); gameState = 'playing'; initGame(); });
+    document.getElementById('btn-menu').addEventListener('click', () => { gameState = 'menu'; switchScreen('screen-main-menu'); });
+    document.getElementById('btn-play-again').addEventListener('click', () => { switchScreen(null); gameState = 'playing'; initGame(); });
+    document.getElementById('btn-end-menu').addEventListener('click', () => { gameState = 'menu'; switchScreen('screen-main-menu'); });
+
+    addInputListeners(); resizeCanvas(); requestAnimationFrame(gameLoop);
+  </script>
+</body>
+
+</html>

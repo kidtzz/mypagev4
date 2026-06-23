@@ -118,5 +118,15 @@
     "description": "Jump, collect coins, and defeat enemies in a retro platform world.",
     "url": "games-list/platform-adventure.html",
     "featured": false
+  },
+  {
+    "id": "billiard",
+    "title": "Billiard",
+    "icon": "🎱",
+    "category": "Sports",
+    "difficulty": "Medium",
+    "description": "Aim carefully, control your shot power, and pocket all the balls in this modern 8-ball style billiard game.",
+    "url": "games-list/billiard.html",
+    "featured": true
   }
 ]
