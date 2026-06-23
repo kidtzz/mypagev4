@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cyber Defense: Neo Arcade</title>
+  <style>
+    /* --- THEME SETUP & VARIABLES --- */
+    :root {
+      --bg-dark: #05060f;
+      --bg-surface: rgba(15, 18, 36, 0.6);
+      --border-glass: rgba(255, 255, 255, 0.06);
+      --text-bright: #ffffff;
+      --text-muted: #7885a5;
+      --neon-blue: #0055ff;
+      --neon-cyan: #00f2fe;
+      --neon-purple: #9d4edd;
+      --neon-magenta: #ff007f;
+      --border-radius: 16px;
+      --glow-cyan: 0 0 15px rgba(0, 242, 254, 0.4);
+      --glow-purple: 0 0 15px rgba(157, 78, 221, 0.4);
+      --glow-magenta: 0 0 15px rgba(255, 0, 127, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-bright);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 15px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* --- BACKGROUND PARTICLES CANVAS --- */
+    #bgCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: auto;
+    }
+
+    /* --- INTERFACE CONTROLLERS WRAPPER --- */
+    .portal-container {
+      width: 100%;
+      max-width: 1024px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .interactive-element {
+      pointer-events: auto;
+    }
+
+    /* --- TOP ACTION BAR --- */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .back-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glass);
+      color: var(--text-bright);
+      padding: 8px 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(12px);
+    }
+
+    .back-btn:hover {
+      border-color: var(--neon-cyan);
+      box-shadow: var(--glow-cyan);
+      color: var(--neon-cyan);
+      transform: translateY(-1px);
+    }
+
+    .top-utility-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .utility-toggle {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glass);
+      color: var(--text-bright);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: all 0.2s;
+      backdrop-filter: blur(12px);
+    }
+
+    .utility-toggle:hover {
+      border-color: var(--neon-purple);
+      box-shadow: var(--glow-purple);
+      transform: scale(1.05);
+    }
+
+    /* --- SCOREBOARD & STATS METRICS DISPLAY PANEL --- */
+    .dashboard {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(16px);
+      border-radius: var(--border-radius);
+      padding: 12px 20px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .branding h1 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #fff, var(--neon-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .branding p {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .stats-grid {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .stat-node {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+      padding: 6px 12px;
+      min-width: 75px;
+      text-align: center;
+    }
+
+    .stat-lbl {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+
+    .stat-val {
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-family: monospace;
+      line-height: 1.1;
+    }
+
+    #statGold {
+      color: #ffd166;
+      text-shadow: 0 0 10px rgba(255, 209, 102, 0.3);
+    }
+
+    #statHp {
+      color: #ff5d8f;
+      text-shadow: 0 0 10px rgba(255, 93, 143, 0.3);
+    }
+
+    #statWave {
+      color: var(--neon-cyan);
+      text-shadow: var(--glow-cyan);
+    }
+
+    #statScore {
+      color: var(--neon-purple);
+      text-shadow: var(--glow-purple);
+    }
+
+    /* --- GAME ENGINE DUAL PANEL ARCHITECTURE --- */
+    .workspace-layout {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 12px;
+      width: 100%;
+    }
+
+    /* --- THE VIEWPORT MATRIX CLIPPING WRAPPER --- */
+    .viewport-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 12 / 8;
+      background: rgba(8, 9, 21, 0.85);
+      border: 2px solid var(--border-glass);
+      border-radius: var(--border-radius);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      overflow: hidden;
+    }
+
+    #gameCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: calc(var(--border-radius) - 2px);
+    }
+
+    /* --- SHOP & INSPECTOR INTERACTIVE CARD RIGHT SIDEBAR --- */
+    .sidebar-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      height: 100%;
+    }
+
+    .panel-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(16px);
+      border-radius: var(--border-radius);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .panel-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 4px;
+    }
+
+    /* --- TOWER SELECTION BUTTON DECK --- */
+    .shop-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .shop-item-btn {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-glass);
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      text-align: left;
+      color: var(--text-bright);
+    }
+
+    .shop-item-btn:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--neon-cyan);
+      box-shadow: inset 0 0 8px rgba(0, 242, 254, 0.1);
+    }
+
+    .shop-item-btn.selected {
+      background: rgba(0, 85, 255, 0.15);
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 10px rgba(0, 242, 254, 0.2), inset 0 0 6px rgba(0, 242, 254, 0.2);
+    }
+
+    .shop-item-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .item-info-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .item-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .item-stats-hint {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .item-cost-tag {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #ffd166;
+      font-family: monospace;
+      background: rgba(255, 209, 102, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* --- LIVE SELECTION DETAILS CONTEXT PANEL --- */
+    .inspector-empty-msg {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 16px 0;
+      font-style: italic;
+    }
+
+    .inspector-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .inspector-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .inspector-header h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--neon-cyan);
+    }
+
+    .inspector-lvl-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      background: var(--neon-purple);
+      padding: 1px 5px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .inspector-spec-table {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      background: rgba(0, 0, 0, 0.15);
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+    }
+
+    .spec-row span:first-child {
+      color: var(--text-muted);
+    }
+
+    .spec-row span:last-child {
+      font-weight: 700;
+      float: right;
+      color: #fff;
+    }
+
+    .inspector-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-glass);
+      color: var(--text-bright);
+      padding: 8px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+
+    .btn:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--text-bright);
+    }
+
+    .btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .btn-upgrade {
+      background: linear-gradient(135deg, var(--neon-blue) 0%, #00d2ff 100%);
+      border: none;
+      color: #05060f;
+      font-weight: 700;
+    }
+
+    .btn-upgrade:hover:not(:disabled) {
+      box-shadow: var(--glow-cyan);
+      transform: translateY(-1px);
+    }
+
+    .btn-sell {
+      border-color: rgba(255, 0, 127, 0.3);
+      color: #ff5d8f;
+    }
+
+    .btn-sell:hover:not(:disabled) {
+      background: rgba(255, 0, 127, 0.1);
+      border-color: var(--neon-magenta);
+    }
+
+    /* --- WAVE CONTROLLER BAR BUTTON --- */
+    .wave-trigger-btn {
+      width: 100%;
+      height: 42px;
+      background: linear-gradient(135deg, var(--neon-purple) 0%, #d441ec 100%);
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      box-shadow: var(--glow-purple);
+      transition: all 0.2s ease;
+    }
+
+    .wave-trigger-btn:hover:not(:disabled) {
+      transform: scale(1.01);
+      filter: brightness(1.1);
+      box-shadow: 0 0 20px rgba(157, 78, 221, 0.6);
+    }
+
+    .wave-trigger-btn:disabled {
+      opacity: 0.5;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    /* --- OVERLAYS MODALS DISPLAY SYSTEM --- */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(5, 6, 15, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: calc(var(--border-radius) - 2px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 24px;
+      z-index: 20;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .overlay-title {
+      font-size: 2.6rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -1px;
+      text-align: center;
+      background: linear-gradient(135deg, #fff, var(--neon-magenta));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(var(--glow-magenta));
+    }
+
+    .stats-summary-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-glass);
+      border-radius: 12px;
+      padding: 16px 24px;
+      width: 100%;
+      max-width: 320px;
+      font-size: 0.85rem;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      padding-bottom: 4px;
+    }
+
+    .summary-row:last-child {
+      margin-bottom: 0;
+      border: none;
+      padding: 0;
+    }
+
+    .summary-row span:last-child {
+      font-weight: 700;
+      color: var(--neon-cyan);
+    }
+
+    .overlay-actions {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+      max-width: 320px;
+      margin-top: 8px;
+    }
+
+    .overlay-actions .btn {
+      flex: 1;
+      height: 42px;
+      font-size: 0.85rem;
+    }
+
+    /* --- SCREEN ALERTS & WAVE NOTIFIERS LAYER --- */
+    .wave-banner-alert {
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.15), transparent);
+      border-top: 1px solid rgba(0, 242, 254, 0.3);
+      border-bottom: 1px solid rgba(0, 242, 254, 0.3);
+      width: 100%;
+      padding: 12px 0;
+      text-align: center;
+      z-index: 10;
+      pointer-events: none;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .wave-banner-alert.fire {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .wave-banner-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--neon-cyan);
+      text-shadow: var(--glow-cyan);
+    }
+
+    .wave-banner-subtitle {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+
+    /* --- RESPONSIVE LAYOUT MATRIX CONTROLS CALIBRATIONS --- */
+    @media (max-width: 820px) {
+      .workspace-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar-panel {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .sidebar-panel .wave-trigger-btn {
+        grid-column: span 2;
+      }
+
+      .dashboard {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        text-align: center;
+      }
+
+      .stats-grid {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .sidebar-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar-panel .wave-trigger-btn {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="bgCanvas"></canvas>
+
+  <div class="portal-container">
+
+    <div class="top-nav interactive-element">
+      <a href="../games-all.html" class="back-btn">
+        <svg style="width:12px; height:12px; fill:currentColor; transform:scaleX(-1);" viewBox="0 0 24 24">
+          <path
+            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+        </svg>
+        Back to Arcade
+      </a>
+      <div class="top-utility-group">
+        <button class="utility-toggle" id="btnPauseToggle" title="Pause Game Engine Loop">⏸</button>
+        <button class="utility-toggle" id="btnAudioToggle" title="Toggle Synthesizer Sound Engine">🔊</button>
+      </div>
+    </div>
+
+    <header class="dashboard interactive-element">
+      <div class="branding">
+        <h1>CYBER DEFENSE</h1>
+        <p>Vector Grid Protection Network</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-node">
+          <div class="stat-lbl">Core HP</div>
+          <div class="stat-val" id="statHp">100</div>
+        </div>
+        <div class="stat-node">
+          <div class="stat-lbl">Cyber Gold</div>
+          <div class="stat-val" id="statGold">200</div>
+        </div>
+        <div class="stat-node">
+          <div class="stat-lbl">Active Wave</div>
+          <div class="stat-val" id="statWave">0</div>
+        </div>
+        <div class="stat-node">
+          <div class="stat-lbl">Secure Score</div>
+          <div class="stat-val" id="statScore">0</div>
+        </div>
+        <div class="stat-node" style="border-color: rgba(0, 242, 254, 0.15)">
+          <div class="stat-lbl" style="color: var(--neon-cyan)">Network Top</div>
+          <div class="stat-val" id="statHighScore" style="color: var(--neon-cyan)">0</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="workspace-layout">
+
+      <div class="viewport-wrapper interactive-element" id="canvasContainerNode">
+        <canvas id="gameCanvas" width="1200" height="800"></canvas>
+
+        <div class="wave-banner-alert" id="waveBannerAlertNode">
+          <div class="wave-banner-title" id="waveBannerTitleNode">Wave 01 Incoming</div>
+          <div class="wave-banner-subtitle">Inbound Threat Grid Verified</div>
+        </div>
+
+        <div class="overlay" id="gameOverOverlay">
+          <div class="overlay-title">SYSTEM COMPROMISED</div>
+          <div class="stats-summary-card">
+            <div class="summary-row"><span>Final Secure Score</span><span id="endScore">0</span></div>
+            <div class="summary-row"><span>Threat Waves Breached</span><span id="endWave">0</span></div>
+            <div class="summary-row"><span>Intruders Eliminated</span><span id="endKills">0</span></div>
+          </div>
+          <div class="overlay-actions">
+            <button class="btn btn-primary" onclick="resetEngineGameSession()">▶ Play Again</button>
+            <button class="btn" onclick="window.location.href = '../games-all.html'">Arcade Home</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-panel interactive-element">
+
+        <div class="panel-card">
+          <div class="panel-title">Deploy Systems Array</div>
+          <div class="shop-grid" id="shopGridButtonsWrapper">
+          </div>
+        </div>
+
+        <div class="panel-card" style="flex: 1;">
+          <div class="panel-title">System Node Diagnostics</div>
+          <div id="inspectorPanelWrapper">
+            <div class="inspector-empty-msg">No structural asset node targeted for grid evaluation. Click a deployed
+              system array to inspect.</div>
+          </div>
+        </div>
+
+        <button class="wave-trigger-btn" id="btnLaunchWave">
+          ⚡ INITIALIZE NEXT WAVE
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    /* ==========================================
+       Constants & Setup Configs Configuration Maps
+       ========================================== */
+    const MAP_ROWS = 8;
+    const MAP_COLS = 12;
+
+    // Base coordinate tracking values mapping layouts
+    let tileWidthSize = 100;
+    let tileHeightSize = 100;
+
+    // Path Node Vector Sequences
+    const GRID_PATH_WAYPOINTS = [
+      { x: 0, y: 2 },
+      { x: 3, y: 2 },
+      { x: 3, y: 5 },
+      { x: 7, y: 5 },
+      { x: 7, y: 1 },
+      { x: 10, y: 1 },
+      { x: 10, y: 7 },
+      { x: 11, y: 7 }
+    ];
+
+    // System Configuration presets properties profiling maps
+    const TOWER_PROFILES = {
+      basic: {
+        name: "Blaster Core",
+        cost: 100,
+        range: 2.0, // Calculated directly in units mapping grids tiles counts scale multipliers
+        damage: 10,
+        attackSpeed: 1.0, // Shots per individual relative execution timestamp second counter channel
+        color: "#00f2fe",
+        glow: "rgba(0, 242, 254, 0.5)",
+        upgradeCostFactor: 1.2,
+        upgradeMultiplier: 1.4
+      },
+      sniper: {
+        name: "Rail Accelerator",
+        cost: 200,
+        range: 5.0,
+        damage: 38,
+        attackSpeed: 0.5,
+        color: "#9d4edd",
+        glow: "rgba(157, 78, 221, 0.5)",
+        upgradeCostFactor: 1.3,
+        upgradeMultiplier: 1.5
+      },
+      rapid: {
+        name: "Vector Driver",
+        cost: 150,
+        range: 2.2,
+        damage: 5,
+        attackSpeed: 4.2,
+        color: "#ff007f",
+        glow: "rgba(255, 0, 127, 0.5)",
+        upgradeCostFactor: 1.25,
+        upgradeMultiplier: 1.35
+      }
+    };
+
+    const ENEMY_PROFILES = {
+      basic: { name: "Bit Strider", hp: 50, speed: 1.2, reward: 10, scoreVal: 20, color: "#00ff66", radius: 14, shape: "circle" },
+      fast: { name: "Packet Drone", hp: 35, speed: 2.3, reward: 15, scoreVal: 30, color: "#ffd166", radius: 11, shape: "rhombus" },
+      tank: { name: "Root Goliath", hp: 160, speed: 0.7, reward: 30, scoreVal: 50, color: "#ff3333", radius: 20, shape: "square" },
+      boss: { name: "MALWARE CORE OVERLORD", hp: 750, speed: 0.5, reward: 100, scoreVal: 250, color: "#ff0055", radius: 28, shape: "hexagon" }
+    };
+
+    /* ==========================================
+       Map Representation & Logical Structures
+       ========================================== */
+    let gameplayMatrixGridMap = [];
+
+    function initializeGridMatrixLogicalContainers() {
+      gameplayMatrixGridMap = [];
+      for (let r = 0; r < MAP_ROWS; r++) {
+        const mapRowArray = [];
+        for (let c = 0; c < MAP_COLS; c++) {
+          mapRowArray.push({
+            row: r,
+            col: c,
+            isPath: false,
+            isSpawn: false,
+            isBase: false,
+            deployedTowerInstanceRef: null
+          });
+        }
+        gameplayMatrixGridMap.push(mapRowArray);
+      }
+
+      // Flag system path tile coordinates allocations
+      for (let i = 0; i < GRID_PATH_WAYPOINTS.length - 1; i++) {
+        const currentWaypoint = GRID_PATH_WAYPOINTS[i];
+        const nextWaypoint = GRID_PATH_WAYPOINTS[i + 1];
+
+        const minColIndex = Math.min(currentWaypoint.x, nextWaypoint.x);
+        const maxColIndex = Math.max(currentWaypoint.x, nextWaypoint.x);
+        const minRowIndex = Math.min(currentWaypoint.y, nextWaypoint.y);
+        const maxRowIndex = Math.max(currentWaypoint.y, nextWaypoint.y);
+
+        for (let r = minRowIndex; r <= maxRowIndex; r++) {
+          for (let c = minColIndex; c <= maxColIndex; c++) {
+            gameplayMatrixGridMap[r][c].isPath = true;
+          }
+        }
+      }
+
+      // Tag anchor configurations endpoints explicitly
+      const spawnPt = GRID_PATH_WAYPOINTS[0];
+      const basePt = GRID_PATH_WAYPOINTS[GRID_PATH_WAYPOINTS.length - 1];
+      gameplayMatrixGridMap[spawnPt.y][spawnPt.x].isSpawn = true;
+      gameplayMatrixGridMap[basePt.y][basePt.x].isBase = true;
+    }
+
+    /* ==========================================
+       Runtime States Modules Trackers Engines Objects
+       ========================================== */
+    let globalPlayerBaseHpCount = 100;
+    let globalPlayerGoldCount = 200;
+    let globalActiveWaveIndexCounter = 0;
+    let globalAccumulatedScoreValue = 0;
+    let globalEnemiesDefeatedCount = 0;
+
+    let activeInstancedTowersArray = [];
+    let activeInstancedEnemiesArray = [];
+    let activeInstancedProjectilesArray = [];
+    let activeParticleExplosionsPool = [];
+    let passiveFloatingTextAlertsPool = [];
+
+    // Operational loop configuration tracking metrics flags
+    let isEngineLoopRunningFlag = true;
+    let isGameTerminalClosedState = false;
+    let isAudioEngineSynthesizerMuted = false;
+
+    let localSelectedShopTowerKeyType = null;
+    let currentInspectedTowerObjectInstanceRef = null;
+
+    // Interaction coordinates references variables
+    let lastTrackedMouseGridCoordinates = { row: null, col: null };
+    const pointerInteractionCoordinates = { x: null, y: null, repulsionRadius: 180 };
+    let backdropParticlesPoolArray = [];
+
+    // Canvas element graphics channels
+    let backgroundCanvasElementNode, bgCtx;
+    let gameCanvasElementNode, gameCtx;
+
+    // Virtual node software synthesizers contexts
+    const NativeAudioContextClassReference = window.AudioContext || window.webkitAudioContext;
+    let syntheticAudioHardwareDevicePipelineInstance = null;
+
+    /* ==========================================
+       Audio Synth Engine (Web Audio Network Nodes)
+       ========================================== */
+    function triggerSyntheticAudioChimeFrequency(frequencyHertzValue, playDurationSeconds, wavePatternType = "sine", outputVolume = 0.05) {
+      if (isAudioEngineSynthesizerMuted) return;
+      try {
+        if (!syntheticAudioHardwareDevicePipelineInstance) {
+          syntheticAudioHardwareDevicePipelineInstance = new NativeAudioContextClassReference();
+        }
+        if (syntheticAudioHardwareDevicePipelineInstance.state === "suspended") {
+          syntheticAudioHardwareDevicePipelineInstance.resume();
+        }
+        const oscillatorGraphNode = syntheticAudioHardwareDevicePipelineInstance.createOscillator();
+        const gainEnvelopeAmplifierNode = syntheticAudioHardwareDevicePipelineInstance.createGain();
+
+        oscillatorGraphNode.type = wavePatternType;
+        oscillatorGraphNode.frequency.setValueAtTime(frequencyHertzValue, syntheticAudioHardwareDevicePipelineInstance.currentTime);
+
+        gainEnvelopeAmplifierNode.gain.setValueAtTime(outputVolume, syntheticAudioHardwareDevicePipelineInstance.currentTime);
+        gainEnvelopeAmplifierNode.gain.exponentialRampToValueAtTime(0.0001, syntheticAudioHardwareDevicePipelineInstance.currentTime + playDurationSeconds);
+
+        oscillatorGraphNode.connect(gainEnvelopeAmplifierNode);
+        gainEnvelopeAmplifierNode.connect(syntheticAudioHardwareDevicePipelineInstance.destination);
+
+        oscillatorGraphNode.start();
+        oscillatorGraphNode.stop(syntheticAudioHardwareDevicePipelineInstance.currentTime + playDurationSeconds);
+      } catch (ex) {
+        console.warn("Virtual software audio synthesizer sequence error:", ex);
+      }
+    }
+
+    /* ==========================================
+       Towers System & Logic Operations Objects Modifiers
+       ========================================== */
+    class TowerNodeInstance {
+      constructor(towerKeyType, row, col) {
+        const profile = TOWER_PROFILES[towerKeyType];
+        this.typeKey = towerKeyType;
+        this.name = profile.name;
+        this.row = row;
+        this.col = col;
+        this.x = (col * tileWidthSize) + (tileWidthSize * 0.5);
+        this.y = (row * tileHeightSize) + (tileHeightSize * 0.5);
+
+        this.level = 1;
+        this.damage = profile.damage;
+        this.range = profile.range * tileWidthSize; // Translate tiles dimension values directly into layout rendering spaces dimensions scale factors
+        this.attackSpeed = profile.attackSpeed;
+        this.color = profile.color;
+        this.glow = profile.glow;
+
+        this.totalInvestmentCostValue = profile.cost;
+        this.cooldownTimerThresholdTimestamp = 0; // Tracks relative timestamps checkpoints metrics parameters markers
+      }
+
+      evaluateTargetAcquisitionTrackingStep(elapsedSecondsTimeDelta) {
+        if (this.cooldownTimerThresholdTimestamp > 0) {
+          this.cooldownTimerThresholdTimestamp -= elapsedSecondsTimeDelta;
+        }
+
+        if (this.cooldownTimerThresholdTimestamp <= 0) {
+          const targetedEnemyNode = this.discoverProximityTargetInRangeZone();
+          if (targetedEnemyNode) {
+            this.executeWeaponSystemFiringFlash(targetedEnemyNode);
+            this.cooldownTimerThresholdTimestamp = 1.0 / this.attackSpeed;
+          }
+        }
+      }
+
+      discoverProximityTargetInRangeZone() {
+        // Prioritize processing advanced intruders that are closest to breaching base parameters
+        let optimalTargetNode = null;
+        let highestDistanceTravelledValue = -1;
+
+        for (let i = 0; i < activeInstancedEnemiesArray.length; i++) {
+          const enemy = activeInstancedEnemiesArray[i];
+          const deltaX = enemy.x - this.x;
+          const deltaY = enemy.y - this.y;
+          const linearDistanceHypotenuse = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+          if (linearDistanceHypotenuse <= this.range) {
+            if (enemy.totalDistanceTravelledMetric > highestDistanceTravelledValue) {
+              highestDistanceTravelledValue = enemy.totalDistanceTravelledMetric;
+              optimalTargetNode = enemy;
+            }
+          }
+        }
+        return optimalTargetNode;
+      }
+
+      executeWeaponSystemFiringFlash(targetedEnemyNode) {
+        // Instantiate projectile elements vectors
+        activeInstancedProjectilesArray.push(new ProjectileNodeInstance(this, targetedEnemyNode));
+
+        // Sound synthesis profile mapping triggers configurations based on type constraints structures
+        if (this.typeKey === "sniper") {
+          triggerSyntheticAudioChimeFrequency(880, 0.12, "sawtooth", 0.03);
+        } else if (this.typeKey === "rapid") {
+          triggerSyntheticAudioChimeFrequency(587.33, 0.04, "sine", 0.04);
+        } else {
+          triggerSyntheticAudioChimeFrequency(440, 0.06, "triangle", 0.05);
+        }
+      }
+
+      triggerUpgradeSequenceLevelUp() {
+        const profile = TOWER_PROFILES[this.typeKey];
+        const actualCostToUpgrade = this.getCalculatedUpgradeCost();
+
+        if (globalPlayerGoldCount >= actualCostToUpgrade && this.level < 3) {
+          globalPlayerGoldCount -= actualCostToUpgrade;
+          this.level++;
+
+          // Increment specifications factors
+          this.damage = Math.round(this.damage * profile.upgradeMultiplier);
+          this.range = Math.round(this.range * (profile.upgradeMultiplier * 0.95));
+          this.attackSpeed = parseFloat((this.attackSpeed * (profile.upgradeMultiplier * 0.9)).toFixed(2));
+
+          this.totalInvestmentCostValue += actualCostToUpgrade;
+
+          triggerSyntheticAudioChimeFrequency(659.25, 0.15, "sine", 0.06);
+          setTimeout(() => triggerSyntheticAudioChimeFrequency(783.99, 0.2, "sine", 0.06), 80);
+
+          createExplosionParticleCloudBurst(this.x, this.y, varColorStringLookup("--neon-cyan", "#00f2fe"), 12);
+          appendPassiveFloatingTextLabel(this.x, this.y - 20, "UPGRADED!", "#00f2fe");
+
+          syncDisplayInterfaceMetricsElements();
+          renderSelectedTowerInspectorPanelDetails();
+          return true;
+        }
+        return false;
+      }
+
+      getCalculatedUpgradeCost() {
+        const profile = TOWER_PROFILES[this.typeKey];
+        return Math.round(profile.cost * this.level * profile.upgradeCostFactor);
+      }
+
+      getCalculatedRefundValue() {
+        return Math.round(this.totalInvestmentCostValue * 0.70);
+      }
+    }
+
+    /* ==========================================
+       Enemies System & Logic Pathing Arrays Operations Objects
+       ========================================== */
+    class EnemyNodeInstance {
+      constructor(enemyProfileKeyType, currentWaveIndex) {
+        const profile = ENEMY_PROFILES[enemyProfileKeyType];
+        this.typeKey = enemyProfileKeyType;
+        this.name = profile.name;
+
+        // Adjust balancing metrics relative to incoming scale multipliers index steps
+        const waveCompoundingDifficultyFactor = 1.0 + (currentWaveIndex - 1) * 0.25;
+        this.maxHp = Math.round(profile.hp * waveCompoundingDifficultyFactor);
+        this.hp = this.maxHp;
+
+        this.speed = profile.speed;
+        this.rewardGoldValue = Math.round(profile.reward * (1.0 + (currentWaveIndex - 1) * 0.05));
+        this.scoreValueContribution = profile.scoreVal;
+        this.color = profile.color;
+        this.radius = profile.radius;
+        this.shape = profile.shape;
+
+        // Position anchor coordinates tracks
+        this.currentWaypointIndexNode = 0;
+        const initialSpawnCoordinates = GRID_PATH_WAYPOINTS[0];
+        this.x = (initialSpawnCoordinates.x * tileWidthSize) + (tileWidthSize * 0.5);
+        this.y = (initialSpawnCoordinates.y * tileHeightSize) + (tileHeightSize * 0.5);
+
+        this.totalDistanceTravelledMetric = 0;
+        this.markedForSystemPurgeFlag = false;
+      }
+
+      evaluateMovementPhysicsTrackingStep(elapsedSecondsTimeDelta) {
+        if (this.currentWaypointIndexNode >= GRID_PATH_WAYPOINTS.length - 1) {
+          this.executeBaseBreachDamageInfliction();
+          return;
+        }
+
+        const nextWaypointTarget = GRID_PATH_WAYPOINTS[this.currentWaypointIndexNode + 1];
+        const targetPixelX = (nextWaypointTarget.x * tileWidthSize) + (tileWidthSize * 0.5);
+        const targetPixelY = (nextWaypointTarget.y * tileHeightSize) + (tileHeightSize * 0.5);
+
+        const distanceDeltaVectorX = targetPixelX - this.x;
+        const distanceDeltaVectorY = targetPixelY - this.y;
+        const remainingDistanceHypotenuse = Math.sqrt(distanceDeltaVectorX * distanceDeltaVectorX + distanceDeltaVectorY * distanceDeltaVectorY);
+
+        const stepMovementDistanceFactor = this.speed * tileWidthSize * 0.2 * elapsedSecondsTimeDelta;
+
+        if (remainingDistanceHypotenuse <= stepMovementDistanceFactor) {
+          // Snap position coordinates directly onto destination points markers targets safely
+          this.x = targetPixelX;
+          this.y = targetPixelY;
+          this.totalDistanceTravelledMetric += remainingDistanceHypotenuse;
+          this.currentWaypointIndexNode++;
+        } else {
+          const movementDirectionNormalizedX = distanceDeltaVectorX / remainingDistanceHypotenuse;
+          const movementDirectionNormalizedY = distanceDeltaVectorY / remainingDistanceHypotenuse;
+
+          this.x += movementDirectionNormalizedX * stepMovementDistanceFactor;
+          this.y += movementDirectionNormalizedY * stepMovementDistanceFactor;
+          this.totalDistanceTravelledMetric += stepMovementDistanceFactor;
+        }
+      }
+
+      inflictDamageAbsorptionRegistry(damageAmountPointsValue) {
+        this.hp -= damageAmountPointsValue;
+        if (this.hp <= 0 && !this.markedForSystemPurgeFlag) {
+          this.markedForSystemPurgeFlag = true;
+          this.executeEliminationSequenceDispersal();
+        }
+      }
+
+      executeEliminationSequenceDispersal() {
+        globalPlayerGoldCount += this.rewardGoldValue;
+        globalAccumulatedScoreValue += this.scoreValueContribution;
+        globalEnemiesDefeatedCount++;
+
+        createExplosionParticleCloudBurst(this.x, this.y, this.color, 14);
+        appendPassiveFloatingTextLabel(this.x, this.y, `+${this.rewardGoldValue}G`, "#ffd166");
+        triggerSyntheticAudioChimeFrequency(220, 0.08, "triangle", 0.04);
+
+        syncDisplayInterfaceMetricsElements();
+      }
+
+      executeBaseBreachDamageInfliction() {
+        this.markedForSystemPurgeFlag = true;
+        globalPlayerBaseHpCount = Math.max(0, globalPlayerBaseHpCount - 10);
+
+        createExplosionParticleCloudBurst(this.x, this.y, varColorStringLookup("--neon-magenta", "#ff007f"), 20);
+        appendPassiveFloatingTextLabel(this.x, this.y, "-10 HP", "#ff5d8f");
+        triggerSyntheticAudioChimeFrequency(110, 0.3, "sawtooth", 0.08);
+
+        syncDisplayInterfaceMetricsElements();
+        verifyTerminalDefeatConditionThresholdState();
+      }
+    }
+
+    /* ==========================================
+       Projectiles & Firing Vectors Modules Objects Models
+       ========================================== */
+    class ProjectileNodeInstance {
+      constructor(originTowerRef, targetEnemyRef) {
+        this.originTowerRef = originTowerRef;
+        this.targetEnemyRef = targetEnemyRef;
+        this.x = originTowerRef.x;
+        this.y = originTowerRef.y;
+
+        this.damage = originTowerRef.damage;
+        this.color = originTowerRef.color;
+        this.speedFactor = tileWidthSize * (originTowerRef.typeKey === "sniper" ? 12.0 : 6.0); // Sniper sub-classes track increased velocity
+        this.markedForSystemPurgeFlag = false;
+      }
+
+      evaluateTrajectoryPhysicsTrackingStep(elapsedSecondsTimeDelta) {
+        if (this.targetEnemyRef.markedForSystemPurgeFlag || this.targetEnemyRef.hp <= 0) {
+          this.markedForSystemPurgeFlag = true;
+          return;
+        }
+
+        const deltaX = this.targetEnemyRef.x - this.x;
+        const deltaY = this.targetEnemyRef.y - this.y;
+        const remainingDistanceHypotenuse = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+        const movementStepDistance = this.speedFactor * elapsedSecondsTimeDelta;
+
+        if (remainingDistanceHypotenuse <= movementStepDistance) {
+          this.x = this.targetEnemyRef.x;
+          this.y = this.targetEnemyRef.y;
+          this.markedForSystemPurgeFlag = true;
+          this.targetEnemyRef.inflictDamageAbsorptionRegistry(this.damage);
+        } else {
+          this.x += (deltaX / remainingDistanceHypotenuse) * movementStepDistance;
+          this.y += (deltaY / remainingDistanceHypotenuse) * movementStepDistance;
+        }
+      }
+    }
+
+    /* ==========================================
+       Waves Management Core Processing Systems Engines
+       ========================================== */
+    let waveQueueSpawningScheduleList = [];
+    let waveSpawnIntervalTimerCountdown = 0;
+    let isWaveCurrentlyActiveSpawningPhase = false;
+
+    function initializeWaveGenerationPlanSchedule() {
+      if (isWaveCurrentlyActiveSpawningPhase || isGameTerminalClosedState) return;
+
+      globalActiveWaveIndexCounter++;
+      isWaveCurrentlyActiveSpawningPhase = true;
+
+      // Compute structural counts allocations scaling based on specifications target presets
+      let countBasic = 5 + (globalActiveWaveIndexCounter - 1) * 3;
+      let countFast = 0;
+      let countTank = 0;
+
+      if (globalActiveWaveIndexCounter >= 2) countFast = 2 + (globalActiveWaveIndexCounter - 2) * 2;
+      if (globalActiveWaveIndexCounter >= 3) countTank = 1 + (globalActiveWaveIndexCounter - 3) * 2;
+
+      waveQueueSpawningScheduleList = [];
+
+      // Disperse allocation arrays
+      for (let i = 0; i < countBasic; i++) waveQueueSpawningScheduleList.push("basic");
+      for (let i = 0; i < countFast; i++)  waveQueueSpawningScheduleList.push("fast");
+      for (let i = 0; i < countTank; i++)  waveQueueSpawningScheduleList.push("tank");
+
+      // Randomize deployment arrays to mix unit distributions profiles safely
+      waveQueueSpawningScheduleList.sort(() => Math.random() - 0.5);
+
+      // Inject Boss Overlords targets configurations checkpoints matching every 5 wave counts intervals
+      if (globalActiveWaveIndexCounter % 5 === 0) {
+        waveQueueSpawningScheduleList.push("boss");
+      }
+
+      waveSpawnIntervalTimerCountdown = 0.8; // Time buffer before launching deployment sequences loop cycles
+
+      // Trigger flashing notice announcement banner alerts overlay system UI components
+      triggerWaveBannerNoticeDisplayFlashing();
+      syncDisplayInterfaceMetricsElements();
+
+      triggerSyntheticAudioChimeFrequency(349.23, 0.2, "sine", 0.06);
+      setTimeout(() => triggerSyntheticAudioChimeFrequency(440, 0.2, "sine", 0.06), 120);
+      setTimeout(() => triggerSyntheticAudioChimeFrequency(523.25, 0.4, "sine", 0.06), 240);
+    }
+
+    function evaluateWaveSpawningQueueLogicTimeline(elapsedSecondsTimeDelta) {
+      if (!isWaveCurrentlyActiveSpawningPhase) return;
+
+      if (waveQueueSpawningScheduleList.length > 0) {
+        waveSpawnIntervalTimerCountdown -= elapsedSecondsTimeDelta;
+        if (waveSpawnIntervalTimerCountdown <= 0) {
+          const extractedEnemyKeyType = waveQueueSpawningScheduleList.shift();
+          activeInstancedEnemiesArray.push(new EnemyNodeInstance(extractedEnemyKeyType, globalActiveWaveIndexCounter));
+          waveSpawnIntervalTimerCountdown = extractedEnemyKeyType === "boss" ? 3.0 : 0.65; // Extended tracking delay after boss units deployments
+        }
+      } else {
+        // Deployment arrays empty, evaluate live clear counts transitions steps markers
+        if (activeInstancedEnemiesArray.length === 0) {
+          isWaveCurrentlyActiveSpawningPhase = false;
+          // Provide baseline round completion bonuses
+          globalPlayerGoldCount += 50 + (globalActiveWaveIndexCounter * 10);
+          syncDisplayInterfaceMetricsElements();
+          triggerSyntheticAudioChimeFrequency(523.25, 0.15, "sine", 0.05);
+          setTimeout(() => triggerSyntheticAudioChimeFrequency(659.25, 0.3, "sine", 0.05), 100);
+        }
+      }
+    }
+
+    /* ==========================================
+       Rendering Engine Layout Canvas Paint Management
+       ========================================== */
+    function renderPrimaryGameplayPlayfieldCanvas() {
+      gameCtx.clearRect(0, 0, gameCanvasElementNode.width, gameCanvasElementNode.height);
+
+      // 1. PAINT MATRIX GRID BACKGROUND BASE LAYOUT TILES
+      for (let r = 0; r < MAP_ROWS; r++) {
+        for (let c = 0; c < MAP_COLS; c++) {
+          const tile = gameplayMatrixGridMap[r][c];
+          const pixelX = c * tileWidthSize;
+          const pixelY = r * tileHeightSize;
+
+          if (tile.isPath) {
+            gameCtx.fillStyle = "#111424";
+            gameCtx.fillRect(pixelX, pixelY, tileWidthSize, tileHeightSize);
+
+            // Draw vector track guide layout indicators marks lines inside center channels
+            gameCtx.strokeStyle = "rgba(0, 242, 254, 0.03)";
+            gameCtx.lineWidth = 2;
+            gameCtx.strokeRect(pixelX + 2, pixelY + 2, tileWidthSize - 4, tileHeightSize - 4);
+          } else {
+            gameCtx.fillStyle = (r + c) % 2 === 0 ? "#090b14" : "#0c0e1a";
+            gameCtx.fillRect(pixelX, pixelY, tileWidthSize, tileHeightSize);
+
+            gameCtx.strokeStyle = "rgba(255, 255, 255, 0.01)";
+            gameCtx.lineWidth = 1;
+            gameCtx.strokeRect(pixelX, pixelY, tileWidthSize, tileHeightSize);
+          }
+
+          if (tile.isSpawn) {
+            gameCtx.fillStyle = "rgba(0, 255, 102, 0.08)";
+            gameCtx.fillRect(pixelX, pixelY, tileWidthSize, tileHeightSize);
+          }
+          if (tile.isBase) {
+            gameCtx.fillStyle = "rgba(255, 0, 127, 0.08)";
+            gameCtx.fillRect(pixelX, pixelY, tileWidthSize, tileHeightSize);
+          }
+        }
+      }
+
+      // 2. HIGHLIGHT HOVER TARGETED BUILD TILES MARKS SELECTION BOUNDS
+      if (localSelectedShopTowerKeyType && lastTrackedMouseGridCoordinates.row !== null && lastTrackedMouseGridCoordinates.col !== null) {
+        const targetTile = gameplayMatrixGridMap[lastTrackedMouseGridCoordinates.row][lastTrackedMouseGridCoordinates.col];
+        const pixelX = lastTrackedMouseGridCoordinates.col * tileWidthSize;
+        const pixelY = lastTrackedMouseGridCoordinates.row * tileHeightSize;
+
+        const profile = TOWER_PROFILES[localSelectedShopTowerKeyType];
+        const isPlacementAllowed = !targetTile.isPath && !targetTile.deployedTowerInstanceRef && globalPlayerGoldCount >= profile.cost;
+
+        gameCtx.fillStyle = isPlacementAllowed ? "rgba(0, 242, 254, 0.15)" : "rgba(255, 51, 51, 0.2)";
+        gameCtx.fillRect(pixelX, pixelY, tileWidthSize, tileHeightSize);
+        gameCtx.strokeStyle = isPlacementAllowed ? varColorStringLookup("--neon-cyan", "#00f2fe") : "#ff3333";
+        gameCtx.lineWidth = 2;
+        gameCtx.strokeRect(pixelX + 1, pixelY + 1, tileWidthSize - 2, tileHeightSize - 2);
+
+        // Project visual operational range indicators arcs radius lines shapes fields overlay structures
+        gameCtx.beginPath();
+        gameCtx.arc(pixelX + tileWidthSize * 0.5, pixelY + tileHeightSize * 0.5, profile.range * tileWidthSize, 0, Math.PI * 2);
+        gameCtx.fillStyle = isPlacementAllowed ? "rgba(0, 242, 254, 0.04)" : "rgba(255, 51, 51, 0.03)";
+        gameCtx.fill();
+        gameCtx.strokeStyle = isPlacementAllowed ? "rgba(0, 242, 254, 0.2)" : "rgba(255, 51, 51, 0.15)";
+        gameCtx.setLineDash([6, 6]);
+        gameCtx.stroke();
+        gameCtx.setLineDash([]);
+      }
+
+      // 3. PROJECT INSPECTED ARRAYS RANGE CHECKS OVERLAYS RADIUS LINES
+      if (currentInspectedTowerObjectInstanceRef) {
+        gameCtx.beginPath();
+        gameCtx.arc(currentInspectedTowerObjectInstanceRef.x, currentInspectedTowerObjectInstanceRef.y, currentInspectedTowerObjectInstanceRef.range, 0, Math.PI * 2);
+        gameCtx.fillStyle = "rgba(157, 78, 221, 0.04)";
+        gameCtx.fill();
+        gameCtx.strokeStyle = "rgba(157, 78, 221, 0.25)";
+        gameCtx.lineWidth = 1.5;
+        gameCtx.setLineDash([4, 4]);
+        gameCtx.stroke();
+        gameCtx.setLineDash([]);
+      }
+
+      // 4. DRAW DEPLOYED ACTIVE TOWERS NODES UNITS STRUCTURES
+      for (let i = 0; i < activeInstancedTowersArray.length; i++) {
+        const tower = activeInstancedTowersArray[i];
+
+        // Outer ring node chassis graphics
+        gameCtx.shadowBlur = 12;
+        gameCtx.shadowColor = tower.color;
+        gameCtx.fillStyle = "#151932";
+        gameCtx.strokeStyle = tower.color;
+        gameCtx.lineWidth = 3;
+
+        gameCtx.beginPath();
+        gameCtx.arc(tower.x, tower.y, tileWidthSize * 0.34, 0, Math.PI * 2);
+        gameCtx.fill();
+        gameCtx.stroke();
+        gameCtx.shadowBlur = 0;
+
+        // Inner core energy crystalline node vectors mapping profiles
+        gameCtx.fillStyle = tower.color;
+        gameCtx.beginPath();
+        const innerRadiusFactor = tower.level === 1 ? 0.12 : tower.level === 2 ? 0.18 : 0.23;
+        gameCtx.arc(tower.x, tower.y, tileWidthSize * innerRadiusFactor, 0, Math.PI * 2);
+        gameCtx.fill();
+
+        // Draw ranking tier level text indicators badges values markers fields profiles
+        gameCtx.fillStyle = "#ffffff";
+        gameCtx.font = "bold 12px monospace";
+        gameCtx.textAlign = "center";
+        gameCtx.textBaseline = "middle";
+        gameCtx.fillText(`L${tower.level}`, tower.x, tower.y + tileHeightSize * 0.24);
+      }
+
+      // 5. DRAW ACTIVE INTRUDERS ENEMIES INLINE RENDERING TRACKS COORDS
+      for (let i = 0; i < activeInstancedEnemiesArray.length; i++) {
+        const enemy = activeInstancedEnemiesArray[i];
+
+        gameCtx.fillStyle = enemy.color;
+        gameCtx.shadowBlur = 10;
+        gameCtx.shadowColor = enemy.color;
+        gameCtx.beginPath();
+
+        if (enemy.shape === "circle") {
+          gameCtx.arc(enemy.x, enemy.y, enemy.radius, 0, Math.PI * 2);
+          gameCtx.fill();
+        } else if (enemy.shape === "rhombus") {
+          gameCtx.moveTo(enemy.x, enemy.y - enemy.radius);
+          gameCtx.lineTo(enemy.x + enemy.radius, enemy.y);
+          gameCtx.lineTo(enemy.x, enemy.y + enemy.radius);
+          gameCtx.lineTo(enemy.x - enemy.radius, enemy.y);
+          gameCtx.closePath();
+          gameCtx.fill();
+        } else if (enemy.shape === "square") {
+          gameCtx.fillRect(enemy.x - enemy.radius, enemy.y - enemy.radius, enemy.radius * 2, enemy.radius * 2);
+        } else if (enemy.shape === "hexagon") {
+          for (let s = 0; s < 6; s++) {
+            const angleRadians = (s * Math.PI / 3);
+            const cornerX = enemy.x + enemy.radius * Math.cos(angleRadians);
+            const cornerY = enemy.y + enemy.radius * Math.sin(angleRadians);
+            if (s === 0) gameCtx.moveTo(cornerX, cornerY);
+            else gameCtx.lineTo(cornerX, cornerY);
+          }
+          gameCtx.closePath();
+          gameCtx.fill();
+        }
+        gameCtx.shadowBlur = 0;
+
+        // Append secondary scaling mini health bar nodes structures layers tracking systems fields
+        const barWidth = enemy.radius * 2.2;
+        const barHeight = 5;
+        const barPixelX = enemy.x - (barWidth * 0.5);
+        const barPixelY = enemy.y - enemy.radius - 10;
+
+        gameCtx.fillStyle = "rgba(0,0,0,0.5)";
+        gameCtx.fillRect(barPixelX, barPixelY, barWidth, barHeight);
+
+        const currentHpRatioPercentageFactor = Math.max(0, enemy.hp / enemy.maxHp);
+        gameCtx.fillStyle = currentHpRatioPercentageFactor > 0.5 ? "#00ff66" : currentHpRatioPercentageFactor > 0.25 ? "#ffd166" : "#ff3333";
+        gameCtx.fillRect(barPixelX, barPixelY, barWidth * currentHpRatioPercentageFactor, barHeight);
+      }
+
+      // 6. DRAW ACTIVE IN-FLIGHT AMMUNITION PROJECTILES ENTITIES
+      for (let i = 0; i < activeInstancedProjectilesArray.length; i++) {
+        const proj = activeInstancedProjectilesArray[i];
+
+        gameCtx.fillStyle = proj.color;
+        gameCtx.shadowBlur = 8;
+        gameCtx.shadowColor = proj.color;
+        gameCtx.beginPath();
+        const bulletSizeRadius = proj.originTowerRef.typeKey === "sniper" ? 4.5 : 3.5;
+        gameCtx.arc(proj.x, proj.y, bulletSizeRadius, 0, Math.PI * 2);
+        gameCtx.fill();
+        gameCtx.shadowBlur = 0;
+      }
+
+      // 7. DRAW PARTICLES EXPLOSIONS VISUAL SPECIAL EFFECTS LAYER
+      evaluateVisualExplosionsParticlesRenderingStep();
+
+      // 8. RENDER SUBTLE TEXT DISPERSAL SYSTEM FLOOR ALERTS LOGS TIERS
+      evaluateFloatingTextLogsRenderingStep();
+    }
+
+    /* ==========================================
+       Effects Systems Modules (Burst Explosions & Texts)
+       ========================================== */
+    function createExplosionParticleCloudBurst(originPixelX, originPixelY, clusterHexColorString, clusterDensitySizeCount = 12) {
+      for (let i = 0; i < clusterDensitySizeCount; i++) {
+        const spreadingAngleRadians = Math.random() * Math.PI * 2;
+        const velocityMagnitudeScalar = Math.random() * 120 + 40;
+
+        activeParticleExplosionsPool.push({
+          x: originPixelX,
+          y: originPixelY,
+          vx: Math.cos(spreadingAngleRadians) * velocityMagnitudeScalar,
+          vy: Math.sin(spreadingAngleRadians) * velocityMagnitudeScalar,
+          color: clusterHexColorString,
+          radiusSize: Math.random() * 3 + 1.5,
+          lifeAlphaSecondsFactor: 1.0,
+          decayRateSpeed: Math.random() * 1.5 + 1.2
+        });
+      }
+    }
+
+    function evaluateVisualExplosionsParticlesRenderingStep() {
+      const timeDeltaStepSeconds = 0.016; // Hard-coded approximation targeting standardized 60fps refresh limits variables
+      for (let i = activeParticleExplosionsPool.length - 1; i >= 0; i--) {
+        const p = activeParticleExplosionsPool[i];
+        p.x += p.vx * timeDeltaStepSeconds;
+        p.y += p.vy * timeDeltaStepSeconds;
+        p.lifeAlphaSecondsFactor -= p.decayRateSpeed * timeDeltaStepSeconds;
+
+        if (p.lifeAlphaSecondsFactor <= 0) {
+          activeParticleExplosionsPool.splice(i, 1);
+          continue;
+        }
+
+        gameCtx.fillStyle = p.color;
+        gameCtx.globalAlpha = p.lifeAlphaSecondsFactor;
+        gameCtx.beginPath();
+        gameCtx.arc(p.x, p.y, p.radiusSize, 0, Math.PI * 2);
+        gameCtx.fill();
+      }
+      gameCtx.globalAlpha = 1.0; // Reset canvas context state configuration channels parameters mapping targets
+    }
+
+    function appendPassiveFloatingTextLabel(originPixelX, originPixelY, displayStringValue, colorHexStyleString) {
+      passiveFloatingTextAlertsPool.push({
+        x: originPixelX,
+        y: originPixelY,
+        text: displayStringValue,
+        color: colorHexStyleString,
+        offsetY: 0,
+        lifeAlphaSecondsFactor: 1.0
+      });
+    }
+
+    function evaluateFloatingTextLogsRenderingStep() {
+      const timeDeltaStepSeconds = 0.016;
+      for (let i = passiveFloatingTextAlertsPool.length - 1; i >= 0; i--) {
+        const t = passiveFloatingTextAlertsPool[i];
+        t.offsetY -= 40 * timeDeltaStepSeconds; // Ascend upwards smoothly over time
+        t.lifeAlphaSecondsFactor -= 1.4 * timeDeltaStepSeconds;
+
+        if (t.lifeAlphaSecondsFactor <= 0) {
+          passiveFloatingTextAlertsPool.splice(i, 1);
+          continue;
+        }
+
+        gameCtx.fillStyle = t.color;
+        gameCtx.font = "bold 14px 'Segoe UI', Arial, sans-serif";
+        gameCtx.textAlign = "center";
+        gameCtx.globalAlpha = t.lifeAlphaSecondsFactor;
+        gameCtx.fillText(t.text, t.x, t.y + t.offsetY);
+      }
+      gameCtx.globalAlpha = 1.0;
+    }
+
+    /* ==========================================
+       User Interface Management & DOM Actions Pipeline
+       ========================================== */
+    function renderBuildSystemShopItemButtons() {
+      const containerNode = document.getElementById("shopGridButtonsWrapper");
+      containerNode.innerHTML = ""; // Clear legacy structures
+
+      Object.keys(TOWER_PROFILES).forEach(key => {
+        const profile = TOWER_PROFILES[key];
+
+        const btnNode = document.createElement("button");
+        btnNode.className = "shop-item-btn";
+        btnNode.setAttribute("data-tower-key", key);
+
+        // Evaluate dynamic real-time checking configurations balances statuses
+        if (globalPlayerGoldCount < profile.cost) {
+          btnNode.disabled = true;
+        }
+
+        if (localSelectedShopTowerKeyType === key) {
+          btnNode.classList.add("selected");
+        }
+
+        btnNode.innerHTML = `
+                    <div class="item-info-meta">
+                        <span class="item-name">${profile.name}</span>
+                        <span class="item-stats-hint">Rng: ${profile.range} · Dmg: ${profile.damage}</span>
+                    </div>
+                    <span class="item-cost-tag">${profile.cost}G</span>
+                `;
+
+        btnNode.addEventListener("click", (e) => {
+          e.stopPropagation();
+          toggleShopSelectionModeState(key);
+        });
+
+        containerNode.appendChild(btnNode);
+      });
+    }
+
+    function toggleShopSelectionModeState(towerKeyType) {
+      currentInspectedTowerObjectInstanceRef = null; // Evict active inline analysis selection targets paths
+
+      if (localSelectedShopTowerKeyType === towerKeyType) {
+        localSelectedShopTowerKeyType = null; // Toggle off if clicked again recursively
+      } else {
+        localSelectedShopTowerKeyType = towerKeyType;
+        triggerSyntheticAudioChimeFrequency(493.88, 0.05, "sine", 0.04);
+      }
+
+      renderBuildSystemShopItemButtons();
+      renderSelectedTowerInspectorPanelDetails();
+    }
+
+    function renderSelectedTowerInspectorPanelDetails() {
+      const panelWrapperNode = document.getElementById("inspectorPanelWrapper");
+
+      if (!currentInspectedTowerObjectInstanceRef) {
+        panelWrapperNode.innerHTML = `<div class="inspector-empty-msg">No structural asset node targeted for grid evaluation. Click a deployed system array to inspect.</div>`;
+        return;
+      }
+
+      const t = currentInspectedTowerObjectInstanceRef;
+      const hasAvailableUpgrades = t.level < 3;
+      const upgradeCost = t.getCalculatedUpgradeCost();
+      const refundValue = t.getCalculatedRefundValue();
+
+      const isUpgradeAffordable = globalPlayerGoldCount >= upgradeCost && hasAvailableUpgrades;
+
+      panelWrapperNode.innerHTML = `
+                <div class="inspector-grid">
+                    <div class="inspector-header">
+                        <h3>${t.name}</h3>
+                        <span class="inspector-lvl-badge">Tier 0${t.level}</span>
+                    </div>
+                    <div class="inspector-spec-table">
+                        <div class="spec-row"><span>Damage:</span><span>${t.damage}</span></div>
+                        <div class="spec-row"><span>Range:</span><span>${Math.round(t.range / tileWidthSize * 10) / 10}</span></div>
+                        <div class="spec-row"><span>Rate:</span><span>${t.attackSpeed}/s</span></div>
+                        <div class="spec-row"><span>Grid Pos:</span><span>[${t.col},${t.row}]</span></div>
+                    </div>
+                    <div class="inspector-actions">
+                        <button class="btn btn-upgrade" id="btnInspectorUpgrade" ${!isUpgradeAffordable ? 'disabled' : ''}>
+                            ${hasAvailableUpgrades ? `Upgrade [${upgradeCost}G]` : 'MAX LEVEL'}
+                        </button>
+                        <button class="btn btn-sell" id="btnInspectorSell">
+                            Decommission [${refundValue}G]
+                        </button>
+                    </div>
+                </div>
+            `;
+
+      // Bind contextual button handlers securely
+      document.getElementById("btnInspectorUpgrade").addEventListener("click", (e) => {
+        e.stopPropagation();
+        t.triggerUpgradeSequenceLevelUp();
+      });
+
+      document.getElementById("btnInspectorSell").addEventListener("click", (e) => {
+        e.stopPropagation();
+        executeTowerDecommissionRefund(t);
+      });
+    }
+
+    function executeTowerDecommissionRefund(towerInstanceRef) {
+      const targetTile = gameplayMatrixGridMap[towerInstanceRef.row][towerInstanceRef.col];
+      const calculatedRefund = towerInstanceRef.getCalculatedRefundValue();
+
+      globalPlayerGoldCount += calculatedRefund;
+      targetTile.deployedTowerInstanceRef = null;
+
+      // Purge reference directly from core array stack tracks
+      const targetIndex = activeInstancedTowersArray.indexOf(towerInstanceRef);
+      if (targetIndex > -1) {
+        activeInstancedTowersArray.splice(targetIndex, 1);
+      }
+
+      createExplosionParticleCloudBurst(towerInstanceRef.x, towerInstanceRef.y, "#ff5d8f", 10);
+      triggerSyntheticAudioChimeFrequency(293.66, 0.15, "triangle", 0.05);
+
+      currentInspectedTowerObjectInstanceRef = null;
+      syncDisplayInterfaceMetricsElements();
+      renderSelectedTowerInspectorPanelDetails();
+    }
+
+    function syncDisplayInterfaceMetricsElements() {
+      document.getElementById("statHp").textContent = globalPlayerBaseHpCount;
+      document.getElementById("statGold").textContent = globalPlayerGoldCount;
+      document.getElementById("statWave").textContent = globalActiveWaveIndexCounter;
+      document.getElementById("statScore").textContent = globalAccumulatedScoreValue;
+
+      // Re-render shop suite deck dynamically to evaluate affordability parameters states shifts
+      renderBuildSystemShopItemButtons();
+    }
+
+    function triggerWaveBannerNoticeDisplayFlashing() {
+      const alertBannerNode = document.getElementById("waveBannerAlertNode");
+      const alertTitleNode = document.getElementById("waveBannerTitleNode");
+
+      alertTitleNode.textContent = `WAVE ${globalActiveWaveIndexCounter.toString().padStart(2, "0")} ARRIVING`;
+      alertBannerNode.classList.add("fire");
+
+      setTimeout(() => {
+        alertBannerNode.classList.remove("fire");
+      }, 2000);
+    }
+
+    /* ==========================================
+       Storage & Game LifeCycle Loops Engines Modules
+       ========================================== */
+    function bindSystemInterfaceInteractionEventHandlers() {
+      // VIEWPORT CLICK ROUTERS MAPPINGS HANDLING GRID INTERACTION SELECTIONS
+      gameCanvasElementNode.addEventListener("click", (e) => {
+        const boundingClientRect = gameCanvasElementNode.getBoundingClientRect();
+        const canvasPixelX = (e.clientX - boundingClientRect.left) * (gameCanvasElementNode.width / boundingClientRect.width);
+        const canvasPixelY = (e.clientY - boundingClientRect.top) * (gameCanvasElementNode.height / boundingClientRect.height);
+
+        const targetedColIndex = Math.floor(canvasPixelX / tileWidthSize);
+        const targetedRowIndex = Math.floor(canvasPixelY / tileHeightSize);
+
+        if (targetedColIndex >= 0 && targetedColIndex < MAP_COLS && targetedRowIndex >= 0 && targetedRowIndex < MAP_ROWS) {
+          executeGridTileInteractionClickAction(targetedRowIndex, targetedColIndex);
+        }
+      });
+
+      // TRACK MOUSE COORDINATES MOVEMENTS FOR DYNAMIC HOVER HIGHLIGHTS EFFECTS INLAYS
+      gameCanvasElementNode.addEventListener("mousemove", (e) => {
+        const boundingClientRect = gameCanvasElementNode.getBoundingClientRect();
+        const canvasPixelX = (e.clientX - boundingClientRect.left) * (gameCanvasElementNode.width / boundingClientRect.width);
+        const canvasPixelY = (e.clientY - boundingClientRect.top) * (gameCanvasElementNode.height / boundingClientRect.height);
+
+        lastTrackedMouseGridCoordinates.col = Math.floor(canvasPixelX / tileWidthSize);
+        lastTrackedMouseGridCoordinates.row = Math.floor(canvasPixelY / tileHeightSize);
+      });
+
+      gameCanvasElementNode.addEventListener("mouseleave", () => {
+        lastTrackedMouseGridCoordinates.row = null;
+        lastTrackedMouseGridCoordinates.col = null;
+      });
+
+      // POINTER CHANNELS INTERCEPTIONS PASSING TO THE ACTIVE PARTICLE BACKDROP SIMULATORS
+      window.addEventListener("mousemove", (e) => {
+        pointerInteractionCoordinates.x = e.clientX;
+        pointerInteractionCoordinates.y = e.clientY;
+      });
+
+      window.addEventListener("mouseleave", () => {
+        pointerInteractionCoordinates.x = null;
+        pointerInteractionCoordinates.y = null;
+      });
+
+      // ACTIONS BUTTON CONTROL LINKS CONNECTS ATTACHMENTS
+      document.getElementById("btnLaunchWave").addEventListener("click", () => {
+        initializeWaveGenerationPlanSchedule();
+      });
+
+      document.getElementById("btnPauseToggle").addEventListener("click", () => {
+        isEngineLoopRunningFlag = !isEngineLoopRunningFlag;
+        document.getElementById("btnPauseToggle").textContent = isEngineLoopRunningFlag ? "⏸" : "▶";
+        if (isEngineLoopRunningFlag) {
+          lastExecutionTimestampCheckpointMarker = performance.now();
+        }
+      });
+
+      document.getElementById("btnAudioToggle").addEventListener("click", () => {
+        isAudioEngineSynthesizerMuted = !isAudioEngineSynthesizerMuted;
+        document.getElementById("btnAudioToggle").textContent = isAudioEngineSynthesizerMuted ? "🔇" : "🔊";
+      });
+    }
+
+    function executeGridTileInteractionClickAction(rowIndex, colIndex) {
+      const targetedTileObject = gameplayMatrixGridMap[rowIndex][colIndex];
+
+      // SCENARIO A: PLACEMENT MODE ACTIVE
+      if (localSelectedShopTowerKeyType) {
+        const profile = TOWER_PROFILES[localSelectedShopTowerKeyType];
+        const isPlacementAllowed = !targetedTileObject.isPath && !targetedTileObject.deployedTowerInstanceRef && globalPlayerGoldCount >= profile.cost;
+
+        if (isPlacementAllowed) {
+          globalPlayerGoldCount -= profile.cost;
+
+          const newlyCreatedTowerNode = new TowerNodeInstance(localSelectedShopTowerKeyType, rowIndex, colIndex);
+          targetedTileObject.deployedTowerInstanceRef = newlyCreatedTowerNode;
+          activeInstancedTowersArray.push(newlyCreatedTowerNode);
+
+          triggerSyntheticAudioChimeFrequency(587.33, 0.1, "sine", 0.05);
+          createExplosionParticleCloudBurst(newlyCreatedTowerNode.x, newlyCreatedTowerNode.y, profile.color, 8);
+
+          localSelectedShopTowerKeyType = null; // Clear build selection after placement
+          currentInspectedTowerObjectInstanceRef = newlyCreatedTowerNode; // Auto-target built structures for analysis updates
+
+          syncDisplayInterfaceMetricsElements();
+          renderSelectedTowerInspectorPanelDetails();
+        } else {
+          triggerSyntheticAudioChimeFrequency(150, 0.15, "sawtooth", 0.06);
+        }
+        return;
+      }
+
+      // SCENARIO B: ANALYSIS SELECT TILES CONFIGURATORS INSPECTOR EVALUATE TARGETS SHIFTS
+      if (targetedTileObject.deployedTowerInstanceRef) {
+        currentInspectedTowerObjectInstanceRef = targetedTileObject.deployedTowerInstanceRef;
+        triggerSyntheticAudioChimeFrequency(440, 0.04, "sine", 0.04);
+      } else {
+        currentInspectedTowerObjectInstanceRef = null;
+      }
+      renderSelectedTowerInspectorPanelDetails();
+    }
+
+    function verifyTerminalDefeatConditionThresholdState() {
+      if (globalPlayerBaseHpCount <= 0 && !isGameTerminalClosedState) {
+        isGameTerminalClosedState = true;
+        isEngineLoopRunningFlag = false;
+
+        // Evaluate record score parameters inside persistent local state profiles
+        const cachedTopScoreValue = localStorage.getItem("td_neo_arcade_highscore") || 0;
+        if (globalAccumulatedScoreValue > parseInt(cachedTopScoreValue, 10)) {
+          localStorage.setItem("td_neo_arcade_highscore", globalAccumulatedScoreValue.toString());
+        }
+
+        document.getElementById("endScore").textContent = globalAccumulatedScoreValue;
+        document.getElementById("endWave").textContent = globalActiveWaveIndexCounter;
+        document.getElementById("endKills").textContent = globalEnemiesDefeatedCount;
+
+        document.getElementById("gameOverOverlay").classList.add("active");
+        triggerSyntheticAudioChimeFrequency(140, 0.4, "sawtooth", 0.12);
+        setTimeout(() => triggerSyntheticAudioChimeFrequency(85, 0.6, "sawtooth", 0.15), 200);
+      }
+    }
+
+    function preserveSynchronizeHighScoreRecordDisplay() {
+      const extractedTopRecord = localStorage.getItem("td_neo_arcade_highscore") || 0;
+      document.getElementById("statHighScore").textContent = extractedTopRecord;
+    }
+
+    function resetEngineGameSession() {
+      document.getElementById("gameOverOverlay").classList.remove("active");
+
+      globalPlayerBaseHpCount = 100;
+      globalPlayerGoldCount = 200;
+      globalActiveWaveIndexCounter = 0;
+      globalAccumulatedScoreValue = 0;
+      globalEnemiesDefeatedCount = 0;
+
+      activeInstancedTowersArray = [];
+      activeInstancedEnemiesArray = [];
+      activeInstancedProjectilesArray = [];
+      activeParticleExplosionsPool = [];
+      passiveFloatingTextAlertsPool = [];
+
+      localSelectedShopTowerKeyType = null;
+      currentInspectedTowerObjectInstanceRef = null;
+      isWaveCurrentlyActiveSpawningPhase = false;
+      waveQueueSpawningScheduleList = [];
+
+      initializeGridMatrixLogicalContainers();
+      preserveSynchronizeHighScoreRecordDisplay();
+      syncDisplayInterfaceMetricsElements();
+      renderSelectedTowerInspectorPanelDetails();
+
+      isGameTerminalClosedState = false;
+      isEngineLoopRunningFlag = true;
+      lastExecutionTimestampCheckpointMarker = performance.now();
+
+      triggerSyntheticAudioChimeFrequency(440, 0.1, "sine", 0.04);
+    }
+
+    /* ==========================================
+       Primary Step Loop Simulation Mechanics Updates
+       ========================================== */
+    let lastExecutionTimestampCheckpointMarker = performance.now();
+
+    function executeMainGameSimulationStepLoopFrame(currentTimestampDelta) {
+      requestAnimationFrame(executeMainGameSimulationStepLoopFrame);
+
+      // Maintain ambient background render updates regardless of gameplay pause status
+      executeBackgroundAmbientParticlesRenderLoop();
+
+      if (!isEngineLoopRunningFlag || isGameTerminalClosedState) return;
+
+      // Compute elapsed physical cycle updates parameters normalizers steps
+      let elapsedSecondsTimeDelta = (currentTimestampDelta - lastExecutionTimestampCheckpointMarker) / 1000.0;
+      lastExecutionTimestampCheckpointMarker = currentTimestampDelta;
+
+      // Bounding constraints safeguard against calculation steps skipping loops during window background switching freezes
+      if (elapsedSecondsTimeDelta > 0.1) elapsedSecondsTimeDelta = 0.1;
+
+      // A. UPDATE SPAWNER LOGIC QUEUE TIMELINE STEPS METRICS TRACKS
+      evaluateWaveSpawningQueueLogicTimeline(elapsedSecondsTimeDelta);
+
+      // B. ANIMATE ENEMIES POSITION COORDINATES VECTORS TRANSLATIONS STEPS
+      for (let i = activeInstancedEnemiesArray.length - 1; i >= 0; i--) {
+        const enemy = activeInstancedEnemiesArray[i];
+        enemy.evaluateMovementPhysicsTrackingStep(elapsedSecondsTimeDelta);
+        if (enemy.markedForSystemPurgeFlag) {
+          activeInstancedEnemiesArray.splice(i, 1);
+        }
+      }
+
+      // C. ENGAGE TOWERS TARGET ANALYSIS WEAPON COOLDOWNS COUNTERS
+      for (let i = 0; i < activeInstancedTowersArray.length; i++) {
+        activeInstancedTowersArray[i].evaluateTargetAcquisitionTrackingStep(elapsedSecondsTimeDelta);
+      }
+
+      // D. CALCULATE PROJECTILES INTERSECT TRAJECTORIES MOVEMENT SPEED FACTOR
+      for (let i = activeInstancedProjectilesArray.length - 1; i >= 0; i--) {
+        const proj = activeInstancedProjectilesArray[i];
+        proj.evaluateTrajectoryPhysicsTrackingStep(elapsedSecondsTimeDelta);
+        if (proj.markedForSystemPurgeFlag) {
+          activeInstancedProjectilesArray.splice(i, 1);
+        }
+      }
+
+      // E. RE-DRAW PLAYFIELD RENDER LAYER TARGET PIPELINES
+      renderPrimaryGameplayPlayfieldCanvas();
+    }
+
+    /* ==========================================
+       Ambient Background Particle Simulation Engine (60FPS Canvas)
+       ========================================== */
+    function setupInteractiveAmbientParticlesPool() {
+      backdropParticlesPoolArray = [];
+      const targetedParticlesTotalLimit = 65;
+      for (let i = 0; i < targetedParticlesTotalLimit; i++) {
+        const isPurpleVariant = Math.random() < 0.45;
+        backdropParticlesPoolArray.push({
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          radius: Math.random() * 2.5 + 1.2,
+          color: isPurpleVariant ? "rgba(157, 78, 221, " : "rgba(0, 242, 254, ",
+          alphaFactor: Math.random() * 0.35 + 0.15,
+          baseVelocityX: Math.random() * 0.4 - 0.2,
+          baseVelocityY: Math.random() * 0.4 - 0.2,
+          activeOffsetX: 0,
+          activeOffsetY: 0
+        });
+      }
+    }
+
+    function executeBackgroundAmbientParticlesRenderLoop() {
+      bgCtx.clearRect(0, 0, backgroundCanvasElementNode.width, backgroundCanvasElementNode.height);
+
+      // Gradient background fill
+      const fillGrad = bgCtx.createRadialGradient(
+        backgroundCanvasElementNode.width * 0.5, backgroundCanvasElementNode.height * 0.3, 20,
+        backgroundCanvasElementNode.width * 0.5, backgroundCanvasElementNode.height * 0.5, Math.max(backgroundCanvasElementNode.width, backgroundCanvasElementNode.height)
+      );
+      fillGrad.addColorStop(0, "#0b0d23");
+      fillGrad.addColorStop(1, "#03040a");
+      bgCtx.fillStyle = fillGrad;
+      bgCtx.fillRect(0, 0, backgroundCanvasElementNode.width, backgroundCanvasElementNode.height);
+
+      // Compute physics transformations tracking across backdrop particles list items
+      for (let i = 0; i < backdropParticlesPoolArray.length; i++) {
+        const p = backdropParticlesPoolArray[i];
+
+        if (pointerInteractionCoordinates.x !== null && pointerInteractionCoordinates.y !== null) {
+          const deltaX = p.x - pointerInteractionCoordinates.x;
+          const deltaY = p.y - pointerInteractionCoordinates.y;
+          const distanceHypotenuse = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+          if (distanceHypotenuse < pointerInteractionCoordinates.repulsionRadius) {
+            const repulsionScalarForce = (pointerInteractionCoordinates.repulsionRadius - distanceHypotenuse) / pointerInteractionCoordinates.repulsionRadius;
+            const accelerationFactorMagnitude = repulsionScalarForce * 2.5;
+
+            p.activeOffsetX += (deltaX / distanceHypotenuse) * accelerationFactorMagnitude;
+            p.activeOffsetY += (deltaY / distanceHypotenuse) * accelerationFactorMagnitude;
+          }
+        }
+
+        p.x += p.baseVelocityX + p.activeOffsetX;
+        p.y += p.baseVelocityY + p.activeOffsetY;
+
+        p.activeOffsetX *= 0.93;
+        p.activeOffsetY *= 0.93;
+
+        // Screen wraps constraints bounds borders
+        if (p.x < -10) p.x = backgroundCanvasElementNode.width + 10;
+        if (p.x > backgroundCanvasElementNode.width + 10) p.x = -10;
+        if (p.y < -10) p.y = backgroundCanvasElementNode.height + 10;
+        if (p.y > backgroundCanvasElementNode.height + 10) p.y = -10;
+
+        bgCtx.beginPath();
+        bgCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        bgCtx.fillStyle = `${p.color}${p.alphaFactor})`;
+        bgCtx.shadowBlur = 6;
+        bgCtx.shadowColor = p.color.includes("157") ? "rgba(157, 78, 221, 0.4)" : "rgba(0, 242, 254, 0.4)";
+        bgCtx.fill();
+      }
+      bgCtx.shadowBlur = 0;
+    }
+
+    function adjustCanvasGraphicLayoutScalesDimensions() {
+      backgroundCanvasElementNode.width = window.innerWidth;
+      backgroundCanvasElementNode.height = window.innerHeight;
+
+      // Recalculate cell sizes mapping definitions targets profiles constraints dimensions parameters arrays
+      tileWidthSize = gameCanvasElementNode.width / MAP_COLS;
+      tileHeightSize = gameCanvasElementNode.height / MAP_ROWS;
+    }
+
+    /* ==========================================
+       System Lifecycle Initialization Boot Setup Root
+       ========================================== */
+    document.addEventListener("DOMContentLoaded", () => {
+      backgroundCanvasElementNode = document.getElementById("bgCanvas");
+      bgCtx = backgroundCanvasElementNode.getContext("2d");
+
+      gameCanvasElementNode = document.getElementById("gameCanvas");
+      gameCtx = gameCanvasElementNode.getContext("2d");
+
+      adjustCanvasGraphicLayoutScalesDimensions();
+      window.addEventListener("resize", adjustCanvasGraphicLayoutScalesDimensions);
+
+      bindSystemInterfaceInteractionEventHandlers();
+      setupInteractiveAmbientParticlesPool();
+      resetEngineGameSession();
+
+      // Trigger primary parallel core frames running threads execution trackers processes loop
+      requestAnimationFrame(executeMainGameSimulationStepLoopFrame);
+    });
+
+    function varColorStringLookup(cssVariableKey, fallbackHexColorString) {
+      try {
+        const resolvedComputedColorString = getComputedStyle(document.body).getPropertyValue(cssVariableKey).trim();
+        return resolvedComputedColorString || fallbackHexColorString;
+      } catch (e) {
+        return fallbackHexColorString;
+      }
+    }
+  </script>
+</body>
+
+</html>

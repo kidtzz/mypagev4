@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>2048 Neon Evolved - Mini Arcade</title>
+  <style>
+    /* --- CSS VARIABLES & THEME SETUP --- */
+    :root {
+      --bg-main: #0c0d14;
+      --bg-surface: #141724;
+      --bg-grid: #1e2235;
+      --bg-tile-empty: rgba(30, 34, 53, 0.5);
+      --text-main: #8f9cae;
+      --text-bright: #ffffff;
+      --accent-orange: #ff6b35;
+      --accent-gold: #ffb703;
+      --border-glass: rgba(255, 255, 255, 0.06);
+      --border-radius: 12px;
+      --transition-speed: 0.15s;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 20px 15px;
+      overflow-x: hidden;
+      background: radial-gradient(circle at 50% 20%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 183, 3, 0.05) 0%, transparent 40%);
+    }
+
+    /* --- ACTION BAR --- */
+    .top-nav {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .back-btn {
+      background: rgba(20, 23, 36, 0.6);
+      border: 1px solid var(--border-glass);
+      color: var(--text-bright);
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .back-btn:hover {
+      border-color: var(--accent-orange);
+      box-shadow: 0 0 15px rgba(255, 107, 53, 0.2);
+      color: var(--accent-orange);
+      transform: translateY(-1px);
+    }
+
+    .audio-toggle {
+      background: rgba(20, 23, 36, 0.6);
+      border: 1px solid var(--border-glass);
+      color: var(--text-bright);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    .audio-toggle:hover {
+      border-color: var(--accent-gold);
+      transform: scale(1.05);
+    }
+
+    /* --- DASHBOARD WRAPPER --- */
+    .game-container {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* --- BRANDING & HEADER --- */
+    .game-header {
+      background: rgba(20, 23, 36, 0.4);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(10px);
+      border-radius: var(--border-radius);
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-box h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text-bright);
+      line-height: 1;
+      background: linear-gradient(135deg, #ffffff 30%, var(--accent-orange));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-box p {
+      font-size: 0.8rem;
+      color: var(--text-main);
+      margin-top: 4px;
+    }
+
+    .scores-wrapper {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .score-box {
+      background: var(--bg-surface);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      padding: 6px 12px;
+      text-align: center;
+      min-width: 80px;
+      position: relative;
+    }
+
+    .score-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-main);
+    }
+
+    .score-value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-bright);
+    }
+
+    /* Float scoring element points animation hook */
+    .score-addition {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--accent-gold);
+      font-weight: 700;
+      font-size: 1rem;
+      animation: floatPoints 0.6s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatPoints {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, 10px);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -15px);
+      }
+    }
+
+    /* --- CONTROLS PANEL ROW --- */
+    .meta-controls-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .stats-panel {
+      flex: 1;
+      background: rgba(20, 23, 36, 0.4);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--border-radius);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      font-size: 0.85rem;
+    }
+
+    .stat-item strong {
+      color: var(--text-bright);
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-glass);
+      color: var(--text-bright);
+      padding: 0 16px;
+      height: 40px;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--text-bright);
+    }
+
+    .btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      border-color: var(--border-glass);
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #e65c00 0%, #f9d423 100%);
+      border: none;
+      color: #0c0d14;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(230, 92, 0, 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 16px rgba(230, 92, 0, 0.3);
+    }
+
+    /* --- THE BOARD PLATFORM GRID --- */
+    .board-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      background: var(--bg-surface);
+      border: 2px solid var(--border-glass);
+      border-radius: 16px;
+      padding: 12px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+      touch-action: none;
+      /* Block default device swipe movements viewport pullbacks */
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      gap: 12px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .grid-cell {
+      background: var(--bg-tile-empty);
+      border-radius: 8px;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* --- ABSOLUTE TILES MATRIX LAYER --- */
+    .tiles-container {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      pointer-events: none;
+    }
+
+    .tile {
+      position: absolute;
+      width: calc((100% - 36px) / 4);
+      height: calc((100% - 36px) / 4);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #ffffff;
+      transition: transform var(--transition-speed) ease-in-out;
+      animation: spawnTile 0.2s ease-out forwards;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    @keyframes spawnTile {
+      0% {
+        opacity: 0;
+        transform: scale(0);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .tile-merged {
+      animation: mergePulse 0.18s ease-in-out alternate;
+    }
+
+    @keyframes mergePulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.18);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /* Precise positional inline matrix mappings via datasets coordinate transforms */
+    .tile[data-row="0"] {
+      top: 0%;
+    }
+
+    .tile[data-row="1"] {
+      top: calc(25% + 3px);
+    }
+
+    .tile[data-row="2"] {
+      top: calc(50% + 6px);
+    }
+
+    .tile[data-row="3"] {
+      top: calc(75% + 9px);
+    }
+
+    .tile[data-col="0"] {
+      left: 0%;
+    }
+
+    .tile[data-col="1"] {
+      left: calc(25% + 3px);
+    }
+
+    .tile[data-col="2"] {
+      left: calc(50% + 6px);
+    }
+
+    .tile[data-col="3"] {
+      left: calc(75% + 9px);
+    }
+
+    /* --- TILE COLOR PALETTE MAP MATRIX --- */
+    .tile-2 {
+      background: #2c3045;
+      color: #f3f4f6;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .tile-4 {
+      background: #3a3f5c;
+      color: #f3f4f6;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .tile-8 {
+      background: #f26419;
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(242, 100, 25, 0.3);
+    }
+
+    .tile-16 {
+      background: #f6bd60;
+      color: #141724;
+      box-shadow: 0 0 12px rgba(246, 189, 96, 0.3);
+    }
+
+    .tile-32 {
+      background: #f28482;
+      color: #ffffff;
+      box-shadow: 0 0 14px rgba(242, 132, 130, 0.3);
+    }
+
+    .tile-64 {
+      background: #f44336;
+      color: #ffffff;
+      box-shadow: 0 0 16px rgba(244, 67, 54, 0.4);
+    }
+
+    .tile-128 {
+      background: #f9c74f;
+      color: #141724;
+      font-size: 1.6rem;
+      box-shadow: 0 0 20px rgba(249, 199, 79, 0.4);
+    }
+
+    .tile-256 {
+      background: #43aa8b;
+      color: #ffffff;
+      font-size: 1.6rem;
+      box-shadow: 0 0 22px rgba(67, 170, 139, 0.5);
+    }
+
+    .tile-512 {
+      background: #4d908e;
+      color: #ffffff;
+      font-size: 1.6rem;
+      box-shadow: 0 0 24px rgba(77, 144, 142, 0.5);
+    }
+
+    .tile-1024 {
+      background: #577590;
+      color: #ffffff;
+      font-size: 1.3rem;
+      box-shadow: 0 0 26px rgba(87, 117, 144, 0.6);
+    }
+
+    .tile-2048 {
+      background: linear-gradient(135deg, #ffb703 0%, #ff6b35 100%);
+      color: #ffffff;
+      font-size: 1.3rem;
+      box-shadow: 0 0 35px rgba(255, 183, 3, 0.8);
+      border: 2px solid #ffffff;
+    }
+
+    .tile-super {
+      background: #7c3aed;
+      color: #ffffff;
+      font-size: 1.2rem;
+      box-shadow: 0 0 40px rgba(124, 58, 237, 0.9);
+    }
+
+    /* --- STATE OVERLAY SCREENS --- */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(12, 13, 20, 0.92);
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 24px;
+      z-index: 20;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .overlay-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text-bright);
+      text-align: center;
+    }
+
+    .overlay-desc {
+      font-size: 0.95rem;
+      color: var(--text-main);
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .overlay-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      max-width: 220px;
+    }
+
+    .overlay-actions .btn {
+      width: 100%;
+      height: 44px;
+    }
+
+    /* --- RUNTIME INSTRUCTION BANNER --- */
+    .instructions-panel {
+      background: rgba(20, 23, 36, 0.3);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--border-radius);
+      padding: 12px;
+      text-align: center;
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+
+    .key-badge {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-bright);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-family: monospace;
+    }
+
+    /* --- RESPONSIVE ADJUSTMENTS --- */
+    @media (max-width: 400px) {
+      .tile {
+        font-size: 1.5rem;
+      }
+
+      .tile-128,
+      .tile-256,
+      .tile-512 {
+        font-size: 1.3rem;
+      }
+
+      .tile-1024,
+      .tile-2048 {
+        font-size: 1.1rem;
+      }
+
+      .board-wrapper {
+        padding: 8px;
+      }
+
+      .grid-container {
+        gap: 8px;
+      }
+
+      .tiles-container {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+      }
+
+      .tile[data-row="1"] {
+        top: calc(25% + 2px);
+      }
+
+      .tile[data-row="2"] {
+        top: calc(50% + 4px);
+      }
+
+      .tile[data-row="3"] {
+        top: calc(75% + 6px);
+      }
+
+      .tile[data-col="1"] {
+        left: calc(25% + 2px);
+      }
+
+      .tile[data-col="2"] {
+        left: calc(50% + 4px);
+      }
+
+      .tile[data-col="3"] {
+        left: calc(75% + 6px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="top-nav">
+    <a href="../games-all.html" class="back-btn">
+      <svg style="width:14px; height:14px; fill:currentColor;" viewBox="0 0 24 24">
+        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+      </svg>
+      Back to Arcade
+    </a>
+    <button class="audio-toggle" id="audioToggleBtn" title="Toggle Sound Engine">🔊</button>
+  </div>
+
+  <div class="game-container">
+
+    <header class="game-header">
+      <div class="brand-box">
+        <h1>2048</h1>
+        <p>Neon Puzzle Edition</p>
+      </div>
+      <div class="scores-wrapper">
+        <div class="score-box" id="currentScoreBox">
+          <div class="score-label">Score</div>
+          <div class="score-value" id="scoreVal">0</div>
+        </div>
+        <div class="score-box">
+          <div class="score-label">Best</div>
+          <div class="score-value" id="bestScoreVal">0</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="meta-controls-row">
+      <div class="stats-panel">
+        <div class="stat-item" id="moveCounterItem">Moves: <strong id="movesVal">0</strong></div>
+      </div>
+      <div class="action-buttons">
+        <button class="btn" id="undoBtn" onclick="triggerUndoAction()" title="Rollback last grid move step" disabled>
+          ↩️ Undo
+        </button>
+        <button class="btn btn-primary" onclick="initiateGameEngine()">
+          🔄 Reset
+        </button>
+      </div>
+    </div>
+
+    <div class="board-wrapper" id="swipeBoardSurface">
+      <div class="grid-container">
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+      </div>
+
+      <div class="tiles-container" id="tilesContainer"></div>
+
+      <div class="overlay" id="winOverlay">
+        <div class="overlay-title" style="color: var(--accent-gold);">🎉 You Win!</div>
+        <div class="overlay-desc">You successfully synthesized the elite 2048 atomic element data block structure
+          matrix!</div>
+        <div class="overlay-actions">
+          <button class="btn btn-primary" onclick="dismissWinOverlayAndContinue()">Continue Playing</button>
+          <button class="btn btn-outline" onclick="initiateGameEngine()">New Game</button>
+        </div>
+      </div>
+
+      <div class="overlay" id="gameoverOverlay">
+        <div class="overlay-title" style="color: #ef4444;">Game Over</div>
+        <div class="overlay-desc" id="finalScoreSummaryText">No available legal tile adjustments remaining on the grid
+          layout.</div>
+        <div class="overlay-actions">
+          <button class="btn btn-primary" onclick="initiateGameEngine()">Play Again</button>
+          <button class="btn btn-outline" onclick="window.location.href = '../games-all.html'">Back to Arcade</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="instructions-panel">
+      Swipe or use key layout directional vectors <span class="key-badge">▲</span> <span class="key-badge">▼</span>
+      <span class="key-badge">◀</span> <span class="key-badge">▶</span> to shift matrix indices. Mash identical block
+      values together to execute synthesis multiplication loops. Press <span class="key-badge">R</span> to reset.
+    </div>
+  </div>
+
+  <script>
+    // ENGINE MODEL CONTEXT VARIABLES MATRIX
+    const GRID_SIZE = 4;
+    let logicalDataGrid = [];
+    let scoreCounterValue = 0;
+    let bestHighScoreValue = 0;
+    let globalMoveCountTracker = 0;
+
+    let hasReachedWinConditionThreshold = false;
+    let isUserContinuingPostWinSession = false;
+    let isAudioEngineMutedFlag = false;
+
+    // UNDO BACKUP SYSTEM CACHING ARCHIVE STRUCTURES
+    let stateSnapshotArchiveHistory = null;
+
+    // VIRTUAL AUDIO CHIP MODULE GENERATOR GRAPH CONTEXT PIPELINES
+    const WebAudioContextClassReference = window.AudioContext || window.webkitAudioContext;
+    let virtualAudioNodeDeviceInstance = null;
+
+    function playSyntheticToneChime(frequencyHertzValue, soundEnvelopeDurationSeconds, waveformPatternString = "sine") {
+      if (isAudioEngineMutedFlag) return;
+      try {
+        if (!virtualAudioNodeDeviceInstance) {
+          virtualAudioNodeDeviceInstance = new WebAudioContextClassReference();
+        }
+        if (virtualAudioNodeDeviceInstance.state === "suspended") {
+          virtualAudioNodeDeviceInstance.resume();
+        }
+        const oscNode = virtualAudioNodeDeviceInstance.createOscillator();
+        const gainEnvelopeAmplifierNode = virtualAudioNodeDeviceInstance.createGain();
+
+        oscNode.type = waveformPatternString;
+        oscNode.frequency.setValueAtTime(frequencyHertzValue, virtualAudioNodeDeviceInstance.currentTime);
+
+        gainEnvelopeAmplifierNode.gain.setValueAtTime(0.12, virtualAudioNodeDeviceInstance.currentTime);
+        gainEnvelopeAmplifierNode.gain.exponentialRampToValueAtTime(0.0001, virtualAudioNodeDeviceInstance.currentTime + soundEnvelopeDurationSeconds);
+
+        oscNode.connect(gainEnvelopeAmplifierNode);
+        gainEnvelopeAmplifierNode.connect(virtualAudioNodeDeviceInstance.destination);
+
+        oscNode.start();
+        oscNode.stop(virtualAudioNodeDeviceInstance.currentTime + soundEnvelopeDurationSeconds);
+      } catch (err) {
+        console.warn("Virtual synthesizer node pipeline injection constraint error:", err);
+      }
+    }
+
+    // INITIAL BOOT HOOK ATTACHMENT ROUTINES
+    document.addEventListener("DOMContentLoaded", () => {
+      loadSavedLocalCachedBestScore();
+      setupInterfaceActionListeners();
+      initiateGameEngine();
+    });
+
+    function loadSavedLocalCachedBestScore() {
+      const preservedStorageValue = localStorage.getItem("arcade_2048_highkey");
+      if (preservedStorageValue) {
+        bestHighScoreValue = parseInt(preservedStorageValue, 10);
+        document.getElementById("bestScoreVal").textContent = bestHighScoreValue;
+      }
+    }
+
+    function setupInterfaceActionListeners() {
+      // DESKTOP SYSTEM CONTROLS INTERCEPT ATTACHMENTS
+      window.addEventListener("keydown", (e) => {
+        if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "].includes(e.key)) {
+          e.preventDefault(); // Stop window spacebar shifting layout parameters offsets
+        }
+
+        switch (e.key) {
+          case "ArrowLeft": handleDirectionalInputShift("left"); break;
+          case "ArrowRight": handleDirectionalInputShift("right"); break;
+          case "ArrowUp": handleDirectionalInputShift("up"); break;
+          case "ArrowDown": handleDirectionalInputShift("down"); break;
+          case "r":
+          case "R": initiateGameEngine(); break;
+        }
+      });
+
+      // GESTURE DESCRIPTOR TOUCH CAPTURE SYSTEM (SWIPE TRACKER DETECTOR)
+      const gestureSurfaceTargetElement = document.getElementById("swipeBoardSurface");
+      let initialTouchPointX = 0;
+      let initialTouchPointY = 0;
+
+      gestureSurfaceTargetElement.addEventListener("touchstart", (e) => {
+        initialTouchPointX = e.touches[0].clientX;
+        initialTouchPointY = e.touches[0].clientY;
+      }, { passive: true });
+
+      gestureSurfaceTargetElement.addEventListener("touchend", (e) => {
+        if (!e.changedTouches || e.changedTouches.length === 0) return;
+
+        const deltaMovementX = e.changedTouches[0].clientX - initialTouchPointX;
+        const deltaMovementY = e.changedTouches[0].clientY - initialTouchPointY;
+
+        const absoluteThresholdDeltaDistanceX = Math.abs(deltaMovementX);
+        const absoluteThresholdDeltaDistanceY = Math.abs(deltaMovementY);
+
+        if (Math.max(absoluteThresholdDeltaDistanceX, absoluteThresholdDeltaDistanceY) > 35) {
+          if (absoluteThresholdDeltaDistanceX > absoluteThresholdDeltaDistanceY) {
+            handleDirectionalInputShift(deltaMovementX > 0 ? "right" : "left");
+          } else {
+            handleDirectionalInputShift(deltaMovementY > 0 ? "down" : "up");
+          }
+        }
+      }, { passive: true });
+
+      // AUDIO SYNC BUTTON MECHANIC
+      document.getElementById("audioToggleBtn").addEventListener("click", () => {
+        isAudioEngineMutedFlag = !isAudioEngineMutedFlag;
+        document.getElementById("audioToggleBtn").textContent = isAudioEngineMutedFlag ? "🔇" : "🔊";
+      });
+    }
+
+    // INITIAL ENGINE LIFECYCLE RE-GEN ROUTINE STEP
+    function initiateGameEngine() {
+      // Close running conditional display overlays down securely
+      document.getElementById("winOverlay").classList.remove("active");
+      document.getElementById("gameoverOverlay").classList.remove("active");
+
+      // Empty structures tracking parameters initialization allocation
+      logicalDataGrid = Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(null));
+      scoreCounterValue = 0;
+      globalMoveCountTracker = 0;
+      hasReachedWinConditionThreshold = false;
+      isUserContinuingPostWinSession = false;
+      stateSnapshotArchiveHistory = null;
+
+      document.getElementById("undoBtn").disabled = true;
+      updateDashboardScoreInterfaceDisplayNodes(0);
+      document.getElementById("movesVal").textContent = globalMoveCountTracker;
+
+      // Initialize essential default baseline system spawning blocks
+      generateRandomBlockCoordinatesElement();
+      generateRandomBlockCoordinatesElement();
+      refreshRenderedMatrixInterfaceViewLayouts();
+    }
+
+    // MATRIX GRID RE-RENDERING MECHANISM LOOP
+    function refreshRenderedMatrixInterfaceViewLayouts() {
+      const targetContainerNode = document.getElementById("tilesContainer");
+      targetContainerNode.innerHTML = ""; // Wipe active render stack allocations completely clean
+
+      for (let r = 0; r < GRID_SIZE; r++) {
+        for (let c = 0; c < GRID_SIZE; c++) {
+          const blockItem = logicalDataGrid[r][c];
+          if (blockItem) {
+            const tileElementNode = document.createElement("div");
+            tileElementNode.classList.add("tile", `tile-${blockItem.value <= 2048 ? blockItem.value : 'super'}`);
+            tileElementNode.textContent = blockItem.value;
+            tileElementNode.setAttribute("data-row", r);
+            tileElementNode.setAttribute("data-col", c);
+
+            if (blockItem.mergedFlag) {
+              tileElementNode.classList.add("tile-merged");
+            }
+
+            targetContainerNode.appendChild(tileElementNode);
+            // Strip temporary structural rendering flag allocations safely
+            blockItem.mergedFlag = false;
+          }
+        }
+      }
+    }
+
+    // SPATIAL TILE RANDOMIZED SPAWN COMPONENT GENERATOR
+    function generateRandomBlockCoordinatesElement() {
+      const availableEmptyGridSlotsCollection = [];
+      for (let r = 0; r < GRID_SIZE; r++) {
+        for (let c = 0; c < GRID_SIZE; c++) {
+          if (logicalDataGrid[r][c] === null) {
+            availableEmptyGridSlotsCollection.push({ x: r, y: c });
+          }
+        }
+      }
+
+      if (availableEmptyGridSlotsCollection.length > 0) {
+        const targetPickedSlotIndex = Math.floor(Math.random() * availableEmptyGridSlotsCollection.length);
+        const assignedCoordinateCoordinates = availableEmptyGridSlotsCollection[targetPickedSlotIndex];
+
+        // Classic value weighting calibration setup: 90% chance for a 2 value block, 10% chance for a 4 value block
+        const finalTileNumericalValue = Math.random() < 0.9 ? 2 : 4;
+
+        logicalDataGrid[assignedCoordinateCoordinates.x][assignedCoordinateCoordinates.y] = {
+          value: finalTileNumericalValue,
+          mergedFlag: false
+        };
+      }
+    }
+
+    // UNDO SNAPSHOT BACKUP CONTROLLER CAPTURING MAPPING VECTOR SYSTEM
+    function recordStateSnapshotToArchive() {
+      stateSnapshotArchiveHistory = {
+        gridState: logicalDataGrid.map(row => row.map(cell => cell ? { ...cell } : null)),
+        scoreState: scoreCounterValue,
+        movesState: globalMoveCountTracker
+      };
+      document.getElementById("undoBtn").disabled = false;
+    }
+
+    function triggerUndoAction() {
+      if (!stateSnapshotArchiveHistory) return;
+
+      logicalDataGrid = stateSnapshotArchiveHistory.gridState;
+      scoreCounterValue = stateSnapshotArchiveHistory.scoreState;
+      globalMoveCountTracker = stateSnapshotArchiveHistory.movesState;
+      stateSnapshotArchiveHistory = null; // Consume history slot vector allocation profile parameters
+
+      document.getElementById("undoBtn").disabled = true;
+      document.getElementById("movesVal").textContent = globalMoveCountTracker;
+
+      updateDashboardScoreInterfaceDisplayNodes(0);
+      refreshRenderedMatrixInterfaceViewLayouts();
+      playSyntheticToneChime(220, 0.15, "triangle");
+    }
+
+    // INPUT DIRECTIONAL SHIFT LOGIC MATRIX ENGINE PIPELINE
+    function handleDirectionalInputShift(directionVectorString) {
+      // Exit early if checking modals active block flags overlay constraints layout parameters
+      if (document.getElementById("winOverlay").classList.contains("active") ||
+        document.getElementById("gameoverOverlay").classList.contains("active")) {
+        return;
+      }
+
+      const historicalSnapshotBackupCopyGrid = logicalDataGrid.map(row => row.map(cell => cell ? { ...cell } : null));
+      let calculatedSessionPointsAccumulated = 0;
+      let checkVectorTileDisplacementOccurred = false;
+
+      // Capture snapshot metrics definitions sequence arrays prior to evaluating adjustments execution paths
+      const temporaryPreMoveScoreBackupValue = scoreCounterValue;
+
+      // COMPUTE MATRIX VECTOR INDEX MODIFICATION SHIFTS
+      if (directionVectorString === "left" || directionVectorString === "right") {
+        for (let r = 0; r < GRID_SIZE; r++) {
+          const workingRowArrayData = logicalDataGrid[r];
+          const processedRowResultArray = evaluateVectorLineCondenseSequence(
+            directionVectorString === "right" ? [...workingRowArrayData].reverse() : [...workingRowArrayData]
+          );
+
+          if (directionVectorString === "right") processedRowResultArray.reverse();
+
+          // Track changes validation checks indices mapping definitions
+          for (let c = 0; c < GRID_SIZE; c++) {
+            if ((logicalDataGrid[r][c]?.value !== processedRowResultArray[c]?.value)) {
+              checkVectorTileDisplacementOccurred = true;
+            }
+            logicalDataGrid[r][c] = processedRowResultArray[c];
+          }
+          calculatedSessionPointsAccumulated += processedRowResultArray.pointsReward;
+        }
+      } else {
+        // Vertical Shifting Column Tracking Configuration Loops Execution logic maps
+        for (let c = 0; c < GRID_SIZE; c++) {
+          const workingColumnArrayData = [];
+          for (let r = 0; r < GRID_SIZE; r++) {
+            workingColumnArrayData.push(logicalDataGrid[r][c]);
+          }
+
+          const processedColumnResultArray = evaluateVectorLineCondenseSequence(
+            directionVectorString === "down" ? [...workingColumnArrayData].reverse() : [...workingColumnArrayData]
+          );
+
+          if (directionVectorString === "down") processedColumnResultArray.reverse();
+
+          for (let r = 0; r < GRID_SIZE; r++) {
+            if ((logicalDataGrid[r][c]?.value !== processedColumnResultArray[r]?.value)) {
+              checkVectorTileDisplacementOccurred = true;
+            }
+            logicalDataGrid[r][c] = processedColumnResultArray[r];
+          }
+          calculatedSessionPointsAccumulated += processedColumnResultArray.pointsReward;
+        }
+      }
+
+      // POST-MOVEMENT VALIDATION CYCLES STEPS
+      if (checkVectorTileDisplacementOccurred) {
+        // Execute rolling archive cache injection updates sequences routines parameters definitions
+        stateSnapshotArchiveHistory = {
+          gridState: historicalSnapshotBackupCopyGrid,
+          scoreState: temporaryPreMoveScoreBackupValue,
+          movesState: globalMoveCountTracker
+        };
+        document.getElementById("undoBtn").disabled = false;
+
+        scoreCounterValue += calculatedSessionPointsAccumulated;
+        globalMoveCountTracker++;
+        document.getElementById("movesVal").textContent = globalMoveCountTracker;
+
+        if (calculatedSessionPointsAccumulated > 0) {
+          updateDashboardScoreInterfaceDisplayNodes(calculatedSessionPointsAccumulated);
+          playSyntheticToneChime(440, 0.08, "triangle");
+          setTimeout(() => playSyntheticToneChime(659.25, 0.06, "sine"), 60);
+        } else {
+          playSyntheticToneChime(349.23, 0.05, "sine");
+        }
+
+        generateRandomBlockCoordinatesElement();
+        refreshRenderedMatrixInterfaceViewLayouts();
+        evaluateWinAndLossConditionThresholdStates();
+      }
+    }
+
+    // VECTOR CONDENSE ARRAY MATHEMATICAL ENGINE SIMULATOR
+    function evaluateVectorLineCondenseSequence(inboundVectorLineArray) {
+      // Strip structural dead space empty gaps components allocations
+      let compactFilterElementsList = inboundVectorLineArray.filter(cell => cell !== null);
+      let scoreSessionGainedAccumulator = 0;
+      const finalizedMergedRowOutputBuffer = [];
+
+      for (let i = 0; i < compactFilterElementsList.length; i++) {
+        if (i < compactFilterElementsList.length - 1 && compactFilterElementsList[i].value === compactFilterElementsList[i + 1].value) {
+          const targetSynthesizedValue = compactFilterElementsList[i].value * 2;
+          scoreSessionGainedAccumulator += targetSynthesizedValue;
+
+          finalizedMergedRowOutputBuffer.push({
+            value: targetSynthesizedValue,
+            mergedFlag: true
+          });
+          i++; // Jump forward over synthesized twin element segment components allocations safely
+        } else {
+          finalizedMergedRowOutputBuffer.push({
+            value: compactFilterElementsList[i].value,
+            mergedFlag: false
+          });
+        }
+      }
+
+      // Repopulate tail fields layout structure with dead empty padding node entries
+      while (finalizedMergedRowOutputBuffer.length < GRID_SIZE) {
+        finalizedMergedRowOutputBuffer.push(null);
+      }
+
+      finalizedMergedRowOutputBuffer.pointsReward = scoreSessionGainedAccumulator;
+      return finalizedMergedRowOutputBuffer;
+    }
+
+    // EVALUATE WIN / LOSS LOGIC THRESHOLDS
+    function evaluateWinAndLossConditionThresholdStates() {
+      // 1. SCAN FOR WIN MATRIX THRESHOLDS MATCH CRITERIA
+      if (!hasReachedWinConditionThreshold && !isUserContinuingPostWinSession) {
+        for (let r = 0; r < GRID_SIZE; r++) {
+          for (let c = 0; c < GRID_SIZE; c++) {
+            if (logicalDataGrid[r][c]?.value === 2048) {
+              hasReachedWinConditionThreshold = true;
+              document.getElementById("winOverlay").classList.add("active");
+              playSyntheticToneChime(523.25, 0.15, "sine");
+              setTimeout(() => playSyntheticToneChime(659.25, 0.15, "sine"), 100);
+              setTimeout(() => playSyntheticToneChime(783.99, 0.3, "sine"), 200);
+              return;
+            }
+          }
+        }
+      }
+
+      // 2. CHECK LEGAL MOVES MATRIX AVAILABILITY EXHAUSTION (LOSS CHECKER)
+      let checkGridIsEntirelyFilled = true;
+      let checkAdjacentMatchIsPossible = false;
+
+      for (let r = 0; r < GRID_SIZE; r++) {
+        for (let c = 0; c < GRID_SIZE; c++) {
+          if (logicalDataGrid[r][c] === null) {
+            checkGridIsEntirelyFilled = false;
+          }
+          // Validate Horizontal structural match alignment metrics indexes profiles
+          if (c < GRID_SIZE - 1 && logicalDataGrid[r][c]?.value === logicalDataGrid[r][c + 1]?.value) {
+            checkAdjacentMatchIsPossible = true;
+          }
+          // Validate Vertical structural match alignment metrics indexes profiles
+          if (r < GRID_SIZE - 1 && logicalDataGrid[r][c]?.value === logicalDataGrid[r + 1][c]?.value) {
+            checkAdjacentMatchIsPossible = true;
+          }
+        }
+      }
+
+      if (checkGridIsEntirelyFilled && !checkAdjacentMatchIsPossible) {
+        document.getElementById("finalScoreSummaryText").textContent = `No strategic structural merge transformations available. Final Session Score: ${scoreCounterValue}`;
+        document.getElementById("gameoverOverlay").classList.add("active");
+        playSyntheticToneChime(293.66, 0.25, "sawtooth");
+        setTimeout(() => playSyntheticToneChime(220.00, 0.4, "sawtooth"), 180);
+      }
+    }
+
+    function dismissWinOverlayAndContinue() {
+      isUserContinuingPostWinSession = true;
+      document.getElementById("winOverlay").classList.remove("active");
+      playSyntheticToneChime(587.33, 0.1, "sine");
+    }
+
+    // UPDATE DASHBOARD SCORING PANEL WIDGET RENDERING NODES
+    function updateDashboardScoreInterfaceDisplayNodes(deltaPointsAddedValue) {
+      document.getElementById("scoreVal").textContent = scoreCounterValue;
+
+      if (scoreCounterValue > bestHighScoreValue) {
+        bestHighScoreValue = scoreCounterValue;
+        localStorage.setItem("arcade_2048_highkey", bestHighScoreValue.toString());
+        document.getElementById("bestScoreVal").textContent = bestHighScoreValue;
+      }
+
+      // Execute float indicators popup tracker animations routines if positive delta exists
+      if (deltaPointsAddedValue > 0) {
+        const anchorNodeElement = document.getElementById("currentScoreBox");
+        const particleIndicatorPopupNode = document.createElement("div");
+        particleIndicatorPopupNode.classList.add("score-addition");
+        particleIndicatorPopupNode.textContent = `+${deltaPointsAddedValue}`;
+
+        anchorNodeElement.appendChild(particleIndicatorPopupNode);
+        // Garbage collection cycle disposal routine
+        setTimeout(() => particleIndicatorPopupNode.remove(), 600);
+      }
+    }
+  </script>
+</body>
+
+</html>

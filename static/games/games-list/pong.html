@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Pong: Neo Arcade Edition</title>
+  <style>
+    /* --- THEME SETUP & VARIABLES --- */
+    :root {
+      --bg-dark: #060713;
+      --bg-surface: rgba(18, 20, 38, 0.5);
+      --border-glass: rgba(255, 255, 255, 0.07);
+      --text-bright: #ffffff;
+      --text-muted: #747d95;
+      --neon-cyan: #00f2fe;
+      --neon-purple: #9d4edd;
+      --neon-blue: #0077b6;
+      --border-radius: 16px;
+      --glow-cyan: 0 0 15px rgba(0, 242, 254, 0.4);
+      --glow-purple: 0 0 15px rgba(157, 78, 221, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-bright);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 20px 15px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* --- BACKGROUND PARTICLES CANVAS --- */
+    #bgCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: auto;
+    }
+
+    /* --- INTERFACE CONTROLLERS WRAPPER --- */
+    .portal-container {
+      width: 100%;
+      max-width: 850px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 2;
+      pointer-events: none;
+      /* Let clicks fall through to the background when not over UI elements */
+    }
+
+    .interactive-element {
+      pointer-events: auto;
+    }
+
+    /* --- ACTION BAR --- */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .back-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glass);
+      color: var(--text-bright);
+      padding: 10px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(12px);
+    }
+
+    .back-btn:hover {
+      border-color: var(--neon-cyan);
+      box-shadow: var(--glow-cyan);
+      color: var(--neon-cyan);
+      transform: translateY(-1px);
+    }
+
+    .audio-toggle {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glass);
+      color: var(--text-bright);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: all 0.2s;
+      backdrop-filter: blur(12px);
+    }
+
+    .audio-toggle:hover {
+      border-color: var(--neon-purple);
+      box-shadow: var(--glow-purple);
+      transform: scale(1.05);
+    }
+
+    /* --- SCOREBOARD DISPLAY PANEL --- */
+    .dashboard {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(16px);
+      border-radius: var(--border-radius);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .branding h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #fff, var(--neon-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .branding p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+
+    .score-tracker {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .score-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .score-lbl {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .score-val {
+      font-size: 2.2rem;
+      font-weight: 800;
+      font-family: monospace;
+      line-height: 1;
+      transition: transform 0.15s ease-out;
+    }
+
+    .score-val.bounce {
+      transform: scale(1.3);
+    }
+
+    #pScore {
+      color: var(--neon-cyan);
+      text-shadow: var(--glow-cyan);
+    }
+
+    #aiScore {
+      color: var(--neon-purple);
+      text-shadow: var(--glow-purple);
+    }
+
+    .score-divider {
+      font-size: 1.5rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    /* --- INTERACTION WRAPPER CONTROL BAR --- */
+    .controls-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .difficulty-selector {
+      display: flex;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid var(--border-glass);
+    }
+
+    .diff-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 16px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .diff-btn:hover {
+      color: var(--text-bright);
+    }
+
+    .diff-btn.active {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--neon-cyan);
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.05);
+    }
+
+    .btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-glass);
+      color: var(--text-bright);
+      padding: 0 20px;
+      height: 38px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--text-bright);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-cyan) 100%);
+      border: none;
+      color: #060713;
+      font-weight: 700;
+    }
+
+    .btn-primary:hover {
+      box-shadow: var(--glow-cyan);
+      transform: scale(1.02);
+    }
+
+    /* --- CORE ARCADE GAME CANVAS ENGINE --- */
+    .viewport-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: rgba(10, 11, 26, 0.7);
+      border: 2px solid var(--border-glass);
+      border-radius: var(--border-radius);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+    }
+
+    #gameCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: calc(var(--border-radius) - 2px);
+    }
+
+    /* --- SCREEN GAME STATE OVERLAYS --- */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(6, 7, 19, 0.92);
+      backdrop-filter: blur(8px);
+      border-radius: calc(var(--border-radius) - 2px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 24px;
+      z-index: 10;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .overlay-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -1px;
+      text-align: center;
+    }
+
+    .overlay-title.win {
+      color: var(--neon-cyan);
+      text-shadow: var(--glow-cyan);
+    }
+
+    .overlay-title.loss {
+      color: var(--neon-purple);
+      text-shadow: var(--glow-purple);
+    }
+
+    .stats-summary {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-glass);
+      border-radius: 10px;
+      padding: 12px 24px;
+      width: 100%;
+      max-width: 280px;
+      font-size: 0.85rem;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .stat-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .stat-row span:last-child {
+      font-weight: 700;
+      color: var(--text-bright);
+    }
+
+    .overlay-actions {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+      max-width: 320px;
+      margin-top: 8px;
+    }
+
+    .overlay-actions .btn {
+      flex: 1;
+      height: 44px;
+    }
+
+    /* --- MOBILE HUD TOUCH GAME CONTROLS --- */
+    .mobile-paddles-touchpad {
+      display: none;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .touch-action-pad {
+      flex: 1;
+      height: 54px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glass);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-bright);
+      font-size: 1.4rem;
+      backdrop-filter: blur(12px);
+      cursor: pointer;
+      transition: background 0.1s, border-color 0.1s;
+    }
+
+    .touch-action-pad:active {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--neon-cyan);
+    }
+
+    /* --- SYSTEM LEGEND DESCRIPTORS PANEL --- */
+    .system-legend {
+      background: rgba(20, 22, 42, 0.2);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--border-radius);
+      padding: 12px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .key-badge {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-bright);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-family: monospace;
+    }
+
+    /* --- RESPONSIVE LAYOUT CALIBRATIONS --- */
+    @media (max-width: 768px) {
+      .mobile-paddles-touchpad {
+        display: flex;
+      }
+
+      .dashboard {
+        padding: 12px 16px;
+      }
+
+      .branding h1 {
+        font-size: 1.4rem;
+      }
+
+      .score-val {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="bgCanvas"></canvas>
+
+  <div class="portal-container">
+
+    <div class="top-nav interactive-element">
+      <a href="../games-all.html" class="back-btn">
+        <svg style="width:14px; height:14px; fill:currentColor;" viewBox="0 0 24 24">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+        </svg>
+        Back to Arcade
+      </a>
+      <button class="audio-toggle" id="audioToggleBtn" title="Toggle Synthesizer Sound Engine">🔊</button>
+    </div>
+
+    <header class="dashboard interactive-element">
+      <div class="branding">
+        <h1>PONG</h1>
+        <p>Neon Vectors Matrix</p>
+      </div>
+      <div class="score-tracker">
+        <div class="score-node">
+          <div class="score-lbl">Player</div>
+          <div class="score-val" id="pScore">0</div>
+        </div>
+        <div class="score-divider">:</div>
+        <div class="score-node">
+          <div class="score-lbl">AI Drone</div>
+          <div class="score-val" id="aiScore">0</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="controls-row interactive-element">
+      <div class="difficulty-selector">
+        <button class="diff-btn active" data-lvl="easy">Easy</button>
+        <button class="diff-btn" data-lvl="medium">Medium</button>
+        <button class="diff-btn" data-lvl="hard">Hard</button>
+      </div>
+      <button class="btn btn-primary" onclick="resetMatchEngineSession()">
+        🔄 Reset Match
+      </button>
+    </div>
+
+    <div class="viewport-wrapper interactive-element">
+      <canvas id="gameCanvas" width="1280" height="720"></canvas>
+
+      <div class="overlay" id="matchTerminalOverlay">
+        <div class="overlay-title" id="terminalTitleNode">🏆 Victory</div>
+        <div class="stats-summary">
+          <div class="stat-row"><span>Rally Interchanges</span><span id="summaryRallies">0</span></div>
+          <div class="stat-row"><span>Max Speed Threshold</span><span id="summaryMaxSpeed">0.0x</span></div>
+          <div class="stat-row"><span>Difficulty Setting</span><span id="summaryDiff"
+              style="text-transform: capitalize;">-</span></div>
+        </div>
+        <div class="overlay-actions">
+          <button class="btn btn-primary" onclick="resetMatchEngineSession()">Play Again</button>
+          <button class="btn" onclick="window.location.href = '../games-all.html'">Arcade Home</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-paddles-touchpad interactive-element">
+      <button class="touch-action-pad" id="touchPadUp">▲ Move Up</button>
+      <button class="touch-action-pad" id="touchPadDown">▼ Move Down</button>
+    </div>
+
+    <div class="system-legend">
+      Desktop Input Controls Matrix: Move Left Paddle via <span class="key-badge">W</span> / <span
+        class="key-badge">S</span> or directional line keys <span class="key-badge">▲</span> / <span
+        class="key-badge">▼</span>. Rally ball structures past opponent to execute victory synthesis. First to <span
+        class="key-badge">10 Points</span> claims arcade operational dominance.
+    </div>
+  </div>
+
+  <script>
+    // --- 1. ENGINE SYSTEM CONFIGURATIONS & PRESETS CONSTANTS ---
+    const DIFF_PROFILES = {
+      easy: { aiSpeed: 6.5, errorMargin: 45, speedIncrement: 0.35 },
+      medium: { aiSpeed: 9.0, errorMargin: 25, speedIncrement: 0.5 },
+      hard: { aiSpeed: 13.0, errorMargin: 10, speedIncrement: 0.65 }
+    };
+
+    let activeDifficultyKey = "easy";
+    let scoreLimitWinThreshold = 10;
+
+    // --- 2. RUNTIME CORE GLOBAL VARIABLES & GRAPHICS CONTEXT REFERENCES ---
+    let backgroundCanvasElementNode, bgCtx;
+    let gameCanvasElementNode, gameCtx;
+    let animationFrameBgReferenceId, animationFrameGameReferenceId;
+
+    // RUNTIME TRACKERS OBJECTS MODEL STRUCTURE DATAS
+    let matchPlayerScoreValue = 0;
+    let matchAiScoreValue = 0;
+    let matchRallyCounterValue = 0;
+    let sessionMaxSpeedValueRecorded = 0;
+    let isMatchTerminalOverlayActiveFlag = false;
+    let isAudioEngineMutedFlag = false;
+
+    // SIMULATION PHYSICS FRAME SPEED NORMALIZERS CONSTANTS
+    const ENGINE_NATIVE_WIDTH = 1280;
+    const ENGINE_NATIVE_HEIGHT = 720;
+
+    // GAME CONTROLS STATE STRUCTS
+    const keyboardControlStateInputs = { Up: false, Down: false };
+    const paddlePhysicalSpeedFactor = 14;
+
+    // INSTANCED SYSTEM GAMEPLAY VECTOR ELEMENT DATA MODELS
+    const entityPaddlePlayerLeft = { x: 30, y: 280, w: 18, h: 160 };
+    const entityPaddleAiRight = { x: ENGINE_NATIVE_WIDTH - 48, y: 280, w: 18, h: 160 };
+    const entityBallCoreInstance = { x: 640, y: 360, radius: 11, vx: 0, vy: 0, currentSpeedMagnitude: 0, baseSpeed: 9.5 };
+
+    let ballVisualTrailBufferHistory = [];
+    const MAX_TRAIL_LENGTH_LIMIT = 8;
+
+    // INTERACTIVE CANVAS BACKGROUND PARTICLE DATA STACK
+    let interactiveParticlesPoolArray = [];
+    const TARGET_PARTICLES_TOTAL_LIMIT = 75;
+    const pointerInteractionCoordinates = { x: null, y: null, repulsionRadius: 180 };
+
+    // VIRTUAL INTERNAL CHIP WEB AUDIO NETWORK NODES CONTEXTS
+    const NativeAudioContextClassReference = window.AudioContext || window.webkitAudioContext;
+    let syntheticAudioHardwareDevicePipelineInstance = null;
+
+    // --- 3. CORE AMBIENT AUDIO SYNTH REEVALUATING PIPELINE ---
+    function triggerSyntheticAudioChimeFrequency(frequencyHertzValue, playDurationSeconds, wavePatternType = "sine") {
+      if (isAudioEngineMutedFlag) return;
+      try {
+        if (!syntheticAudioHardwareDevicePipelineInstance) {
+          syntheticAudioHardwareDevicePipelineInstance = new NativeAudioContextClassReference();
+        }
+        if (syntheticAudioHardwareDevicePipelineInstance.state === "suspended") {
+          syntheticAudioHardwareDevicePipelineInstance.resume();
+        }
+        const oscillatorGraphNode = syntheticAudioHardwareDevicePipelineInstance.createOscillator();
+        const gainEnvelopeAmplifierNode = syntheticAudioHardwareDevicePipelineInstance.createGain();
+
+        oscillatorGraphNode.type = wavePatternType;
+        oscillatorGraphNode.frequency.setValueAtTime(frequencyHertzValue, syntheticAudioHardwareDevicePipelineInstance.currentTime);
+
+        gainEnvelopeAmplifierNode.gain.setValueAtTime(0.08, syntheticAudioHardwareDevicePipelineInstance.currentTime);
+        gainEnvelopeAmplifierNode.gain.exponentialRampToValueAtTime(0.0001, syntheticAudioHardwareDevicePipelineInstance.currentTime + playDurationSeconds);
+
+        oscillatorGraphNode.connect(gainEnvelopeAmplifierNode);
+        gainEnvelopeAmplifierNode.connect(syntheticAudioHardwareDevicePipelineInstance.destination);
+
+        oscillatorGraphNode.start();
+        oscillatorGraphNode.stop(syntheticAudioHardwareDevicePipelineInstance.currentTime + playDurationSeconds);
+      } catch (ex) {
+        console.warn("Virtual software audio synthesizer compilation sequence blocked context parameters constraints:", ex);
+      }
+    }
+
+    // --- 4. SYSTEM LIFECYCLE STARTUP SETUP COMPONENT ENGINE INITIALIZATION ---
+    document.addEventListener("DOMContentLoaded", () => {
+      initializeSystemCanvasGraphicPipelines();
+      bindUserInterfaceInteractionEventHandlers();
+      setupInteractiveAmbientParticlesPool();
+
+      // Trigger parallel execution runtime loops
+      executeBackgroundAnimationRenderLoop();
+      executeGamePhysicsAnimationSimulationLoop();
+
+      resetMatchEngineSession();
+    });
+
+    function initializeSystemCanvasGraphicPipelines() {
+      // Setup interactive backdrop infrastructure
+      backgroundCanvasElementNode = document.getElementById("bgCanvas");
+      bgCtx = backgroundCanvasElementNode.getContext("2d");
+      recalculateBackgroundCanvasViewportBoundaries();
+
+      // Setup primary physics gameplay visualization loop
+      gameCanvasElementNode = document.getElementById("gameCanvas");
+      gameCtx = gameCanvasElementNode.getContext("2d");
+    }
+
+    function recalculateBackgroundCanvasViewportBoundaries() {
+      backgroundCanvasElementNode.width = window.innerWidth;
+      backgroundCanvasElementNode.height = window.innerHeight;
+    }
+
+    window.addEventListener("resize", () => {
+      recalculateBackgroundCanvasViewportBoundaries();
+    });
+
+    // --- 5. INTERACTIVE BACKGROUND ENGINE (PARTICLE WAVE MATRIX 60FPS) ---
+    function setupInteractiveAmbientParticlesPool() {
+      interactiveParticlesPoolArray = [];
+      for (let i = 0; i < TARGET_PARTICLES_TOTAL_LIMIT; i++) {
+        interactiveParticlesPoolArray.push(createNewParticleBlueprintObjectSpecification());
+      }
+    }
+
+    function createNewParticleBlueprintObjectSpecification(overrideAtMousePosition = false) {
+      const isPurpleVariant = Math.random() < 0.4;
+      return {
+        x: overrideAtMousePosition ? pointerInteractionCoordinates.x + (Math.random() * 20 - 10) : Math.random() * window.innerWidth,
+        y: overrideAtMousePosition ? pointerInteractionCoordinates.y + (Math.random() * 20 - 10) : Math.random() * window.innerHeight,
+        radius: Math.random() * 3.5 + 1.5,
+        color: isPurpleVariant ? "rgba(157, 78, 221, " : "rgba(0, 242, 254, ",
+        alphaFactor: Math.random() * 0.4 + 0.15,
+        baseVelocityX: Math.random() * 0.6 - 0.3,
+        baseVelocityY: Math.random() * 0.6 - 0.3,
+        activeOffsetX: 0,
+        activeOffsetY: 0
+      };
+    }
+
+    function executeBackgroundAnimationRenderLoop() {
+      bgCtx.clearRect(0, 0, backgroundCanvasElementNode.width, backgroundCanvasElementNode.height);
+
+      // Execute subtle dynamic gradient sweep overlay logic sequence across background
+      const radialCenterGradientGradientMask = bgCtx.createRadialGradient(
+        backgroundCanvasElementNode.width * 0.5, backgroundCanvasElementNode.height * 0.2, 10,
+        backgroundCanvasElementNode.width * 0.5, backgroundCanvasElementNode.height * 0.5, Math.max(backgroundCanvasElementNode.width, backgroundCanvasElementNode.height)
+      );
+      radialCenterGradientGradientMask.addColorStop(0, "#0a0c1f");
+      radialCenterGradientGradientMask.addColorStop(1, "#04050d");
+      bgCtx.fillStyle = radialCenterGradientGradientMask;
+      bgCtx.fillRect(0, 0, backgroundCanvasElementNode.width, backgroundCanvasElementNode.height);
+
+      // PROCESS AMBIENT FLOAT LAYER INDICES
+      for (let i = 0; i < interactiveParticlesPoolArray.length; i++) {
+        const p = interactiveParticlesPoolArray[i];
+
+        // Track mouse repulsion vector displacement transformations
+        if (pointerInteractionCoordinates.x !== null && pointerInteractionCoordinates.y !== null) {
+          const distanceDeltaVectorX = p.x - pointerInteractionCoordinates.x;
+          const distanceDeltaVectorY = p.y - pointerInteractionCoordinates.y;
+          const distanceHypotenuseLength = Math.sqrt(distanceDeltaVectorX * distanceDeltaVectorX + distanceDeltaVectorY * distanceDeltaVectorY);
+
+          if (distanceHypotenuseLength < pointerInteractionCoordinates.repulsionRadius) {
+            const forceProximityScalar = (pointerInteractionCoordinates.repulsionRadius - distanceHypotenuseLength) / pointerInteractionCoordinates.repulsionRadius;
+            const accelerationFactorMagnitude = forceProximityScalar * 3.0; // Pushing index velocity offset factor
+
+            // Apply directional normalization values directly to real-time execution offset channels
+            p.activeOffsetX += (distanceDeltaVectorX / distanceHypotenuseLength) * accelerationFactorMagnitude;
+            p.activeOffsetY += (distanceDeltaVectorY / distanceHypotenuseLength) * accelerationFactorMagnitude;
+          }
+        }
+
+        // Apply velocity vectors
+        p.x += p.baseVelocityX + p.activeOffsetX;
+        p.y += p.baseVelocityY + p.activeOffsetY;
+
+        // Gradually dampen structural offset modifiers back to rest baselines
+        p.activeOffsetX *= 0.92;
+        p.activeOffsetY *= 0.92;
+
+        // Boundary collision cross-screen resets wraps
+        if (p.x < -10) p.x = backgroundCanvasElementNode.width + 10;
+        if (p.x > backgroundCanvasElementNode.width + 10) p.x = -10;
+        if (p.y < -10) p.y = backgroundCanvasElementNode.height + 10;
+        if (p.y > backgroundCanvasElementNode.height + 10) p.y = -10;
+
+        // Render vector object details
+        bgCtx.beginPath();
+        bgCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        bgCtx.fillStyle = `${p.color}${p.alphaFactor})`;
+        bgCtx.shadowBlur = 8;
+        bgCtx.shadowColor = p.color.includes("157") ? "rgba(157, 78, 221, 0.5)" : "rgba(0, 242, 254, 0.5)";
+        bgCtx.fill();
+      }
+      bgCtx.shadowBlur = 0; // Clear shadow buffer context immediately
+
+      animationFrameBgReferenceId = requestAnimationFrame(backgroundAnimationRenderLoop);
+    }
+
+    // --- 6. USER INTERFACE BINDINGS CONTROL SYSTEM BINDINGS MAPPINGS ---
+    function bindUserInterfaceInteractionEventHandlers() {
+      // TRACK DESKTOP DESCRIPTIVE KEYBOARD ENGINE INPUT CONTROLS MATRIX
+      window.addEventListener("keydown", (e) => {
+        if (["w", "W", "ArrowUp"].includes(e.key)) keyboardControlStateInputs.Up = true;
+        if (["s", "S", "ArrowDown"].includes(e.key)) keyboardControlStateInputs.Down = true;
+      });
+
+      window.addEventListener("keyup", (e) => {
+        if (["w", "W", "ArrowUp"].includes(e.key)) keyboardControlStateInputs.Up = false;
+        if (["s", "S", "ArrowDown"].includes(e.key)) keyboardControlStateInputs.Down = false;
+      });
+
+      // INTERCEPT POINTER DATA CHANNELS INJECT BACKDROP INTERACTIVE COORDINATES
+      window.addEventListener("mousemove", (e) => {
+        pointerInteractionCoordinates.x = e.clientX;
+        pointerInteractionCoordinates.y = e.clientY;
+      });
+
+      window.addEventListener("mouseleave", () => {
+        pointerInteractionCoordinates.x = null;
+        pointerInteractionCoordinates.y = null;
+      });
+
+      // MOUSE POINTER CLICK POP SPARK INJECTIONS
+      window.addEventListener("mousedown", (e) => {
+        // Generate instant local clusters inside vector arrays pool tracking records
+        for (let i = 0; i < 6; i++) {
+          interactiveParticlesPoolArray.shift(); // Evict legacy particle entries
+          interactiveParticlesPoolArray.push(createNewParticleBlueprintObjectSpecification(true));
+        }
+      });
+
+      // BIND RE-DETERMINED INTERACTIVE DIFFICULTY TOGGLES LISTS ELEMENTS
+      document.querySelectorAll(".diff-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".diff-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          activeDifficultyKey = btn.getAttribute("data-lvl");
+          resetMatchEngineSession();
+        });
+      });
+
+      // CONNECT AUDIO SYNC GRAPH ACTION BUTTON INTERRUPTS ELEMENT
+      document.getElementById("audioToggleBtn").addEventListener("click", () => {
+        isAudioEngineMutedFlag = !isAudioEngineMutedFlag;
+        document.getElementById("audioToggleBtn").textContent = isAudioEngineMutedFlag ? "🔇" : "🔊";
+      });
+
+      // MOBILE INTERACTIVE DECK TOUCH ACTION BINDINGS INTERCEPTION LAYERS
+      const upBtnMobileNode = document.getElementById("touchPadUp");
+      const downBtnMobileNode = document.getElementById("touchPadDown");
+
+      upBtnMobileNode.addEventListener("touchstart", (e) => { e.preventDefault(); keyboardControlStateInputs.Up = true; }, { passive: false });
+      upBtnMobileNode.addEventListener("touchend", (e) => { e.preventDefault(); keyboardControlStateInputs.Up = false; }, { passive: false });
+
+      downBtnMobileNode.addEventListener("touchstart", (e) => { e.preventDefault(); keyboardControlStateInputs.Down = true; }, { passive: false });
+      downBtnMobileNode.addEventListener("touchend", (e) => { e.preventDefault(); keyboardControlStateInputs.Down = false; }, { passive: false });
+    }
+
+    // --- 7. PRIMARY ENGINE SIMULATION LIFECYCLE (MATCH PHYSICS LOOPS) ---
+    function resetMatchEngineSession() {
+      document.getElementById("matchTerminalOverlay").classList.remove("active");
+      isMatchTerminalOverlayActiveFlag = false;
+
+      matchPlayerScoreValue = 0;
+      matchAiScoreValue = 0;
+      matchRallyCounterValue = 0;
+      sessionMaxSpeedValueRecorded = entityBallCoreInstance.baseSpeed;
+
+      syncScoreboardDisplayMetricsNodesValues();
+      repositionEntitiesToStartingCoordinates();
+      triggerBallLaunchSequence();
+    }
+
+    function repositionEntitiesToStartingCoordinates() {
+      entityPaddlePlayerLeft.y = (ENGINE_NATIVE_HEIGHT - entityPaddlePlayerLeft.h) * 0.5;
+      entityPaddleAiRight.y = (ENGINE_NATIVE_HEIGHT - entityPaddleAiRight.h) * 0.5;
+      entityBallCoreInstance.x = ENGINE_NATIVE_WIDTH * 0.5;
+      entityBallCoreInstance.y = ENGINE_NATIVE_HEIGHT * 0.5;
+      ballVisualTrailBufferHistory = [];
+    }
+
+    function triggerBallLaunchSequence() {
+      entityBallCoreInstance.x = ENGINE_NATIVE_WIDTH * 0.5;
+      entityBallCoreInstance.y = ENGINE_NATIVE_HEIGHT * 0.5;
+      entityBallCoreInstance.currentSpeedMagnitude = entityBallCoreInstance.baseSpeed;
+      ballVisualTrailBufferHistory = [];
+
+      // Randomize direction angle parameters while avoiding direct vertical trajectories
+      const outboundHeadingDirectionSignX = Math.random() < 0.5 ? -1 : 1;
+      const computedAngularTrajectoryRadians = (Math.random() * 50 - 25) * Math.PI / 180;
+
+      entityBallCoreInstance.vx = outboundHeadingDirectionSignX * entityBallCoreInstance.baseSpeed * Math.cos(computedAngularTrajectoryRadians);
+      entityBallCoreInstance.vy = entityBallCoreInstance.baseSpeed * Math.sin(computedAngularTrajectoryRadians);
+    }
+
+    function executeGamePhysicsAnimationSimulationLoop() {
+      if (!isMatchTerminalOverlayActiveFlag) {
+        evaluatePhysicsSimulationStepUpdate();
+      }
+      renderGamePlayfieldGraphicsCanvas();
+
+      animationFrameGameReferenceId = requestAnimationFrame(executeGamePhysicsAnimationSimulationLoop);
+    }
+
+    function evaluatePhysicsSimulationStepUpdate() {
+      // A. PLAYER MANUAL PADDLE MECHANICAL MOVEMENT CONTROLS LOGIC
+      if (keyboardControlStateInputs.Up) {
+        entityPaddlePlayerLeft.y = Math.max(0, entityPaddlePlayerLeft.y - paddlePhysicalSpeedFactor);
+      }
+      if (keyboardControlStateInputs.Down) {
+        entityPaddlePlayerLeft.y = Math.min(ENGINE_NATIVE_HEIGHT - entityPaddlePlayerLeft.h, entityPaddlePlayerLeft.y + paddlePhysicalSpeedFactor);
+      }
+
+      // B. COMPUTE AI EMULATOR MOTION DRONE ENGINE
+      const diffConfig = DIFF_PROFILES[activeDifficultyKey];
+      const targetCenterPaddleOffsetCoordinateY = entityPaddleAiRight.y + (entityPaddleAiRight.h * 0.5);
+
+      // Only update tracker position tracking metrics when ball travels toward the AI column path boundaries
+      if (entityBallCoreInstance.vx > 0) {
+        const targetTrackingDistanceDeltaY = entityBallCoreInstance.y - targetCenterPaddleOffsetCoordinateY;
+
+        // Check if distance delta triggers target tracking actions path limits
+        if (Math.abs(targetTrackingDistanceDeltaY) > diffConfig.errorMargin) {
+          if (targetTrackingDistanceDeltaY > 0) {
+            entityPaddleAiRight.y = Math.min(ENGINE_NATIVE_HEIGHT - entityPaddleAiRight.h, entityPaddleAiRight.y + diffConfig.aiSpeed);
+          } else {
+            entityPaddleAiRight.y = Math.max(0, entityPaddleAiRight.y - diffConfig.aiSpeed);
+          }
+        }
+      } else {
+        // Slowly float back toward center playfield coordinate during idle state phases
+        const platformCenterCoordinateY = ENGINE_NATIVE_HEIGHT * 0.5;
+        if (Math.abs(targetCenterPaddleOffsetCoordinateY - platformCenterCoordinateY) > 20) {
+          entityPaddleAiRight.y += (targetCenterPaddleOffsetCoordinateY < platformCenterCoordinateY) ? 1.5 : -1.5;
+        }
+      }
+
+      // C. TRAIL PROCESSING
+      ballVisualTrailBufferHistory.push({ x: entityBallCoreInstance.x, y: entityBallCoreInstance.y });
+      if (ballVisualTrailBufferHistory.length > MAX_TRAIL_LENGTH_LIMIT) {
+        ballVisualTrailBufferHistory.shift();
+      }
+
+      // D. INTEGRATE VELOCITY MATRIX TO CORE BALL INSTANCE
+      entityBallCoreInstance.x += entityBallCoreInstance.vx;
+      entityBallCoreInstance.y += entityBallCoreInstance.vy;
+
+      // E. EVALUATE FLOOR / ROOF BOUNDARY COLLISIONS
+      if (entityBallCoreInstance.y - entityBallCoreInstance.radius <= 0) {
+        entityBallCoreInstance.y = entityBallCoreInstance.radius;
+        entityBallCoreInstance.vy = -entityBallCoreInstance.vy;
+        triggerSyntheticAudioChimeFrequency(330, 0.05, "sine");
+      } else if (entityBallCoreInstance.y + entityBallCoreInstance.radius >= ENGINE_NATIVE_HEIGHT) {
+        entityBallCoreInstance.y = ENGINE_NATIVE_HEIGHT - entityBallCoreInstance.radius;
+        entityBallCoreInstance.vy = -entityBallCoreInstance.vy;
+        triggerSyntheticAudioChimeFrequency(330, 0.05, "sine");
+      }
+
+      // F. INTERCEPT COLLISION DETECTIONS ACROSS LEFT/RIGHT PADDLE STRIPS
+      if (entityBallCoreInstance.vx < 0) {
+        // Test Left Paddle interactions intersections indices profile maps
+        if (evaluateVectorRectIntersectBoundingBox(entityBallCoreInstance, entityPaddlePlayerLeft)) {
+          processPaddleDeflectionBounceMechanic(entityPaddlePlayerLeft, true);
+        }
+      } else {
+        // Test Right Paddle interactions intersections indices profile maps
+        if (evaluateVectorRectIntersectBoundingBox(entityBallCoreInstance, entityPaddleAiRight)) {
+          processPaddleDeflectionBounceMechanic(entityPaddleAiRight, false);
+        }
+      }
+
+      // G. VERIFY OUT OF BOUNDS POINTS VALIDATION SEQUENCES TRIPPED
+      if (entityBallCoreInstance.x < 0) {
+        matchAiScoreValue++;
+        triggerScoreUpdateVisualFeedbackBounce("aiScore");
+        triggerSyntheticAudioChimeFrequency(180, 0.25, "triangle");
+        verifyMatchTargetLimitsReachedState();
+      } else if (entityBallCoreInstance.x > ENGINE_NATIVE_WIDTH) {
+        matchPlayerScoreValue++;
+        triggerScoreUpdateVisualFeedbackBounce("pScore");
+        triggerSyntheticAudioChimeFrequency(587.33, 0.2, "sine");
+        verifyMatchTargetLimitsReachedState();
+      }
+    }
+
+    function evaluateVectorRectIntersectBoundingBox(ball, paddle) {
+      // Find proximity delta limits mapping indices boundaries
+      const closestX = Math.max(paddle.x, Math.min(ball.x, paddle.x + paddle.w));
+      const closestY = Math.max(paddle.y, Math.min(ball.y, paddle.y + paddle.h));
+
+      const deltaX = ball.x - closestX;
+      const deltaY = ball.y - closestY;
+
+      const squaredDistance = (deltaX * deltaX) + (deltaY * deltaY);
+      return squaredDistance < (ball.radius * ball.radius);
+    }
+
+    function processPaddleDeflectionBounceMechanic(paddle, isLeftPaddleInteraction) {
+      matchRallyCounterValue++;
+
+      // Calculate contact angle relative to center point offset metrics
+      const contactPointRelativeY = ballCoreInstanceY = entityBallCoreInstance.y - (paddle.y + paddle.h * 0.5);
+      const normalizedImpactFactorY = contactPointRelativeY / (paddle.h * 0.5);
+      const maximumDeflectionAngleRadians = 55 * Math.PI / 180;
+      const targetReflectionAngleRadians = normalizedImpactFactorY * maximumDeflectionAngleRadians;
+
+      // Step up current speed profile scaling metrics constraints setup maps
+      const diffPreset = DIFF_PROFILES[activeDifficultyKey];
+      entityBallCoreInstance.currentSpeedMagnitude = Math.min(32, entityBallCoreInstance.currentSpeedMagnitude + diffPreset.speedIncrement);
+
+      if (entityBallCoreInstance.currentSpeedMagnitude > sessionMaxSpeedValueRecorded) {
+        sessionMaxSpeedValueRecorded = entityBallCoreInstance.currentSpeedMagnitude;
+      }
+
+      // Set directional velocity outputs updates parameters definitions
+      const computedDirectionSignX = isLeftPaddleInteraction ? 1 : -1;
+      entityBallCoreInstance.vx = computedDirectionSignX * entityBallCoreInstance.currentSpeedMagnitude * Math.cos(targetReflectionAngleRadians);
+      entityBallCoreInstance.vy = entityBallCoreInstance.currentSpeedMagnitude * Math.sin(targetReflectionAngleRadians);
+
+      // Correct coordinate clipping depths manually to prevent frame sticking cycles
+      if (isLeftPaddleInteraction) {
+        entityBallCoreInstance.x = paddle.x + paddle.w + entityBallCoreInstance.radius;
+      } else {
+        entityBallCoreInstance.x = paddle.x - entityBallCoreInstance.radius;
+      }
+
+      triggerSyntheticAudioChimeFrequency(isLeftPaddleInteraction ? 440 : 493.88, 0.08, "sine");
+    }
+
+    function triggerScoreUpdateVisualFeedbackBounce(targetElementId) {
+      const targetDomNode = document.getElementById(targetElementId);
+      targetDomNode.classList.add("bounce");
+      setTimeout(() => targetDomNode.classList.remove("bounce"), 150);
+    }
+
+    function syncScoreboardDisplayMetricsNodesValues() {
+      document.getElementById("pScore").textContent = matchPlayerScoreValue;
+      document.getElementById("aiScore").textContent = matchAiScoreValue;
+    }
+
+    function verifyMatchTargetLimitsReachedState() {
+      syncScoreboardDisplayMetricsNodesValues();
+      if (matchPlayerScoreValue >= scoreLimitWinThreshold || matchAiScoreValue >= scoreLimitWinThreshold) {
+        isMatchTerminalClosedState = true;
+        triggerMatchTerminalOverlayScreen();
+      } else {
+        triggerBallLaunchSequence();
+      }
+    }
+
+    function triggerMatchTerminalOverlayScreen() {
+      isMatchTerminalOverlayActiveFlag = true;
+
+      const overlayTitleElementNode = document.getElementById("terminalTitleNode");
+      const finalPlayerWonFlag = matchPlayerScoreValue >= scoreLimitWinThreshold;
+
+      if (finalPlayerWonFlag) {
+        overlayTitleElementNode.textContent = "🏆 Victory";
+        overlayTitleElementNode.className = "overlay-title win";
+        triggerSyntheticAudioChimeFrequency(523.25, 0.15, "sine");
+        setTimeout(() => triggerSyntheticAudioChimeFrequency(659.25, 0.15, "sine"), 120);
+        setTimeout(() => triggerSyntheticAudioChimeFrequency(783.99, 0.4, "sine"), 240);
+      } else {
+        overlayTitleElementNode.textContent = "💀 Defeat";
+        overlayTitleElementNode.className = "overlay-title loss";
+        triggerSyntheticAudioChimeFrequency(140, 0.3, "sawtooth");
+        setTimeout(() => triggerSyntheticAudioChimeFrequency(90, 0.5, "sawtooth"), 150);
+      }
+
+      // Populate dashboard panel fields elements metrics summary targets
+      const calculatedNormalizedSpeedScalar = (sessionMaxSpeedValueRecorded / entityBallCoreInstance.baseSpeed).toFixed(1);
+      document.getElementById("summaryRallies").textContent = matchRallyCounterValue;
+      document.getElementById("summaryMaxSpeed").textContent = `${calculatedNormalizedSpeedScalar}x`;
+      document.getElementById("summaryDiff").textContent = activeDifficultyKey;
+
+      document.getElementById("matchTerminalOverlay").classList.add("active");
+    }
+
+    // --- 8. GRAPHICS CANVAS RENDERING SYSTEM MANAGERS ---
+    function renderGamePlayfieldGraphicsCanvas() {
+      // A. CONTEXT WIPEOUT RE-DRAWS
+      gameCtx.fillStyle = "#0c0d1e";
+      gameCtx.fillRect(0, 0, ENGINE_NATIVE_WIDTH, ENGINE_NATIVE_HEIGHT);
+
+      // B. DRAW AMBIENT SEPARATOR DASH MATRIX CHANNEL MARKERS
+      gameCtx.strokeStyle = "rgba(255, 255, 255, 0.03)";
+      gameCtx.lineWidth = 4;
+      gameCtx.setLineDash([15, 15]);
+      gameCtx.beginPath();
+      gameCtx.moveTo(ENGINE_NATIVE_WIDTH * 0.5, 0);
+      gameCtx.lineTo(ENGINE_NATIVE_WIDTH * 0.5, ENGINE_NATIVE_HEIGHT);
+      gameCtx.stroke();
+      gameCtx.setLineDash([]); // Reset line dash sequence properties definition configuration patterns
+
+      // C. RENDER PLAYER AND AI PADDLE BLOCKS WITH LIGHT GLOW EXTENSIONS
+      gameCtx.shadowBlur = 16;
+
+      // Player Paddle (Neon Cyan Vector)
+      gameCtx.fillStyle = varColorStringLookup("--neon-cyan", "#00f2fe");
+      gameCtx.shadowColor = "rgba(0, 242, 254, 0.6)";
+      drawRoundedRectGraphic(gameCtx, entityPaddlePlayerLeft.x, entityPaddlePlayerLeft.y, entityPaddlePlayerLeft.w, entityPaddlePlayerLeft.h, 6);
+
+      // AI Paddle (Neon Purple Vector)
+      gameCtx.fillStyle = varColorStringLookup("--neon-purple", "#9d4edd");
+      gameCtx.shadowColor = "rgba(157, 78, 221, 0.6)";
+      drawRoundedRectGraphic(gameCtx, entityPaddleAiRight.x, entityPaddleAiRight.y, entityPaddleAiRight.w, entityPaddleAiRight.h, 6);
+
+      // D. DRAW BALL TRAIL EXTENSION MATRICES PIPELINE
+      gameCtx.shadowBlur = 0; // Disable shadow blur temporarily for trail efficiency
+      for (let i = 0; i < ballVisualTrailBufferHistory.length; i++) {
+        const trailNode = ballVisualTrailBufferHistory[i];
+        const trailRatioIndexFactor = (i + 1) / ballVisualTrailBufferHistory.length;
+
+        gameCtx.beginPath();
+        gameCtx.arc(trailNode.x, trailNode.y, entityBallCoreInstance.radius * trailRatioIndexFactor, 0, Math.PI * 2);
+        gameCtx.fillStyle = `rgba(0, 242, 254, ${trailRatioIndexFactor * 0.22})`;
+        gameCtx.fill();
+      }
+
+      // E. DRAW ACTIVE CENTRAL CORE BALL STRUCTURE
+      gameCtx.beginPath();
+      gameCtx.arc(entityBallCoreInstance.x, entityBallCoreInstance.y, entityBallCoreInstance.radius, 0, Math.PI * 2);
+      gameCtx.fillStyle = "#ffffff";
+      gameCtx.shadowBlur = 14;
+      gameCtx.shadowColor = "rgba(0, 242, 254, 0.8)";
+      gameCtx.fill();
+      gameCtx.shadowBlur = 0; // Clear remaining active graphics context configuration values
+    }
+
+    // --- 9. AUXILIARY UTILITY HELPER METHODS FUNCTIONS ---
+    function varColorStringLookup(cssVariableKey, fallbackHexColorString) {
+      const resolvedComputedColorString = getComputedStyle(document.body).getPropertyValue(cssVariableKey).trim();
+      return resolvedComputedColorString || fallbackHexColorString;
+    }
+
+    function drawRoundedRectGraphic(ctx, x, y, width, height, radiusBorderValue) {
+      ctx.beginPath();
+      ctx.moveTo(x + radiusBorderValue, y);
+      ctx.lineTo(x + width - radiusBorderValue, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radiusBorderValue);
+      ctx.lineTo(x + width, y + height - radiusBorderValue);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - radiusBorderValue, y + height);
+      ctx.lineTo(x + radiusBorderValue, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - radiusBorderValue);
+      ctx.lineTo(x, y + radiusBorderValue);
+      ctx.quadraticCurveTo(x, y, x + radiusBorderValue, y);
+      ctx.closePath();
+      ctx.fill();
+    }
+  </script>
+</body>
+
+</html>

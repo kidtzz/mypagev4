@@ -1,0 +1,122 @@
+[
+  {
+    "id": "tetris",
+    "title": "Tetris",
+    "icon": "🧱",
+    "category": "Arcade",
+    "difficulty": "Medium",
+    "description": "Classic block puzzle game.",
+    "url": "games-list/tetris.html",
+    "featured": true
+  },
+  {
+    "id": "snake",
+    "title": "Snake",
+    "icon": "🐍",
+    "category": "Arcade",
+    "difficulty": "Easy",
+    "description": "Eat food, grow longer, and avoid crashing into yourself.",
+    "url": "games-list/snake.html",
+    "featured": true
+  },
+  {
+    "id": "2048",
+    "title": "2048",
+    "icon": "🧩",
+    "category": "Puzzle",
+    "difficulty": "Medium",
+    "description": "Merge tiles and reach 2048.",
+    "url": "games-list/2048.html",
+    "featured": true
+  },
+  {
+    "id": "minesweeper",
+    "title": "Minesweeper",
+    "icon": "💣",
+    "category": "Puzzle",
+    "difficulty": "Medium",
+    "description": "Find all mines without triggering an explosion.",
+    "url": "games-list/minesweeper.html",
+    "featured": true
+  },
+  {
+    "id": "pong",
+    "title": "Pong",
+    "icon": "🏓",
+    "category": "Arcade",
+    "difficulty": "Easy",
+    "description": "Classic paddle battle against AI.",
+    "url": "games-list/pong.html",
+    "featured": false
+  },
+  {
+    "id": "factory-idle",
+    "title": "Factory Idle",
+    "icon": "🏭",
+    "category": "Coming Soon",
+    "difficulty": "Hard",
+    "description": "Build factories, automate production, and become an industrial tycoon.",
+    "url": "games-list/factory-idle.html",
+    "featured": false
+  },
+  {
+    "id": "territory-wars",
+    "title": "Territory Wars",
+    "icon": "🌍",
+    "category": "Coming Soon",
+    "difficulty": "Hard",
+    "description": "Expand your territory and conquer the map.",
+    "url": "games-list/territory-wars.html",
+    "featured": false
+  },
+  {
+    "id": "unblock-puzzle",
+    "title": "Unblock Puzzle",
+    "icon": "🧠",
+    "category": "Coming Soon",
+    "difficulty": "Hard",
+    "description": "Slide blocks and free the target piece.",
+    "url": "games-list/unblock-puzzle.html",
+    "featured": false
+  },
+  {
+    "id": "traffic-escape",
+    "title": "Traffic Escape",
+    "icon": "🚦",
+    "category": "Coming Soon",
+    "difficulty": "Medium",
+    "description": "Solve traffic jams and free the roads.",
+    "url": "games-list/traffic-escape.html",
+    "featured": false
+  },
+  {
+    "id": "chain-reaction",
+    "title": "Chain Reaction",
+    "icon": "🧨",
+    "category": "Coming Soon",
+    "difficulty": "Hard",
+    "description": "Trigger massive chain reactions and clear every level.",
+    "url": "games-list/chain-reaction.html",
+    "featured": false
+  },
+  {
+    "id": "tower-defense",
+    "title": "Tower Defense",
+    "icon": "🏰",
+    "category": "Strategy",
+    "difficulty": "Hard",
+    "description": "Defend your base against endless enemy waves.",
+    "url": "games-list/tower-defense.html",
+    "featured": false
+  },
+  {
+    "id": "platform-adventure",
+    "title": "Platform Adventure",
+    "icon": "🍄",
+    "category": "Coming Soon",
+    "difficulty": "Medium",
+    "description": "Jump, collect coins, and defeat enemies in a retro platform world.",
+    "url": "games-list/platform-adventure.html",
+    "featured": false
+  }
+]

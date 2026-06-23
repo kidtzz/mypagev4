@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tetris - Mini Arcade</title>
+  <style>
+    :root {
+      --bg-main: #0b0c10;
+      --bg-surface: #1f2833;
+      --bg-card: rgba(31, 40, 51, 0.6);
+      --text-main: #c5c6c7;
+      --text-bright: #ffffff;
+      --accent-purple: #8a2be2;
+      --accent-cyan: #00f2fe;
+      --border-glass: rgba(255, 255, 255, 0.08);
+      --border-radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    /* --- HEADER NAVIGATION --- */
+    .back-nav {
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .back-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      color: var(--text-bright);
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s;
+    }
+
+    .back-btn:hover {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* --- GAME CONTAINER --- */
+    .game-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 24px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .game-header {
+      text-align: center;
+      width: 100%;
+    }
+
+    .game-title {
+      font-size: 2rem;
+      color: var(--text-bright);
+      font-weight: 800;
+      background: linear-gradient(to right, #ffffff, var(--accent-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 5px;
+    }
+
+    /* --- STATS ROW --- */
+    .stats-row {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      background: rgba(11, 12, 16, 0.6);
+      border: 1px solid var(--border-glass);
+      padding: 12px 20px;
+      border-radius: var(--border-radius);
+    }
+
+    .stat-box {
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #8b9bb4;
+      margin-bottom: 2px;
+    }
+
+    .stat-value {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-bright);
+    }
+
+    /* --- CANVAS VIEWPORT --- */
+    .canvas-area {
+      position: relative;
+      background: #000000;
+      border: 3px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+      overflow: hidden;
+    }
+
+    canvas {
+      display: block;
+      background: #050508;
+    }
+
+    /* --- OVERLAYS --- */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(11, 12, 16, 0.85);
+      backdrop-filter: blur(4px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      z-index: 10;
+    }
+
+    .overlay-title {
+      font-size: 1.8rem;
+      color: var(--text-bright);
+      font-weight: 700;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: var(--text-bright);
+      border: none;
+      padding: 12px 30px;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 20px rgba(124, 58, 237, 0.6);
+    }
+
+    /* --- MOBILE TOUCH CONTROLS --- */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 100%;
+      margin-top: 5px;
+    }
+
+    .ctrl-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-glass);
+      color: var(--text-bright);
+      padding: 15px 0;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.1s;
+    }
+
+    .ctrl-btn:active {
+      background: rgba(0, 242, 254, 0.2);
+      border-color: var(--accent-cyan);
+    }
+
+    .span-3 {
+      grid-column: span 3;
+    }
+
+    /* Hide touch controls on desktop profiles */
+    @media (min-width: 769px) {
+      .controls-grid {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="back-nav">
+    <a href="../games-all.html" class="back-btn">
+      <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24">
+        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+      </svg>
+      Back to Dashboard
+    </a>
+  </div>
+
+  <div class="game-wrapper">
+    <div class="game-header">
+      <h1 class="game-title">🧱 Tetris</h1>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-label">Score</div>
+        <div class="stat-value" id="scoreDisplay">0</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Lines</div>
+        <div class="stat-value" id="linesDisplay">0</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Level</div>
+        <div class="stat-value" id="levelDisplay">1</div>
+      </div>
+    </div>
+
+    <div class="canvas-area">
+      <canvas id="tetrisCanvas" width="240" height="480"></canvas>
+
+      <div class="overlay" id="gameOverlay">
+        <div class="overlay-title" id="overlayText">Tetris Classic</div>
+        <button class="btn" id="startBtn" onclick="initiateGameEngine()">Start Game</button>
+      </div>
+    </div>
+
+    <div class="controls-grid">
+      <button class="ctrl-btn" onclick="handleTouchAction('rotate')">🔄 Rotate</button>
+      <button class="ctrl-btn" onclick="handleTouchAction('up')">⚡ Drop</button>
+      <button class="ctrl-btn" onclick="handleTouchAction('hold')">🧩 Hold</button>
+      <button class="ctrl-btn" onclick="handleTouchAction('left')">⬅️ Left</button>
+      <button class="ctrl-btn" onclick="handleTouchAction('down')">⬇️ Soft</button>
+      <button class="ctrl-btn" onclick="handleTouchAction('right')">➡️ Right</button>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("tetrisCanvas");
+    const ctx = canvas.getContext("2d");
+
+    // Block layout constants
+    const BLOCK_SIZE = 24;
+    const COLUMNS = 10;
+    const ROWS = 20;
+
+    // Apply visual scaling to provide crisp retina execution grids
+    ctx.scale(20, 20); // Sync logic array size metrics directly inside coordinate systems
+
+    // Classic Game Theme Hex Coloring Profiles
+    const TETROMINO_COLORS = [
+      null,
+      '#00f2fe', // I: Cyan
+      '#007bff', // J: Blue
+      '#f59e0b', // L: Orange
+      '#eab308', // O: Yellow
+      '#22c55e', // S: Green
+      '#8a2be2', // T: Purple
+      '#ef4444'  // Z: Red
+    ];
+
+    // Tetromino shapes matrices definitions
+    const SHAPES = [
+      [],
+      [[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]], // I
+      [[2, 0, 0], [2, 2, 2], [0, 0, 0]],                 // J
+      [[0, 0, 3], [3, 3, 3], [0, 0, 0]],                 // L
+      [[4, 4], [4, 4]],                             // O
+      [[0, 5, 5], [5, 5, 0], [0, 0, 0]],                 // S
+      [[0, 6, 0], [6, 6, 6], [0, 0, 0]],                 // T
+      [[7, 7, 0], [0, 7, 7], [0, 0, 0]]                  // Z
+    ];
+
+    let playfield = Array.from({ length: ROWS }, () => Array(COLUMNS).fill(0));
+    let activePiece = null;
+    let score = 0;
+    let linesCleared = 0;
+    let activeLevel = 1;
+    let runtimeDropInterval = 1000;
+    let previousAnimationFrameTimestamp = 0;
+    let accumulatedDropTimer = 0;
+    let isGameRunning = false;
+
+    // PLAYER OBJECT CONTEXT MATRIX
+    class Piece {
+      constructor(shapeIndex) {
+        this.shapeIndex = shapeIndex;
+        this.matrix = SHAPES[shapeIndex];
+        this.x = Math.floor((COLUMNS - this.matrix[0].length) / 2);
+        this.y = 0;
+      }
+    }
+
+    // START/RESTART TRIGGERS
+    function initiateGameEngine() {
+      playfield = Array.from({ length: ROWS }, () => Array(COLUMNS).fill(0));
+      score = 0;
+      linesCleared = 0;
+      activeLevel = 1;
+      runtimeDropInterval = 1000;
+      accumulatedDropTimer = 0;
+      previousAnimationFrameTimestamp = 0;
+
+      updateScoreUI();
+      document.getElementById("gameOverlay").style.display = "none";
+
+      spawnNewPiece();
+      isGameRunning = true;
+      requestAnimationFrame(gameLoopPipeline);
+    }
+
+    function spawnNewPiece() {
+      const randomShapeIndex = Math.floor(Math.random() * (SHAPES.length - 1)) + 1;
+      activePiece = new Piece(randomShapeIndex);
+
+      // Instant fail checking matrix criteria
+      if (evaluateCollisionDetect()) {
+        handleGameOverState();
+      }
+    }
+
+    // CRITICAL REFRESH REPEAT CYCLES LOOP
+    function gameLoopPipeline(currentTimestamp = 0) {
+      if (!isGameRunning) return;
+
+      const elapsedDeltaFrameTime = currentTimestamp - previousAnimationFrameTimestamp;
+      previousAnimationFrameTimestamp = currentTimestamp;
+      accumulatedDropTimer += elapsedDeltaFrameTime;
+
+      if (accumulatedDropTimer > runtimeDropInterval) {
+        dropActivePiece();
+      }
+
+      renderGraphicsView();
+      requestAnimationFrame(gameLoopPipeline);
+    }
+
+    // DRAW ENGINE PIPELINE
+    function renderGraphicsView() {
+      // Wipe Slate Clean
+      ctx.fillStyle = "#050508";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw Arena State Background Matrix Blocks
+      drawMatrixStructure(playfield, { x: 0, y: 0 });
+
+      // Draw Player Active Working Block
+      if (activePiece) {
+        drawMatrixStructure(activePiece.matrix, { x: activePiece.x, y: activePiece.y });
+      }
+    }
+
+    function drawMatrixStructure(matrixArray, offsetCoordinates) {
+      matrixArray.forEach((rowArray, rowIndex) => {
+        rowArray.forEach((valueCode, colIndex) => {
+          if (valueCode !== 0) {
+            ctx.fillStyle = TETROMINO_COLORS[valueCode];
+            ctx.fillRect(colIndex + offsetCoordinates.x, rowIndex + offsetCoordinates.y, 1, 1);
+
+            // Subtle inner grid block bevel rendering line paths
+            ctx.strokeStyle = "rgba(0,0,0,0.25)";
+            ctx.lineWidth = 0.06;
+            ctx.strokeRect(colIndex + offsetCoordinates.x, rowIndex + offsetCoordinates.y, 1, 1);
+          }
+        });
+      });
+    }
+
+    // MOVEMENT LOGIC SCHEMES
+    function dropActivePiece() {
+      activePiece.y++;
+      accumulatedDropTimer = 0;
+
+      if (evaluateCollisionDetect()) {
+        activePiece.y--;
+        lockActivePieceToField();
+        scanLineClears();
+        spawnNewPiece();
+      }
+    }
+
+    function hardDropActivePiece() {
+      while (!evaluateCollisionDetect()) {
+        activePiece.y++;
+      }
+      activePiece.y--;
+      lockActivePieceToField();
+      scanLineClears();
+      spawnNewPiece();
+    }
+
+    function moveHorizontal(stepDirection) {
+      activePiece.x += stepDirection;
+      if (evaluateCollisionDetect()) {
+        activePiece.x -= stepDirection;
+      }
+    }
+
+    function rotateActivePiece() {
+      const originalMatrix = activePiece.matrix;
+
+      // Perform matrix Transpose & Reverse lines mapping configurations
+      const mutatedRotationMatrix = originalMatrix[0].map((_, idx) =>
+        originalMatrix.map(row => row[idx])
+      ).map(row => row.reverse());
+
+      activePiece.matrix = mutatedRotationMatrix;
+
+      // Wall Kick logic simulator checking validation bounds
+      let originalXOffset = activePiece.x;
+      let offsetAdjustment = 1;
+
+      while (evaluateCollisionDetect()) {
+        activePiece.x += offsetAdjustment;
+        offsetAdjustment = -(offsetAdjustment + (offsetAdjustment > 0 ? 1 : -1));
+        if (Math.abs(offsetAdjustment) > activePiece.matrix[0].length) {
+          activePiece.matrix = originalMatrix; // Undo action rotation profile completely
+          activePiece.x = originalXOffset;
+          return;
+        }
+      }
+    }
+
+    // COLLISION LOGIC CALCULATOR
+    function evaluateCollisionDetect() {
+      const currentMatrix = activePiece.matrix;
+      for (let r = 0; r < currentMatrix.length; r++) {
+        for (let c = 0; c < currentMatrix[r].length; c++) {
+          if (currentMatrix[r][c] !== 0) {
+            let targetWorldFieldCoordinateX = activePiece.x + c;
+            let targetWorldFieldCoordinateY = activePiece.y + r;
+
+            if (targetWorldFieldCoordinateX < 0 ||
+              targetWorldFieldCoordinateX >= COLUMNS ||
+              targetWorldFieldCoordinateY >= ROWS) {
+              return true;
+            }
+
+            if (targetWorldFieldCoordinateY >= 0 && playfield[targetWorldFieldCoordinateY][targetWorldFieldCoordinateX] !== 0) {
+              return true;
+            }
+          }
+        }
+      }
+      return false;
+    }
+
+    function lockActivePieceToField() {
+      activePiece.matrix.forEach((row, r) => {
+        row.forEach((value, c) => {
+          if (value !== 0) {
+            const targetY = activePiece.y + r;
+            if (targetY >= 0) {
+              playfield[targetY][activePiece.x + c] = activePiece.shapeIndex;
+            }
+          }
+        });
+      });
+    }
+
+    // LINE SCANNERS & SCORING MODES SYSTEM
+    function scanLineClears() {
+      let consecutiveClearedLineCounter = 0;
+
+      outerLoop: for (let r = ROWS - 1; r >= 0; r--) {
+        for (let c = 0; c < COLUMNS; c++) {
+          if (playfield[r][c] === 0) {
+            continue outerLoop;
+          }
+        }
+
+        // Line filled criteria validation splice routine array structure configurations
+        const droppedRowLineArraySplice = playfield.splice(r, 1)[0].fill(0);
+        playfield.unshift(droppedRowLineArraySplice);
+        consecutiveClearedLineCounter++;
+        r++; // Force verification matrix recheck alignment step positions
+      }
+
+      if (consecutiveClearedLineCounter > 0) {
+        // Classic scaling index point reward curves calculation formulas
+        const scoresMapWeightLookup = [0, 100, 300, 500, 800];
+        score += (scoresMapWeightLookup[consecutiveClearedLineCounter] || 800) * activeLevel;
+        linesCleared += consecutiveClearedLineCounter;
+
+        // Track difficulty increments parameters acceleration triggers
+        activeLevel = Math.floor(linesCleared / 10) + 1;
+        runtimeDropInterval = Math.max(100, 1000 - (activeLevel - 1) * 90);
+
+        updateScoreUI();
+      }
+    }
+
+    function updateScoreUI() {
+      document.getElementById("scoreDisplay").textContent = score;
+      document.getElementById("linesDisplay").textContent = linesCleared;
+      document.getElementById("levelDisplay").textContent = activeLevel;
+    }
+
+    function handleGameOverState() {
+      isGameRunning = false;
+      document.getElementById("overlayText").textContent = "Game Over";
+      document.getElementById("startBtn").textContent = "Play Again";
+      document.getElementById("gameOverlay").style.display = "flex";
+    }
+
+    // DESKTOP SYSTEM KEYBOARD HANDLING HOOKS
+    window.addEventListener("keydown", (e) => {
+      if (!isGameRunning) return;
+
+      switch (e.key) {
+        case "ArrowLeft":
+        case "a":
+        case "A":
+          moveHorizontal(-1);
+          break;
+        case "ArrowRight":
+        case "d":
+        case "D":
+          moveHorizontal(1);
+          break;
+        case "ArrowDown":
+        case "s":
+        case "S":
+          dropActivePiece();
+          break;
+        case "ArrowUp":
+        case "w":
+        case "W":
+          rotateActivePiece();
+          break;
+        case " ":
+          e.preventDefault();
+          hardDropActivePiece();
+          break;
+      }
+    });
+
+    // MOBILE CONTROL INPUT MAPPING TRANSLATOR HOOK
+    function handleTouchAction(actionTypeString) {
+      if (!isGameRunning) return;
+
+      switch (actionTypeString) {
+        case "left": moveHorizontal(-1); break;
+        case "right": moveHorizontal(1); break;
+        case "down": dropActivePiece(); break;
+        case "rotate": rotateActivePiece(); break;
+        case "up": hardDropActivePiece(); break;
+        case "hold": rotateActivePiece(); break; // Alternate fallback strategy mapping configurations
+      }
+    }
+  </script>
+</body>
+
+</html>

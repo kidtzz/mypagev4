@@ -20,7 +20,7 @@ Hello
 
 Become a programming professional & Highly motivated to learn something new. interested in Database, Web/apps, programming (Js, Python, Shell), Linux, Security, Infrastructure, especially about programming & database.
 
-&nbsp;
+<!-- &nbsp;
 
 
 ## Experiences
@@ -69,12 +69,12 @@ Become a programming professional & Highly motivated to learn something new. int
 -   Support service improvement activities and software monitoring
 -   Software purchase advice and social media advertising
 -   Working to manage customer data
--   Make a website landing page as an advertising service
+-   Make a website landing page as an advertising service -->
 
 
 &nbsp;
 
-***---- Experience Project Based as Database Engineer MGS -----***
+***---- Experience Project Based in MGS -----***
 
 **PT. Telkomsel**\
 *January 2026*\
@@ -113,7 +113,7 @@ Become a programming professional & Highly motivated to learn something new. int
 
 
 
-***---- Experience Project Based as Technical Consultant MII -----***
+***---- Experience Project Based in MII -----***
 
 
 **PT. Hana Bank**\

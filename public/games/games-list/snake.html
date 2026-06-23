@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Neon Snake - Mini Arcade</title>
+  <style>
+    /* --- CSS VARIABLES & THEMING --- */
+    :root {
+      --bg-main: #050508;
+      --bg-surface: #0f111a;
+      --bg-card: rgba(20, 24, 36, 0.6);
+      --text-main: #8b9bb4;
+      --text-bright: #ffffff;
+      --accent-green: #39ff14;
+      --accent-cyan: #00f2fe;
+      --accent-blue: #007bff;
+      --accent-purple: #7c3aed;
+      --border-glass: rgba(255, 255, 255, 0.06);
+      --border-radius: 16px;
+      --glow-green: rgba(57, 255, 20, 0.3);
+      --glow-cyan: rgba(0, 242, 254, 0.3);
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* --- RESET & BASIC SETUP --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-family);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 20px 10px;
+      overflow-x: hidden;
+      background: radial-gradient(circle at 50% 30%, rgba(124, 58, 237, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 20% 80%, rgba(0, 242, 254, 0.05) 0%, transparent 50%);
+    }
+
+    /* --- LAYOUT CONTAINER --- */
+    .app-container {
+      width: 100%;
+      max-width: 900px;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 24px;
+      margin-top: 10px;
+    }
+
+    /* --- HEADER ACTIONS --- */
+    .top-nav {
+      grid-column: span 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .back-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      color: var(--text-bright);
+      padding: 10px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+    }
+
+    .back-btn:hover {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 15px var(--glow-cyan);
+      transform: translateY(-2px);
+      color: var(--accent-cyan);
+    }
+
+    .audio-toggle {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      color: var(--text-bright);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+      backdrop-filter: blur(10px);
+    }
+
+    .audio-toggle:hover {
+      border-color: var(--accent-purple);
+      box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+    }
+
+    /* --- LEFT COLUMN: GAMEBOARD WINDOW --- */
+    .game-screen-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .game-window {
+      position: relative;
+      background: #020204;
+      border: 2px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--border-radius);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6),
+        inset 0 0 30px rgba(0, 0, 0, 0.9);
+      overflow: hidden;
+      aspect-ratio: 1;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* --- RIGHT COLUMN: SIDEBAR METRICS --- */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .glass-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(12px);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .brand-title h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-bright);
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+      background: linear-gradient(to right, #ffffff, var(--accent-green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-title p {
+      font-size: 0.85rem;
+      color: var(--text-main);
+    }
+
+    /* --- STATS BOXES --- */
+    .stats-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .stat-card {
+      background: rgba(5, 5, 8, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.3s;
+    }
+
+    .stat-card:hover {
+      transform: translateX(4px);
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-main);
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      transition: all 0.2s ease;
+    }
+
+    .stat-value.pulse {
+      transform: scale(1.2);
+      color: var(--accent-green);
+    }
+
+    /* --- DIFFICULTY CONFIGS --- */
+    .difficulty-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .diff-btn {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-glass);
+      color: var(--text-main);
+      padding: 8px 0;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .diff-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-bright);
+    }
+
+    .diff-btn.active {
+      background: rgba(124, 58, 237, 0.2);
+      border-color: var(--accent-purple);
+      color: var(--text-bright);
+      box-shadow: 0 0 10px rgba(124, 58, 237, 0.2);
+    }
+
+    /* --- CONTROLS GUIDE PANEL --- */
+    .controls-guide h3 {
+      font-size: 0.9rem;
+      color: var(--text-bright);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .ctrl-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .ctrl-row:last-child {
+      border-bottom: none;
+    }
+
+    .key-badge {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-bright);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-family: monospace;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+    }
+
+    /* --- OVERLAYS MECHANICS --- */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(5, 5, 8, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      z-index: 10;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .overlay-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text-bright);
+      margin-bottom: 10px;
+      letter-spacing: -1px;
+      text-align: center;
+    }
+
+    .overlay-title.gameover-text {
+      color: #ef4444;
+      text-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+      animation: gameoverPulse 2s infinite alternate;
+    }
+
+    @keyframes gameoverPulse {
+      0% {
+        transform: scale(1);
+      }
+
+      100% {
+        transform: scale(1.04);
+      }
+    }
+
+    .overlay-subtitle {
+      font-size: 1rem;
+      color: var(--text-main);
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .overlay-metrics {
+      width: 100%;
+      max-width: 260px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-glass);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+
+    .metric-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .metric-line:last-child {
+      margin-bottom: 0;
+    }
+
+    .metric-line span:last-child {
+      font-weight: bold;
+      color: var(--text-bright);
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: var(--text-bright);
+      border: none;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 30px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 5px 15px rgba(124, 58, 237, 0.3);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 100%;
+      max-width: 220px;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(124, 58, 237, 0.5);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border-glass);
+      color: var(--text-bright);
+      box-shadow: none;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--text-bright);
+      box-shadow: none;
+    }
+
+    /* --- VIRTUAL GAMEPAD (MOBILE ONLY) --- */
+    .mobile-gamepad {
+      display: none;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      width: 100%;
+      max-width: 260px;
+      margin: 10px auto 0 auto;
+    }
+
+    .pad-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      color: var(--text-bright);
+      height: 64px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: all 0.1s;
+    }
+
+    .pad-btn:active {
+      background: var(--accent-cyan);
+      color: var(--bg-main);
+      box-shadow: 0 0 15px var(--glow-cyan);
+      transform: scale(0.95);
+    }
+
+    /* Utility grid placements for d-pad layout */
+    .pad-up {
+      grid-column: 2;
+    }
+
+    .pad-left {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .pad-right {
+      grid-column: 3;
+      grid-row: 2;
+    }
+
+    .pad-down {
+      grid-column: 2;
+      grid-row: 3;
+    }
+
+    /* --- RESPONSIVE MEDIA FILTERS --- */
+    @media (max-width: 768px) {
+      .app-container {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .top-nav {
+        grid-column: span 1;
+      }
+
+      .sidebar {
+        order: 2;
+      }
+
+      .game-screen-wrapper {
+        order: 1;
+      }
+
+      .controls-guide {
+        display: none;
+      }
+    }
+
+    /* Detection framework targeting touch capable mobile displays */
+    @media (pointer: coarse),
+    (max-width: 768px) {
+      .mobile-gamepad {
+        display: grid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="top-nav">
+    <a href="../games-all.html" class="back-btn">
+      <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24">
+        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+      </svg>
+      Back to Arcade
+    </a>
+    <button class="audio-toggle" id="audioToggleBtn" title="Toggle Sound Mechanics">🔊</button>
+  </div>
+
+  <div class="app-container">
+
+    <div class="game-screen-wrapper">
+      <div class="game-window">
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+
+        <div class="overlay active" id="startOverlay">
+          <div class="overlay-title">NEON SNAKE</div>
+          <div class="overlay-subtitle">Avoid walls, devour pixels, accelerate speed.</div>
+          <button class="btn" onclick="startGameEngine()">Start Mission</button>
+        </div>
+
+        <div class="overlay" id="pauseOverlay">
+          <div class="overlay-title" style="color: var(--accent-cyan);">PAUSED</div>
+          <div class="overlay-subtitle">Press P or tap Resume to re-enter loop.</div>
+          <button class="btn" onclick="togglePauseGame()">Resume Game</button>
+        </div>
+
+        <div class="overlay" id="gameoverOverlay">
+          <div class="overlay-title gameover-text">GAME OVER</div>
+          <div class="overlay-subtitle" id="gameOverReason">You hit an absolute boundary asset!</div>
+
+          <div class="overlay-metrics">
+            <div class="metric-line">
+              <span>Final Score</span>
+              <span id="finalScoreDisplay">0</span>
+            </div>
+            <div class="metric-line">
+              <span>Food Devoured</span>
+              <span id="finalFoodDisplay">0</span>
+            </div>
+          </div>
+
+          <button class="btn" onclick="startGameEngine()">▶ Play Again</button>
+          <button class="btn btn-outline" onclick="window.location.href = '../games-all.html'">⬅ Back to Arcade</button>
+        </div>
+      </div>
+
+      <div class="mobile-gamepad">
+        <button class="pad-btn pad-up" data-dir="up">▲</button>
+        <button class="pad-btn pad-left" data-dir="left">◀</button>
+        <button class="pad-btn pad-right" data-dir="right">▶</button>
+        <button class="pad-btn pad-down" data-dir="down">▼</button>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="glass-panel brand-title">
+        <h1>🟢 Neon Snake</h1>
+        <p>Pure modern native architecture browser module.</p>
+      </div>
+
+      <div class="glass-panel stats-container">
+        <div class="stat-card">
+          <div class="stat-label">Score</div>
+          <div class="stat-value" id="scoreVal">0</div>
+        </div>
+        <div class="stat-card" style="border-color: rgba(0, 242, 254, 0.15)">
+          <div class="stat-label">High Score</div>
+          <div class="stat-value" id="highScoreVal" style="color: var(--accent-cyan);">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Food Eaten</div>
+          <div class="stat-value" id="foodVal">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Current Velocity</div>
+          <div class="stat-value" id="speedVal" style="font-size:1.1rem; font-family:monospace;">100%</div>
+        </div>
+      </div>
+
+      <div class="glass-panel">
+        <div class="stat-label" style="margin-bottom: 6px;">Select Difficulty Engine</div>
+        <div class="difficulty-group">
+          <button class="diff-btn" data-diff="easy">Easy</button>
+          <button class="diff-btn active" data-diff="medium">Medium</button>
+          <button class="diff-btn" data-diff="hard">Hard</button>
+        </div>
+      </div>
+
+      <div class="glass-panel controls-guide">
+        <h3>Navigation Layout</h3>
+        <div class="ctrl-row"><span>Move Directions</span><span><span class="key-badge">▲</span> <span
+              class="key-badge">▼</span> <span class="key-badge">◀</span> <span class="key-badge">▶</span></span></div>
+        <div class="ctrl-row"><span>Pause / Resume</span><span><span class="key-badge">P</span></span></div>
+        <div class="ctrl-row"><span>Instant Restart</span><span><span class="key-badge">R</span></span></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    // GRID CONFIGURATIONS
+    const GRID_COUNT = 20; // 20x20 Grid Blocks Matrix Configuration setup mapping profiles
+    let gridBlockSize = canvas.width / GRID_COUNT;
+
+    // SYSTEM DATA STRUCTS
+    let snakeCoordinates = [];
+    let snakeDirection = "right";
+    let nextInboundDirection = "right";
+    let foodPosition = { x: 0, y: 0 };
+
+    let liveScore = 0;
+    let persistentHighScore = 0;
+    let foodEatenTrackerCount = 0;
+
+    let activeTickEngineRate = 120; // Default millisecond baseline interval loop timer parameters
+    let difficultyFactorModeOffset = "medium";
+    let systemLoopTimerReference = null;
+
+    let isGameRunningFlag = false;
+    let isGamePausedFlag = false;
+    let isAudioMutedFlag = false;
+
+    // VISUAL EFFECTS SPAWN ANIMATION VARIABLE
+    let foodPulseScaleRadius = 0;
+    let foodAnimationPulseSignMultiplier = 1;
+
+    // AUDIO GENERATOR ARCHITECTURE SYNTHESIZER CONTEXT (Web Audio API - No CDNs or Files required)
+    const AudioContextEngine = window.AudioContext || window.webkitAudioContext;
+    let audioContextInstance = null;
+
+    function triggerSynthesizedSound(pitchFreq, envelopeDuration, waveformType = "sine") {
+      if (isAudioMutedFlag) return;
+      try {
+        if (!audioContextInstance) {
+          audioContextInstance = new AudioContextEngine();
+        }
+        if (audioContextInstance.state === "suspended") {
+          audioContextInstance.resume();
+        }
+        const oscillatorNode = audioContextInstance.createOscillator();
+        const amplifierGainNode = audioContextInstance.createGain();
+
+        oscillatorNode.type = waveformType;
+        oscillatorNode.frequency.setValueAtTime(pitchFreq, audioContextInstance.currentTime);
+
+        amplifierGainNode.gain.setValueAtTime(0.15, audioContextInstance.currentTime);
+        amplifierGainNode.gain.exponentialRampToValueAtTime(0.0001, audioContextInstance.currentTime + envelopeDuration);
+
+        oscillatorNode.connect(amplifierGainNode);
+        amplifierGainNode.connect(audioContextInstance.destination);
+
+        oscillatorNode.start();
+        oscillatorNode.stop(audioContextInstance.currentTime + envelopeDuration);
+      } catch (ex) {
+        console.warn("Audio Context pipeline initializing block vector exception:", ex);
+      }
+    }
+
+    // ENTRY SYSTEM BOOT HOOK
+    document.addEventListener("DOMContentLoaded", () => {
+      loadSavedHighScoreData();
+      setupInteractiveInputBindings();
+      handleResizeOptimizationFrame();
+      window.addEventListener('resize', handleResizeOptimizationFrame);
+    });
+
+    function handleResizeOptimizationFrame() {
+      // Adaptive rendering layouts recalculation mappings configuration contexts
+      gridBlockSize = canvas.width / GRID_COUNT;
+      if (isGameRunningFlag && !isGamePausedFlag) renderEngineGraphicsView();
+    }
+
+    function loadSavedHighScoreData() {
+      const dataVal = localStorage.getItem("neon_snake_highscore");
+      if (dataVal) {
+        persistentHighScore = parseInt(dataVal, 10);
+        document.getElementById("highScoreVal").textContent = persistentHighScore;
+      }
+    }
+
+    function setupInteractiveInputBindings() {
+      // KEYBOARD CONTROL MAPPING INTERFACES
+      window.addEventListener("keydown", (event) => {
+        if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "].includes(event.key)) {
+          // Restrict window structural viewport default browsing shifting offsets
+          event.preventDefault();
+        }
+
+        if (!isGameRunningFlag && event.key.toLowerCase() === 'r') return;
+
+        switch (event.key) {
+          case "ArrowUp":
+          case "w":
+          case "W":
+            if (snakeDirection !== "down") nextInboundDirection = "up";
+            break;
+          case "ArrowDown":
+          case "s":
+          case "S":
+            if (snakeDirection !== "up") nextInboundDirection = "down";
+            break;
+          case "ArrowLeft":
+          case "a":
+          case "A":
+            if (snakeDirection !== "right") nextInboundDirection = "left";
+            break;
+          case "ArrowRight":
+          case "d":
+          case "D":
+            if (snakeDirection !== "left") nextInboundDirection = "right";
+            break;
+          case "p":
+          case "P":
+            togglePauseGame();
+            break;
+          case "r":
+          case "R":
+            startGameEngine();
+            break;
+        }
+      });
+
+      // VIRTUAL PAD GESTURE ASSIGNMENTS
+      document.querySelectorAll(".pad-btn").forEach(btnElement => {
+        btnElement.addEventListener("touchstart", (e) => {
+          e.preventDefault();
+          handleDirectionalInputShift(btnElement.getAttribute("data-dir"));
+        });
+        btnElement.addEventListener("mousedown", () => {
+          handleDirectionalInputShift(btnElement.getAttribute("data-dir"));
+        });
+      });
+
+      // DIFFICULTY MODE CONTROLLER ATTACHMENTS
+      document.querySelectorAll(".diff-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          if (isGameRunningFlag && !isGamePausedFlag) return; // Prevent dynamic tampering mid-session run
+          document.querySelectorAll(".diff-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          difficultyFactorModeOffset = btn.getAttribute("data-diff");
+        });
+      });
+
+      // AUDIO BUTTON ACTION MECHANIC
+      document.getElementById("audioToggleBtn").addEventListener("click", () => {
+        isAudioMutedFlag = !isAudioMutedFlag;
+        document.getElementById("audioToggleBtn").textContent = isAudioMutedFlag ? "🔇" : "🔊";
+      });
+    }
+
+    function handleDirectionalInputShift(directionString) {
+      if (!isGameRunningFlag || isGamePausedFlag) return;
+      if (directionString === "up" && snakeDirection !== "down") nextInboundDirection = "up";
+      if (directionString === "down" && snakeDirection !== "up") nextInboundDirection = "down";
+      if (directionString === "left" && snakeDirection !== "right") nextInboundDirection = "left";
+      if (directionString === "right" && snakeDirection !== "left") nextInboundDirection = "right";
+    }
+
+    // INITIAL ENGINE SEQUENCE STATE RESET
+    function startGameEngine() {
+      // Close any operational overlays
+      document.getElementById("startOverlay").classList.remove("active");
+      document.getElementById("pauseOverlay").classList.remove("active");
+      document.getElementById("gameoverOverlay").classList.remove("active");
+
+      // Evaluate Selected Difficulty Timing Frame Specs
+      if (difficultyFactorModeOffset === "easy") activeTickEngineRate = 150;
+      else if (difficultyFactorModeOffset === "hard") activeTickEngineRate = 80;
+      else activeTickEngineRate = 110; // Medium structural target fallback settings
+
+      // Reset Snake Coordinate Positions Configuration Index Array
+      snakeCoordinates = [
+        { x: 10, y: 10 },
+        { x: 9, y: 10 },
+        { x: 8, y: 10 }
+      ];
+
+      snakeDirection = "right";
+      nextInboundDirection = "right";
+      liveScore = 0;
+      foodEatenTrackerCount = 0;
+      isGamePausedFlag = false;
+      isGameRunningFlag = true;
+
+      updateScorePanelUI(false);
+      recalculateFoodPlacementCoordinates();
+
+      if (systemLoopTimerReference) clearTimeout(systemLoopTimerReference);
+      processTickCycleStep();
+
+      triggerSynthesizedSound(330, 0.15, "triangle");
+      setTimeout(() => triggerSynthesizedSound(440, 0.2, "sine"), 100);
+    }
+
+    // GAME PROCESSING LOOPS
+    function processTickCycleStep() {
+      if (!isGameRunningFlag || isGamePausedFlag) return;
+
+      advanceSnakeStateEngine();
+      evaluateCollisionProfiles();
+
+      if (isGameRunningFlag && !isGamePausedFlag) {
+        renderEngineGraphicsView();
+
+        // Keep processing loops iteratively mapped dynamically across intervals
+        systemLoopTimerReference = setTimeout(processTickCycleStep, activeTickEngineRate);
+      }
+    }
+
+    // CORE MOVEMENT AND STATE TRANSFORMATIONS
+    function advanceSnakeStateEngine() {
+      snakeDirection = nextInboundDirection;
+
+      const headCoordSegment = { ...snakeCoordinates[0] };
+
+      switch (snakeDirection) {
+        case "up": headCoordSegment.y--; break;
+        case "down": headCoordSegment.y++; break;
+        case "left": headCoordSegment.x--; break;
+        case "right": headCoordSegment.x++; break;
+      }
+
+      // Inward prepend operation context arrays
+      snakeCoordinates.unshift(headCoordSegment);
+
+      // EVALUATE DEVOUR INTERACTION MATRIX
+      if (headCoordSegment.x === foodPosition.x && headCoordSegment.y === foodPosition.y) {
+        liveScore += 10;
+        foodEatenTrackerCount++;
+
+        triggerSynthesizedSound(587.33, 0.08, "sine"); // High-pitched chime audio feedback module
+        triggerScoreValuePulseAnimation();
+
+        recalculateFoodPlacementCoordinates();
+        updateScorePanelUI(true);
+
+        // ACCELERATION SPEED GAIN OVER TIME METRIC INDEX SCALINGS
+        if (activeTickEngineRate > 45) {
+          activeTickEngineRate -= 1.5; // Staggered dynamic acceleration scaling indexes adjustments
+        }
+      } else {
+        // Drop terminal trail end node vector segment safely if no consumption occurred
+        snakeCoordinates.pop();
+      }
+    }
+
+    // COLLISION LOGIC DETECTORS
+    function evaluateCollisionProfiles() {
+      const headPieceInstance = snakeCoordinates[0];
+
+      // 1. BOUNDARY CRASH DETECTORS
+      if (headPieceInstance.x < 0 || headPieceInstance.x >= GRID_COUNT ||
+        headPieceInstance.y < 0 || headPieceInstance.y >= GRID_COUNT) {
+        handleGameOverTrigger("You crossed out of bounds!");
+        return;
+      }
+
+      // 2. SELF COLLISION CHECK GRID SEGMENTS DETECTOR
+      for (let idx = 1; idx < snakeCoordinates.length; idx++) {
+        if (snakeCoordinates[idx].x === headPieceInstance.x && snakeCoordinates[idx].y === headPieceInstance.y) {
+          handleGameOverTrigger("You bit into your own segment!");
+          return;
+        }
+      }
+    }
+
+    // FOOD POSITION SELECTION ALGORITHMIC WRAPPER
+    function recalculateFoodPlacementCoordinates() {
+      let localizedValidPositionDiscovered = false;
+      let potentialTargetX, potentialTargetY;
+
+      while (!localizedValidPositionDiscovered) {
+        potentialTargetX = Math.floor(Math.random() * GRID_COUNT);
+        potentialTargetY = Math.floor(Math.random() * GRID_COUNT);
+
+        // Match candidate position indices check against existing snake bodies matrix array allocations
+        localizedValidPositionDiscovered = true;
+        for (let cellSegment of snakeCoordinates) {
+          if (cellSegment.x === potentialTargetX && cellSegment.y === potentialTargetY) {
+            localizedValidPositionDiscovered = false;
+            break;
+          }
+        }
+      }
+
+      foodPosition = { x: potentialTargetX, y: potentialTargetY };
+      foodPulseScaleRadius = 0; // Reset animation tracking frame values
+    }
+
+    // PAUSE ENGINE MUTATOR SUB-ROUTINE
+    function togglePauseGame() {
+      if (!isGameRunningFlag) return;
+
+      isGamePausedFlag = !isGamePausedFlag;
+      const pauseOverlayNode = document.getElementById("pauseOverlay");
+
+      if (isGamePausedFlag) {
+        pauseOverlayNode.classList.add("active");
+        clearTimeout(systemLoopTimerReference);
+        triggerSynthesizedSound(220, 0.2, "sawtooth");
+      } else {
+        pauseOverlayNode.classList.remove("active");
+        processTickCycleStep();
+        triggerSynthesizedSound(440, 0.15, "triangle");
+      }
+    }
+
+    // END STATE LOGIC COMPONENT HANDLER
+    function handleGameOverTrigger(reasonTextString) {
+      isGameRunningFlag = false;
+      clearTimeout(systemLoopTimerReference);
+
+      // Evaluate persistent caching variables vectors storage
+      if (liveScore > persistentHighScore) {
+        persistentHighScore = liveScore;
+        localStorage.setItem("neon_snake_highscore", persistentHighScore.toString());
+        document.getElementById("highScoreVal").textContent = persistentHighScore;
+      }
+
+      triggerSynthesizedSound(150, 0.4, "sawtooth"); // Low failure tone signature profile
+      setTimeout(() => triggerSynthesizedSound(100, 0.6, "sawtooth"), 200);
+
+      // Populate text parameters inside structural DOM interface views nodes
+      document.getElementById("gameOverReason").textContent = reasonTextString;
+      document.getElementById("finalScoreDisplay").textContent = liveScore;
+      document.getElementById("finalFoodDisplay").textContent = foodEatenTrackerCount;
+
+      document.getElementById("gameoverOverlay").classList.add("active");
+    }
+
+    // UPDATE METRIC TEXT PANELS INTERACTIVE FIELDS
+    function updateScorePanelUI(hasEatenPulseEvent) {
+      document.getElementById("scoreVal").textContent = liveScore;
+      document.getElementById("foodVal").textContent = foodEatenTrackerCount;
+
+      // Speed percentage tracking computation metrics mapping display calculations
+      const baselineRateMapping = 120;
+      const calculatedPercentageRatio = Math.round((baselineRateMapping / activeTickEngineRate) * 100);
+      document.getElementById("speedVal").textContent = `${calculatedPercentageRatio}%`;
+    }
+
+    function triggerScoreValuePulseAnimation() {
+      const displayScoreRefNode = document.getElementById("scoreVal");
+      displayScoreRefNode.classList.add("pulse");
+      setTimeout(() => displayScoreRefNode.classList.remove("pulse"), 250);
+    }
+
+    // GRAPHICS AND VECTOR RENDERING CONTROLLER PIPELINES
+    function renderEngineGraphicsView() {
+      // Clear current canvas mapping area frame allocations
+      ctx.fillStyle = "#020204";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // DRAW VIRTUAL SCANLINE GRID PATHWAYS BACKGROUND
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.015)";
+      ctx.lineWidth = 1;
+      for (let idx = 0; idx <= GRID_COUNT; idx++) {
+        // Vertical Lines
+        ctx.beginPath();
+        ctx.moveTo(idx * gridBlockSize, 0);
+        ctx.lineTo(idx * gridBlockSize, canvas.height);
+        ctx.stroke();
+
+        // Horizontal Lines
+        ctx.beginPath();
+        ctx.moveTo(0, idx * gridBlockSize);
+        ctx.lineTo(canvas.width, idx * gridBlockSize);
+        ctx.stroke();
+      }
+
+      // DRAW PIXEL FOOD (Neon Cyberpunk Diamond Chime Visuals Structure)
+      // Staggered size loop increment animations updates trackers variables vectors
+      foodPulseScaleRadius += 0.08 * foodAnimationPulseSignMultiplier;
+      if (foodPulseScaleRadius > 3 || foodPulseScaleRadius < -2) {
+        foodAnimationPulseSignMultiplier *= -1;
+      }
+
+      const targetFoodCanvasCoordX = (foodPosition.x * gridBlockSize) + gridBlockSize / 2;
+      const targetFoodCanvasCoordY = (foodPosition.y * gridBlockSize) + gridBlockSize / 2;
+      const evaluatedDynamicFoodRadius = Math.max(4, (gridBlockSize / 2.5) + foodPulseScaleRadius);
+
+      ctx.shadowBlur = 18;
+      ctx.shadowColor = "#ff007f"; // Neon pink core contrast for target foods tracking parameters
+      ctx.fillStyle = "#ff007f";
+
+      ctx.beginPath();
+      ctx.arc(targetFoodCanvasCoordX, targetFoodCanvasCoordY, evaluatedDynamicFoodRadius, 0, Math.PI * 2);
+      ctx.fill();
+
+      // DRAW GLOWING NEON CYBER SNAKE
+      snakeCoordinates.forEach((segmentCell, elementPositionIndex) => {
+        const drawCoordPositionX = segmentCell.x * gridBlockSize;
+        const drawCoordPositionY = segmentCell.y * gridBlockSize;
+        const paddedInnerSegmentSizeOffset = gridBlockSize - 2;
+
+        if (elementPositionIndex === 0) {
+          // Head Drawing Logic Matrix Configuration Viewports
+          ctx.fillStyle = varColorLookupStringSelector("--accent-cyan");
+          ctx.shadowColor = varColorLookupStringSelector("--accent-cyan");
+          ctx.shadowBlur = 14;
+          ctx.fillRect(drawCoordPositionX + 1, drawCoordPositionY + 1, paddedInnerSegmentSizeOffset, paddedInnerSegmentSizeOffset);
+
+          // Small aesthetic indicator tracking eyes positions setup details mapping matrix
+          ctx.fillStyle = "#000000";
+          ctx.shadowBlur = 0;
+
+          const eyePaddingSizeMetric = gridBlockSize / 4;
+          if (snakeDirection === "right" || snakeDirection === "left") {
+            ctx.fillRect(drawCoordPositionX + (snakeDirection === "right" ? gridBlockSize - 5 : 3), drawCoordPositionY + eyePaddingSizeMetric, 2, 2);
+            ctx.fillRect(drawCoordPositionX + (snakeDirection === "right" ? gridBlockSize - 5 : 3), drawCoordPositionY + gridBlockSize - eyePaddingSizeMetric - 2, 2, 2);
+          } else {
+            ctx.fillRect(drawCoordPositionX + eyePaddingSizeMetric, drawCoordPositionY + (snakeDirection === "down" ? gridBlockSize - 5 : 3), 2, 2);
+            ctx.fillRect(drawCoordPositionX + gridBlockSize - eyePaddingSizeMetric - 2, drawCoordPositionY + (snakeDirection === "down" ? gridBlockSize - 5 : 3), 2, 2);
+          }
+        } else {
+          // Body segments drawing iterations setup parameters
+          ctx.shadowBlur = 8;
+          const evaluationColorGradientRatioFactor = elementPositionIndex / snakeCoordinates.length;
+
+          // Fade color mapping shifts downstream toward tails tracking frames definitions
+          if (evaluationColorGradientRatioFactor < 0.4) {
+            ctx.fillStyle = varColorLookupStringSelector("--accent-green");
+            ctx.shadowColor = varColorLookupStringSelector("--accent-green");
+          } else {
+            ctx.fillStyle = "#10b981"; // Dark emerald secondary trailing tone profile
+            ctx.shadowColor = "#10b981";
+          }
+
+          ctx.fillRect(drawCoordPositionX + 1, drawCoordPositionY + 1, paddedInnerSegmentSizeOffset, paddedInnerSegmentSizeOffset);
+        }
+      });
+
+      // Wipe out shadow state parameters to guarantee clean subsequent render sweeps
+      ctx.shadowBlur = 0;
+    }
+
+    // READ RAW CSS COMPUTED PALETTES
+    function varColorLookupStringSelector(variableIdentifierStringName) {
+      return getComputedStyle(document.documentElement).getPropertyValue(variableIdentifierStringName).trim();
+    }
+  </script>
+</body>
+
+</html>

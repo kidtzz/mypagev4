@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Retro Neon Minesweeper - Mini Arcade</title>
+  <style>
+    /* --- THEME VARIABLES & SYSTEM CONFIG --- */
+    :root {
+      --bg-main: #0a0b10;
+      --bg-surface: #12141d;
+      --bg-panel: rgba(22, 26, 41, 0.6);
+      --bg-cell: #1c1f30;
+      --bg-cell-revealed: #0e1017;
+      --text-main: #94a3b8;
+      --text-bright: #ffffff;
+      --accent-blue: #00f2fe;
+      --accent-red: #ff0055;
+      --accent-gold: #ffb703;
+      --border-glass: rgba(255, 255, 255, 0.06);
+      --border-radius: 16px;
+      --glow-blue: rgba(0, 242, 254, 0.25);
+
+      /* Mine Neighbor Indicator Palettes */
+      --num-1: #3b82f6;
+      --num-2: #10b981;
+      --num-3: #ef4444;
+      --num-4: #8b5cf6;
+      --num-5: #ec4899;
+      --num-6: #06b6d4;
+      --num-7: #eab308;
+      --num-8: #f97316;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 20px 10px;
+      overflow-x: hidden;
+      background: radial-gradient(circle at 50% 15%, rgba(0, 242, 254, 0.08) 0%, transparent 55%),
+        radial-gradient(circle at 10% 80%, rgba(255, 0, 85, 0.04) 0%, transparent 40%);
+    }
+
+    /* --- NAVIGATION LINKS --- */
+    .top-nav {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .back-btn {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-glass);
+      color: var(--text-bright);
+      padding: 8px 18px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(12px);
+    }
+
+    .back-btn:hover {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 15px var(--glow-blue);
+      color: var(--accent-blue);
+      transform: translateY(-1px);
+    }
+
+    .audio-toggle {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-glass);
+      color: var(--text-bright);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    .audio-toggle:hover {
+      border-color: var(--accent-gold);
+      transform: scale(1.05);
+    }
+
+    /* --- APP ARCHITECTURE WRAPPER --- */
+    .main-wrapper {
+      width: 100%;
+      max-width: 1000px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* --- LIVE HUB METRICS OVERVIEW --- */
+    .dashboard-panel {
+      width: 100%;
+      max-width: 600px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(16px);
+      border-radius: var(--border-radius);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .dash-row-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .title-block h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text-bright);
+      letter-spacing: -0.5px;
+      background: linear-gradient(to right, #ffffff, var(--accent-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .title-block p {
+      font-size: 0.75rem;
+      color: var(--text-main);
+    }
+
+    .dash-counters {
+      display: flex;
+      gap: 12px;
+    }
+
+    .counter-box {
+      background: #090a0f;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      padding: 6px 14px;
+      min-width: 75px;
+      text-align: center;
+    }
+
+    .counter-lbl {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-main);
+    }
+
+    .counter-val {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      font-family: monospace;
+    }
+
+    /* --- CONTROLS / DIFFICULTY STRIP --- */
+    .dash-row-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      padding-top: 12px;
+    }
+
+    .diff-select-group {
+      display: flex;
+      gap: 6px;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 3px;
+      border-radius: 8px;
+    }
+
+    .diff-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .diff-btn:hover {
+      color: var(--text-bright);
+    }
+
+    .diff-btn.active {
+      background: var(--bg-cell);
+      color: var(--accent-blue);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-glass);
+      color: var(--text-bright);
+      padding: 0 16px;
+      height: 34px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--text-bright);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #007bff 0%, var(--accent-blue) 100%);
+      border: none;
+      color: #0a0b10;
+      font-weight: 700;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 0 12px var(--glow-blue);
+      transform: scale(1.02);
+    }
+
+    /* --- THE FIELD VIEWPORT CLIPPING SYSTEM --- */
+    .board-scroll-viewport {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 10px 0 20px 0;
+      display: flex;
+      justify-content: center;
+      scrollbar-width: thin;
+      scrollbar-color: var(--bg-cell) var(--bg-main);
+    }
+
+    /* Webkit scrollbar stylings */
+    .board-scroll-viewport::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .board-scroll-viewport::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .board-scroll-viewport::-webkit-scrollbar-thumb {
+      background: var(--bg-cell);
+      border-radius: 10px;
+    }
+
+    .mines-grid {
+      background: var(--bg-surface);
+      border: 3px solid rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      padding: 8px;
+      display: grid;
+      gap: 4px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    /* --- GRID CELL ENTITIES --- */
+    .cell {
+      width: 28px;
+      height: 28px;
+      background: var(--bg-cell);
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      font-weight: 800;
+      transition: background 0.15s, transform 0.1s;
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .cell:hover:not(.revealed):not(.flagged) {
+      background: #25293f;
+      transform: scale(1.05);
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.08);
+    }
+
+    .cell.revealed {
+      background: var(--bg-cell-revealed);
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.7);
+      border-color: transparent;
+      animation: popReveal 0.15s ease-out;
+    }
+
+    @keyframes popReveal {
+      0% {
+        transform: scale(0.85);
+        opacity: 0.7;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .cell.flagged {
+      animation: flagPlace 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    }
+
+    @keyframes flagPlace {
+      0% {
+        transform: scale(0.5) rotate(-15deg);
+      }
+
+      100% {
+        transform: scale(1) rotate(0deg);
+      }
+    }
+
+    .cell.qmark {
+      color: var(--accent-gold);
+    }
+
+    /* Value Coloring Mappings via standard attributes targeting */
+    .cell[data-count="1"] {
+      color: var(--num-1);
+    }
+
+    .cell[data-count="2"] {
+      color: var(--num-2);
+    }
+
+    .cell[data-count="3"] {
+      color: var(--num-3);
+    }
+
+    .cell[data-count="4"] {
+      color: var(--num-4);
+    }
+
+    .cell[data-count="5"] {
+      color: var(--num-5);
+    }
+
+    .cell[data-count="6"] {
+      color: var(--num-6);
+    }
+
+    .cell[data-count="7"] {
+      color: var(--num-7);
+    }
+
+    .cell[data-count="8"] {
+      color: var(--num-8);
+    }
+
+    .cell.exploded {
+      background: var(--accent-red) !important;
+      color: #ffffff;
+      box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
+      z-index: 5;
+    }
+
+    .cell.wrong-flag {
+      background: rgba(255, 0, 85, 0.1);
+      position: relative;
+    }
+
+    .cell.wrong-flag::after {
+      content: "×";
+      position: absolute;
+      color: var(--accent-red);
+      font-size: 1.4rem;
+      font-weight: 300;
+      top: -2px;
+    }
+
+    /* --- STATUS GAME SCREEN OVERLAYS --- */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 11, 16, 0.9);
+      backdrop-filter: blur(8px);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 20px;
+      z-index: 20;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .overlay-title {
+      font-size: 2rem;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .overlay-title.win {
+      color: var(--accent-blue);
+      text-shadow: 0 0 20px var(--glow-blue);
+    }
+
+    .overlay-title.loss {
+      color: var(--accent-red);
+      text-shadow: 0 0 20px rgba(255, 0, 85, 0.3);
+    }
+
+    .metrics-card {
+      width: 100%;
+      max-width: 240px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-glass);
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+    }
+
+    .metric-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .metric-row span:last-child {
+      font-weight: 700;
+      color: var(--text-bright);
+    }
+
+    .overlay-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+      max-width: 200px;
+    }
+
+    .overlay-actions .btn {
+      width: 100%;
+      height: 40px;
+      justify-content: center;
+    }
+
+    /* --- UTILITY RUNTIME HINTS STATS BAR --- */
+    .hint-bar {
+      width: 100%;
+      max-width: 600px;
+      background: rgba(20, 23, 36, 0.3);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--border-radius);
+      padding: 12px;
+      text-align: center;
+      font-size: 0.75rem;
+      line-height: 1.4;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-bright);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="top-nav">
+    <a href="../games-all.html" class="back-btn">
+      <svg style="width:14px; height:14px; fill:currentColor;" viewBox="0 0 24 24">
+        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+      </svg>
+      Back to Arcade
+    </a>
+    <button class="audio-toggle" id="audioToggleBtn" title="Toggle Sound Synth Engine">🔊</button>
+  </div>
+
+  <div class="main-wrapper">
+
+    <div class="dashboard-panel">
+      <div class="dash-row-top">
+        <div class="title-block">
+          <h1>Minesweeper</h1>
+          <p>Neon Operational Matrix</p>
+        </div>
+        <div class="dash-counters">
+          <div class="counter-box">
+            <div class="counter-lbl">Mines</div>
+            <div class="counter-val" id="minesRemainingDisplay">000</div>
+          </div>
+          <div class="counter-box">
+            <div class="counter-lbl">Time</div>
+            <div class="counter-val" id="timerDisplay">000</div>
+          </div>
+          <div class="counter-box" style="border-color: rgba(0,242,254,0.15)">
+            <div class="counter-lbl">Best</div>
+            <div class="counter-val" id="bestTimeDisplay" style="color: var(--accent-blue);">---</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-row-bottom">
+        <div class="diff-select-group">
+          <button class="diff-btn active" data-level="easy">Easy</button>
+          <button class="diff-btn" data-level="medium">Medium</button>
+          <button class="diff-btn" data-level="hard">Hard</button>
+        </div>
+
+        <button class="btn btn-primary" onclick="generateFreshSessionMatrix()">
+          🔄 Restart
+        </button>
+      </div>
+    </div>
+
+    <div class="board-scroll-viewport">
+      <div class="mines-grid" id="minesGridPlatform">
+        <div class="overlay" id="winOverlay">
+          <div class="overlay-title win">🎉 You Win!</div>
+          <div class="metrics-card">
+            <div class="metric-row"><span>Clear Time</span><span id="winTime">0s</span></div>
+            <div class="metric-row"><span>Flags Used</span><span id="winFlags">0</span></div>
+            <div class="metric-row"><span>Difficulty</span><span id="winDiff"
+                style="text-transform: capitalize;">-</span></div>
+          </div>
+          <div class="overlay-actions">
+            <button class="btn btn-primary" onclick="generateFreshSessionMatrix()">Play Again</button>
+            <button class="btn" onclick="window.location.href = '../games-all.html'">Back to Arcade</button>
+          </div>
+        </div>
+
+        <div class="overlay" id="lossOverlay">
+          <div class="overlay-title loss">💥 BOOM!</div>
+          <p style="font-size:0.85rem; text-align:center; margin-top:-6px;">Matrix stability compromised. Game over.</p>
+          <div class="overlay-actions" style="margin-top:8px;">
+            <button class="btn btn-primary" onclick="generateFreshSessionMatrix()">Play Again</button>
+            <button class="btn" onclick="window.location.href = '../games-all.html'">Back to Arcade</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hint-bar">
+      Desktop: <span class="badge">Left Click</span> Reveal cell. <span class="badge">Right Click</span> Cycle Flag /
+      Question state.<br>
+      Mobile: <span class="badge">Tap</span> Reveal cell. <span class="badge">Long Press (250ms)</span> Toggle marking
+      flags data assets.
+    </div>
+  </div>
+
+  <script>
+    // CONFIGURATIONS MAP STRUCTS
+    const DIFFICULTY_PRESETS = {
+      easy: { rows: 9, cols: 9, mines: 10 },
+      medium: { rows: 16, cols: 16, mines: 40 },
+      hard: { rows: 16, cols: 30, mines: 99 }
+    };
+
+    let currentActiveDifficultyKey = "easy";
+    let gridRowsCount = 9;
+    let gridColsCount = 9;
+    let totalTargetMinesCount = 10;
+
+    // SESSION STATE ENGINES MODEL BACKINGS
+    let logicalBoardGrid = []; // Multi-dimensional matrix tracking data cells state
+    let flagCounterTrackerCount = 0;
+    let elapsedTimerSecondsCounter = 0;
+    let intervalTimerSystemReference = null;
+
+    let isFirstActionExecutionTriggered = false;
+    let isSessionTerminalClosedState = false;
+    let isAudioSynthMutedFlag = false;
+
+    // WEB AUDIO CHIP NODE WAVEFORM GENERATOR CONTEXTS
+    const NativeAudioContextClass = window.AudioContext || window.webkitAudioContext;
+    let syntheticAudioHardwareDeviceInstance = null;
+
+    function triggerSyntheticGameSoundTone(frequencyHz, durationSeconds, patternType = "sine") {
+      if (isAudioSynthMutedFlag) return;
+      try {
+        if (!syntheticAudioHardwareDeviceInstance) {
+          syntheticAudioHardwareDeviceInstance = new NativeAudioContextClass();
+        }
+        if (syntheticAudioHardwareDeviceInstance.state === "suspended") {
+          syntheticAudioHardwareDeviceInstance.resume();
+        }
+        const oscillatorGraphNode = syntheticAudioHardwareDeviceInstance.createOscillator();
+        const gainEnvelopeAmplifierNode = syntheticAudioHardwareDeviceInstance.createGain();
+
+        oscillatorGraphNode.type = patternType;
+        oscillatorGraphNode.frequency.setValueAtTime(frequencyHz, syntheticAudioHardwareDeviceInstance.currentTime);
+
+        gainEnvelopeAmplifierNode.gain.setValueAtTime(0.1, syntheticAudioHardwareDeviceInstance.currentTime);
+        gainEnvelopeAmplifierNode.gain.exponentialRampToValueAtTime(0.0001, syntheticAudioHardwareDeviceInstance.currentTime + durationSeconds);
+
+        oscillatorGraphNode.connect(gainEnvelopeAmplifierNode);
+        gainEnvelopeAmplifierNode.connect(syntheticAudioHardwareDeviceInstance.destination);
+
+        oscillatorGraphNode.start();
+        oscillatorGraphNode.stop(syntheticAudioHardwareDeviceInstance.currentTime + durationSeconds);
+      } catch (ex) {
+        console.warn("Synthesizer instance failed node generation cycle hook interception:", ex);
+      }
+    }
+
+    // INITIAL ATTACHMENT LIFECYCLE RUNTIME ROOT BOOT
+    document.addEventListener("DOMContentLoaded", () => {
+      initializeDifficultyInterceptionListeners();
+      initializeGlobalAudioControlSync();
+      generateFreshSessionMatrix();
+    });
+
+    function initializeDifficultyInterceptionListeners() {
+      document.querySelectorAll(".diff-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".diff-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          currentActiveDifficultyKey = btn.getAttribute("data-level");
+          generateFreshSessionMatrix();
+        });
+      });
+    }
+
+    function initializeGlobalAudioControlSync() {
+      document.getElementById("audioToggleBtn").addEventListener("click", () => {
+        isAudioSynthMutedFlag = !isAudioSynthMutedFlag;
+        document.getElementById("audioToggleBtn").textContent = isAudioSynthMutedFlag ? "🔇" : "🔊";
+      });
+    }
+
+    function syncDisplayBestRecordTimesUI() {
+      const preservedStorageKey = `mines_best_${currentActiveDifficultyKey}`;
+      const extractedBestTimeValue = localStorage.getItem(preservedStorageKey);
+      document.getElementById("bestTimeDisplay").textContent = extractedBestTimeValue ? formatTimeMetricsString(parseInt(extractedBestTimeValue, 10)) : "---";
+    }
+
+    // MATRIX INITIALIZER FACTORY ENGINE
+    function generateFreshSessionMatrix() {
+      // Close active display overlay nodes
+      document.getElementById("winOverlay").classList.remove("active");
+      document.getElementById("lossOverlay").classList.remove("active");
+
+      // Extract working specifications from configurations maps profiles
+      const config = DIFFICULTY_PRESETS[currentActiveDifficultyKey];
+      gridRowsCount = config.rows;
+      gridColsCount = config.cols;
+      totalTargetMinesCount = config.mines;
+
+      // Reset operational data counters parameters definitions
+      flagCounterTrackerCount = 0;
+      elapsedTimerSecondsCounter = 0;
+      isFirstActionExecutionTriggered = false;
+      isSessionTerminalClosedState = false;
+
+      if (intervalTimerSystemReference) clearInterval(intervalTimerSystemReference);
+
+      document.getElementById("timerDisplay").textContent = "000";
+      updateMinesDisplayCountUI();
+      syncDisplayBestRecordTimesUI();
+
+      // RECONFIGURE LAYOUT PLATFORM ELEMENT PROPERTIES
+      const gridContainerPlatformNode = document.getElementById("minesGridPlatform");
+      gridContainerPlatformNode.style.gridTemplateRows = `repeat(${gridRowsCount}, 28px)`;
+      gridContainerPlatformNode.style.gridTemplateColumns = `repeat(${gridColsCount}, 28px)`;
+
+      // Strip historic cell items elements safely from display tree layout paths
+      document.querySelectorAll(".cell").forEach(el => el.remove());
+
+      // CONSTRUCT INTERNAL DATA ARRAYS LOGIC MODELS
+      logicalBoardGrid = [];
+      for (let r = 0; r < gridRowsCount; r++) {
+        const innerRowArray = [];
+        for (let c = 0; c < gridColsCount; c++) {
+          // Create element tracking data object reference
+          const cellModelNode = {
+            row: r,
+            col: c,
+            isMine: false,
+            isRevealed: false,
+            markState: 0, // 0: clear, 1: flagged, 2: question mark
+            neighborMinesCount: 0,
+            domReference: null
+          };
+
+          // Append corresponding interactive structural display block element
+          const htmlDivNode = document.createElement("div");
+          htmlDivNode.classList.add("cell");
+          htmlDivNode.setAttribute("data-r", r);
+          htmlDivNode.setAttribute("data-c", c);
+
+          injectCellInputInteractionsRouterHooks(htmlDivNode, cellModelNode);
+          gridContainerPlatformNode.appendChild(htmlDivNode);
+
+          cellModelNode.domReference = htmlDivNode;
+          innerRowArray.push(cellModelNode);
+        }
+        logicalBoardGrid.push(innerRowArray);
+      }
+      triggerSyntheticGameSoundTone(380, 0.1, "triangle");
+    }
+
+    // INTERACTIVE CONTROL ROUTERS MAPPINGS (DESKTOP MOUSE / MOBILE TOUCH INTEGRATIONS)
+    function injectCellInputInteractionsRouterHooks(htmlDivNode, cellModelNode) {
+      // DESKTOP MOUSE LEFT/RIGHT CLICKS HANDLING INTERFACES
+      htmlDivNode.addEventListener("click", (e) => {
+        e.preventDefault();
+        executePrimaryCellClickReveal(cellModelNode);
+      });
+
+      htmlDivNode.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        executeAlternateCellMarkCycle(cellModelNode);
+      });
+
+      // MOBILE SMARTPHONE GESTURE RECOGNIZERS (TAP VS LONG-PRESS DETECTORS WRAPPERS)
+      let touchTimerReference = null;
+      let touchWasInterruptedCancellationFlag = false;
+
+      htmlDivNode.addEventListener("touchstart", (e) => {
+        touchWasInterruptedCancellationFlag = false;
+        touchTimerReference = setTimeout(() => {
+          touchWasInterruptedCancellationFlag = true;
+          executeAlternateCellMarkCycle(cellModelNode);
+        }, 250); // 250 milliseconds long-press threshold criteria
+      }, { passive: true });
+
+      htmlDivNode.addEventListener("touchend", (e) => {
+        if (touchTimerReference) clearTimeout(touchTimerReference);
+        if (!touchWasInterruptedCancellationFlag) {
+          executePrimaryCellClickReveal(cellModelNode);
+        }
+      }, { passive: true });
+
+      htmlDivNode.addEventListener("touchmove", () => {
+        if (touchTimerReference) clearTimeout(touchTimerReference);
+        touchWasInterruptedCancellationFlag = true;
+      }, { passive: true });
+    }
+
+    // PRIMARY ACTION EXECUTION LOGIC PIPELINE (REVEAL CELLS)
+    function executePrimaryCellClickReveal(cellModelNode) {
+      if (isSessionTerminalClosedState || cellModelNode.isRevealed || cellModelNode.markState === 1) return;
+
+      // FIRST CLICK PROTECTION GUARANTEE MECHANICS
+      if (!isFirstActionExecutionTriggered) {
+        isFirstActionExecutionTriggered = true;
+        populateMinesLayoutMatrix(cellModelNode);
+        initializeActiveTimerTracker();
+      }
+
+      // LOSS PROFILE TRIGGER CONDITIONS MET EVALUATION
+      if (cellModelNode.isMine) {
+        triggerGameOverLossSequence(cellModelNode);
+        return;
+      }
+
+      // RECURSIVE REVEAL SUB-ROUTINE TRAVERSES CALLS
+      evaluateCellRevealCascade(cellModelNode);
+      triggerSyntheticGameSoundTone(500, 0.05, "sine");
+      evaluateWinConditionThresholdState();
+    }
+
+    // MARKING MANAGEMENT STATE CYCLE ITERATORS (FLAG -> QMARK -> CLEAR)
+    function executeAlternateCellMarkCycle(cellModelNode) {
+      if (isSessionTerminalClosedState || cellModelNode.isRevealed) return;
+
+      // Start session timer automatically on an initial marking flag drop if required
+      if (!isFirstActionExecutionTriggered) {
+        isFirstActionExecutionTriggered = true;
+        populateMinesLayoutMatrix(null); // Pure arbitrary open field randomized selection
+        initializeActiveTimerTracker();
+      }
+
+      const el = cellModelNode.domReference;
+
+      if (cellModelNode.markState === 0) {
+        // Shift to Flagged state
+        cellModelNode.markState = 1;
+        flagCounterTrackerCount++;
+        el.classList.add("flagged");
+        el.textContent = "🚩";
+        triggerSyntheticGameSoundTone(400, 0.06, "triangle");
+      } else if (cellModelNode.markState === 1) {
+        // Shift to Question Mark state
+        cellModelNode.markState = 2;
+        flagCounterTrackerCount--;
+        el.classList.remove("flagged");
+        el.classList.add("qmark");
+        el.textContent = "❓";
+        triggerSyntheticGameSoundTone(350, 0.06, "sine");
+      } else {
+        // Shift back to Clear state
+        cellModelNode.markState = 0;
+        el.classList.remove("qmark");
+        el.textContent = "";
+        triggerSyntheticGameSoundTone(300, 0.05, "sine");
+      }
+
+      updateMinesDisplayCountUI();
+    }
+
+    // ALGORITHMIC MINE DISTRIBUTIONS DISPERSALS
+    function populateMinesLayoutMatrix(protectedFirstClickCellNode) {
+      let deployedMinesCounter = 0;
+
+      while (deployedMinesCounter < totalTargetMinesCount) {
+        const pickedRandomRowIndex = Math.floor(Math.random() * gridRowsCount);
+        const pickedRandomColIndex = Math.floor(Math.random() * gridColsCount);
+        const candidateCellNode = logicalBoardGrid[pickedRandomRowIndex][pickedRandomColIndex];
+
+        if (candidateCellNode.isMine) continue;
+
+        // Enforce safety zone bounding conditions filter criteria
+        if (protectedFirstClickCellNode) {
+          const rowDistanceDelta = Math.abs(candidateCellNode.row - protectedFirstClickCellNode.row);
+          const colDistanceDelta = Math.abs(candidateCellNode.col - protectedFirstClickCellNode.col);
+          // Deny mine positioning placement inside the 3x3 box surrounding the first clicked coordinates
+          if (rowDistanceDelta <= 1 && colDistanceDelta <= 1) continue;
+        }
+
+        candidateCellNode.isMine = true;
+        deployedMinesCounter++;
+      }
+
+      // COMPILE PROXIMITY NEIGHBOR COUNT METRICS
+      for (let r = 0; r < gridRowsCount; r++) {
+        for (let c = 0; c < gridColsCount; c++) {
+          const currentCell = logicalBoardGrid[r][c];
+          if (currentCell.isMine) continue;
+
+          let surroundingMinesDiscoveredCount = 0;
+          iterateNeighborCoordinates(r, c, (neighborCell) => {
+            if (neighborCell.isMine) surroundingMinesDiscoveredCount++;
+          });
+          currentCell.neighborMinesCount = surroundingMinesDiscoveredCount;
+        }
+      }
+    }
+
+    // RECURSIVE REVEAL FLOOD-FILL ENGINE FLOW
+    function evaluateCellRevealCascade(targetCellNode) {
+      if (targetCellNode.isRevealed || targetCellNode.markState === 1) return;
+
+      targetCellNode.isRevealed = true;
+      const el = targetCellNode.domReference;
+      el.classList.add("revealed");
+
+      if (targetCellNode.neighborMinesCount > 0) {
+        el.textContent = targetCellNode.neighborMinesCount;
+        el.setAttribute("data-count", targetCellNode.neighborMinesCount);
+      } else {
+        // Cascade outward into nearby clear space zero-neighbor blocks
+        iterateNeighborCoordinates(targetCellNode.row, targetCellNode.col, (neighborCell) => {
+          evaluateCellRevealCascade(neighborCell);
+        });
+      }
+    }
+
+    // MATRIX COORD ADJACENCY TRAVERSAL UTILITY WRAPPER
+    function iterateNeighborCoordinates(originRow, originCol, executionCallbackRoutine) {
+      for (let rOffset = -1; rOffset <= 1; rOffset++) {
+        for (let cOffset = -1; cOffset <= 1; cOffset++) {
+          if (rOffset === 0 && cOffset === 0) continue;
+
+          const calculatedTargetRowIndex = originRow + rOffset;
+          const calculatedTargetColIndex = originCol + cOffset;
+
+          if (calculatedTargetRowIndex >= 0 && calculatedTargetRowIndex < gridRowsCount &&
+            calculatedTargetColIndex >= 0 && calculatedTargetColIndex < gridColsCount) {
+            executionCallbackRoutine(logicalBoardGrid[calculatedTargetRowIndex][calculatedTargetColIndex]);
+          }
+        }
+      }
+    }
+
+    // DISPLAY INTERFACE LABEL SYNC UP ELEMENTS
+    function updateMinesDisplayCountUI() {
+      const calculatedNetMinesBalance = totalTargetMinesCount - flagCounterTrackerCount;
+      document.getElementById("minesRemainingDisplay").textContent = formatMetricNumberPadding(calculatedNetMinesBalance);
+    }
+
+    function initializeActiveTimerTracker() {
+      elapsedTimerSecondsCounter = 0;
+      intervalTimerSystemReference = setInterval(() => {
+        elapsedTimerSecondsCounter++;
+        document.getElementById("timerDisplay").textContent = formatMetricNumberPadding(elapsedTimerSecondsCounter);
+      }, 1000);
+    }
+
+    function formatMetricNumberPadding(numericalValue) {
+      const absoluteValue = Math.abs(numericalValue);
+      const paddedTextString = absoluteValue.toString().padStart(3, "0");
+      return numericalValue < 0 ? `-${paddedTextString.substring(1)}` : paddedTextString;
+    }
+
+    function formatTimeMetricsString(totalSecondsValue) {
+      return `${totalSecondsValue}s`;
+    }
+
+    // GAME OUTCOME VALIDATION CONTROLLER CYCLES
+    function evaluateWinConditionThresholdState() {
+      let matchesCompletedSuccessfullyFlag = true;
+
+      for (let r = 0; r < gridRowsCount; r++) {
+        for (let c = 0; c < gridColsCount; c++) {
+          const currentCell = logicalBoardGrid[r][c];
+          // Any cell that is NOT a mine must be fully revealed to satisfy win criteria conditions
+          if (!currentCell.isMine && !currentCell.isRevealed) {
+            matchesCompletedSuccessfullyFlag = false;
+            break;
+          }
+        }
+      }
+
+      if (matchesCompletedSuccessfullyFlag) {
+        triggerGameOverWinSequence();
+      }
+    }
+
+    function triggerGameOverWinSequence() {
+      isSessionTerminalClosedState = true;
+      clearInterval(intervalTimerSystemReference);
+
+      triggerSyntheticGameSoundTone(523.25, 0.15, "sine");
+      setTimeout(() => triggerSyntheticGameSoundTone(659.25, 0.15, "sine"), 120);
+      setTimeout(() => triggerSyntheticGameSoundTone(783.99, 0.4, "sine"), 240);
+
+      // EVALUATE LOCAL PERSISTENT STORAGE HIGH RECORD TIMES
+      const cacheRecordStorageKey = `mines_best_${currentActiveDifficultyKey}`;
+      const existingRecordValue = localStorage.getItem(cacheRecordStorageKey);
+
+      if (!existingRecordValue || elapsedTimerSecondsCounter < parseInt(existingRecordValue, 10)) {
+        localStorage.setItem(cacheRecordStorageKey, elapsedTimerSecondsCounter.toString());
+      }
+
+      // POPULATE METRICS MODAL INTERFACE DISPLAYS
+      document.getElementById("winTime").textContent = formatTimeMetricsString(elapsedTimerSecondsCounter);
+      document.getElementById("winFlags").textContent = flagCounterTrackerCount;
+      document.getElementById("winDiff").textContent = currentActiveDifficultyKey;
+
+      document.getElementById("winOverlay").classList.add("active");
+    }
+
+    function triggerGameOverLossSequence(explodedCellNode) {
+      isSessionTerminalClosedState = true;
+      clearInterval(intervalTimerSystemReference);
+
+      triggerSyntheticGameSoundTone(140, 0.3, "sawtooth");
+      setTimeout(() => triggerSyntheticGameSoundTone(90, 0.5, "sawtooth"), 150);
+
+      // FULL MAP REVEAL FAILURE EXPOSURES
+      for (let r = 0; r < gridRowsCount; r++) {
+        for (let c = 0; c < gridColsCount; c++) {
+          const cellItem = logicalBoardGrid[r][c];
+          const domEl = cellItem.domReference;
+
+          if (cellItem.isMine) {
+            if (cellItem.markState !== 1) {
+              domEl.classList.add("revealed");
+              domEl.textContent = "💣";
+            }
+          } else {
+            if (cellItem.markState === 1) {
+              // Erroneous flag diagnostic markings updates
+              domEl.classList.remove("flagged");
+              domEl.classList.add("wrong-flag");
+            }
+          }
+        }
+      }
+
+      explodedCellNode.domReference.classList.add("exploded");
+      document.getElementById("lossOverlay").classList.add("active");
+    }
+  </script>
+</body>
+
+</html>

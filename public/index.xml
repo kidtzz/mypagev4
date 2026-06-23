@@ -11,8 +11,18 @@
     </image>
     <generator>Hugo -- 0.150.0</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 21 Jun 2026 16:12:05 +0700</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 11:12:36 +0700</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Games Simple</title>
+      <link>http://localhost:1313/arts/games-simple/</link>
+      <pubDate>Tue, 23 Jun 2026 11:12:36 +0700</pubDate>
+      <guid>http://localhost:1313/arts/games-simple/</guid>
+      <description>&lt;h3 id=&#34;game-aj&#34;&gt;Game aj&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/games/games-all.html&#34;&gt;Game nih&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     <item>
       <title>English Quiz</title>
       <link>http://localhost:1313/arts/english-quiz/</link>
@@ -1031,20 +1041,57 @@ Repository -&amp;gt; &lt;a href=&#34;https://github.com/arywr/dreamteam-new&#34;
 &lt;p&gt; &lt;/p&gt;
 &lt;p&gt;Hello&lt;/p&gt;
 &lt;p&gt;Become a programming professional &amp;amp; Highly motivated to learn something new. interested in Database, Web/apps, programming (Js, Python, Shell), Linux, Security, Infrastructure, especially about programming &amp;amp; database.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;h2 id=&#34;experiences&#34;&gt;Experiences&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Database Consultant (Implementation &amp;amp; Presales Support)&lt;/strong&gt;, PT. Metrocom Global Solusi (MGS)&lt;br&gt;
-&lt;em&gt;Jul 2025 – Present&lt;/em&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Deliver database and infrastructure implementation projects, including installation, configuration, and initial performance tuning.&lt;/li&gt;
-&lt;li&gt;Design and implement enterprise database architectures, primarily using Oracle Database and related enterprise platforms.&lt;/li&gt;
-&lt;li&gt;Support database security and compliance-related implementations in enterprise environments.&lt;/li&gt;
-&lt;li&gt;Support presales activities by providing technical input, solution design, and requirement analysis when required.&lt;/li&gt;
-&lt;li&gt;Collaborate with internal teams and customer stakeholders during project execution and go-live phases.&lt;/li&gt;
-&lt;li&gt;Prepare technical documentation, implementation reports, and provide post-implementation support.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Database Consultant&lt;/strong&gt;, PT. Mitra Integrasi Informatika (MII)&lt;br&gt;
-&lt;em&gt;July 2024 – June 2025&lt;/em&gt;&lt;/p&gt;</description>
+&lt;!-- &amp;nbsp;
+
+
+## Experiences
+
+**Database Consultant (Implementation &amp; Presales Support)**, PT. Metrocom Global Solusi (MGS)\
+*Jul 2025 – Present*
+
+- Deliver database and infrastructure implementation projects, including installation, configuration, and initial performance tuning.
+- Design and implement enterprise database architectures, primarily using Oracle Database and related enterprise platforms.
+- Support database security and compliance-related implementations in enterprise environments.
+- Support presales activities by providing technical input, solution design, and requirement analysis when required.
+- Collaborate with internal teams and customer stakeholders during project execution and go-live phases.
+- Prepare technical documentation, implementation reports, and provide post-implementation support.
+
+**Database Consultant**, PT. Mitra Integrasi Informatika (MII)\
+*July 2024 – June 2025*
+- Managed and supported production database environments including Oracle Database, MySQL, and EDB PostgreSQL.
+- Implemented and maintained high availability and replication solutions such as Oracle RAC, Oracle Data Guard,
+- MySQL Master-Slave replication, and MySQL InnoDB Cluster.
+- Performed preventive and corrective maintenance, troubleshooting, and performance optimization in production environments.
+- Worked closely with application, infrastructure, and customer teams to ensure database reliability, stability, and scalability.
+
+**IT Service Management**, PT. Mitra Integrasi Informatika (MII)\
+*July 2022 – june 2024*
+
+-   Make design and implementation for clients.
+-   Meeting with clients to determine requirements.
+-   Working with clients to define the scope of a project.
+-   Planning timescales and the resources needed.
+-   Clarifying a clients system specifications, understanding their work practices and the nature of their business to deliver the most effective and efficient business process.
+-   Analyzing IT requirements within companies and giving independent and objective advice on the use of IT.
+-   Developing agreed solutions and implementing new systems.
+-   Preparing documentation and presenting progress reports to customers.
+-   Organizing training for users and other consultants.
+
+**Freelance Web Developer**, Exclolab\
+*April 2022 – June 2023*
+-   Prolific skills with HTML, CSS, Less, Bootstrap, and JavaScript
+-   Web API integration (RESTFUL/JSON)
+-   working with JavaScript and WordPress
+-   Create responsive web and interactive displays
+
+**Internship**, PT. Telkom Indonesia (Semarang)\
+*July 2020 – August 2020*
+
+-   Support service improvement activities and software monitoring
+-   Software purchase advice and social media advertising
+-   Working to manage customer data
+-   Make a website landing page as an advertising service --&gt;
+&lt;p&gt; &lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
