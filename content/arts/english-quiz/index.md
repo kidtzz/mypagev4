@@ -54,4 +54,3 @@ Belajar kosakata dengan metode flashcard untuk membantu meningkatkan daya ingat 
     * *Deskripsi:* Kumpulan vocabulary CEFR B1–B2 lengkap dengan definisi, pelafalan, dan contoh penggunaan.
     * Link Belajar:
         * [Vocabulary Flashcards (Set 1)](/english-flashcards/flashcard-theme1.html?quiz=flashcard-1)
-        * [Vocabulary Flashcards (Set 2 (C2))](/english-flashcards/flashcard-theme1.html?quiz=flashcard-2)

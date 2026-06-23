@@ -240,9 +240,11 @@
       <p class="font-medium text-sm opacity-70">Memuat aset vocabulary...</p>
     </div>
 
-    <main id="main-content" class="hidden grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- MAIN DIUBAH MENJADI flex-col PADA MOBILE, DAN grid PADA MD KEATAS -->
+    <main id="main-content" class="hidden flex flex-col md:grid md:grid-cols-3 gap-8">
 
-      <div class="md:col-span-1 space-y-4">
+      <!-- FILTER DI-SET order-2 AGAR DI MOBILE PINDAH KE BAWAH -->
+      <div class="md:col-span-1 space-y-4 order-2 md:order-none">
         <div class="p-5 rounded-2xl shadow-xs border space-y-4 theme-card theme-border">
           <div class="flex items-center justify-between border-b pb-2 theme-border">
             <h3 class="font-bold text-sm">Pencarian & Filter</h3>
@@ -300,7 +302,8 @@
         </div>
       </div>
 
-      <div class="md:col-span-2 space-y-6">
+      <!-- FLASHCARD DI-SET order-1 AGAR DI MOBILE NAIK KE ATAS -->
+      <div class="md:col-span-2 space-y-6 order-1 md:order-none">
         <div class="perspective-1000 w-full h-[380px] relative">
           <div id="flashcard-object"
             class="transform-style-3d transition-transform duration-500 ease-in-out w-full h-full relative cursor-pointer"
@@ -415,7 +418,6 @@
   </div>
 
   <script>
-    // RE-ARRANGED STATE RESERVED LOGIC
     let MASTER_VOCAB_BANK = [];
     let activePool = [];
     let currentIdx = 0;
@@ -425,10 +427,9 @@
     window.addEventListener('DOMContentLoaded', () => {
       initLocalStorageData();
       applyThemeEngine();
-      loadFlashcardBank(); // Langsung mengambil response berdasarkan params URL
+      loadFlashcardBank();
     });
 
-    // FUNCTIONS UNTUK MENGOCOK ARRAY KARTU (Fisher-Yates Shuffle)
     function shuffleArray(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -437,13 +438,10 @@
       return array;
     }
 
-    // SISTEM UTAMA DYNAMIC FETCH SESUAI PARAMETER URL (?quiz=flashcard-1)
     async function loadFlashcardBank() {
       const loadingEl = document.getElementById("loading");
       const mainContentEl = document.getElementById("main-content");
-
       const params = new URLSearchParams(window.location.search);
-      // Default otomatis ke 'flashcard-1' jika parameter ?quiz tidak ditulis di URL
       const quizId = params.get('quiz') || 'flashcard-1';
 
       try {
@@ -451,8 +449,6 @@
         if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
 
         const data = await response.json();
-
-        // Simpan data asli, lalu langsung acak urutannya
         const rawCards = data.cards || [];
         MASTER_VOCAB_BANK = shuffleArray(rawCards);
 
@@ -532,7 +528,6 @@
       if (activePool.length > 0) renderFlashcardViewport();
     }
 
-    // SYSTEM FILTER TETAP BERJALAN NORMAL PADA ARRAY YANG SUDAH TERACAK
     function applyFilters() {
       if (!MASTER_VOCAB_BANK) return;
 
@@ -577,6 +572,8 @@
 
       document.getElementById("stat-total").textContent = `${activePool.length}/${MASTER_VOCAB_BANK.length}`;
     }
+
+    document.getElementById("stat-total").textContent = `${activePool.length}/${MASTER_VOCAB_BANK.length}`;
 
     function toggleFavFilter() {
       filterFavsOnly = !filterFavsOnly;

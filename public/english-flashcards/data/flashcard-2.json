@@ -2,7 +2,7 @@
   "title": "English Flashcards C1",
   "cards": [
     {
-      "id": 1,
+      "id": 201,
       "word": "subsequent",
       "partOfSpeech": "adjective",
       "pronunciation": "SUHB-si-kwuhnt",
@@ -14,7 +14,7 @@
       "category": "business"
     },
     {
-      "id": 2,
+      "id": 202,
       "word": "leveraging",
       "partOfSpeech": "verb",
       "pronunciation": "LEV-uh-rij-ing",
@@ -26,7 +26,7 @@
       "category": "technology"
     },
     {
-      "id": 3,
+      "id": 203,
       "word": "unprecedented",
       "partOfSpeech": "adjective",
       "pronunciation": "uhn-PRES-i-den-tid",
@@ -38,7 +38,7 @@
       "category": "business"
     },
     {
-      "id": 4,
+      "id": 204,
       "word": "ambiguous",
       "partOfSpeech": "adjective",
       "pronunciation": "am-BIG-yoo-uhs",
@@ -50,7 +50,7 @@
       "category": "social"
     },
     {
-      "id": 5,
+      "id": 205,
       "word": "seamless",
       "partOfSpeech": "adjective",
       "pronunciation": "SEEM-lis",
@@ -62,7 +62,7 @@
       "category": "technology"
     },
     {
-      "id": 6,
+      "id": 206,
       "word": "feasibility",
       "partOfSpeech": "noun",
       "pronunciation": "fee-zuh-BIL-i-tee",
@@ -74,7 +74,7 @@
       "category": "business"
     },
     {
-      "id": 7,
+      "id": 207,
       "word": "redundancy",
       "partOfSpeech": "noun",
       "pronunciation": "ri-DUHN-duhn-see",
@@ -86,7 +86,7 @@
       "category": "it"
     },
     {
-      "id": 8,
+      "id": 208,
       "word": "mitigate",
       "partOfSpeech": "verb",
       "pronunciation": "MIT-i-geyt",
@@ -98,7 +98,7 @@
       "category": "it"
     },
     {
-      "id": 9,
+      "id": 209,
       "word": "scrutinize",
       "partOfSpeech": "verb",
       "pronunciation": "SKROO-tuhn-ahyz",
@@ -110,7 +110,7 @@
       "category": "business"
     },
     {
-      "id": 10,
+      "id": 210,
       "word": "stagnant",
       "partOfSpeech": "adjective",
       "pronunciation": "STAG-nuhnt",
@@ -122,7 +122,7 @@
       "category": "business"
     },
     {
-      "id": 11,
+      "id": 211,
       "word": "facilitate",
       "partOfSpeech": "verb",
       "pronunciation": "fuh-SIL-i-teyt",
@@ -134,7 +134,7 @@
       "category": "technology"
     },
     {
-      "id": 12,
+      "id": 212,
       "word": "discrepancy",
       "partOfSpeech": "noun",
       "pronunciation": "dih-SKREP-uhn-see",
@@ -146,7 +146,7 @@
       "category": "business"
     },
     {
-      "id": 13,
+      "id": 213,
       "word": "comprehensive",
       "partOfSpeech": "adjective",
       "pronunciation": "kom-pri-HEN-siv",
@@ -158,7 +158,7 @@
       "category": "business"
     },
     {
-      "id": 14,
+      "id": 214,
       "word": "autonomous",
       "partOfSpeech": "adjective",
       "pronunciation": "aw-TON-uh-muhs",
@@ -170,7 +170,7 @@
       "category": "technology"
     },
     {
-      "id": 15,
+      "id": 215,
       "word": "exponential",
       "partOfSpeech": "adjective",
       "pronunciation": "ek-spoh-NEN-shuhl",
@@ -182,7 +182,7 @@
       "category": "technology"
     },
     {
-      "id": 16,
+      "id": 216,
       "word": "eloquent",
       "partOfSpeech": "adjective",
       "pronunciation": "EL-uh-kwuhnt",
@@ -194,7 +194,7 @@
       "category": "social"
     },
     {
-      "id": 17,
+      "id": 217,
       "word": "deteriorate",
       "partOfSpeech": "verb",
       "pronunciation": "dih-TEER-ee-uh-reyt",
@@ -206,7 +206,7 @@
       "category": "technology"
     },
     {
-      "id": 18,
+      "id": 218,
       "word": "adhere to",
       "partOfSpeech": "phrasal verb",
       "pronunciation": "ad-HEER too",
@@ -218,7 +218,7 @@
       "category": "it"
     },
     {
-      "id": 19,
+      "id": 219,
       "word": "vague",
       "partOfSpeech": "adjective",
       "pronunciation": "veyg",
@@ -230,7 +230,7 @@
       "category": "business"
     },
     {
-      "id": 20,
+      "id": 220,
       "word": "oversight",
       "partOfSpeech": "noun",
       "pronunciation": "OH-ver-sahyt",
@@ -242,7 +242,7 @@
       "category": "it"
     },
     {
-      "id": 21,
+      "id": 221,
       "word": "obsolete",
       "partOfSpeech": "adjective",
       "pronunciation": "ob-suh-LEET",
@@ -254,7 +254,7 @@
       "category": "technology"
     },
     {
-      "id": 22,
+      "id": 222,
       "word": "implement",
       "partOfSpeech": "verb",
       "pronunciation": "IM-pluh-ment",
@@ -266,7 +266,7 @@
       "category": "it"
     },
     {
-      "id": 23,
+      "id": 223,
       "word": "allocate",
       "partOfSpeech": "verb",
       "pronunciation": "AL-uh-keyt",
@@ -278,7 +278,7 @@
       "category": "technology"
     },
     {
-      "id": 24,
+      "id": 224,
       "word": "disruptive",
       "partOfSpeech": "adjective",
       "pronunciation": "dis-RUHP-tiv",
@@ -290,7 +290,7 @@
       "category": "business"
     },
     {
-      "id": 25,
+      "id": 225,
       "word": "prevalent",
       "partOfSpeech": "adjective",
       "pronunciation": "PREV-uh-luhnt",
@@ -302,7 +302,7 @@
       "category": "it"
     },
     {
-      "id": 26,
+      "id": 226,
       "word": "prerequisite",
       "partOfSpeech": "noun / adjective",
       "pronunciation": "pree-REK-wuh-zit",
@@ -314,7 +314,7 @@
       "category": "technology"
     },
     {
-      "id": 27,
+      "id": 227,
       "word": "benchmark",
       "partOfSpeech": "noun / verb",
       "pronunciation": "BENCH-mahrk",
@@ -326,7 +326,7 @@
       "category": "technology"
     },
     {
-      "id": 28,
+      "id": 228,
       "word": "jeopardize",
       "partOfSpeech": "verb",
       "pronunciation": "JEP-er-dahyz",
@@ -338,7 +338,7 @@
       "category": "business"
     },
     {
-      "id": 29,
+      "id": 229,
       "word": "lucrative",
       "partOfSpeech": "adjective",
       "pronunciation": "LOO-kruh-tiv",
@@ -350,7 +350,7 @@
       "category": "business"
     },
     {
-      "id": 30,
+      "id": 230,
       "word": "volatile",
       "partOfSpeech": "adjective",
       "pronunciation": "VOL-uh-tl",
@@ -362,7 +362,7 @@
       "category": "business"
     },
     {
-      "id": 31,
+      "id": 231,
       "word": "scrutiny",
       "partOfSpeech": "noun",
       "pronunciation": "SKROO-tuhn-ee",
@@ -374,7 +374,7 @@
       "category": "business"
     },
     {
-      "id": 32,
+      "id": 232,
       "word": "contingency",
       "partOfSpeech": "noun",
       "pronunciation": "kuhn-TIN-juhn-see",
@@ -386,7 +386,7 @@
       "category": "it"
     },
     {
-      "id": 33,
+      "id": 233,
       "word": "vulnerable",
       "partOfSpeech": "adjective",
       "pronunciation": "VUHL-ner-uh-buhl",
@@ -398,7 +398,7 @@
       "category": "technology"
     },
     {
-      "id": 34,
+      "id": 234,
       "word": "paramount",
       "partOfSpeech": "adjective",
       "pronunciation": "PAR-uh-mownt",
@@ -410,7 +410,7 @@
       "category": "technology"
     },
     {
-      "id": 35,
+      "id": 235,
       "word": "perceive",
       "partOfSpeech": "verb",
       "pronunciation": "per-SEEV",
@@ -422,7 +422,7 @@
       "category": "daily life"
     },
     {
-      "id": 36,
+      "id": 236,
       "word": "deviate",
       "partOfSpeech": "verb",
       "pronunciation": "DEE-vee-eyt",
@@ -434,7 +434,7 @@
       "category": "business"
     },
     {
-      "id": 37,
+      "id": 237,
       "word": "streamline",
       "partOfSpeech": "verb",
       "pronunciation": "STREEM-lahyn",
@@ -446,7 +446,7 @@
       "category": "technology"
     },
     {
-      "id": 38,
+      "id": 238,
       "word": "correlation",
       "partOfSpeech": "noun",
       "pronunciation": "kawr-uh-LEY-shuhn",
@@ -458,7 +458,7 @@
       "category": "technology"
     },
     {
-      "id": 39,
+      "id": 239,
       "word": "reconcile",
       "partOfSpeech": "verb",
       "pronunciation": "REK-uhn-sahyl",
@@ -470,7 +470,7 @@
       "category": "business"
     },
     {
-      "id": 40,
+      "id": 240,
       "word": "empirical",
       "partOfSpeech": "adjective",
       "pronunciation": "em-PIR-i-kuhl",
@@ -482,7 +482,7 @@
       "category": "technology"
     },
     {
-      "id": 41,
+      "id": 241,
       "word": "consensus",
       "partOfSpeech": "noun",
       "pronunciation": "kuhn-SEN-suhs",
@@ -494,7 +494,7 @@
       "category": "business"
     },
     {
-      "id": 42,
+      "id": 242,
       "word": "viable",
       "partOfSpeech": "adjective",
       "pronunciation": "VAHY-uh-buhl",
@@ -506,7 +506,7 @@
       "category": "business"
     },
     {
-      "id": 43,
+      "id": 243,
       "word": "meticulous",
       "partOfSpeech": "adjective",
       "pronunciation": "muh-TIK-yuh-luhs",
@@ -518,7 +518,7 @@
       "category": "it"
     },
     {
-      "id": 44,
+      "id": 244,
       "word": "precede",
       "partOfSpeech": "verb",
       "pronunciation": "pree-SEED",
@@ -542,7 +542,7 @@
       "category": "business"
     },
     {
-      "id": 46,
+      "id": 246,
       "word": "feasibility study",
       "partOfSpeech": "noun phrase",
       "pronunciation": "fee-zuh-BIL-i-tee STUHD-ee",
@@ -554,7 +554,7 @@
       "category": "it"
     },
     {
-      "id": 47,
+      "id": 247,
       "word": "adversity",
       "partOfSpeech": "noun",
       "pronunciation": "ad-VUR-si-tee",
@@ -566,7 +566,7 @@
       "category": "daily life"
     },
     {
-      "id": 48,
+      "id": 248,
       "word": "propensity",
       "partOfSpeech": "noun",
       "pronunciation": "pruh-PEN-si-tee",
@@ -578,7 +578,7 @@
       "category": "technology"
     },
     {
-      "id": 49,
+      "id": 249,
       "word": "advocate",
       "partOfSpeech": "verb / noun",
       "pronunciation": "AD-vuh-keyt",
@@ -590,7 +590,7 @@
       "category": "business"
     },
     {
-      "id": 50,
+      "id": 250,
       "word": "ambiguity",
       "partOfSpeech": "noun",
       "pronunciation": "am-bi-GYOO-i-tee",
@@ -602,7 +602,7 @@
       "category": "technology"
     },
     {
-      "id": 51,
+      "id": 251,
       "word": "catalyst",
       "partOfSpeech": "noun",
       "pronunciation": "KAT-l-ist",
@@ -610,11 +610,11 @@
       "definition": "an event or person that causes important change to happen quickly",
       "translation": "katalisator, pemicu perubahan cepat",
       "example": "The pandemic acted as a catalyst for digital transformation across industries.",
-      "exampleTranslation": "Pandemi bertindak sebagai katalisator untuk transformasi digital di berbagai industri.",
+      "exampleTranslation": "Pandemi bertindak as a katalisator untuk transformasi digital di berbagai industri.",
       "category": "business"
     },
     {
-      "id": 52,
+      "id": 252,
       "word": "coherent",
       "partOfSpeech": "adjective",
       "pronunciation": "koh-HEER-uhnt",
@@ -626,7 +626,7 @@
       "category": "technology"
     },
     {
-      "id": 53,
+      "id": 253,
       "word": "disseminate",
       "partOfSpeech": "verb",
       "pronunciation": "dih-SEM-uh-neyt",
@@ -638,7 +638,7 @@
       "category": "business"
     },
     {
-      "id": 54,
+      "id": 254,
       "word": "stringent",
       "partOfSpeech": "adjective",
       "pronunciation": "STRIN-juhnt",
@@ -650,7 +650,7 @@
       "category": "it"
     },
     {
-      "id": 55,
+      "id": 255,
       "word": "ubiquitous",
       "partOfSpeech": "adjective",
       "pronunciation": "yoo-BIK-wi-tuhs",
@@ -662,7 +662,7 @@
       "category": "daily life"
     },
     {
-      "id": 56,
+      "id": 256,
       "word": "paradigm shift",
       "partOfSpeech": "noun phrase",
       "pronunciation": "PAR-uh-dahym shift",
@@ -674,7 +674,7 @@
       "category": "technology"
     },
     {
-      "id": 57,
+      "id": 257,
       "word": "incentive",
       "partOfSpeech": "noun",
       "pronunciation": "in-SEN-tiv",
@@ -686,7 +686,7 @@
       "category": "business"
     },
     {
-      "id": 58,
+      "id": 258,
       "word": "cognitive",
       "partOfSpeech": "adjective",
       "pronunciation": "KOG-ni-tiv",
@@ -698,7 +698,7 @@
       "category": "technology"
     },
     {
-      "id": 59,
+      "id": 259,
       "word": "compliance",
       "partOfSpeech": "noun",
       "pronunciation": "kuhm-PLAHY-uhns",
@@ -710,7 +710,7 @@
       "category": "it"
     },
     {
-      "id": 60,
+      "id": 260,
       "word": "intermittent",
       "partOfSpeech": "adjective",
       "pronunciation": "in-ter-MIT-nt",
@@ -722,7 +722,7 @@
       "category": "technology"
     },
     {
-      "id": 61,
+      "id": 261,
       "word": "intrinsic",
       "partOfSpeech": "adjective",
       "pronunciation": "in-TRIN-zik",
@@ -734,7 +734,7 @@
       "category": "business"
     },
     {
-      "id": 62,
+      "id": 262,
       "word": "scrutinised",
       "partOfSpeech": "verb (past)",
       "pronunciation": "SKROO-tuhn-ahyzd",
@@ -746,7 +746,7 @@
       "category": "it"
     },
     {
-      "id": 63,
+      "id": 263,
       "word": "leverage",
       "partOfSpeech": "verb / noun",
       "pronunciation": "LEV-uh-rij",
@@ -758,7 +758,7 @@
       "category": "business"
     },
     {
-      "id": 64,
+      "id": 264,
       "word": "concur",
       "partOfSpeech": "verb",
       "pronunciation": "kuhn-KUR",
@@ -770,7 +770,7 @@
       "category": "business"
     },
     {
-      "id": 65,
+      "id": 265,
       "word": "detrimental",
       "partOfSpeech": "adjective",
       "pronunciation": "de-truh-MEN-tl",
@@ -782,7 +782,7 @@
       "category": "daily life"
     },
     {
-      "id": 66,
+      "id": 266,
       "word": "discourse",
       "partOfSpeech": "noun",
       "pronunciation": "DIS-kawrs",
@@ -794,7 +794,7 @@
       "category": "social"
     },
     {
-      "id": 67,
+      "id": 267,
       "word": "disparate",
       "partOfSpeech": "adjective",
       "pronunciation": "DIS-per-it",
@@ -806,7 +806,7 @@
       "category": "technology"
     },
     {
-      "id": 68,
+      "id": 268,
       "word": "distort",
       "partOfSpeech": "verb",
       "pronunciation": "dih-STAWRT",
@@ -818,7 +818,7 @@
       "category": "technology"
     },
     {
-      "id": 69,
+      "id": 269,
       "word": "empirical data",
       "partOfSpeech": "noun phrase",
       "pronunciation": "em-PIR-i-kuhl DEY-tuh",
@@ -830,7 +830,7 @@
       "category": "technology"
     },
     {
-      "id": 70,
+      "id": 270,
       "word": "endeavour",
       "partOfSpeech": "noun / verb",
       "pronunciation": "en-DEV-er",
@@ -838,11 +838,11 @@
       "definition": "an effort or attempt to do something, especially something new or difficult",
       "translation": "upaya keras, ikhtiar, berusaha sungguh-sungguh",
       "example": "Building a new operating system is a massive technological endeavour.",
-      "exampleTranslation": "Membangun sistem operasi baru adalah upaya teknologi yang sangat besar.",
+      "exampleTranslation": "Meningkatkan sistem operasi baru adalah upaya teknologi yang sangat besar.",
       "category": "business"
     },
     {
-      "id": 71,
+      "id": 271,
       "word": "equate",
       "partOfSpeech": "verb",
       "pronunciation": "ih-KWEYT",
@@ -854,7 +854,7 @@
       "category": "daily life"
     },
     {
-      "id": 72,
+      "id": 272,
       "word": "erroneous",
       "partOfSpeech": "adjective",
       "pronunciation": "uh-ROH-nee-uhs",
@@ -866,7 +866,7 @@
       "category": "it"
     },
     {
-      "id": 73,
+      "id": 273,
       "word": "explicit",
       "partOfSpeech": "adjective",
       "pronunciation": "ik-SPLIS-it",
@@ -878,7 +878,7 @@
       "category": "business"
     },
     {
-      "id": 74,
+      "id": 274,
       "word": "fluctuate",
       "partOfSpeech": "verb",
       "pronunciation": "FLUHK-choo-eyt",
@@ -890,7 +890,7 @@
       "category": "technology"
     },
     {
-      "id": 75,
+      "id": 275,
       "word": "foster",
       "partOfSpeech": "verb",
       "pronunciation": "FAWS-ter",
@@ -902,7 +902,7 @@
       "category": "social"
     },
     {
-      "id": 76,
+      "id": 276,
       "word": "framework",
       "partOfSpeech": "noun",
       "pronunciation": "FREYM-wurk",
@@ -914,7 +914,7 @@
       "category": "it"
     },
     {
-      "id": 77,
+      "id": 277,
       "word": "hierarchy",
       "partOfSpeech": "noun",
       "pronunciation": "HAHY-uh-rahr-kee",
@@ -926,7 +926,7 @@
       "category": "business"
     },
     {
-      "id": 78,
+      "id": 278,
       "word": "hypothesis",
       "partOfSpeech": "noun",
       "pronunciation": "hahy-POTH-uh-sis",
@@ -938,7 +938,7 @@
       "category": "technology"
     },
     {
-      "id": 79,
+      "id": 279,
       "word": "implicitly",
       "partOfSpeech": "adverb",
       "pronunciation": "im-PLIS-it-lee",
@@ -950,7 +950,7 @@
       "category": "it"
     },
     {
-      "id": 80,
+      "id": 280,
       "word": "impose",
       "partOfSpeech": "verb",
       "pronunciation": "im-POHZ",
@@ -962,7 +962,7 @@
       "category": "business"
     },
     {
-      "id": 81,
+      "id": 281,
       "word": "indigenous",
       "partOfSpeech": "adjective",
       "pronunciation": "in-DIJ-uh-nuhs",
@@ -974,7 +974,7 @@
       "category": "social"
     },
     {
-      "id": 82,
+      "id": 282,
       "word": "infrastructure",
       "partOfSpeech": "noun",
       "pronunciation": "IN-fruh-struhk-cher",
@@ -986,7 +986,7 @@
       "category": "technology"
     },
     {
-      "id": 83,
+      "id": 283,
       "word": "inherent",
       "partOfSpeech": "adjective",
       "pronunciation": "in-HEER-uhnt",
@@ -998,7 +998,7 @@
       "category": "it"
     },
     {
-      "id": 84,
+      "id": 284,
       "word": "inhibit",
       "partOfSpeech": "verb",
       "pronunciation": "in-HIB-it",
@@ -1010,7 +1010,7 @@
       "category": "technology"
     },
     {
-      "id": 85,
+      "id": 285,
       "word": "innovative",
       "partOfSpeech": "adjective",
       "pronunciation": "IN-uh-vey-tiv",
@@ -1022,7 +1022,7 @@
       "category": "business"
     },
     {
-      "id": 86,
+      "id": 286,
       "word": "integrate",
       "partOfSpeech": "verb",
       "pronunciation": "IN-tuh-greyt",
@@ -1034,7 +1034,7 @@
       "category": "it"
     },
     {
-      "id": 87,
+      "id": 287,
       "word": "intervene",
       "partOfSpeech": "verb",
       "pronunciation": "in-ter-VEEN",
@@ -1046,7 +1046,7 @@
       "category": "business"
     },
     {
-      "id": 88,
+      "id": 288,
       "word": "justify",
       "partOfSpeech": "verb",
       "pronunciation": "JUHS-tuh-fahy",
@@ -1058,7 +1058,7 @@
       "category": "business"
     },
     {
-      "id": 89,
+      "id": 289,
       "word": "marginal",
       "partOfSpeech": "adjective",
       "pronunciation": "MAHR-juh-nuhl",
@@ -1070,7 +1070,7 @@
       "category": "technology"
     },
     {
-      "id": 90,
+      "id": 290,
       "word": "modify",
       "partOfSpeech": "verb",
       "pronunciation": "MOD-uh-fahy",
@@ -1082,7 +1082,7 @@
       "category": "it"
     },
     {
-      "id": 91,
+      "id": 291,
       "word": "notwithstanding",
       "partOfSpeech": "preposition / adverb",
       "pronunciation": "not-with-STAN-ding",
@@ -1094,7 +1094,7 @@
       "category": "business"
     },
     {
-      "id": 92,
+      "id": 292,
       "word": "objective",
       "partOfSpeech": "noun / adjective",
       "pronunciation": "uhb-JEK-tiv",
@@ -1106,7 +1106,7 @@
       "category": "business"
     },
     {
-      "id": 93,
+      "id": 293,
       "word": "orientation",
       "partOfSpeech": "noun",
       "pronunciation": "awr-ee-en-TEY-shuhn",
@@ -1118,7 +1118,7 @@
       "category": "business"
     },
     {
-      "id": 94,
+      "id": 294,
       "word": "perspective",
       "partOfSpeech": "noun",
       "pronunciation": "per-SPEK-tiv",
@@ -1130,7 +1130,7 @@
       "category": "daily life"
     },
     {
-      "id": 95,
+      "id": 295,
       "word": "precisely",
       "partOfSpeech": "adverb",
       "pronunciation": "pri-SAHY-slee",
@@ -1142,7 +1142,7 @@
       "category": "technology"
     },
     {
-      "id": 96,
+      "id": 296,
       "word": "qualitative",
       "partOfSpeech": "adjective",
       "pronunciation": "KWOL-i-tey-tiv",
@@ -1154,7 +1154,7 @@
       "category": "technology"
     },
     {
-      "id": 97,
+      "id": 297,
       "word": "reinforce",
       "partOfSpeech": "verb",
       "pronunciation": "ree-in-FAWRS",
@@ -1166,7 +1166,7 @@
       "category": "it"
     },
     {
-      "id": 98,
+      "id": 298,
       "word": "retention",
       "partOfSpeech": "noun",
       "pronunciation": "ri-TEN-shuhn",
@@ -1178,7 +1178,7 @@
       "category": "business"
     },
     {
-      "id": 99,
+      "id": 299,
       "word": "subtle",
       "partOfSpeech": "adjective",
       "pronunciation": "SUHT-l",
@@ -1190,7 +1190,7 @@
       "category": "technology"
     },
     {
-      "id": 100,
+      "id": 300,
       "word": "validity",
       "partOfSpeech": "noun",
       "pronunciation": "vuh-LID-i-tee",
