@@ -15,7 +15,7 @@ Pilih modul di bawah ini untuk mulai belajar dan menguji kemampuan bahasa Inggri
 Belajar kosakata dengan metode flashcard untuk membantu meningkatkan daya ingat dan memperluas perbendaharaan kata.
 
 * **Flashcard Collection**
-    * *Deskripsi:* Kumpulan vocabulary CEFR B1–B2 lengkap dengan definisi, pelafalan, dan contoh penggunaan.
+    * *Deskripsi:* Kumpulan vocabulary CEFR B1–B2-C1 lengkap dengan definisi, pelafalan, dan contoh penggunaan.
     * Link Belajar:
         * [Vocabulary Flashcards (Set 1)](/english-flashcards/flashcard-theme1.html?quiz=flashcard-1)
 
