@@ -18,8 +18,8 @@
       <link>http://localhost:1313/arts/games-simple/</link>
       <pubDate>Tue, 23 Jun 2026 11:12:36 +0700</pubDate>
       <guid>http://localhost:1313/arts/games-simple/</guid>
-      <description>&lt;p&gt;Here bang &amp;ndash;&amp;gt;
-&lt;a href=&#34;http://localhost:1313/games/games-all.html&#34;&gt;Game nih&lt;/a&gt;&lt;/p&gt;</description>
+      <description>&lt;p&gt;Here &amp;ndash;&amp;gt;
+&lt;a href=&#34;http://localhost:1313/games/games-all.html&#34;&gt;Game nih check&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>English Quiz</title>
@@ -28,6 +28,20 @@
       <guid>http://localhost:1313/arts/english-quiz/</guid>
       <description>&lt;h3 id=&#34;english-assessment-center&#34;&gt;English Assessment Center&lt;/h3&gt;
 &lt;p&gt;Pilih modul di bawah ini untuk mulai belajar dan menguji kemampuan bahasa Inggris Anda.&lt;/p&gt;
+&lt;h3 id=&#34;vocabulary-flashcards&#34;&gt;Vocabulary Flashcards&lt;/h3&gt;
+&lt;p&gt;Belajar kosakata dengan metode flashcard untuk membantu meningkatkan daya ingat dan memperluas perbendaharaan kata.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Flashcard Collection&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Deskripsi:&lt;/em&gt; Kumpulan vocabulary CEFR B1–B2 lengkap dengan definisi, pelafalan, dan contoh penggunaan.&lt;/li&gt;
+&lt;li&gt;Link Belajar:
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/english-flashcards/flashcard-theme1.html?quiz=flashcard-1&#34;&gt;Vocabulary Flashcards (Set 1)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;grammar--tenses&#34;&gt;Grammar &amp;amp; Tenses&lt;/h3&gt;
 &lt;p&gt;Latihan soal untuk menguasai struktur kalimat dan tata bahasa.&lt;/p&gt;
 &lt;ul&gt;

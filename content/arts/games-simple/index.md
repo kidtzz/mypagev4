@@ -4,5 +4,5 @@ draft: false
 title: 'Games Simple'
 ---
 
-Here bang -->
-[Game nih](/games/games-all.html)
+Here -->
+[Game nih check](/games/games-all.html)

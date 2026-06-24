@@ -16,9 +16,10 @@ title: ""
 ---
 &nbsp;
 
-Hello
+Hello and welcome!
 
-Become a programming professional & Highly motivated to learn something new. interested in Database, Web/apps, programming (Js, Python, Shell), Linux, Security, Infrastructure, especially about programming & database.
+Technology enthusiast with a strong interest in databases, programming, Linux, security, infrastructure, artificial intelligence (AI), and IT service management. Passionate about continuous learning and exploring new technologies. Experienced in working with database systems and developing solutions using JavaScript, Python, and Shell scripting. Familiar with ITIL principles and best practices for delivering and managing IT services. Enjoy building projects, solving technical problems, and continuously improving technical and professional skills.
+
 
 <!-- &nbsp;
 
@@ -195,20 +196,27 @@ Become a programming professional & Highly motivated to learn something new. int
 
 
 
-## Founder
-Founder Library - **Manggala Pustaka**
-*August 2021 - Present*
+## Founder Library
+**Manggala Pustaka** - *Since August 2021*
 
-*The Manggala Pustaka Library is the brainchild of the people in the Manggal hamlet, especially the village youths. TBM itself is engaged in the field, especially children. The activities of TBM include coloring classes, recitation classes, archery classes, art classes, as well as emergency classes which are held when school children are online, not only for children, activities that lead to the community, such as health checks, discussions about modern agriculture. as well as other positive activities in order to improve the economy and community empowerment*
+Manggala Pustaka Library is a community-based library initiative established in August 2021 by the residents of Manggal Hamlet, particularly local youth, with the goal of promoting literacy, education, and community empowerment.
 
-To become a library that cultivates people's love of reading and enriches people's insight through books.
+The library serves as a learning and development center for children and the wider community through a variety of educational, cultural, and social programs. Activities include reading and literacy programs, coloring classes, Qur’an recitation classes, archery training, arts and creative workshops, and learning assistance programs, especially during periods of online schooling.
 
--   Providing quality books
--   As a container for creative ideas from the community
--   Realizing creative ideas from the community
--   Making a quality society, in terms of education, culture and economy
--   Become a friendly forum that bridges the implementation of positive activities that are  
--   self-developmental
+Beyond children’s activities, Manggala Pustaka also facilitates community-oriented programs such as health check-ups, discussions on modern agriculture, community development initiatives, and various activities aimed at improving social welfare and economic empowerment.
+
+
+### Vision
+
+To foster a culture of reading and lifelong learning while enriching community knowledge through accessible and quality educational resources.
+
+### Mission
+- Provide access to quality books and educational materials.
+- Create a platform for community creativity, learning, and collaboration.
+- Support and realize innovative ideas that benefit the community.
+- Contribute to the development of a knowledgeable, creative, and empowered society.
+- Promote growth in education, culture, and economic well-being.
+- Serve as a friendly and inclusive forum for positive community activities and self-development.
 
 **Profile**:
 [Profile Here](https://linktr.ee/manggalapustaka?fbclid=PAY2xjawHpeLlleHRuA2FlbQIxMQABpmrxCeqf99BjQkgWFsa7tNW2XXCqWOSN0BHiw_JWjvyXKoVUoPAeCbuGeA_aem_QsfMUaQ_zMPqKU6rUC5k2Q).
@@ -216,14 +224,14 @@ To become a library that cultivates people's love of reading and enriches people
 **Website**:
 [Digital Library Here](https://desasimo.perpustakaan.co.id/)
 
-## Organization Experiance
+<!-- ## Organization Experiance
 
 **Dorm Team Telkom University**\
 *November 2017 – April 2018*
 
 -   Develop work programs and activities. 
 -   Carry out the planned program.
--   Coordinate the tasks given by the general chairman
+-   Coordinate the tasks given by the general chairman -->
 
 ## Additional Skills
 

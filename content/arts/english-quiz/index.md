@@ -9,6 +9,17 @@ layout: "quiz-theme1"
 ### English Assessment Center
 Pilih modul di bawah ini untuk mulai belajar dan menguji kemampuan bahasa Inggris Anda.
 
+
+### Vocabulary Flashcards
+
+Belajar kosakata dengan metode flashcard untuk membantu meningkatkan daya ingat dan memperluas perbendaharaan kata.
+
+* **Flashcard Collection**
+    * *Deskripsi:* Kumpulan vocabulary CEFR B1–B2 lengkap dengan definisi, pelafalan, dan contoh penggunaan.
+    * Link Belajar:
+        * [Vocabulary Flashcards (Set 1)](/english-flashcards/flashcard-theme1.html?quiz=flashcard-1)
+
+
 ### Grammar & Tenses
 Latihan soal untuk menguasai struktur kalimat dan tata bahasa.
 
@@ -45,12 +56,3 @@ Perkaya kosakata, phrasal verbs, dan idiom umum.
         * [AP1 - Vocabulary (Quiz 1)](/english-quiz/quiz-theme1-ap1.html?quiz=ap1-vocabulary-1)
         * [AP1 - Vocabulary (Quiz 2)](/english-quiz/quiz-theme1-ap1.html?quiz=ap1-vocabulary-2)
 
-
-### Vocabulary Flashcards
-
-Belajar kosakata dengan metode flashcard untuk membantu meningkatkan daya ingat dan memperluas perbendaharaan kata.
-
-* **Flashcard Collection**
-    * *Deskripsi:* Kumpulan vocabulary CEFR B1–B2 lengkap dengan definisi, pelafalan, dan contoh penggunaan.
-    * Link Belajar:
-        * [Vocabulary Flashcards (Set 1)](/english-flashcards/flashcard-theme1.html?quiz=flashcard-1)

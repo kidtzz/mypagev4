@@ -18,8 +18,8 @@
       <link>http://localhost:1313/arts/games-simple/</link>
       <pubDate>Tue, 23 Jun 2026 11:12:36 +0700</pubDate>
       <guid>http://localhost:1313/arts/games-simple/</guid>
-      <description>&lt;p&gt;Here bang &amp;ndash;&amp;gt;
-&lt;a href=&#34;http://localhost:1313/games/games-all.html&#34;&gt;Game nih&lt;/a&gt;&lt;/p&gt;</description>
+      <description>&lt;p&gt;Here &amp;ndash;&amp;gt;
+&lt;a href=&#34;http://localhost:1313/games/games-all.html&#34;&gt;Game nih check&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>English Quiz</title>
@@ -28,6 +28,20 @@
       <guid>http://localhost:1313/arts/english-quiz/</guid>
       <description>&lt;h3 id=&#34;english-assessment-center&#34;&gt;English Assessment Center&lt;/h3&gt;
 &lt;p&gt;Pilih modul di bawah ini untuk mulai belajar dan menguji kemampuan bahasa Inggris Anda.&lt;/p&gt;
+&lt;h3 id=&#34;vocabulary-flashcards&#34;&gt;Vocabulary Flashcards&lt;/h3&gt;
+&lt;p&gt;Belajar kosakata dengan metode flashcard untuk membantu meningkatkan daya ingat dan memperluas perbendaharaan kata.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Flashcard Collection&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Deskripsi:&lt;/em&gt; Kumpulan vocabulary CEFR B1–B2 lengkap dengan definisi, pelafalan, dan contoh penggunaan.&lt;/li&gt;
+&lt;li&gt;Link Belajar:
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/english-flashcards/flashcard-theme1.html?quiz=flashcard-1&#34;&gt;Vocabulary Flashcards (Set 1)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;grammar--tenses&#34;&gt;Grammar &amp;amp; Tenses&lt;/h3&gt;
 &lt;p&gt;Latihan soal untuk menguasai struktur kalimat dan tata bahasa.&lt;/p&gt;
 &lt;ul&gt;
@@ -1037,59 +1051,8 @@ Repository -&amp;gt; &lt;a href=&#34;https://github.com/arywr/dreamteam-new&#34;
 &lt;/ul&gt;
 &lt;hr&gt;
 &lt;p&gt; &lt;/p&gt;
-&lt;p&gt;Hello&lt;/p&gt;
-&lt;p&gt;Become a programming professional &amp;amp; Highly motivated to learn something new. interested in Database, Web/apps, programming (Js, Python, Shell), Linux, Security, Infrastructure, especially about programming &amp;amp; database.&lt;/p&gt;
-&lt;!-- &amp;nbsp;
-
-
-## Experiences
-
-**Database Consultant (Implementation &amp; Presales Support)**, PT. Metrocom Global Solusi (MGS)\
-*Jul 2025 – Present*
-
-- Deliver database and infrastructure implementation projects, including installation, configuration, and initial performance tuning.
-- Design and implement enterprise database architectures, primarily using Oracle Database and related enterprise platforms.
-- Support database security and compliance-related implementations in enterprise environments.
-- Support presales activities by providing technical input, solution design, and requirement analysis when required.
-- Collaborate with internal teams and customer stakeholders during project execution and go-live phases.
-- Prepare technical documentation, implementation reports, and provide post-implementation support.
-
-**Database Consultant**, PT. Mitra Integrasi Informatika (MII)\
-*July 2024 – June 2025*
-- Managed and supported production database environments including Oracle Database, MySQL, and EDB PostgreSQL.
-- Implemented and maintained high availability and replication solutions such as Oracle RAC, Oracle Data Guard,
-- MySQL Master-Slave replication, and MySQL InnoDB Cluster.
-- Performed preventive and corrective maintenance, troubleshooting, and performance optimization in production environments.
-- Worked closely with application, infrastructure, and customer teams to ensure database reliability, stability, and scalability.
-
-**IT Service Management**, PT. Mitra Integrasi Informatika (MII)\
-*July 2022 – june 2024*
-
--   Make design and implementation for clients.
--   Meeting with clients to determine requirements.
--   Working with clients to define the scope of a project.
--   Planning timescales and the resources needed.
--   Clarifying a clients system specifications, understanding their work practices and the nature of their business to deliver the most effective and efficient business process.
--   Analyzing IT requirements within companies and giving independent and objective advice on the use of IT.
--   Developing agreed solutions and implementing new systems.
--   Preparing documentation and presenting progress reports to customers.
--   Organizing training for users and other consultants.
-
-**Freelance Web Developer**, Exclolab\
-*April 2022 – June 2023*
--   Prolific skills with HTML, CSS, Less, Bootstrap, and JavaScript
--   Web API integration (RESTFUL/JSON)
--   working with JavaScript and WordPress
--   Create responsive web and interactive displays
-
-**Internship**, PT. Telkom Indonesia (Semarang)\
-*July 2020 – August 2020*
-
--   Support service improvement activities and software monitoring
--   Software purchase advice and social media advertising
--   Working to manage customer data
--   Make a website landing page as an advertising service --&gt;
-&lt;p&gt; &lt;/p&gt;</description>
+&lt;p&gt;Hello and welcome!&lt;/p&gt;
+&lt;p&gt;Technology enthusiast with a strong interest in databases, programming, Linux, security, infrastructure, artificial intelligence (AI), and IT service management. Passionate about continuous learning and exploring new technologies. Experienced in working with database systems and developing solutions using JavaScript, Python, and Shell scripting. Familiar with ITIL principles and best practices for delivering and managing IT services. Enjoy building projects, solving technical problems, and continuously improving technical and professional skills.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
