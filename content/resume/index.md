@@ -214,7 +214,7 @@ To become a library that cultivates people's love of reading and enriches people
 [Profile Here](https://linktr.ee/manggalapustaka?fbclid=PAY2xjawHpeLlleHRuA2FlbQIxMQABpmrxCeqf99BjQkgWFsa7tNW2XXCqWOSN0BHiw_JWjvyXKoVUoPAeCbuGeA_aem_QsfMUaQ_zMPqKU6rUC5k2Q).
 
 **Website**:
-[Digital Library Here](https://desasimo.perpustakaan.co.id/m/home.dg)
+[Digital Library Here](https://desasimo.perpustakaan.co.id/)
 
 ## Organization Experiance
 
