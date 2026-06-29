@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<style>
+  [data-theme="nord-dark"] {
+    --bg-color: #2e3440;
+    --card-bg: rgba(46, 52, 64, 0.5);
+    --border-color: rgba(216, 222, 233, 0.08);
+    --text-main: #eceff4;
+    --text-muted: #d8dee9;
+    --text-dim: #4c566a;
+    --accent-color: #88c0d0;
+    --accent-hover: #8fbcbb;
+    --accent-text: #2e3440;
+    --btn-bg: rgba(216, 222, 233, 0.05);
+    --btn-hover: rgba(216, 222, 233, 0.1);
+    --fog-opacity: 0.08;
+  }
+
+  [data-theme="dracula"] {
+    --bg-color: #282a36;
+    --card-bg: rgba(40, 42, 54, 0.55);
+    --border-color: rgba(189, 147, 249, 0.12);
+    --text-main: #f8f8f2;
+    --text-muted: #6272a4;
+    --text-dim: #44475a;
+    --accent-color: #bd93f9;
+    --accent-hover: #ff79c6;
+    --accent-text: #282a36;
+    --btn-bg: rgba(255, 255, 255, 0.04);
+    --btn-hover: rgba(255, 255, 255, 0.08);
+    --fog-opacity: 0.1;
+  }
+
+  [data-theme="forest"] {
+    --bg-color: #0e1410;
+    --card-bg: rgba(20, 28, 22, 0.5);
+    --border-color: rgba(163, 190, 140, 0.08);
+    --text-main: #f0f4f1;
+    --text-muted: #8fa194;
+    --text-dim: #3a473f;
+    --accent-color: #a3be8c;
+    --accent-hover: #b48ead;
+    --accent-text: #141c16;
+    --btn-bg: rgba(255, 255, 255, 0.03);
+    --btn-hover: rgba(255, 255, 255, 0.07);
+    --fog-opacity: 0.15;
+  }
+
+  [data-theme="sepia-dark"] {
+    --bg-color: #1a1614;
+    --card-bg: rgba(38, 32, 28, 0.5);
+    --border-color: rgba(214, 180, 154, 0.08);
+    --text-main: #f4eae1;
+    --text-muted: #bda290;
+    --text-dim: #4a3f38;
+    --accent-color: #e3a878;
+    --accent-hover: #f0c29e;
+    --accent-text: #1a1614;
+    --btn-bg: rgba(255, 255, 255, 0.03);
+    --btn-hover: rgba(255, 255, 255, 0.07);
+    --fog-opacity: 0.12;
+  }
+
+  [data-theme="cyberpunk"] {
+    --bg-color: #0b0813;
+    --card-bg: rgba(21, 15, 36, 0.55);
+    --border-color: rgba(0, 240, 255, 0.15);
+    --text-main: #00f0ff;
+    --text-muted: #ff007f;
+    --text-dim: #3d1e6d;
+    --accent-color: #ff007f;
+    --accent-hover: #00f0ff;
+    --accent-text: #ffffff;
+    --btn-bg: rgba(0, 240, 255, 0.03);
+    --btn-hover: rgba(255, 0, 127, 0.1);
+    --fog-opacity: 0.2;
+  }
+
+  /* --- RESET & BASE STYLES --- */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    overflow: hidden;
+    position: relative;
+    transition: background-color 0.8s ease;
+  }
+
+  /* --- CSS-ONLY ANIMATED FOG/CLOUDS BACKGROUND --- */
+  .background-animation-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .fog-layer {
+    position: absolute;
+    width: 300%;
+    height: 100%;
+    opacity: var(--fog-opacity);
+    background: radial-gradient(circle at 20% 30%, var(--accent-color) 0%, transparent 40%),
+      radial-gradient(circle at 75% 60%, var(--text-muted) 0%, transparent 45%);
+    filter: blur(60px);
+    transition: opacity 0.8s ease;
+  }
+
+  .fog-1 {
+    animation: moveFog 70s linear infinite;
+    top: -10%;
+  }
+
+  .fog-2 {
+    animation: moveFogReverse 90s linear infinite;
+    top: 10%;
+    opacity: calc(var(--fog-opacity) * 0.7);
+  }
+
+  @keyframes moveFog {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+
+    50% {
+      transform: translate3d(-35%, 5%, 0);
+    }
+
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes moveFogReverse {
+    0% {
+      transform: translate3d(-50%, 0, 0);
+    }
+
+    50% {
+      transform: translate3d(-15%, -8%, 0);
+    }
+
+    100% {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  /* --- PREMIUM GLASSMORPHISM CARD --- */
+  .timer-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid var(--border-color);
+    border-radius: 28px;
+    padding: 40px;
+    width: 100%;
+    max-width: 480px;
+    text-align: center;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4),
+      inset 0 1px 2px rgba(255, 255, 255, 0.05);
+    animation: cardEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    z-index: 2;
+    transition: background 0.5s, border-color 0.5s, max-width 0.5s, padding 0.5s;
+  }
+
+  /* --- THEME PICKER DOTS --- */
+  .theme-picker {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 30px;
+  }
+
+  .theme-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .theme-dot:hover {
+    transform: scale(1.25);
+  }
+
+  .theme-dot.active {
+    border: 2px solid var(--text-main);
+    transform: scale(1.15);
+  }
+
+  /* --- HEADER & LABELS --- */
+  h1 {
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    transition: color 0.5s;
+  }
+
+  .meta-info {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-bottom: 40px;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    transition: color 0.5s;
+  }
+
+  /* --- RESPONSIVE LARGE TIMER DISPLAY --- */
+  .timer-display {
+    font-size: 4.5rem;
+    font-weight: 200;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+    margin: 25px 0 40px 0;
+    transition: color 0.5s ease, font-size 0.5s ease, margin 0.5s ease;
+  }
+
+  .completion-message {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--accent-color);
+    margin: 25px 0;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    display: none;
+  }
+
+  .completion-message.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* --- INPUTS --- */
+  .inputs-container {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 45px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .inputs-container.hide {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    margin: 0;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px;
+  }
+
+  .input-group label {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+    transition: color 0.5s;
+  }
+
+  .input-group input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 14px;
+    color: var(--text-main);
+    font-size: 1.35rem;
+    text-align: center;
+    font-family: inherit;
+    outline: none;
+    transition: background 0.2s, border-color 0.5s, color 0.5s, padding 0.5s, font-size 0.5s;
+  }
+
+  .input-group input:focus {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--accent-color);
+  }
+
+  /* Remove input spinners */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+
+  /* --- CONTROLS / BUTTONS --- */
+  .controls {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    transition: gap 0.5s;
+  }
+
+  .btn {
+    background: var(--btn-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    color: var(--text-main);
+    padding: 18px;
+    font-size: 1.02rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s, border-color 0.5s, color 0.5s, padding 0.5s, font-size 0.5s;
+    outline: none;
+    width: 100%;
+  }
+
+  .btn:hover {
+    background: var(--btn-hover);
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+  }
+
+  .btn-primary {
+    background: var(--accent-color);
+    color: var(--accent-text);
+    font-weight: 600;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-hover);
+  }
+
+  .btn.hide {
+    display: none;
+  }
+
+  /* --- ANIMATIONS --- */
+  @keyframes cardEntrance {
+    from {
+      opacity: 0;
+      transform: scale(0.96) translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  /* --- WINDOWS / DESKTOP / TABLET SCALING SYSTEM --- */
+  @media (min-width: 768px) {
+    .timer-card {
+      max-width: 680px;
+      padding: 60px 50px;
+      border-radius: 32px;
+    }
+
+    .timer-display {
+      font-size: 7.5rem;
+      /* Upgraded sizing layout for high resolution systems */
+      margin: 30px 0 50px 0;
+      font-weight: 100;
+    }
+
+    .inputs-container {
+      gap: 24px;
+      margin-bottom: 55px;
+    }
+
+    .input-group {
+      width: 100px;
+    }
+
+    .input-group input {
+      font-size: 1.75rem;
+      padding: 18px;
+      border-radius: 16px;
+    }
+
+    .input-group label {
+      font-size: 0.8rem;
+      margin-bottom: 12px;
+    }
+
+    .btn {
+      padding: 22px;
+      font-size: 1.15rem;
+      border-radius: 20px;
+    }
+
+    .controls {
+      gap: 18px;
+    }
+  }
+
+  @media (min-width: 400px) {
+    .controls {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .controls.single-btn {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+
+<body>
+  <div class="background-animation-container">
+    <div class="fog-layer fog-1"></div>
+    <div class="fog-layer fog-2"></div>
+  </div>
+
+  <div class="timer-card">
+    <div class="theme-picker">
+      <div class="theme-dot active" data-theme-name="charcoal" style="background-color: #252525;" title="Charcoal">
+      </div>
+      <div class="theme-dot" data-theme-name="nord-dark" style="background-color: #3b4252;" title="Nord Dark"></div>
+      <div class="theme-dot" data-theme-name="dracula" style="background-color: #6272a4;" title="Dracula"></div>
+      <div class="theme-dot" data-theme-name="forest" style="background-color: #1c261f;" title="Deep Forest"></div>
+      <div class="theme-dot" data-theme-name="sepia-dark" style="background-color: #26201c;" title="Warm Sepia"></div>
+      <div class="theme-dot" data-theme-name="cyberpunk" style="background-color: #ff007f;" title="Cyberpunk"></div>
+    </div>
+
+    <h1>Study Timer</h1>
+    <div class="meta-info">
+      <span id="current-date">--/--/----</span>
+      <span>•</span>
+      <span id="current-time">00:00:00</span>
+    </div>
+
+    <div class="timer-display" id="display">00:00:00</div>
+
+    <div class="completion-message" id="completion-msg">✔ Study Session Complete</div>
+
+    <div class="inputs-container" id="inputs-wrapper">
+      <div class="input-group">
+        <label for="hours">Hours</label>
+        <input type="number" id="hours" min="0" max="99" placeholder="00" value="00">
+      </div>
+      <div class="input-group">
+        <label for="minutes">Minutes</label>
+        <input type="number" id="minutes" min="0" max="59" placeholder="00" value="00">
+      </div>
+      <div class="input-group">
+        <label for="seconds">Seconds</label>
+        <input type="number" id="seconds" min="0" max="59" placeholder="00" value="00">
+      </div>
+    </div>
+
+    <div class="controls" id="controls-wrapper">
+      <button class="btn btn-primary" id="btn-start">Start</button>
+      <button class="btn hide" id="btn-pause">Pause</button>
+      <button class="btn btn-primary hide" id="btn-resume">Resume</button>
+      <button class="btn hide" id="btn-reset">Reset</button>
+    </div>
+  </div>
+</body>
+
+
+<script>
+  // --- STATE MANAGEMENT ---
+  let totalSeconds = 0;
+  let initialSeconds = 0;
+  let isRunning = false;
+  let isPaused = false;
+  let lastTimestamp = 0;
+  let animationFrameId = null;
+
+  // --- DOM REFERENCE NODES ---
+  const hoursInput = document.getElementById('hours');
+  const minutesInput = document.getElementById('minutes');
+  const secondsInput = document.getElementById('seconds');
+  const display = document.getElementById('display');
+  const completionMsg = document.getElementById('completion-msg');
+  const inputsWrapper = document.getElementById('inputs-wrapper');
+  const controlsWrapper = document.getElementById('controls-wrapper');
+
+  const btnStart = document.getElementById('btn-start');
+  const btnPause = document.getElementById('btn-pause');
+  const btnResume = document.getElementById('btn-resume');
+  const btnReset = document.getElementById('btn-reset');
+
+  const currentDateEl = document.getElementById('current-date');
+  const currentTimeEl = document.getElementById('current-time');
+  const themeDots = document.querySelectorAll('.theme-dot');
+
+  // --- BROWSER NATIVE AUDIO DRIVER ---
+  function playBeep() {
+    try {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(880, audioCtx.currentTime);
+      gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      oscillator.start();
+      oscillator.stop(audioCtx.currentTime + 0.4);
+    } catch (e) {
+      // AudioContext auto-play policy bypass safety protection
+    }
+  }
+
+  // --- PRECISION REALTIME CLOCK LOOP ---
+  function updateLiveClock() {
+    const now = new Date();
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    currentDateEl.textContent = now.toLocaleDateString(undefined, options);
+
+    const hrs = String(now.getHours()).padStart(2, '0');
+    const mins = String(now.getMinutes()).padStart(2, '0');
+    const secs = String(now.getSeconds()).padStart(2, '0');
+    currentTimeEl.textContent = `${hrs}:${mins}:${secs}`;
+
+    requestAnimationFrame(updateLiveClock);
+  }
+
+  // --- SYSTEM ENGINE HARDWARE CALCULATION ---
+  function formatTimeSpan(totalSecs) {
+    const h = Math.floor(totalSecs / 3600);
+    const m = Math.floor((totalSecs % 3600) / 60);
+    const s = totalSecs % 60;
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }
+
+  function updateDisplay(secs) {
+    display.textContent = formatTimeSpan(secs);
+  }
+
+  function timerLoop(timestamp) {
+    if (!isRunning) return;
+
+    if (!lastTimestamp) lastTimestamp = timestamp;
+    const elapsed = timestamp - lastTimestamp;
+
+    if (elapsed >= 1000) {
+      const ticks = Math.floor(elapsed / 1000);
+      totalSeconds -= ticks;
+      lastTimestamp += ticks * 1000;
+
+      if (totalSeconds <= 0) {
+        totalSeconds = 0;
+        updateDisplay(0);
+        completeSession();
+        return;
+      }
+      updateDisplay(totalSeconds);
+    }
+    animationFrameId = requestAnimationFrame(timerLoop);
+  }
+
+  // --- CONFIGURABLE THEME HANDLERS ---
+  function switchTheme(themeName) {
+    if (themeName === 'charcoal') {
+      document.documentElement.removeAttribute('data-theme');
+    } else {
+      document.documentElement.setAttribute('data-theme', themeName);
+    }
+
+    themeDots.forEach(dot => {
+      if (dot.getAttribute('data-theme-name') === themeName) {
+        dot.classList.add('active');
+      } else {
+        dot.classList.remove('active');
+      }
+    });
+    localStorage.setItem('study_timer_theme', themeName);
+  }
+
+  // --- RUNTIME STATE ENGINE ---
+  function syncInputsToDisplay() {
+    const h = parseInt(hoursInput.value) || 0;
+    const m = parseInt(minutesInput.value) || 0;
+    const s = parseInt(secondsInput.value) || 0;
+    totalSeconds = (h * 3600) + (m * 60) + s;
+    updateDisplay(totalSeconds);
+  }
+
+  function saveState() {
+    localStorage.setItem('study_timer_hours', hoursInput.value);
+    localStorage.setItem('study_timer_minutes', minutesInput.value);
+    localStorage.setItem('study_timer_seconds', secondsInput.value);
+  }
+
+  function loadState() {
+    if (localStorage.getItem('study_timer_hours') !== null) {
+      hoursInput.value = String(localStorage.getItem('study_timer_hours')).padStart(2, '0');
+      minutesInput.value = String(localStorage.getItem('study_timer_minutes')).padStart(2, '0');
+      secondsInput.value = String(localStorage.getItem('study_timer_seconds')).padStart(2, '0');
+      syncInputsToDisplay();
+    }
+    const savedTheme = localStorage.getItem('study_timer_theme');
+    if (savedTheme) {
+      switchTheme(savedTheme);
+    }
+  }
+
+  function updateUIState() {
+    if (isRunning) {
+      inputsWrapper.classList.add('hide');
+      btnStart.classList.add('hide');
+      btnResume.classList.add('hide');
+      btnPause.classList.remove('hide');
+      btnReset.classList.remove('hide');
+      controlsWrapper.classList.remove('single-btn');
+      completionMsg.classList.remove('show');
+    } else if (isPaused) {
+      btnPause.classList.add('hide');
+      btnResume.classList.remove('hide');
+    } else {
+      inputsWrapper.classList.remove('hide');
+      btnStart.classList.remove('hide');
+      btnPause.classList.add('hide');
+      btnResume.classList.add('hide');
+      btnReset.classList.add('hide');
+      controlsWrapper.classList.add('single-btn');
+    }
+  }
+
+  function startTimer() {
+    const h = parseInt(hoursInput.value) || 0;
+    const m = parseInt(minutesInput.value) || 0;
+    const s = parseInt(secondsInput.value) || 0;
+    totalSeconds = (h * 3600) + (m * 60) + s;
+
+    if (totalSeconds <= 0) return;
+
+    initialSeconds = totalSeconds;
+    saveState();
+
+    isRunning = true;
+    isPaused = false;
+    lastTimestamp = 0;
+
+    updateUIState();
+    animationFrameId = requestAnimationFrame(timerLoop);
+  }
+
+  function pauseTimer() {
+    isRunning = false;
+    isPaused = true;
+    cancelAnimationFrame(animationFrameId);
+    updateUIState();
+  }
+
+  function resumeTimer() {
+    isRunning = true;
+    isPaused = false;
+    lastTimestamp = 0;
+    updateUIState();
+    animationFrameId = requestAnimationFrame(timerLoop);
+  }
+
+  function resetTimer() {
+    isRunning = false;
+    isPaused = false;
+    cancelAnimationFrame(animationFrameId);
+    loadState();
+    if (totalSeconds === 0) syncInputsToDisplay();
+    completionMsg.classList.remove('show');
+    updateUIState();
+  }
+
+  function completeSession() {
+    isRunning = false;
+    isPaused = false;
+    cancelAnimationFrame(animationFrameId);
+    playBeep();
+    completionMsg.classList.add('show');
+    updateUIState();
+  }
+
+  function sanitizeInput(element, max) {
+    element.addEventListener('input', () => {
+      let val = parseInt(element.value);
+      if (isNaN(val) || val < 0) val = 0;
+      if (val > max) val = max;
+      element.value = String(val).padStart(2, '0');
+      if (!isRunning && !isPaused) syncInputsToDisplay();
+      saveState();
+    });
+
+    element.addEventListener('blur', () => {
+      if (element.value === '') element.value = '00';
+      element.value = String(element.value).padStart(2, '0');
+    });
+  }
+
+  // --- INITIALIZATION ---
+  function init() {
+    sanitizeInput(hoursInput, 99);
+    sanitizeInput(minutesInput, 59);
+    sanitizeInput(secondsInput, 59);
+
+    btnStart.addEventListener('click', startTimer);
+    btnPause.addEventListener('click', pauseTimer);
+    btnResume.addEventListener('click', resumeTimer);
+    btnReset.addEventListener('click', resetTimer);
+
+    themeDots.forEach(dot => {
+      dot.addEventListener('click', (e) => {
+        const selectedTheme = e.target.getAttribute('data-theme-name');
+        switchTheme(selectedTheme);
+      });
+    });
+
+    controlsWrapper.classList.add('single-btn');
+
+    loadState();
+    if (totalSeconds === 0) syncInputsToDisplay();
+
+    requestAnimationFrame(updateLiveClock);
+  }
+
+  window.addEventListener('DOMContentLoaded', init);
+</script>
+
+</html>
