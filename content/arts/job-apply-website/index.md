@@ -21,6 +21,11 @@ https://careers.ey.com/ey/search/?createNewAlert=false&q=&optionsFacetsDD_custom
 
 https://careersatadvisory.kpmg.co.id/search/?createNewAlert=false&q=indonesia
 
+
+**Accenture**
+https://www.accenture.com/id-en/careers/jobsearch
+
+
 **Astra**:
 
 https://career.astra.co.id/lowongan

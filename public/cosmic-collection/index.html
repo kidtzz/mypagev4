@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Celestial Moon — The Throne of Creation</title>
+  <style>
+    :root {
+      --ink: #f3ead8;
+      --ink-dim: rgba(243, 234, 216, 0.62);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+      cursor: default;
+    }
+
+    #scene {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    #vignette {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.55) 100%),
+        radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 60%);
+      mix-blend-mode: multiply;
+    }
+
+    #grain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.025;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.9) 0.5px, transparent 0.5px);
+      background-size: 3px 3px;
+    }
+
+    #ui {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      transition: opacity 2.2s ease, filter 2.2s ease;
+      text-align: center;
+    }
+
+    .eyebrow {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 11px;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: 22px;
+      opacity: 0;
+      animation: riseFade 2.4s ease forwards;
+      animation-delay: 0.3s;
+    }
+
+    h1 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-weight: 400;
+      font-size: clamp(34px, 6.4vw, 84px);
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      text-shadow: 0 0 40px rgba(243, 234, 216, 0.35), 0 0 110px rgba(150, 170, 255, 0.18);
+      opacity: 0;
+      animation: riseFade 2.6s ease forwards;
+      animation-delay: 0.7s;
+    }
+
+    .subtitle {
+      margin-top: 16px;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(13px, 1.6vw, 19px);
+      letter-spacing: 0.12em;
+      color: var(--ink-dim);
+      opacity: 0;
+      animation: riseFade 2.6s ease forwards;
+      animation-delay: 1.1s;
+    }
+
+    .hint {
+      position: absolute;
+      bottom: 38px;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      opacity: 0;
+      animation: riseFade 2.4s ease forwards;
+      animation-delay: 2.1s;
+    }
+
+    @keyframes riseFade {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    body.idle #ui {
+      opacity: 0;
+      filter: blur(2px);
+    }
+
+    body.idle {
+      cursor: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="scene"></canvas>
+  <div id="vignette"></div>
+  <div id="grain"></div>
+
+  <div id="ui">
+    <div class="eyebrow">A Vigil Above the Dark</div>
+    <h1>Celestial Moon</h1>
+    <p class="subtitle">The Throne of Creation</p>
+    <div class="hint">drift the light · the universe is listening</div>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      /* ============================================================
+         CORE SETUP
+      ============================================================ */
+      const canvas = document.getElementById('scene');
+      const ctx = canvas.getContext('2d', { alpha: false });
+      let W = 0, H = 0, DPR = 1;
+
+      function resize() {
+        DPR = Math.min(window.devicePixelRatio || 1, 2);
+        W = window.innerWidth;
+        H = window.innerHeight;
+        canvas.width = Math.floor(W * DPR);
+        canvas.height = Math.floor(H * DPR);
+        canvas.style.width = W + 'px';
+        canvas.style.height = H + 'px';
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      }
+      window.addEventListener('resize', resize);
+
+      /* ---------- helpers ---------- */
+      function rand(a, b) { return a + Math.random() * (b - a); }
+      function randInt(a, b) { return Math.floor(rand(a, b + 1)); }
+      function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+      function lerp(a, b, t) { return a + (b - a) * t; }
+      function makeCanvas(w, h) {
+        const c = document.createElement('canvas');
+        c.width = w; c.height = h;
+        return c;
+      }
+      function hexToRgba(hex, a) {
+        const v = parseInt(hex.slice(1), 16);
+        const r = (v >> 16) & 255, g = (v >> 8) & 255, b = v & 255;
+        return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+      }
+
+      /* ============================================================
+         POINTER / IDLE / AMBIENT MODE
+      ============================================================ */
+      const mouse = { tx: 0, ty: 0, x: 0, y: 0 };
+      let lastInteraction = performance.now();
+      let idle = false;
+
+      function onPointer(cx, cy) {
+        mouse.tx = clamp((cx / W) * 2 - 1, -1, 1);
+        mouse.ty = clamp((cy / H) * 2 - 1, -1, 1);
+        registerInteraction();
+      }
+      window.addEventListener('mousemove', e => onPointer(e.clientX, e.clientY));
+      window.addEventListener('touchmove', e => {
+        if (e.touches && e.touches[0]) onPointer(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      window.addEventListener('keydown', registerInteraction);
+      window.addEventListener('click', registerInteraction);
+      window.addEventListener('touchstart', registerInteraction, { passive: true });
+
+      function registerInteraction() {
+        lastInteraction = performance.now();
+        if (idle) {
+          idle = false;
+          document.body.classList.remove('idle');
+        }
+      }
+
+      /* ============================================================
+         PROCEDURAL TEXTURE GENERATION (offscreen, one-time)
+      ============================================================ */
+
+      // ---- Moon surface ----
+      function generateMoonTexture(size) {
+        const c = makeCanvas(size, size);
+        const g = c.getContext('2d');
+        const r = size / 2;
+
+        const base = g.createRadialGradient(r * 0.6, r * 0.55, r * 0.04, r, r, r);
+        base.addColorStop(0, '#fdf6e7');
+        base.addColorStop(0.22, '#ecdfc6');
+        base.addColorStop(0.5, '#c3b095');
+        base.addColorStop(0.78, '#8a7a63');
+        base.addColorStop(1, '#382f23');
+        g.fillStyle = base;
+        g.beginPath(); g.arc(r, r, r, 0, Math.PI * 2); g.fill();
+
+        g.save();
+        g.beginPath(); g.arc(r, r, r, 0, Math.PI * 2); g.clip();
+
+        // maria — large dark plains
+        for (let i = 0; i < 7; i++) {
+          const mx = rand(r * 0.25, r * 1.75), my = rand(r * 0.25, r * 1.75);
+          const mr = rand(r * 0.14, r * 0.34);
+          const mg = g.createRadialGradient(mx, my, 0, mx, my, mr);
+          mg.addColorStop(0, 'rgba(55,47,36,0.38)');
+          mg.addColorStop(1, 'rgba(55,47,36,0)');
+          g.fillStyle = mg;
+          g.beginPath(); g.arc(mx, my, mr, 0, Math.PI * 2); g.fill();
+        }
+
+        // craters — shadow / rim-light / floor for relief
+        for (let i = 0; i < 150; i++) {
+          const cx = rand(r * 0.1, r * 1.9), cy = rand(r * 0.1, r * 1.9);
+          if (Math.hypot(cx - r, cy - r) > r * 0.97) continue;
+          const cr = rand(r * 0.01, r * 0.09);
+
+          g.beginPath();
+          g.fillStyle = 'rgba(35,29,22,' + rand(0.18, 0.42) + ')';
+          g.arc(cx + cr * 0.2, cy + cr * 0.2, cr, 0, Math.PI * 2);
+          g.fill();
+
+          g.beginPath();
+          g.fillStyle = 'rgba(255,250,235,' + rand(0.1, 0.28) + ')';
+          g.arc(cx - cr * 0.16, cy - cr * 0.16, cr * 0.85, 0, Math.PI * 2);
+          g.fill();
+
+          g.beginPath();
+          g.fillStyle = 'rgba(100,88,70,' + rand(0.22, 0.4) + ')';
+          g.arc(cx, cy, cr * 0.6, 0, Math.PI * 2);
+          g.fill();
+        }
+
+        // fine speckle noise for surface micro-texture
+        for (let i = 0; i < 3500; i++) {
+          const a = Math.random() * Math.PI * 2;
+          const d = Math.sqrt(Math.random()) * r;
+          const px = r + Math.cos(a) * d, py = r + Math.sin(a) * d;
+          g.fillStyle = Math.random() > 0.5 ? 'rgba(255,255,255,0.028)' : 'rgba(0,0,0,0.035)';
+          g.fillRect(px, py, 1, 1);
+        }
+
+        g.restore();
+        return c;
+      }
+
+      // ---- Nebula / volumetric cloud blob textures ----
+      function generateNebulaTexture(w, h, palette, density) {
+        const c = makeCanvas(w, h);
+        const g = c.getContext('2d');
+        g.globalCompositeOperation = 'lighter';
+        for (let i = 0; i < density; i++) {
+          const col = palette[randInt(0, palette.length - 1)];
+          const x = rand(0, w), y = rand(0, h);
+          const rad = rand(w * 0.06, w * 0.32);
+          const a = rand(0.035, 0.11);
+          const grad = g.createRadialGradient(x, y, 0, x, y, rad);
+          grad.addColorStop(0, hexToRgba(col, a));
+          grad.addColorStop(0.5, hexToRgba(col, a * 0.4));
+          grad.addColorStop(1, hexToRgba(col, 0));
+          g.fillStyle = grad;
+          g.beginPath(); g.arc(x, y, rad, 0, Math.PI * 2); g.fill();
+        }
+        return c;
+      }
+
+      // ---- Distant galaxy sprite ----
+      function generateGalaxyTexture(size, hue) {
+        const c = makeCanvas(size, size);
+        const g = c.getContext('2d');
+        const r = size / 2;
+
+        const core = g.createRadialGradient(r, r, 0, r, r, r * 0.38);
+        core.addColorStop(0, hue.core);
+        core.addColorStop(1, 'rgba(255,255,255,0)');
+        g.fillStyle = core;
+        g.beginPath(); g.arc(r, r, r * 0.38, 0, Math.PI * 2); g.fill();
+
+        g.save();
+        g.translate(r, r);
+        for (let arm = 0; arm < 2; arm++) {
+          g.save();
+          g.rotate(arm * Math.PI + rand(-0.25, 0.25));
+          g.beginPath();
+          for (let t = 0; t < 1; t += 0.02) {
+            const ang = t * Math.PI * 3;
+            const rad = t * r * 0.92;
+            const px = Math.cos(ang) * rad, py = Math.sin(ang) * rad * 0.42;
+            if (t === 0) g.moveTo(px, py); else g.lineTo(px, py);
+          }
+          g.strokeStyle = hexToRgba(hue.arm, 0.2);
+          g.lineWidth = r * 0.2;
+          g.lineCap = 'round';
+          g.stroke();
+          g.restore();
+        }
+        for (let i = 0; i < 180; i++) {
+          const a = Math.random() * Math.PI * 2;
+          const d = Math.sqrt(Math.random()) * r * 0.95;
+          g.fillStyle = hexToRgba(hue.dust, rand(0.05, 0.22));
+          g.fillRect(Math.cos(a) * d, Math.sin(a) * d, 1.2, 1.2);
+        }
+        g.restore();
+        return c;
+      }
+
+      // ---- Small planet sprite ----
+      function generatePlanetTexture(size, palette) {
+        const c = makeCanvas(size, size);
+        const g = c.getContext('2d');
+        const r = size / 2;
+
+        const grad = g.createRadialGradient(r * 0.6, r * 0.55, r * 0.04, r, r, r);
+        grad.addColorStop(0, palette.light);
+        grad.addColorStop(0.6, palette.mid);
+        grad.addColorStop(1, palette.dark);
+        g.fillStyle = grad;
+        g.beginPath(); g.arc(r, r, r, 0, Math.PI * 2); g.fill();
+
+        g.save();
+        g.beginPath(); g.arc(r, r, r, 0, Math.PI * 2); g.clip();
+        for (let i = 0; i < 6; i++) {
+          const by = rand(0, size), bh = rand(size * 0.03, size * 0.12);
+          g.fillStyle = hexToRgba(palette.band, rand(0.06, 0.2));
+          g.fillRect(0, by, size, bh);
+        }
+        g.restore();
+        return c;
+      }
+
+      /* ============================================================
+         SCENE STATE
+      ============================================================ */
+      const STATE = {
+        moonTex: null,
+        moon: { xFrac: 0.665, yFrac: 0.37, rotation: 0, depth: 0.05 },
+
+        nebulaTextures: [],
+        nebulae: [],
+
+        cloudTextures: [],
+        clouds: [],
+
+        galaxies: [],
+        starLayers: [],
+        planets: [],
+        dust: [],
+
+        shootingStars: [],
+        comets: [],
+
+        events: { nebulaPulse: 0, energyWave: null }
+      };
+
+      function makeStarLayer(count, depth, minR, maxR, minA, maxA) {
+        const stars = [];
+        const colors = ['#ffffff', '#cfe0ff', '#fff4d8', '#ffd9c2', '#d8f0ff'];
+        for (let i = 0; i < count; i++) {
+          stars.push({
+            xFrac: rand(-0.08, 1.08),
+            yFrac: rand(-0.08, 1.08),
+            r: rand(minR, maxR),
+            baseAlpha: rand(minA, maxA),
+            color: colors[randInt(0, colors.length - 1)],
+            twinkleSpeed: rand(0.0005, 0.0022),
+            twinklePhase: rand(0, Math.PI * 2)
+          });
+        }
+        return { depth, stars };
+      }
+
+      function init() {
+        STATE.moonTex = generateMoonTexture(1024);
+
+        const nebulaPalette = ['#1b2a6b', '#3a1f6b', '#5b2d8c', '#1f5b7a', '#0d3b5c', '#caa55b', '#241a4a'];
+        STATE.nebulaTextures = [
+          generateNebulaTexture(1900, 1150, nebulaPalette, 80),
+          generateNebulaTexture(1500, 950, nebulaPalette, 55)
+        ];
+        STATE.nebulae = [
+          { texIndex: 0, xFrac: 0.52, yFrac: 0.46, scale: 1.35, rotation: 0, rotSpeed: 0.000016, depth: 0.05, alpha: 0.85 },
+          { texIndex: 1, xFrac: 0.22, yFrac: 0.62, scale: 1.05, rotation: rand(0, 6), rotSpeed: -0.000012, depth: 0.075, alpha: 0.55 }
+        ];
+
+        STATE.cloudTextures = [
+          generateNebulaTexture(1300, 760, ['#2a3a6b', '#3d4f8c', '#1f2a4a', '#162038'], 36)
+        ];
+        STATE.clouds = [];
+        for (let i = 0; i < 5; i++) {
+          STATE.clouds.push({
+            xFrac: rand(-0.1, 1.1), yFrac: rand(0.08, 0.95),
+            scale: rand(0.55, 1.15), rotation: rand(0, Math.PI * 2),
+            drift: rand(-0.000018, 0.000018), depth: 0.46, alpha: rand(0.22, 0.48)
+          });
+        }
+
+        STATE.galaxyTextures = [
+          generateGalaxyTexture(230, { core: '#fff3d6', arm: '#8fa8ff', dust: '#cdd8ff' }),
+          generateGalaxyTexture(150, { core: '#ffe9d6', arm: '#c98fff', dust: '#e8cdff' }),
+          generateGalaxyTexture(185, { core: '#d6f0ff', arm: '#8fffe0', dust: '#cdfff0' })
+        ];
+        STATE.galaxies = STATE.galaxyTextures.map(tex => ({
+          tex,
+          xFrac: rand(0.05, 0.95), yFrac: rand(0.04, 0.48),
+          scale: rand(0.42, 0.92), rotation: rand(0, Math.PI * 2),
+          rotSpeed: rand(0.00001, 0.00004), depth: 0.02,
+          baseAlpha: rand(0.4, 0.68), brighten: 0
+        }));
+
+        // four depth bands of stars — far micro-dust through near bright
+        STATE.starLayers = [
+          makeStarLayer(650, 0.04, 0.5, 1.1, 0.15, 0.55),
+          makeStarLayer(420, 0.12, 0.7, 1.5, 0.25, 0.8),
+          makeStarLayer(260, 0.22, 1.1, 2.1, 0.35, 1.0),
+          makeStarLayer(120, 0.36, 1.7, 3.0, 0.5, 1.0)
+        ];
+
+        const planetPalettes = [
+          { light: '#ffe9c2', mid: '#c98a4b', dark: '#5a3a22', band: '#7a4a26' },
+          { light: '#d8f0ff', mid: '#5a8fae', dark: '#23425a', band: '#3a6a85' },
+          { light: '#f0d8ff', mid: '#8a5aae', dark: '#33203f', band: '#6a3a85' }
+        ];
+        STATE.planetTextures = planetPalettes.map(p => generatePlanetTexture(160, p));
+        STATE.planets = [
+          { tex: STATE.planetTextures[0], xFrac: 0.11, yFrac: 0.74, radius: 32, depth: 0.5, rotation: 0, rotSpeed: 0.00025, hasRing: false, orbitPhase: rand(0, 6) },
+          { tex: STATE.planetTextures[1], xFrac: 0.87, yFrac: 0.16, radius: 21, depth: 0.4, rotation: 0, rotSpeed: 0.00018, hasRing: true, orbitPhase: rand(0, 6) },
+          { tex: STATE.planetTextures[2], xFrac: 0.30, yFrac: 0.87, radius: 15, depth: 0.62, rotation: 0, rotSpeed: 0.0004, hasRing: false, orbitPhase: rand(0, 6) }
+        ];
+
+        STATE.dust = [];
+        for (let i = 0; i < 130; i++) {
+          STATE.dust.push({
+            xFrac: rand(-0.1, 1.1), yFrac: rand(-0.1, 1.1),
+            r: rand(0.6, 2.2), alpha: rand(0.05, 0.32), depth: 0.92,
+            driftX: rand(-0.000055, 0.000055), driftY: rand(-0.00004, 0.00004)
+          });
+        }
+      }
+
+      /* ============================================================
+         PARALLAX / CAMERA
+      ============================================================ */
+      function pOffset(depth) {
+        return { x: mouse.x * depth * 70, y: mouse.y * depth * 70 };
+      }
+
+      const camera = { rotation: 0, zoom: 1, panX: 0, panY: 0 };
+      function updateCamera(t) {
+        camera.rotation = Math.sin(t * 0.00005) * 0.012;
+        camera.zoom = 1 + Math.sin(t * 0.00007) * 0.018;
+        camera.panX = Math.sin(t * 0.00004) * 18;
+        camera.panY = Math.cos(t * 0.000035) * 14;
+      }
+
+      /* ============================================================
+         DRAW ROUTINES
+      ============================================================ */
+      function drawBackground(t) {
+        const hueShift = Math.sin(t * 0.00002) * 9;
+        const g = ctx.createLinearGradient(0, 0, 0, H);
+        g.addColorStop(0, 'hsl(' + (231 + hueShift) + ',55%,6%)');
+        g.addColorStop(0.5, 'hsl(' + (250 + hueShift) + ',50%,4%)');
+        g.addColorStop(1, '#02030a');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, W, H);
+      }
+
+      function drawGalaxies() {
+        STATE.galaxies.forEach(gx => {
+          gx.rotation += gx.rotSpeed;
+          const off = pOffset(gx.depth);
+          const x = gx.xFrac * W + off.x;
+          const y = gx.yFrac * H + off.y;
+          const size = gx.tex.width * gx.scale;
+          ctx.save();
+          ctx.globalAlpha = clamp(gx.baseAlpha + gx.brighten, 0, 1);
+          ctx.translate(x, y);
+          ctx.rotate(gx.rotation);
+          ctx.drawImage(gx.tex, -size / 2, -size / 2, size, size);
+          ctx.restore();
+          gx.brighten *= 0.965;
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      function drawNebulae(t) {
+        STATE.nebulae.forEach(n => {
+          n.rotation += n.rotSpeed;
+          const tex = STATE.nebulaTextures[n.texIndex];
+          const off = pOffset(n.depth);
+          const x = n.xFrac * W + off.x + Math.sin(t * 0.00003 + n.xFrac * 10) * 22;
+          const y = n.yFrac * H + off.y;
+          const w = tex.width * n.scale, h = tex.height * n.scale;
+          ctx.save();
+          ctx.globalAlpha = clamp(n.alpha + STATE.events.nebulaPulse, 0, 1);
+          ctx.globalCompositeOperation = 'lighter';
+          ctx.translate(x, y);
+          ctx.rotate(n.rotation);
+          ctx.drawImage(tex, -w / 2, -h / 2, w, h);
+          ctx.restore();
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      function drawClouds(t) {
+        const tex = STATE.cloudTextures[0];
+        STATE.clouds.forEach(c => {
+          c.rotation += c.drift;
+          const off = pOffset(c.depth);
+          const x = c.xFrac * W + off.x + Math.sin(t * 0.00004 + c.rotation) * 28;
+          const y = c.yFrac * H + off.y;
+          const w = tex.width * c.scale, h = tex.height * c.scale;
+          ctx.save();
+          ctx.globalAlpha = c.alpha;
+          ctx.globalCompositeOperation = 'lighter';
+          ctx.translate(x, y);
+          ctx.drawImage(tex, -w / 2, -h / 2, w, h);
+          ctx.restore();
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      function drawStarLayer(layer, t) {
+        const off = pOffset(layer.depth);
+        layer.stars.forEach(s => {
+          const tw = Math.sin(t * s.twinkleSpeed + s.twinklePhase) * 0.5 + 0.5;
+          const alpha = s.baseAlpha * (0.5 + tw * 0.5);
+          const x = s.xFrac * W + off.x;
+          const y = s.yFrac * H + off.y;
+          ctx.globalAlpha = alpha;
+          ctx.fillStyle = s.color;
+          ctx.beginPath(); ctx.arc(x, y, s.r, 0, Math.PI * 2); ctx.fill();
+          if (s.r > 1.8) {
+            ctx.globalAlpha = alpha * 0.32;
+            ctx.beginPath(); ctx.arc(x, y, s.r * 2.6, 0, Math.PI * 2); ctx.fill();
+          }
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      function drawMoon(t) {
+        const m = STATE.moon;
+        m.rotation += 0.000014;
+        const off = pOffset(m.depth);
+        const radius = Math.min(W, H) * 0.185;
+        const x = m.xFrac * W + off.x;
+        const y = m.yFrac * H + off.y;
+
+        // atmospheric / bloom halo
+        const glow = ctx.createRadialGradient(x, y, radius * 0.7, x, y, radius * 2.3);
+        glow.addColorStop(0, 'rgba(255,244,214,0.26)');
+        glow.addColorStop(0.4, 'rgba(190,178,148,0.09)');
+        glow.addColorStop(1, 'rgba(190,178,148,0)');
+        ctx.fillStyle = glow;
+        ctx.beginPath(); ctx.arc(x, y, radius * 2.3, 0, Math.PI * 2); ctx.fill();
+
+        ctx.save();
+        ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI * 2); ctx.clip();
+        ctx.translate(x, y);
+        ctx.rotate(m.rotation);
+        ctx.drawImage(STATE.moonTex, -radius, -radius, radius * 2, radius * 2);
+        ctx.restore();
+
+        // soft terminator shading for spherical depth
+        ctx.save();
+        ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI * 2); ctx.clip();
+        const shade = ctx.createRadialGradient(x - radius * 0.3, y - radius * 0.3, radius * 0.1, x, y, radius * 1.3);
+        shade.addColorStop(0, 'rgba(255,255,255,0)');
+        shade.addColorStop(0.6, 'rgba(10,8,16,0.06)');
+        shade.addColorStop(1, 'rgba(5,4,10,0.58)');
+        ctx.fillStyle = shade;
+        ctx.fillRect(x - radius, y - radius, radius * 2, radius * 2);
+        ctx.restore();
+
+        // rim light
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.lineWidth = radius * 0.035;
+        ctx.strokeStyle = 'rgba(255,248,225,0.22)';
+        ctx.stroke();
+      }
+
+      function drawPlanets(t) {
+        STATE.planets.forEach(p => {
+          p.rotation += p.rotSpeed;
+          const off = pOffset(p.depth);
+          const bob = Math.sin(t * 0.00002 + p.orbitPhase) * 6;
+          const x = p.xFrac * W + off.x;
+          const y = p.yFrac * H + off.y + bob;
+          ctx.save();
+          ctx.translate(x, y);
+          if (p.hasRing) {
+            ctx.save();
+            ctx.rotate(0.42);
+            ctx.scale(1, 0.32);
+            ctx.beginPath();
+            ctx.arc(0, 0, p.radius * 1.9, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(222,202,172,0.45)';
+            ctx.lineWidth = p.radius * 0.18;
+            ctx.stroke();
+            ctx.restore();
+          }
+          ctx.rotate(p.rotation);
+          ctx.drawImage(p.tex, -p.radius, -p.radius, p.radius * 2, p.radius * 2);
+          ctx.restore();
+        });
+      }
+
+      function drawDust() {
+        const off = pOffset(0.92);
+        STATE.dust.forEach(d => {
+          d.xFrac += d.driftX; d.yFrac += d.driftY;
+          if (d.xFrac > 1.1) d.xFrac = -0.1; if (d.xFrac < -0.1) d.xFrac = 1.1;
+          if (d.yFrac > 1.1) d.yFrac = -0.1; if (d.yFrac < -0.1) d.yFrac = 1.1;
+          const x = d.xFrac * W + off.x, y = d.yFrac * H + off.y;
+          ctx.globalAlpha = d.alpha;
+          ctx.fillStyle = '#ffffff';
+          ctx.beginPath(); ctx.arc(x, y, d.r, 0, Math.PI * 2); ctx.fill();
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      /* ---------- shooting stars ---------- */
+      let shootingStarTimer = 0, nextShootingStar = rand(3, 8);
+      function spawnShootingStar() {
+        const fromLeft = Math.random() > 0.5;
+        const y0 = rand(0, H * 0.55);
+        const x0 = fromLeft ? rand(-60, W * 0.3) : rand(W * 0.7, W + 60);
+        const angle = fromLeft ? rand(0.12, 0.5) : Math.PI - rand(0.12, 0.5);
+        const speed = rand(700, 1150);
+        STATE.shootingStars.push({
+          x: x0, y: y0, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+          life: 0, maxLife: rand(0.55, 1.0), len: rand(80, 160)
+        });
+      }
+      function updateDrawShootingStars(dt) {
+        shootingStarTimer += dt;
+        if (shootingStarTimer > nextShootingStar) {
+          spawnShootingStar();
+          shootingStarTimer = 0;
+          nextShootingStar = rand(4, 12);
+        }
+        for (let i = STATE.shootingStars.length - 1; i >= 0; i--) {
+          const s = STATE.shootingStars[i];
+          s.life += dt; s.x += s.vx * dt; s.y += s.vy * dt;
+          if (s.life >= s.maxLife) { STATE.shootingStars.splice(i, 1); continue; }
+          const tl = s.life / s.maxLife;
+          let a = 1;
+          if (tl < 0.15) a = tl / 0.15;
+          else if (tl > 0.75) a = (1 - tl) / 0.25;
+          const ang = Math.atan2(s.vy, s.vx);
+          const tx = s.x - Math.cos(ang) * s.len, ty = s.y - Math.sin(ang) * s.len;
+          const grad = ctx.createLinearGradient(s.x, s.y, tx, ty);
+          grad.addColorStop(0, 'rgba(255,255,255,' + a + ')');
+          grad.addColorStop(0.4, 'rgba(205,222,255,' + (a * 0.5) + ')');
+          grad.addColorStop(1, 'rgba(205,222,255,0)');
+          ctx.strokeStyle = grad; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(tx, ty); ctx.stroke();
+          ctx.fillStyle = 'rgba(255,255,255,' + a + ')';
+          ctx.beginPath(); ctx.arc(s.x, s.y, 2.1, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+
+      /* ---------- comet (special event) ---------- */
+      function spawnComet() {
+        const y0 = rand(H * 0.05, H * 0.5);
+        const speed = rand(150, 240);
+        const angle = rand(0.05, 0.22);
+        STATE.comets.push({
+          x: -120, y: y0, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+          life: 0, maxLife: (W + 400) / speed + 4, len: 230
+        });
+      }
+      function updateDrawComets(dt) {
+        for (let i = STATE.comets.length - 1; i >= 0; i--) {
+          const c = STATE.comets[i];
+          c.life += dt; c.x += c.vx * dt; c.y += c.vy * dt;
+          if (c.x > W + 250 || c.life > c.maxLife) { STATE.comets.splice(i, 1); continue; }
+          const ang = Math.atan2(c.vy, c.vx);
+          const tx = c.x - Math.cos(ang) * c.len, ty = c.y - Math.sin(ang) * c.len;
+          const grad = ctx.createLinearGradient(c.x, c.y, tx, ty);
+          grad.addColorStop(0, 'rgba(255,250,235,0.92)');
+          grad.addColorStop(0.3, 'rgba(185,212,255,0.45)');
+          grad.addColorStop(1, 'rgba(185,212,255,0)');
+          ctx.strokeStyle = grad; ctx.lineWidth = 4; ctx.lineCap = 'round';
+          ctx.beginPath(); ctx.moveTo(c.x, c.y); ctx.lineTo(tx, ty); ctx.stroke();
+          const head = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, 15);
+          head.addColorStop(0, 'rgba(255,255,255,1)');
+          head.addColorStop(1, 'rgba(255,255,255,0)');
+          ctx.fillStyle = head;
+          ctx.beginPath(); ctx.arc(c.x, c.y, 15, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+
+      /* ---------- rare special events ---------- */
+      let eventTimer = 0, nextEventTime = rand(20, 60);
+      function updateEvents(dt) {
+        eventTimer += dt;
+        if (eventTimer > nextEventTime) {
+          eventTimer = 0;
+          nextEventTime = rand(20, 60);
+          triggerRandomEvent();
+        }
+        STATE.events.nebulaPulse *= 0.965;
+        const ew = STATE.events.energyWave;
+        if (ew) {
+          ew.r += ew.speed * dt;
+          ew.alpha -= dt * 0.22;
+          if (ew.alpha <= 0) STATE.events.energyWave = null;
+        }
+      }
+      function triggerRandomEvent() {
+        const pick = randInt(0, 3);
+        if (pick === 0) spawnComet();
+        else if (pick === 1) STATE.events.nebulaPulse = 0.22;
+        else if (pick === 2) {
+          const gx = STATE.galaxies[randInt(0, STATE.galaxies.length - 1)];
+          gx.brighten = 0.5;
+        } else {
+          STATE.events.energyWave = { r: 0, speed: rand(170, 250), alpha: 0.32 };
+        }
+      }
+      function drawEnergyWave() {
+        const ew = STATE.events.energyWave;
+        if (!ew) return;
+        ctx.save();
+        ctx.globalAlpha = clamp(ew.alpha, 0, 1);
+        const grad = ctx.createRadialGradient(W * 0.5, H * 0.5, Math.max(ew.r - 40, 0), W * 0.5, H * 0.5, ew.r + 40);
+        grad.addColorStop(0, 'rgba(180,210,255,0)');
+        grad.addColorStop(0.5, 'rgba(180,210,255,0.35)');
+        grad.addColorStop(1, 'rgba(180,210,255,0)');
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        ctx.arc(W * 0.5, H * 0.5, ew.r, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      /* ============================================================
+         MAIN LOOP
+      ============================================================ */
+      let lastTime = performance.now();
+      function frame(now) {
+        const dt = Math.min((now - lastTime) / 1000, 0.05);
+        lastTime = now;
+
+        mouse.x += (mouse.tx - mouse.x) * 0.045;
+        mouse.y += (mouse.ty - mouse.y) * 0.045;
+
+        updateCamera(now);
+        updateEvents(dt);
+
+        if (!idle && now - lastInteraction > 10000) {
+          idle = true;
+          document.body.classList.add('idle');
+        }
+
+        ctx.clearRect(0, 0, W, H);
+        drawBackground(now);
+
+        ctx.save();
+        ctx.translate(W / 2, H / 2);
+        ctx.rotate(camera.rotation);
+        ctx.scale(camera.zoom, camera.zoom);
+        ctx.translate(-W / 2 + camera.panX, -H / 2 + camera.panY);
+
+        drawGalaxies();
+        drawNebulae(now);
+        drawStarLayer(STATE.starLayers[0], now);
+        drawStarLayer(STATE.starLayers[1], now);
+        drawMoon(now);
+        drawClouds(now);
+        drawStarLayer(STATE.starLayers[2], now);
+        drawPlanets(now);
+        drawStarLayer(STATE.starLayers[3], now);
+        updateDrawComets(dt);
+        updateDrawShootingStars(dt);
+        drawDust();
+        drawEnergyWave();
+
+        ctx.restore();
+
+        requestAnimationFrame(frame);
+      }
+
+      /* ============================================================
+         BOOT
+      ============================================================ */
+      resize();
+      init();
+      requestAnimationFrame(frame);
+
+    })();
+  </script>
+</body>
+
+</html>
