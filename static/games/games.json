@@ -17,7 +17,7 @@
     "difficulty": "Easy",
     "description": "Eat food, grow longer, and avoid crashing into yourself.",
     "url": "games-list/snake.html",
-    "featured": true
+    "featured": false
   },
   {
     "id": "2048",
@@ -128,5 +128,15 @@
     "description": "Aim carefully, control your shot power, and pocket all the balls in this modern 8-ball style billiard game.",
     "url": "games-list/billiard.html",
     "featured": true
+  },
+  {
+    "id": "kingdom-builder",
+    "title": "Kingdom Builder",
+    "icon": "🏯",
+    "category": "Strategy",
+    "difficulty": "Hard",
+    "description": "Build your kingdom from scratch by managing resources, constructing buildings, and training units. Expand your territory and defeat enemy kingdoms in this mini RTS experience.",
+    "url": "games-list/kingdom-builder.html",
+    "featured": false
   }
 ]

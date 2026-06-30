@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+
+  <div id="hud">
+    <div class="hud-item">
+      <span>Gold:</span>
+      <span id="hud-gold" class="gold-txt">100</span>
+      <span id="hud-income" class="income-txt">(+0/s)</span>
+    </div>
+    <div class="hud-item">
+      <span>Units:</span>
+      <span id="hud-pop" class="pop-txt">0 / 20</span>
+    </div>
+    <div class="hud-item">
+      <span>Time:</span>
+      <span id="hud-time" class="time-txt">00:00</span>
+    </div>
+  </div>
+
+  <div id="main-container">
+    <div id="canvas-container">
+      <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <div id="side-panel">
+      <div class="panel-section">
+        <div class="section-title">Build Structures</div>
+        <div class="grid-buttons">
+          <button class="btn" id="btn-build-mine" onclick="game.uiAction('build', 'mine')">
+            <span>Gold Mine</span>
+            <span class="cost" id="cost-build-mine">50 G</span>
+          </button>
+          <button class="btn" id="btn-build-barracks" onclick="game.uiAction('build', 'barracks')">
+            <span>Barracks</span>
+            <span class="cost" id="cost-build-barracks">80 G</span>
+          </button>
+          <button class="btn" id="btn-build-farm" onclick="game.uiAction('build', 'farm')">
+            <span>Farm</span>
+            <span class="cost" id="cost-build-farm">40 G</span>
+          </button>
+          <button class="btn" id="btn-build-wall" onclick="game.uiAction('build', 'wall')">
+            <span>Wall</span>
+            <span class="cost" id="cost-build-wall">60 G</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-title">Global Upgrades</div>
+        <div class="grid-buttons">
+          <button class="btn" id="btn-up-atk" onclick="game.uiAction('upgradeGlobal', 'attack')">
+            <span>Atk Damage</span>
+            <span class="cost" id="cost-up-atk">100 G</span>
+          </button>
+          <button class="btn" id="btn-up-hp" onclick="game.uiAction('upgradeGlobal', 'hp')">
+            <span>Unit Max HP</span>
+            <span class="cost" id="cost-up-hp">100 G</span>
+          </button>
+          <button class="btn" id="btn-up-spawn" onclick="game.uiAction('upgradeGlobal', 'spawn')">
+            <span>Spawn Rate</span>
+            <span class="cost" id="cost-up-spawn">150 G</span>
+          </button>
+          <button class="btn" id="btn-up-income" onclick="game.uiAction('upgradeGlobal', 'income')">
+            <span>Passive Inc</span>
+            <span class="cost" id="cost-up-income">120 G</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-title">Manual Recruit</div>
+        <div class="grid-buttons">
+          <button class="btn" id="btn-spawn-soldier" onclick="game.uiAction('spawnUnit', 'soldier')">
+            <span>Soldier</span>
+            <span class="cost">25 G</span>
+          </button>
+          <button class="btn" id="btn-spawn-archer" onclick="game.uiAction('spawnUnit', 'archer')">
+            <span>Archer</span>
+            <span class="cost">35 G</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="panel-section" id="info-panel">
+        <div class="section-title">Selection Info</div>
+        <div id="info-content">
+          <div class="info-title">No selection</div>
+          <div class="info-desc">Click on a friendly or enemy building to view or upgrade it.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-overlay">
+    <div class="modal-box" id="modal-box">
+      <div class="modal-title start-title" id="m-title">Kingdom Builder</div>
+      <div class="modal-text" id="m-text">
+        Build mines, farms, and barracks to generate an army. Secure the lanes, defend your Town Hall, and push forward
+        to
+        completely annihilate the enemy base!
+      </div>
+      <button class="modal-btn" id="m-btn" onclick="game.closeModal()">Start Match</button>
+      <div class="storage-info" id="m-storage">Best Time: None</div>
+    </div>
+  </div>
+
+  <script>
+    // --- AUDIO ENGINE (Web Audio API) ---
+    class AudioEngine {
+      constructor() {
+        this.ctx = null;
+      }
+      init() {
+        if (!this.ctx) {
+          this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+      }
+      play(type) {
+        this.init();
+        if (!this.ctx) return;
+        try {
+          let osc = this.ctx.createOscillator();
+          let gain = this.ctx.createGain();
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          let now = this.ctx.currentTime;
+          if (type === 'build') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(200, now);
+            osc.frequency.exponentialRampToValueAtTime(500, now + 0.15);
+            gain.gain.setValueAtTime(0.15, now);
+            gain.gain.linearRampToValueAtTime(0, now + 0.15);
+            osc.start(now);
+            osc.stop(now + 0.15);
+          } else if (type === 'hit') {
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(120, now);
+            osc.frequency.linearRampToValueAtTime(40, now + 0.08);
+            gain.gain.setValueAtTime(0.2, now);
+            gain.gain.linearRampToValueAtTime(0, now + 0.08);
+            osc.start(now);
+            osc.stop(now + 0.08);
+          } else if (type === 'shoot') {
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(600, now);
+            osc.frequency.exponentialRampToValueAtTime(300, now + 0.1);
+            gain.gain.setValueAtTime(0.1, now);
+            gain.gain.linearRampToValueAtTime(0, now + 0.1);
+            osc.start(now);
+            osc.stop(now + 0.1);
+          } else if (type === 'death') {
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(100, now);
+            osc.frequency.linearRampToValueAtTime(20, now + 0.25);
+            gain.gain.setValueAtTime(0.15, now);
+            gain.gain.linearRampToValueAtTime(0, now + 0.25);
+            osc.start(now);
+            osc.stop(now + 0.25);
+          } else if (type === 'victory') {
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(300, now);
+            osc.frequency.setValueAtTime(400, now + 0.1);
+            osc.frequency.setValueAtTime(500, now + 0.2);
+            osc.frequency.setValueAtTime(600, now + 0.3);
+            gain.gain.setValueAtTime(0.15, now);
+            gain.gain.linearRampToValueAtTime(0, now + 0.5);
+            osc.start(now);
+            osc.stop(now + 0.5);
+          }
+        } catch (e) { console.log(e); }
+      }
+    }
+    const audio = new AudioEngine();
+
+    // --- CONFIG & CONSTANTS ---
+    const TEAM_PLAYER = 'player';
+    const TEAM_ENEMY = 'enemy';
+
+    const BASE_BUILDING_DATA = {
+      townhall: { name: 'Town Hall', cost: 0, hp: 2500, maxLevel: 3, desc: 'Your vital core command castle.' },
+      mine: { name: 'Gold Mine', cost: 50, hp: 400, maxLevel: 3, desc: 'Extracts rich gold ore deposit layers.' },
+      barracks: { name: 'Barracks', cost: 80, hp: 600, maxLevel: 3, desc: 'Trains primary automatic strike squads.' },
+      farm: { name: 'Farm', cost: 40, hp: 350, maxLevel: 3, desc: 'Supplies provisions to scale population.' },
+      wall: { name: 'Defensive Wall', cost: 60, hp: 1200, maxLevel: 3, desc: 'High armor barricade to stall attackers.' }
+    };
+
+    const UNIT_DATA = {
+      worker: { name: 'Worker', hp: 45, speed: 1.1, range: 30, atk: 0, cd: 60, cost: 0, size: 8 },
+      soldier: { name: 'Soldier', hp: 130, speed: 1.4, range: 25, atk: 14, cd: 50, cost: 25, size: 10 },
+      archer: { name: 'Archer', hp: 75, speed: 1.6, range: 160, atk: 9, cd: 65, cost: 35, size: 9 },
+      knight: { name: 'Knight', hp: 260, speed: 2.1, range: 28, atk: 22, cd: 55, cost: 65, size: 12 }
+    };
+
+    // --- VISUAL EFFECTS ---
+    class FloatingText {
+      constructor(x, y, text, color = '#fff') {
+        this.x = x; this.y = y; this.text = text; this.color = color;
+        this.alpha = 1; this.vy = -1.2; this.life = 45;
+      }
+      update() { this.y += this.vy; this.alpha -= 1 / 45; this.life--; }
+      draw(ctx) {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.fillStyle = this.color;
+        ctx.font = 'bold 13px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(this.text, this.x, this.y);
+        ctx.restore();
+      }
+    }
+
+    class Particle {
+      constructor(x, y, color) {
+        this.x = x; this.y = y; this.color = color;
+        this.vx = (Math.random() - 0.5) * 4;
+        this.vy = (Math.random() - 0.5) * 4;
+        this.radius = Math.random() * 3 + 2;
+        this.life = 30;
+        this.maxLife = 30;
+      }
+      update() { this.x += this.vx; this.y += this.vy; this.life--; }
+      draw(ctx) {
+        ctx.save();
+        ctx.globalAlpha = this.life / this.maxLife;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    class Projectile {
+      constructor(x, y, target, damage, team) {
+        this.x = x; this.y = y; this.target = target; this.damage = damage; this.team = team;
+        this.speed = 6; this.radius = 3; this.dead = false;
+      }
+      update() {
+        if (this.target.hp <= 0 || !this.target.active) { this.dead = true; return; }
+        let dx = this.target.x - this.x;
+        let dy = (this.target.y - 15) - this.y;
+        let dist = Math.hypot(dx, dy);
+        if (dist < this.speed) {
+          this.target.takeDamage(this.damage);
+          audio.play('hit');
+          this.dead = true;
+        } else {
+          this.x += (dx / dist) * this.speed;
+          this.y += (dy / dist) * this.speed;
+        }
+      }
+      draw(ctx) {
+        ctx.fillStyle = '#fff000';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // --- GAME ENTITIES ---
+    class Building {
+      constructor(id, type, team, lane, lanePos, x, y) {
+        this.id = id; this.type = type; this.team = team; this.lane = lane; this.lanePos = lanePos;
+        this.x = x; this.y = y;
+        this.level = 1;
+        let base = BASE_BUILDING_DATA[type];
+        this.maxHp = base.hp;
+        this.hp = base.hp;
+        this.width = type === 'townhall' ? 70 : (type === 'wall' ? 25 : 55);
+        this.height = type === 'townhall' ? 85 : (type === 'wall' ? 90 : 60);
+        this.active = true;
+        this.spawnTimer = 0;
+      }
+      upgrade() {
+        if (this.level >= 3) return false;
+        this.level++;
+        this.maxHp = Math.round(this.maxHp * 1.5);
+        this.hp = this.maxHp;
+        return true;
+      }
+      takeDamage(amt) {
+        this.hp -= amt;
+        if (this.hp <= 0) { this.hp = 0; this.active = false; }
+      }
+      draw(ctx, isSelected) {
+        let clr = this.team === TEAM_PLAYER ? '#4a90e2' : '#e74c3c';
+        if (this.type === 'townhall') clr = this.team === TEAM_PLAYER ? '#2c3e50' : '#7f8c8d';
+        if (this.type === 'wall') clr = '#7f8c8d';
+        if (this.type === 'mine') clr = '#f1c40f';
+        if (this.type === 'farm') clr = '#27ae60';
+        if (this.type === 'barracks') clr = '#9b59b6';
+
+        ctx.save();
+        ctx.fillStyle = clr;
+        ctx.lineWidth = isSelected ? 3 : 1;
+        ctx.strokeStyle = isSelected ? '#fff' : '#222';
+
+        // Draw Base Shape
+        ctx.beginPath();
+        ctx.rect(this.x - this.width / 2, this.y - this.height, this.width, this.height);
+        ctx.fill();
+        ctx.stroke();
+
+        // Distinct details
+        ctx.fillStyle = 'rgba(255,255,255,0.15)';
+        ctx.font = '9px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(`Lv${this.level}`, this.x, this.y - this.height + 15);
+
+        // HP Bar
+        let pct = this.hp / this.maxHp;
+        ctx.fillStyle = 'rgba(0,0,0,0.5)';
+        ctx.fillRect(this.x - 25, this.y - this.height - 12, 50, 5);
+        ctx.fillStyle = pct > 0.4 ? '#2ecc71' : '#e74c3c';
+        ctx.fillRect(this.x - 25, this.y - this.height - 12, 50 * pct, 5);
+        ctx.restore();
+      }
+    }
+
+    class Unit {
+      constructor(id, type, team, lane, x, y, globalAtkMod = 1, globalHpMod = 1) {
+        this.id = id; this.type = type; this.team = team; this.lane = lane;
+        this.x = x; this.y = y;
+        let src = UNIT_DATA[type];
+        this.maxHp = Math.round(src.hp * globalHpMod);
+        this.hp = this.maxHp;
+        this.speed = src.speed * (team === TEAM_PLAYER ? 1 : -1);
+        this.rawSpeed = src.speed;
+        this.range = src.range;
+        this.atk = Math.round(src.atk * globalAtkMod);
+        this.maxCd = src.cd;
+        this.cd = 0;
+        this.size = src.size;
+        this.active = true;
+        this.state = 'walk'; // walk, fight
+      }
+      takeDamage(amt) {
+        this.hp -= amt;
+        if (this.hp <= 0) { this.hp = 0; this.active = false; }
+      }
+      update(opponents, opponentBuildings, projectiles) {
+        if (this.cd > 0) this.cd--;
+
+        // 1. Scan for closest enemy unit in same lane
+        let targetUnit = null;
+        let minDist = Infinity;
+        for (let o of opponents) {
+          if (o.lane !== this.lane || !o.active) continue;
+          let d = Math.abs(o.x - this.x);
+          if (d < minDist) { minDist = d; targetUnit = o; }
+        }
+
+        // 2. Scan for closest enemy building in same lane
+        let targetBldg = null;
+        let minBldgDist = Infinity;
+        for (let b of opponentBuildings) {
+          if (b.lane !== this.lane || !b.active) continue;
+          let d = Math.abs(b.x - this.x) - b.width / 2;
+          if (d < minBldgDist) { minBldgDist = d; targetBldg = b; }
+        }
+
+        // Decision Framework
+        let curTarget = null;
+        let curDist = Infinity;
+
+        if (targetUnit && minDist < minBldgDist) { curTarget = targetUnit; curDist = minDist; }
+        else if (targetBldg) { curTarget = targetBldg; curDist = minBldgDist; }
+
+        if (curTarget && curDist <= this.range) {
+          this.state = 'fight';
+          if (this.cd === 0 && this.atk > 0) {
+            if (this.type === 'archer') {
+              projectiles.push(new Projectile(this.x, this.y - 15, curTarget, this.atk, this.team));
+              audio.play('shoot');
+            } else {
+              curTarget.takeDamage(this.atk);
+              audio.play('hit');
+            }
+            this.cd = this.maxCd;
+          }
+        } else {
+          this.state = 'walk';
+          this.x += this.speed;
+        }
+      }
+      draw(ctx) {
+        ctx.save();
+        ctx.fillStyle = this.team === TEAM_PLAYER ? '#3498db' : '#e74c3c';
+        if (this.type === 'knight') ctx.fillStyle = this.team === TEAM_PLAYER ? '#f1c40f' : '#d35400';
+        if (this.type === 'archer') ctx.fillStyle = this.team === TEAM_PLAYER ? '#1abc9c' : '#c0392b';
+
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = '#222';
+        ctx.stroke();
+
+        // Combat visual indicator
+        if (this.state === 'fight' && this.cd > this.maxCd * 0.7) {
+          ctx.fillStyle = '#fff';
+          ctx.beginPath();
+          ctx.arc(this.x + (this.team === TEAM_PLAYER ? 12 : -12), this.y - 5, 4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // HP line mini
+        if (this.hp < this.maxHp) {
+          let pct = this.hp / this.maxHp;
+          ctx.fillStyle = '#c0392b';
+          ctx.fillRect(this.x - 10, this.y - this.size - 6, 20, 3);
+          ctx.fillStyle = '#2ecc71';
+          ctx.fillRect(this.x - 10, this.y - this.size - 6, 20 * pct, 3);
+        }
+        ctx.restore();
+      }
+    }
+
+    // --- GAME ENGINE ---
+    class GameEngine {
+      constructor() {
+        this.canvas = document.getElementById('gameCanvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.gold = 100;
+        this.maxPop = 20;
+        this.gameTime = 0;
+        this.running = false;
+        this.selectedBuilding = null;
+
+        this.buildings = [];
+        this.units = [];
+        this.projectiles = [];
+        this.particles = [];
+        this.floatingTexts = [];
+
+        this.globalUpgrades = {
+          player: { attack: 1.0, hp: 1.0, spawn: 1.0, income: 0 },
+          enemy: { attack: 1.0, hp: 1.0, spawn: 1.0, income: 0 }
+        };
+
+        this.upgradeCosts = { attack: 100, hp: 100, spawn: 150, income: 120 };
+        this.nextId = 1;
+        this.laneY = [];
+        this.laneCount = 2;
+
+        // Enemy AI Parameter Scaling
+        this.aiDecisionTimer = 0;
+        this.aiDiffScale = 1.0;
+
+        window.addEventListener('resize', () => this.resizeCanvas());
+        this.canvas.addEventListener('click', (e) => this.handleCanvasClick(e));
+      }
+
+      init() {
+        this.resizeCanvas();
+        this.loadSaveData();
+        this.resetGame();
+        this.renderHUD();
+        this.updateUIButtons();
+
+        // Animation loop initiation
+        this.lastTime = performance.now();
+        requestAnimationFrame((t) => this.loop(t));
+      }
+
+      resizeCanvas() {
+        let rect = this.canvas.parentElement.getBoundingClientRect();
+        this.canvas.width = rect.width;
+        this.canvas.height = rect.height;
+
+        // Layout dynamic 2-lanes
+        let h = this.canvas.height;
+        this.laneY = [h * 0.42, h * 0.78];
+      }
+
+      resetGame() {
+        this.gold = 100;
+        this.maxPop = 20;
+        this.gameTime = 0;
+        this.buildings = [];
+        this.units = [];
+        this.projectiles = [];
+        this.particles = [];
+        this.floatingTexts = [];
+        this.selectedBuilding = null;
+        this.aiDiffScale = 1.0;
+        this.aiDecisionTimer = 0;
+
+        this.globalUpgrades.player = { attack: 1.0, hp: 1.0, spawn: 1.0, income: 0 };
+        this.globalUpgrades.enemy = { attack: 1.0, hp: 1.0, spawn: 1.0, income: 0 };
+        this.upgradeCosts = { attack: 100, hp: 100, spawn: 150, income: 120 };
+
+        let w = this.canvas.width;
+        // Place Player TownHall (Left) & Enemy TownHall (Right) across lanes
+        for (let l = 0; l < this.laneCount; l++) {
+          // Main bases span both lanes visually or distinct entry
+          if (l === 0) {
+            this.addBuilding('townhall', TEAM_PLAYER, 0, 0, 60, this.laneY[0] + 30);
+            this.addBuilding('townhall', TEAM_ENEMY, 0, 0, w - 60, this.laneY[0] + 30);
+          } else {
+            this.addBuilding('townhall', TEAM_PLAYER, 1, 0, 60, this.laneY[1] + 30);
+            this.addBuilding('townhall', TEAM_ENEMY, 1, 0, w - 60, this.laneY[1] + 30);
+          }
+        }
+        this.selectBuilding(this.buildings[0]);
+      }
+
+      addBuilding(type, team, lane, lanePos, x, y) {
+        let b = new Building(this.nextId++, type, team, lane, lanePos, x, y);
+        this.buildings.push(b);
+        return b;
+      }
+
+      spawnUnit(type, team, lane) {
+        let pCount = this.units.filter(u => u.team === team).length;
+        if (team === TEAM_PLAYER && pCount >= this.maxPop) return false;
+
+        let startX = team === TEAM_PLAYER ? 70 : this.canvas.width - 70;
+        let targetY = this.laneY[lane] - (Math.random() * 16 - 8);
+
+        let mods = this.globalUpgrades[team];
+        let u = new Unit(this.nextId++, type, team, lane, startX, targetY, mods.attack, mods.hp);
+        this.units.push(u);
+        return true;
+      }
+
+      handleCanvasClick(e) {
+        let rect = this.canvas.getBoundingClientRect();
+        let mx = e.clientX - rect.left;
+        let my = e.clientY - rect.top;
+
+        // Click building detection
+        let clickedBldg = null;
+        for (let b of this.buildings) {
+          if (!b.active) continue;
+          if (mx >= b.x - b.width / 2 && mx <= b.x + b.width / 2 &&
+            my >= b.y - b.height && my <= b.y) {
+            clickedBldg = b;
+            break;
+          }
+        }
+        if (clickedBldg) {
+          this.selectBuilding(clickedBldg);
+        }
+      }
+
+      selectBuilding(b) {
+        this.selectedBuilding = b;
+        this.renderSelectionInfo();
+      }
+
+      renderSelectionInfo() {
+        let container = document.getElementById('info-content');
+        if (!this.selectedBuilding || !this.selectedBuilding.active) {
+          container.innerHTML = `<div class="info-title">No selection</div><div class="info-desc">Click on a building to manage.</div>`;
+          return;
+        }
+        let b = this.selectedBuilding;
+        let base = BASE_BUILDING_DATA[b.type];
+        let isPlayer = b.team === TEAM_PLAYER;
+        let upCost = Math.round(base.cost * 1.4 * b.level);
+        let upBtnHtml = (isPlayer && b.level < 3) ?
+          `<button class="btn" style="margin-top:10px; width:100%;" onclick="game.uiAction('upgradeBuilding', ${b.id})">Upgrade to Lv${b.level + 1} <span class="cost">${upCost} G</span></button>` : '';
+
+        if (b.level >= 3) upBtnHtml = `<div style="font-size:11px;color:#2ecc71;margin-top:8px;font-weight:bold;">MAX LEVEL REACHED</div>`;
+
+        container.innerHTML = `
+                  <div class="info-title">${base.name} (Lv ${b.level})</div>
+                  <div style="font-size:11px; color:${isPlayer ? '#4a90e2' : '#e74c3c'}; font-weight:bold; margin-bottom:4px;">${isPlayer ? 'Alliance Alliance' : 'Enemy Clan'} Structure</div>
+                  <div class="info-desc">${base.desc}</div>
+                  <div class="info-stats">
+                      <span>HP: ${b.hp} / ${b.maxHp}</span>
+                      <span>Lane: ${b.lane === 0 ? 'Top Lane' : 'Bottom Lane'}</span>
+                  </div>
+                  ${upBtnHtml}
+              `;
+      }
+
+      uiAction(action, param) {
+        if (!this.running) return;
+
+        if (action === 'build') {
+          let cost = BASE_BUILDING_DATA[param].cost;
+          if (this.gold >= cost) {
+            // Find an available layout slot on lanes
+            let built = this.tryBuildStructure(param, TEAM_PLAYER);
+            if (built) {
+              this.gold -= cost;
+              audio.play('build');
+              this.floatingTexts.push(new FloatingText(built.x, built.y - 40, `-${cost} G`, '#ff6666'));
+            }
+          }
+        } else if (action === 'upgradeBuilding') {
+          let b = this.buildings.find(x => x.id === param);
+          if (b && b.team === TEAM_PLAYER) {
+            let cost = Math.round(BASE_BUILDING_DATA[b.type].cost * 1.4 * b.level);
+            if (this.gold >= cost) {
+              if (b.upgrade()) {
+                this.gold -= cost;
+                audio.play('build');
+                this.floatingTexts.push(new FloatingText(b.x, b.y - 60, `Upgraded!`, '#2ecc71'));
+                this.renderSelectionInfo();
+              }
+            }
+          }
+        } else if (action === 'upgradeGlobal') {
+          let cost = this.upgradeCosts[param];
+          if (this.gold >= cost) {
+            this.gold -= cost;
+            if (param === 'attack') this.globalUpgrades.player.attack += 0.25;
+            if (param === 'hp') this.globalUpgrades.player.hp += 0.25;
+            if (param === 'spawn') this.globalUpgrades.player.spawn += 0.30;
+            if (param === 'income') this.globalUpgrades.player.income += 3;
+
+            this.upgradeCosts[param] = Math.round(cost * 1.5);
+            audio.play('build');
+            this.updateUIButtons();
+          }
+        } else if (action === 'spawnUnit') {
+          let uSpec = UNIT_DATA[param];
+          if (this.gold >= uSpec.cost) {
+            let randLane = Math.floor(Math.random() * this.laneCount);
+            if (this.spawnUnit(param, TEAM_PLAYER, randLane)) {
+              this.gold -= uSpec.cost;
+            }
+          }
+        }
+        this.renderHUD();
+      }
+
+      tryBuildStructure(type, team) {
+        // Compute lane and specific positional slot offset coordinates dynamically
+        let lane = Math.floor(Math.random() * this.laneCount);
+        let sameBldgs = this.buildings.filter(b => b.team === team && b.lane === lane && b.type === type);
+        if (sameBldgs.length >= 3) {
+          // Try alternate lane
+          lane = lane === 0 ? 1 : 0;
+          sameBldgs = this.buildings.filter(b => b.team === team && b.lane === lane && b.type === type);
+          if (sameBldgs.length >= 3) return null; // cap reached per lane
+        }
+
+        let slotIdx = sameBldgs.length + 1;
+        let xOffset = 130 + slotIdx * 65;
+        if (type === 'wall') xOffset = 360; // walls further advanced ahead of core
+
+        let actualX = team === TEAM_PLAYER ? xOffset : this.canvas.width - xOffset;
+        let actualY = this.laneY[lane] + 25;
+
+        return this.addBuilding(type, team, lane, slotIdx, actualX, actualY);
+      }
+
+      updateUIButtons() {
+        document.getElementById('cost-build-mine').innerText = `${BASE_BUILDING_DATA.mine.cost} G`;
+        document.getElementById('cost-build-barracks').innerText = `${BASE_BUILDING_DATA.barracks.cost} G`;
+        document.getElementById('cost-build-farm').innerText = `${BASE_BUILDING_DATA.farm.cost} G`;
+        document.getElementById('cost-build-wall').innerText = `${BASE_BUILDING_DATA.wall.cost} G`;
+
+        document.getElementById('cost-up-atk').innerText = `${this.upgradeCosts.attack} G`;
+        document.getElementById('cost-up-hp').innerText = `${this.upgradeCosts.hp} G`;
+        document.getElementById('cost-up-spawn').innerText = `${this.upgradeCosts.spawn} G`;
+        document.getElementById('cost-up-income').innerText = `${this.upgradeCosts.income} G`;
+      }
+
+      renderHUD() {
+        document.getElementById('hud-gold').innerText = Math.floor(this.gold);
+
+        // Calculate dynamic passive income representation
+        let mineCount = this.buildings.filter(b => b.active && b.team === TEAM_PLAYER && b.type === 'mine');
+        let mineInc = mineCount.reduce((sum, b) => sum + (2 * b.level), 0);
+        let totalInc = 2 + mineInc + this.globalUpgrades.player.income;
+        document.getElementById('hud-income').innerText = `(+${totalInc}/s)`;
+
+        // Population
+        let farmCount = this.buildings.filter(b => b.active && b.team === TEAM_PLAYER && b.type === 'farm');
+        this.maxPop = 20 + farmCount.reduce((sum, b) => sum + (b.level * 10), 0);
+        let pCount = this.units.filter(u => u.team === TEAM_PLAYER).length;
+        document.getElementById('hud-pop').innerText = `${pCount} / ${this.maxPop}`;
+
+        // Format time
+        let m = Math.floor(this.gameTime / 60).toString().padStart(2, '0');
+        let s = Math.floor(this.gameTime % 60).toString().padStart(2, '0');
+        document.getElementById('hud-time').innerText = `${m}:${s}`;
+      }
+
+      executeEnemyAI(dt) {
+        this.aiDecisionTimer += dt;
+        if (this.aiDecisionTimer < 2.0) return;
+        this.aiDecisionTimer = 0;
+
+        // Scale difficulty factor based on elapsed game timeline
+        this.aiDiffScale = 1.0 + (this.gameTime / 100);
+
+        let eGoldMod = 1.5 * this.aiDiffScale;
+        let activeUnits = this.units.filter(u => u.team === TEAM_ENEMY).length;
+
+        // Simple decision tree weights
+        let r = Math.random();
+        let randLane = Math.floor(Math.random() * this.laneCount);
+
+        if (activeUnits < 15 * this.aiDiffScale) {
+          if (r < 0.45) this.spawnUnit('soldier', TEAM_ENEMY, randLane);
+          else if (r < 0.75) this.spawnUnit('archer', TEAM_ENEMY, randLane);
+          else if (r < 0.95 && this.gameTime > 40) this.spawnUnit('knight', TEAM_ENEMY, randLane);
+        }
+
+        // AI building logic
+        if (Math.random() < 0.25) {
+          let bTypes = ['mine', 'barracks', 'wall', 'farm'];
+          let pick = bTypes[Math.floor(Math.random() * bTypes.length)];
+          this.tryBuildStructure(pick, TEAM_ENEMY);
+        }
+      }
+
+      loop(timestamp) {
+        let dt = (timestamp - this.lastTime) / 1000;
+        this.lastTime = timestamp;
+
+        if (this.running) {
+          this.gameTime += dt;
+
+          // Economy Ticks (every second)
+          let pCount = this.units.filter(u => u.team === TEAM_PLAYER).length;
+          let mineCount = this.buildings.filter(b => b.active && b.team === TEAM_PLAYER && b.type === 'mine');
+          let mineInc = mineCount.reduce((sum, b) => sum + (2 * b.level), 0);
+          this.gold += (2 + mineInc + this.globalUpgrades.player.income) * dt;
+
+          // Building Logic Hooks (Auto Barracks Spawning)
+          for (let b of this.buildings) {
+            if (!b.active || b.type !== 'barracks') continue;
+            b.spawnTimer += dt * (b.team === TEAM_PLAYER ? this.globalUpgrades.player.spawn : 1.0);
+            let thresh = 9.0 - (b.level * 1.5);
+            if (b.spawnTimer >= thresh) {
+              b.spawnTimer = 0;
+              let roll = Math.random();
+              let ut = roll < 0.6 ? 'soldier' : 'archer';
+              if (b.level === 3 && roll > 0.8) ut = 'knight';
+              this.spawnUnit(ut, b.team, b.lane);
+            }
+          }
+
+          this.executeEnemyAI(dt);
+          this.updateEntities();
+          this.checkCollisions();
+          this.checkVictoryConditions();
+          this.renderHUD();
+        }
+
+        this.draw();
+        requestAnimationFrame((t) => this.loop(t));
+      }
+
+      updateEntities() {
+        // Filter active entities
+        this.units = this.units.filter(u => u.active);
+        this.projectiles = this.projectiles.filter(p => !p.dead);
+
+        // Process Floating texts
+        for (let ft of this.floatingTexts) ft.update();
+        this.floatingTexts = this.floatingTexts.filter(ft => ft.life > 0);
+
+        // Particles
+        for (let p of this.particles) p.update();
+        this.particles = this.particles.filter(p => p.life > 0);
+
+        // Update units
+        let playerUnits = this.units.filter(u => u.team === TEAM_PLAYER);
+        let enemyUnits = this.units.filter(u => u.team === TEAM_ENEMY);
+        let playerBldgs = this.buildings.filter(b => b.active && b.team === TEAM_PLAYER);
+        let enemyBldgs = this.buildings.filter(b => b.active && b.team === TEAM_ENEMY);
+
+        for (let u of this.units) {
+          if (u.team === TEAM_PLAYER) {
+            u.update(enemyUnits, enemyBldgs, this.projectiles);
+          } else {
+            u.update(playerUnits, playerBldgs, this.projectiles);
+          }
+        }
+
+        // Projectiles
+        for (let p of this.projectiles) p.update();
+      }
+
+      checkCollisions() {
+        // Simple soft physical spacing constraint push logic for frontline units
+        for (let i = 0; i < this.units.length; i++) {
+          for (let j = i + 1; j < this.units.length; j++) {
+            let u1 = this.units[i];
+            let u2 = this.units[j];
+            if (u1.lane !== u2.lane) continue;
+
+            let dx = u2.x - u1.x;
+            let dist = Math.abs(dx);
+            let minDist = (u1.size + u2.size) * 0.9;
+
+            if (dist < minDist && dist > 0) {
+              let overlap = minDist - dist;
+              // Push slightly apart horizontally
+              let sign = dx > 0 ? 1 : -1;
+              u1.x -= sign * overlap * 0.5;
+              u2.x += sign * overlap * 0.5;
+            }
+          }
+        }
+      }
+
+      checkVictoryConditions() {
+        let ptHalls = this.buildings.filter(b => b.type === 'townhall' && b.team === TEAM_PLAYER && b.active);
+        let etHalls = this.buildings.filter(b => b.type === 'townhall' && b.team === TEAM_ENEMY && b.active);
+
+        if (ptHalls.length === 0) {
+          this.endGame(false);
+        } else if (etHalls.length === 0) {
+          this.endGame(true);
+        }
+      }
+
+      endGame(isWin) {
+        this.running = false;
+        audio.play('victory');
+
+        let title = document.getElementById('m-title');
+        let txt = document.getElementById('m-text');
+        let btn = document.getElementById('m-btn');
+        let overlay = document.getElementById('modal-overlay');
+
+        overlay.style.display = 'flex';
+        if (isWin) {
+          title.innerText = "VICTORY!";
+          title.className = "modal-title win-title";
+          txt.innerText = `Superb strategy commander! You completely dismantled the opposing kingdom's defenses in ${Math.floor(this.gameTime)} seconds.`;
+          btn.innerText = "Claim Another Glory";
+
+          // Save best progress
+          let currentBest = localStorage.getItem('kb_best_time');
+          if (!currentBest || this.gameTime < parseFloat(currentBest)) {
+            localStorage.setItem('kb_best_time', this.gameTime.toString());
+          }
+        } else {
+          title.innerText = "DEFEAT";
+          title.className = "modal-title lose-title";
+          txt.innerText = "Your royal Town Hall was crushed to dust under the heavy momentum of enemy forces. Refine your defenses next time!";
+          btn.innerText = "Rebuild Kingdom";
+        }
+        this.loadSaveData();
+      }
+
+      loadSaveData() {
+        let best = localStorage.getItem('kb_best_time');
+        let el = document.getElementById('m-storage');
+        if (best) {
+          let m = Math.floor(best / 60).toString().padStart(2, '0');
+          let s = Math.floor(best % 60).toString().padStart(2, '0');
+          el.innerText = `Best Clear Speed Time Record: ${m}:${s}`;
+        } else {
+          el.innerText = `Best Time: None recorded yet`;
+        }
+      }
+
+      closeModal() {
+        document.getElementById('modal-overlay').style.display = 'none';
+        this.resetGame();
+        this.running = true;
+        this.lastTime = performance.now();
+      }
+
+      draw() {
+        let ctx = this.ctx;
+        let w = this.canvas.width;
+        let h = this.canvas.height;
+
+        // Ground & environment base pass
+        ctx.fillStyle = '#435f39';
+        ctx.fillRect(0, 0, w, h);
+
+        // Draw lanes pathways
+        ctx.fillStyle = '#4d6942';
+        for (let ly of this.laneY) {
+          ctx.fillRect(0, ly - 35, w, 70);
+          // Central dividing line guide dash
+          ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+          ctx.setLineDash([15, 15]);
+          ctx.beginPath();
+          ctx.moveTo(0, ly);
+          ctx.lineTo(w, ly);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+
+        // Render active buildings
+        for (let b of this.buildings) {
+          if (b.active) b.draw(ctx, b === this.selectedBuilding);
+        }
+
+        // Units rendering
+        for (let u of this.units) {
+          u.draw(ctx);
+        }
+
+        // Projectiles
+        for (let p of this.projectiles) {
+          p.draw(ctx);
+        }
+
+        // Particles
+        for (let p of this.particles) {
+          p.draw(ctx);
+        }
+
+        // Floating damage texts
+        for (let ft of this.floatingTexts) {
+          ft.draw(ctx);
+        }
+      }
+    }
+
+    // Run game instantiation on window load context
+    const game = new GameEngine();
+    window.onload = () => { game.init(); };
+  </script>
+
+</body>
+
+
+</html>
