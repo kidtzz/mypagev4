@@ -11,15 +11,17 @@
     </image>
     <generator>Hugo -- 0.150.0</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 29 Jun 2026 21:57:41 +0700</lastBuildDate>
+    <lastBuildDate>Mon, 06 Jul 2026 16:49:06 +0700</lastBuildDate>
     <atom:link href="http://localhost:1313/arts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Timer</title>
-      <link>http://localhost:1313/arts/timer/</link>
-      <pubDate>Mon, 29 Jun 2026 21:57:41 +0700</pubDate>
-      <guid>http://localhost:1313/arts/timer/</guid>
+      <title>Anything</title>
+      <link>http://localhost:1313/arts/anything/</link>
+      <pubDate>Mon, 06 Jul 2026 16:49:06 +0700</pubDate>
+      <guid>http://localhost:1313/arts/anything/</guid>
       <description>&lt;p&gt;Here &amp;ndash;&amp;gt;
-&lt;a href=&#34;http://localhost:1313/timer/timer-study.html&#34;&gt;Timer check&lt;/a&gt;&lt;/p&gt;</description>
+&lt;a href=&#34;http://localhost:1313/timer/timer-study.html&#34;&gt;Timer check&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Here&amp;ndash;&amp;gt;
+&lt;a href=&#34;http://localhost:1313/abstract/cyberfloating.html&#34;&gt;Abstract&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>Games Simple</title>
