@@ -46,7 +46,7 @@
     let bgAngle = 0;
 
     const fontStack = "bold %fspx 'Consolas', 'Monaco', 'Roboto Mono', 'Courier New', monospace";
-    const isMobile = window.innerWidth < 768;
+    const isMobile = window.innerWidth < 768 || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     const maxWords = isMobile ? 18 : 32;
 
     const mouse = {
@@ -55,13 +55,16 @@
       radius: isMobile ? 60 : 100
     };
 
-    // Event Listener Interaksi Mouse & Touch
-    window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
-    window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
-    window.addEventListener('touchmove', (e) => {
-      if (e.touches.length > 0) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }
-    });
-    window.addEventListener('touchend', () => { mouse.x = null; mouse.y = null; });
+    // Event Listener Interaksi Mouse (Hanya aktif jika BUKAN mobile/Android)
+    if (!isMobile) {
+      window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+      window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+    } else {
+      // Jika di Android/Mobile, ketukan layar akan me-refresh susunan kata
+      window.addEventListener('click', () => {
+        init();
+      });
+    }
 
     function resizeCanvas() {
       canvas.width = window.innerWidth;
@@ -113,7 +116,8 @@
       }
 
       update() {
-        if (mouse.x !== null && mouse.y !== null) {
+        // Interaksi dorongan mouse dimatikan total untuk Android/Mobile
+        if (!isMobile && mouse.x !== null && mouse.y !== null) {
           const textCenterX = this.x + this.width / 2;
           const textCenterY = this.y - this.height / 2;
           const dx = textCenterX - mouse.x;
@@ -123,7 +127,7 @@
           if (distance < mouse.radius) {
             const force = (mouse.radius - distance) / mouse.radius;
             const angle = Math.atan2(dy, dx);
-            const pushSpeed = isMobile ? 2.0 : 3.5;
+            const pushSpeed = 3.5;
             this.vx += Math.cos(angle) * force * pushSpeed;
             this.vy += Math.sin(angle) * force * pushSpeed;
           }
@@ -186,7 +190,7 @@
         gradient.addColorStop(1, '#0a192f');
       }
       else if (currentHour >= 16 && currentHour < 19) {
-        // 3. SORE / SENJA (16:00 - 19:00) - Twilight yang agak cerah & hangat (Favorit Anda)
+        // 3. SORE / SENJA (16:00 - 19:00) - Twilight yang agak cerah & hangat
         gradient.addColorStop(0, '#0c0915');
         gradient.addColorStop(0.35, '#181e35');
         gradient.addColorStop(0.7, '#322250');
