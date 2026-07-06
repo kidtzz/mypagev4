@@ -17,11 +17,12 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-color: #030106;
-      /* Base fallback dipergelap */
+      background-color: #0c0915;
+      /* Base fallback color */
       font-family: 'Consolas', 'Monaco', 'Roboto Mono', 'Courier New', Courier, monospace;
       font-weight: bold;
       transition: background-color 1s ease;
+      /* Transisi halus saat perpindahan waktu */
     }
 
     canvas {
@@ -46,16 +47,15 @@
 
     const fontStack = "bold %fspx 'Consolas', 'Monaco', 'Roboto Mono', 'Courier New', monospace";
     const isMobile = window.innerWidth < 768;
-
-    // Jumlah kata sedikit dikurangi agar tidak terlalu padat karena font membesar
-    const maxWords = isMobile ? 15 : 26;
+    const maxWords = isMobile ? 18 : 32;
 
     const mouse = {
       x: null,
       y: null,
-      radius: isMobile ? 70 : 120 // Radius dorongan sedikit diperbesar mengikuti ukuran font
+      radius: isMobile ? 60 : 100
     };
 
+    // Event Listener Interaksi Mouse & Touch
     window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
     window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
     window.addEventListener('touchmove', (e) => {
@@ -77,9 +77,8 @@
       }
 
       reset(isInitial = false) {
-        // FONT DIปรับ AGAK LEBIH BESAR: HP (12px - 16px) | Desktop (14px - 24px)
-        const minFont = isMobile ? 12 : 14;
-        const maxFont = isMobile ? 16 : 24;
+        const minFont = isMobile ? 8 : 10;
+        const maxFont = isMobile ? 12 : 18;
 
         this.fontSize = Math.floor(Math.random() * (maxFont - minFont + 1)) + minFont;
 
@@ -124,7 +123,7 @@
           if (distance < mouse.radius) {
             const force = (mouse.radius - distance) / mouse.radius;
             const angle = Math.atan2(dy, dx);
-            const pushSpeed = isMobile ? 2.2 : 3.8;
+            const pushSpeed = isMobile ? 2.0 : 3.5;
             this.vx += Math.cos(angle) * force * pushSpeed;
             this.vy += Math.sin(angle) * force * pushSpeed;
           }
@@ -152,7 +151,7 @@
       }
     }
 
-    // WARNA GRADASI DIBUAT JAUH LEBIH GELAP & DEEP
+    // LOGIKA PERUBAHAN BACKGROUND BERDASARKAN JAM ASLI
     function drawDynamicBackground() {
       bgAngle += 0.0012;
 
@@ -167,39 +166,40 @@
 
       const gradient = ctx.createLinearGradient(x1, y1, x2, y2);
 
+      // Ambil jam perangkat lokal saat ini (0-23)
       const currentHour = new Date().getHours();
 
       if (currentHour >= 4 && currentHour < 6) {
-        // 1. SUBUH / FAJAR - Dimmed down fajar hangat
-        gradient.addColorStop(0, '#030106');
-        gradient.addColorStop(0.4, '#0f0a1c');
-        gradient.addColorStop(0.75, '#261020');
-        gradient.addColorStop(0.95, '#381822');
-        gradient.addColorStop(1, '#030106');
+        // 1. SUBUH / FAJAR (04:00 - 06:00) - Semburat fajar merah muda & ungu tua
+        gradient.addColorStop(0, '#0a0512');
+        gradient.addColorStop(0.4, '#1b1130');
+        gradient.addColorStop(0.75, '#401b35');
+        gradient.addColorStop(0.95, '#5e2938'); // Merah fajar
+        gradient.addColorStop(1, '#0a0512');
       }
       else if (currentHour >= 6 && currentHour < 16) {
-        // 2. SIANG / PAGI - Deep Navy berkelas (kontras tinggi untuk teks siang hari)
-        gradient.addColorStop(0, '#040a15');
-        gradient.addColorStop(0.35, '#0b1424');
-        gradient.addColorStop(0.7, '#12243b');
-        gradient.addColorStop(0.92, '#1b3754');
-        gradient.addColorStop(1, '#040a15');
+        // 2. SIANG / PAGI (06:00 - 16:00) - Biru langit cerah (Dibuat kontras gelap agar teks terbaca)
+        gradient.addColorStop(0, '#0a192f');
+        gradient.addColorStop(0.35, '#172a45');
+        gradient.addColorStop(0.7, '#1f3d60');     // Biru langit cerah redup
+        gradient.addColorStop(0.92, '#2e5b88');
+        gradient.addColorStop(1, '#0a192f');
       }
       else if (currentHour >= 16 && currentHour < 19) {
-        // 3. SORE / SENJA - Twilight yang dipergelap (agak redup tapi warna senja tetap samar terasa)
-        gradient.addColorStop(0, '#05030a');
-        gradient.addColorStop(0.35, '#0d101d');
-        gradient.addColorStop(0.7, '#1b122b');
-        gradient.addColorStop(0.92, '#2b191c');
-        gradient.addColorStop(1, '#05030a');
+        // 3. SORE / SENJA (16:00 - 19:00) - Twilight yang agak cerah & hangat (Favorit Anda)
+        gradient.addColorStop(0, '#0c0915');
+        gradient.addColorStop(0.35, '#181e35');
+        gradient.addColorStop(0.7, '#322250');
+        gradient.addColorStop(0.92, '#4e2e34');
+        gradient.addColorStop(1, '#0c0915');
       }
       else {
-        // 4. MALAM / MIDNIGHT - Berubah jadi ultra-dark cyber mode
-        gradient.addColorStop(0, '#010003');
-        gradient.addColorStop(0.35, '#02040a');
-        gradient.addColorStop(0.7, '#06030b');
-        gradient.addColorStop(0.92, '#0a0405');
-        gradient.addColorStop(1, '#010003');
+        // 4. MALAM / MIDNIGHT (19:00 - 04:00) - Deep cyber night yang misterius & gelap
+        gradient.addColorStop(0, '#020105');
+        gradient.addColorStop(0.35, '#050a14');
+        gradient.addColorStop(0.7, '#0f071c');
+        gradient.addColorStop(0.92, '#170b0d');
+        gradient.addColorStop(1, '#020105');
       }
 
       ctx.fillStyle = gradient;
