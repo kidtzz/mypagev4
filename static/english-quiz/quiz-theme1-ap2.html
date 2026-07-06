@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global English Placement Framework</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: ['class', '[data-theme="dark"]'],
+        }
+    </script>
+    <style>
+        html[data-theme="light"] {
+            --bg: #ffffff;
+            --text: #0f172a;
+            --border: #e2e8f0;
+            --card-bg: #ffffff;
+            --accent: #0f172a;
+            --accent-text: #ffffff;
+            --muted-bg: #f8fafc;
+        }
+
+        html[data-theme="dark"] {
+            --bg: #0f172a;
+            --text: #e2e8f0;
+            --border: #1e293b;
+            --card-bg: #0f172a;
+            --accent: #f8fafc;
+            --accent-text: #0f172a;
+            --muted-bg: #1e293b;
+        }
+
+        html[data-theme="sepia"] {
+            --bg: #f4ecd8;
+            --text: #433422;
+            --border: #e4d5b7;
+            --card-bg: #fdf6e3;
+            --accent: #433422;
+            --accent-text: #fdf6e3;
+            --muted-bg: #eae0c7;
+        }
+
+        html[data-theme="nord"] {
+            --bg: #2e3440;
+            --text: #eceff4;
+            --border: #3b4252;
+            --card-bg: #2e3440;
+            --accent: #88c0d0;
+            --accent-text: #2e3440;
+            --muted-bg: #3b4252;
+        }
+
+        html[data-theme="forest"] {
+            --bg: #141d17;
+            --text: #e1e7e4;
+            --border: #223127;
+            --card-bg: #141d17;
+            --accent: #a3b899;
+            --accent-text: #141d17;
+            --muted-bg: #223127;
+        }
+
+        html[data-theme="cyberpunk"] {
+            --bg: #000000;
+            --text: #00ff66;
+            --border: #333333;
+            --card-bg: #050505;
+            --accent: #ff007f;
+            --accent-text: #ffffff;
+            --muted-bg: #111111;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+        }
+
+        header,
+        .card-border {
+            border-color: var(--border);
+            background-color: var(--bg);
+        }
+
+        .theme-border {
+            border-color: var(--border);
+        }
+
+        .theme-card {
+            background-color: var(--card-bg);
+            border-color: var(--border);
+        }
+
+        .theme-muted {
+            background-color: var(--muted-bg);
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--accent-text);
+        }
+    </style>
+</head>
+
+<body class="font-sans min-h-screen antialiased transition-colors duration-200">
+
+    <!-- Clean Navigation Bar -->
+    <header class="border-b sticky top-0 z-40 bg-inherit">
+        <div class="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between gap-2">
+
+            <!-- Header Title -->
+            <div class="flex items-center space-x-2">
+                <h1 class="text-base font-bold tracking-tight">YAS KIDTZ</h1>
+                <span class="text-xs text-slate-400 hidden sm:inline"> | Placement Test</span>
+            </div>
+
+            <!-- Utilities: Theme selector stays visible on Android, progress hidden on mobile -->
+            <div class="flex items-center space-x-3 text-xs">
+                <button onclick="cycleThemeMode()"
+                    class="p-1.5 rounded-lg border theme-border hover:opacity-80 transition flex items-center space-x-1"
+                    title="Change Theme">
+                    <i data-lucide="palette" class="w-4 h-4"></i>
+                    <span id="themeLabelName"
+                        class="text-[11px] font-medium uppercase tracking-wider px-1 hidden sm:inline">Light</span>
+                </button>
+
+                <!-- Hidden on mobile (Android) using 'hidden sm:flex' -->
+                <div id="topNavStats" class="hidden sm:flex items-center space-x-3">
+                    <span id="navProgressText" class="font-medium opacity-60">0 / 10 Completed</span>
+                    <div class="w-16 bg-slate-200/50 rounded-full h-1 overflow-hidden">
+                        <div id="navProgressBar" class="h-1 rounded-full transition-all btn-accent" style="width: 0%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-4 py-6 md:py-10">
+
+        <!-- VIEW 1: WELCOME / LANDING DASHBOARD -->
+        <div id="welcomeView" class="hidden"></div>
+
+        <!-- VIEW 2: EXAM INTERFACE -->
+        <div id="examView" class="hidden space-y-8">
+
+            <!-- Questions List Layout -->
+            <div id="questionsContainer" class="space-y-6">
+                <!-- Populated programmatically -->
+            </div>
+
+            <!-- Direct Submit Area -->
+            <div class="pt-6 flex justify-center sm:justify-end">
+                <button id="submitTestBtn" onclick="calculateFinalMetrics()"
+                    class="w-full sm:w-auto btn-accent px-8 py-3 rounded-xl text-sm font-semibold tracking-wide transition shadow-sm">
+                    Submit
+                </button>
+            </div>
+
+            <!-- Minimalist Question Board Index Map -->
+            <div class="pt-4 border-t theme-border">
+                <div class="flex justify-between items-center mb-3 text-xs">
+                    <h3 class="font-semibold opacity-60 uppercase tracking-wider">Question Map</h3>
+                    <button onclick="clearCurrentProgress()"
+                        class="text-rose-500 hover:underline flex items-center space-x-1">
+                        <i data-lucide="refresh-cw" class="w-3 h-3"></i>
+                        <span>Reset Grid</span>
+                    </button>
+                </div>
+                <div id="questionGridMap" class="flex flex-wrap gap-1.5">
+                    <!-- Generated programmatically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 3: REPORT DASHBOARD -->
+        <div id="reportView" class="hidden space-y-6 max-w-xl mx-auto">
+            <div class="border theme-border rounded-xl p-8 text-center theme-muted">
+                <span class="text-xs font-bold tracking-widest opacity-60 uppercase">Result</span>
+                <h2 id="displayCompositeScore" class="text-5xl font-black my-3 tracking-tight text-indigo-600">0%</h2>
+                <p id="displayCorrectRatio" class="text-sm font-medium opacity-80">0 dari 10 Jawaban Benar</p>
+                <p id="certDateStamp" class="text-xs opacity-50 mt-2">Date</p>
+            </div>
+
+            <!-- Actions Panel -->
+            <div class="flex gap-3">
+                <button onclick="restartExam()"
+                    class="flex-1 btn-accent font-medium py-2.5 px-4 rounded-lg text-sm transition">
+                    New Quiz
+                </button>
+                <button onclick="goBackToQuizList()"
+                    class="flex-1 border theme-border font-medium py-2.5 px-4 rounded-lg text-sm transition hover:opacity-80">
+                    Back to List
+                </button>
+            </div>
+
+            <!-- Itemized Reviews -->
+            <div class="space-y-4 pt-6 border-t theme-border">
+                <h3 class="text-sm font-bold">Review Summary</h3>
+                <div id="reviewMatrixContainer" class="space-y-3">
+                    <!-- Populated programmatically -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        let MASTER_QUESTION_BANK = [];
+        let randomizedQuestionsOrder = [];
+        let userResponsesMatrix = {};
+
+        const QUESTIONS_TO_SHOW = 10;
+
+        const THEME_LIST = ['light', 'dark', 'sepia', 'nord', 'forest', 'cyberpunk'];
+        let currentThemeIndex = 0;
+
+        function cycleThemeMode() {
+            currentThemeIndex = (currentThemeIndex + 1) % THEME_LIST.length;
+            const chosenTheme = THEME_LIST[currentThemeIndex];
+
+            document.documentElement.setAttribute('data-theme', chosenTheme);
+            document.getElementById('themeLabelName').innerText = chosenTheme;
+            localStorage.setItem('multiThemePreference', chosenTheme);
+        }
+
+        const savedTheme = localStorage.getItem('multiThemePreference');
+        if (savedTheme && THEME_LIST.includes(savedTheme)) {
+            currentThemeIndex = THEME_LIST.indexOf(savedTheme);
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            window.addEventListener('DOMContentLoaded', () => {
+                document.getElementById('themeLabelName').innerText = savedTheme;
+            });
+        }
+
+        async function loadQuestionBank() {
+            const params = new URLSearchParams(window.location.search);
+            const quizId = params.get('quiz') || 'ap1';
+            const response = await fetch(`/english-quiz/data/${quizId}.json`);
+            const data = await response.json();
+            MASTER_QUESTION_BANK = data.questions;
+            initializeSystemExamState();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            loadQuestionBank();
+        });
+
+        function initializeSystemExamState() {
+            startExam();
+        }
+
+        function startExam() {
+            let tempArray = [...MASTER_QUESTION_BANK];
+
+            for (let i = tempArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [tempArray[i], tempArray[j]] = [tempArray[j], tempArray[i]];
+            }
+
+            randomizedQuestionsOrder = tempArray.slice(0, QUESTIONS_TO_SHOW);
+            userResponsesMatrix = {};
+
+            showExamInterfaceView();
+        }
+
+        function showView(viewId) {
+            ['welcomeView', 'examView', 'reportView'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(viewId).classList.remove('hidden');
+        }
+
+        function showExamInterfaceView() {
+            showView('examView');
+            renderQuestionsPageBlock();
+            loadInteractiveGridMap();
+        }
+
+        function updateGlobalProgressTrackers() {
+            const answeredCount = Object.keys(userResponsesMatrix).length;
+            const percentage = (answeredCount / QUESTIONS_TO_SHOW) * 100;
+
+            const progressTextEl = document.getElementById('navProgressText');
+            const progressBarEl = document.getElementById('navProgressBar');
+
+            if (progressTextEl) progressTextEl.innerText = `${answeredCount} / ${QUESTIONS_TO_SHOW} Completed`;
+            if (progressBarEl) progressBarEl.style.width = `${percentage}%`;
+        }
+
+        function loadInteractiveGridMap() {
+            const mapContainer = document.getElementById('questionGridMap');
+            mapContainer.innerHTML = '';
+
+            randomizedQuestionsOrder.forEach((question, index) => {
+                const mapCell = document.createElement('button');
+                mapCell.innerText = (index + 1).toString();
+                mapCell.className = `h-8 w-8 text-xs font-mono rounded-lg transition border flex items-center justify-center`;
+
+                const isAnswered = userResponsesMatrix[question.id] !== undefined;
+
+                if (isAnswered) {
+                    mapCell.className += ' btn-accent border-transparent font-bold';
+                } else {
+                    mapCell.className += ' bg-transparent opacity-60 theme-border hover:opacity-100';
+                }
+
+                mapCell.onclick = () => { jumpToQuestionItemIndex(index); };
+                mapContainer.appendChild(mapCell);
+            });
+        }
+
+        function renderQuestionsPageBlock() {
+            if (randomizedQuestionsOrder.length === 0) return;
+
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            randomizedQuestionsOrder.forEach((question, globalIndex) => {
+                let extraContent = '';
+
+                if (question.passage) {
+                    extraContent += `
+                        <div class="mb-4 p-3 rounded-xl border theme-border theme-muted text-sm leading-relaxed opacity-90 whitespace-pre-line">
+                            ${question.passage}
+                        </div>
+                    `;
+                }
+
+                if (question.audio) {
+                    extraContent += `
+                        <div class="mb-4">
+                            <audio controls class="w-full h-8 text-xs">
+                                <source src="${question.audio}" type="audio/mpeg">
+                            </audio>
+                        </div>
+                    `;
+                }
+
+                const questionCard = document.createElement('div');
+                questionCard.id = `q-card-item-${globalIndex}`;
+                questionCard.className = "border-b theme-border pb-6 transition-colors duration-150";
+
+                questionCard.innerHTML = `
+                    <div class="flex items-center pb-2 mb-3 text-xs opacity-50 font-bold">
+                        <span>Question ${globalIndex + 1}</span>
+                    </div>
+                    <div class="mb-4">
+                       ${extraContent}
+                        <p class="text-sm md:text-base font-semibold leading-relaxed tracking-wide">${question.text}</p>
+                    </div>
+                    <div id="options-box-wrapper-${question.id}" class="space-y-1.5"></div>
+                `;
+
+                container.appendChild(questionCard);
+                const optionsBox = document.getElementById(`options-box-wrapper-${question.id}`);
+
+                question.options.forEach(option => {
+                    const isSelected = userResponsesMatrix[question.id] === option;
+                    const optionLabel = document.createElement('label');
+                    optionLabel.className = `flex items-center p-3 rounded-lg border transition cursor-pointer text-xs font-medium select-none ${isSelected
+                        ? 'btn-accent border-transparent font-semibold'
+                        : 'border-transparent theme-muted opacity-80 hover:opacity-100'
+                        }`;
+
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = `radio_group_choice_${question.id}`;
+                    radio.value = option;
+                    radio.checked = isSelected;
+                    radio.className = 'w-3.5 h-3.5 mr-2.5 accent-current';
+                    radio.onchange = () => { selectOptionChoiceValue(question.id, option); };
+
+                    optionLabel.appendChild(radio);
+                    const labelText = document.createElement('span');
+                    labelText.innerText = option;
+                    optionLabel.appendChild(labelText);
+                    optionsBox.appendChild(optionLabel);
+                });
+            });
+
+            updateGlobalProgressTrackers();
+            lucide.createIcons();
+        }
+
+        function selectOptionChoiceValue(questionId, selectedValue) {
+            userResponsesMatrix[questionId] = selectedValue;
+            updateGlobalProgressTrackers();
+            loadInteractiveGridMap();
+        }
+
+        function jumpToQuestionItemIndex(targetGlobalIndex) {
+            setTimeout(() => {
+                const element = document.getElementById(`q-card-item-${targetGlobalIndex}`);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 100);
+        }
+
+        function clearCurrentProgress() {
+            if (confirm("Are you certain you want to clear your answers? This will reset all your current progress.")) {
+                localStorage.clear();
+                window.location.reload();
+            }
+        }
+
+        function calculateFinalMetrics() {
+            const totalAnswered = Object.keys(userResponsesMatrix).length;
+            if (totalAnswered < QUESTIONS_TO_SHOW) {
+                if (!confirm(`Warning: You have only answered ${totalAnswered} out of ${QUESTIONS_TO_SHOW} questions. Unanswered questions count as incorrect. Do you want to submit anyway?`)) {
+                    return;
+                }
+            }
+
+            let aggregateScore = 0;
+            randomizedQuestionsOrder.forEach(item => {
+                if (userResponsesMatrix[item.id] === item.answer) {
+                    aggregateScore++;
+                }
+            });
+
+            const finalPercentage = Math.round((aggregateScore / QUESTIONS_TO_SHOW) * 100);
+
+            document.getElementById('displayCompositeScore').innerText = `${finalPercentage}%`;
+            document.getElementById('displayCorrectRatio').innerText = `${aggregateScore} dari ${QUESTIONS_TO_SHOW} Jawaban Benar`;
+
+            const liveDate = new Date();
+            document.getElementById('certDateStamp').innerText = liveDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            generateItemizedReviewMatrixLayout();
+
+            showView('reportView');
+            const topNavStatsEl = document.getElementById('topNavStats');
+            if (topNavStatsEl) topNavStatsEl.classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            localStorage.clear();
+        }
+
+        function generateItemizedReviewMatrixLayout() {
+            const container = document.getElementById('reviewMatrixContainer');
+            container.innerHTML = '';
+
+            randomizedQuestionsOrder.forEach((item, idx) => {
+                const userChoice = userResponsesMatrix[item.id] || "[Belum Dijawab]";
+                const isCorrect = userChoice === item.answer;
+
+                const card = document.createElement('div');
+                card.className = `p-3 rounded-lg border text-xs ${isCorrect
+                    ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400'
+                    : 'bg-rose-500/10 border-rose-500/30 text-rose-600 dark:text-rose-400'
+                    }`;
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-1 text-[11px]">
+                        <span class="font-bold opacity-60">No. ${idx + 1}</span>
+                        <span class="font-bold">
+                            ${isCorrect ? 'Correct' : 'Incorrect'}
+                        </span>
+                    </div>
+                    <p class="font-medium mb-2 text-slate-800 dark:text-white">${item.text}</p>
+                    <div class="space-y-0.5 text-[11px] opacity-80">
+                        <div><span>Your Answer:</span> <span class="font-mono font-semibold">${userChoice}</span></div>
+                        <div><span>Correct Answer:</span> <span class="font-mono font-semibold text-emerald-600">${item.answer}</span></div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function restartExam() {
+            Object.keys(localStorage).forEach(key => {
+                if (key.includes('exam_')) {
+                    localStorage.removeItem(key);
+                }
+            });
+            location.reload();
+        }
+
+        function goBackToQuizList() {
+            window.location.href = '/arts/english-quiz/';
+        }
+    </script>
+</body>
+
+</html>
