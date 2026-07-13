@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
-    /* --- CSS RESET & ROOT --- */
+    /* --- CSS RESET & THEME TOKENS --- */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -18,20 +18,73 @@
     }
 
     :root {
-      --bg-base: #0B0B0B;
-      --card-bg: #161616;
-      --card-border: rgba(255, 255, 255, 0.07);
-      --card-border-glow: rgba(62, 207, 142, 0.3);
-      --text-main: #EDEDED;
-      --text-muted: #888888;
+      /* Default theme = Dark Soft */
+      --bg-base: #0f1216;
+      --bg-elev-1: rgba(255, 255, 255, 0.03);
+      --bg-elev-2: rgba(255, 255, 255, 0.05);
+
+      --card-bg: rgba(255, 255, 255, 0.035);
+      --card-border: rgba(255, 255, 255, 0.10);
+      --card-border-glow: rgba(62, 207, 142, 0.25);
+
+      --text-main: #F3F4F6;
+      --text-muted: rgba(243, 244, 246, 0.70);
+      --text-faint: rgba(243, 244, 246, 0.52);
+
+      --focus-ring: rgba(62, 207, 142, 0.65);
 
       /* Category Accent Colors */
-      --accent-life: #3ECF8E;
-      --accent-programming: #3B82F6;
-      --accent-career: #A855F7;
-      --accent-ideas: #06B6D4;
-      --accent-daily: #6B7280;
+      --accent-life: #34d399;
+      --accent-programming: #60a5fa;
+      --accent-career: #c084fc;
+      --accent-ideas: #22d3ee;
+      --accent-daily: #94a3b8;
+
+      /* UI */
+      --shadow-soft: 0 10px 26px rgba(0, 0, 0, 0.30);
+      --shadow-card: 0 12px 30px rgba(0, 0, 0, 0.26);
+      --shadow-card-hover: 0 18px 42px rgba(0, 0, 0, 0.36);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --content-max: 1600px;
     }
+
+    /* Theme: Light */
+    body[data-theme="light"] {
+      --bg-base: #f6f7fb;
+      --bg-elev-1: rgba(0, 0, 0, 0.02);
+      --bg-elev-2: rgba(0, 0, 0, 0.04);
+
+      --card-bg: rgba(255, 255, 255, 0.82);
+      --card-border: rgba(0, 0, 0, 0.10);
+      --card-border-glow: rgba(62, 207, 142, 0.22);
+
+      --text-main: #0b1220;
+      --text-muted: rgba(11, 18, 32, 0.70);
+      --text-faint: rgba(11, 18, 32, 0.52);
+
+      --focus-ring: rgba(16, 185, 129, 0.55);
+
+      --shadow-soft: 0 10px 26px rgba(16, 24, 40, 0.10);
+      --shadow-card: 0 12px 30px rgba(16, 24, 40, 0.10);
+      --shadow-card-hover: 0 18px 42px rgba(16, 24, 40, 0.14);
+    }
+
+    /* Theme: Dark High-Contrast */
+    body[data-theme="dark-contrast"] {
+      --bg-base: #07090c;
+      --bg-elev-1: rgba(255, 255, 255, 0.04);
+      --bg-elev-2: rgba(255, 255, 255, 0.07);
+
+      --card-bg: rgba(255, 255, 255, 0.04);
+      --card-border: rgba(255, 255, 255, 0.14);
+      --card-border-glow: rgba(62, 207, 142, 0.30);
+
+      --text-main: #ffffff;
+      --text-muted: rgba(255, 255, 255, 0.78);
+      --text-faint: rgba(255, 255, 255, 0.60);
+    }
+
 
     /* --- CUSTOM SCROLLBAR --- */
     ::-webkit-scrollbar {
@@ -135,11 +188,11 @@
 
     /* --- CONTROLS: SEARCH & FILTERS --- */
     .controls-wrapper {
-      max-width: 700px;
+      max-width: var(--content-max);
       margin: 0 auto 50px auto;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 16px;
     }
 
     .search-box {
@@ -148,22 +201,21 @@
 
     .search-box input {
       width: 100%;
-      background: rgba(22, 22, 22, 0.7);
+      background: color-mix(in srgb, var(--bg-base) 82%, transparent);
       border: 1px solid var(--card-border);
-      padding: 16px 24px;
-      border-radius: 99px;
+      padding: 14px 18px;
+      border-radius: var(--radius-pill);
       color: var(--text-main);
       font-family: inherit;
       font-size: 1rem;
       outline: none;
       backdrop-filter: blur(8px);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
     }
 
     .search-box input:focus {
       border-color: var(--accent-life);
-      box-shadow: 0 0 20px rgba(62, 207, 142, 0.15);
-      background: #161616;
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 30%, transparent);
     }
 
     .filter-chips {
@@ -174,29 +226,37 @@
     }
 
     .chip {
-      background: rgba(22, 22, 22, 0.5);
+      background: color-mix(in srgb, var(--bg-base) 72%, transparent);
       border: 1px solid var(--card-border);
-      padding: 6px 16px;
-      border-radius: 99px;
-      font-size: 0.85rem;
-      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 0.88rem;
+      font-weight: 600;
       color: var(--text-muted);
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: transform 0.12s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
       user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .chip:hover {
+      transform: translateY(-1px);
     }
 
     .chip:hover,
     .chip.active {
       color: var(--text-main);
-      border-color: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.20);
       background: var(--card-bg);
     }
 
     .chip.active {
-      border-color: var(--accent-life);
-      box-shadow: 0 0 12px rgba(62, 207, 142, 0.1);
+      border-color: color-mix(in srgb, var(--accent-life) 65%, var(--card-border));
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-life) 18%, transparent);
     }
+
+
+
 
     /* --- REAL MASONRY LAYOUT ENGINE --- */
     .masonry-grid {
@@ -491,6 +551,7 @@
       <div class="search-box">
         <input type="text" id="searchInput" placeholder="Search thoughts..." aria-label="Search thoughts real time">
       </div>
+
       <div class="filter-chips" id="filterChips" role="tablist" aria-label="Category filters">
         <span class="chip active" data-category="All" role="tab" aria-selected="true">All</span>
         <span class="chip" data-category="Life" role="tab" aria-selected="false">Life</span>
@@ -499,7 +560,10 @@
         <span class="chip" data-category="Ideas" role="tab" aria-selected="false">Ideas</span>
         <span class="chip" data-category="Daily" role="tab" aria-selected="false">Daily</span>
       </div>
+
+
     </div>
+
 
     <!-- MAIN GRID CONTAINER -->
     <main class="masonry-grid" id="masonryGrid">
@@ -520,14 +584,15 @@
 
     const DEFAULT_SORT_DESC = true;
 
-
     const accentMap = {
+
       "life": "var(--accent-life)",
       "programming": "var(--accent-programming)",
       "career": "var(--accent-career)",
       "ideas": "var(--accent-ideas)",
       "daily": "var(--accent-daily)"
     };
+
 
     // Dom References
 
@@ -537,13 +602,18 @@
     const emptyState = document.getElementById("emptyState");
 
     // Initialize System Lifecycle
-    document.addEventListener("DOMContentLoaded", initApp);
+    document.addEventListener("DOMContentLoaded", () => {
+      initApp();
+    });
+
 
     async function initApp() {
       try {
         const response = await fetch("noted.json");
+
         if (!response.ok) throw new Error("Network schema profile payload unreadable.");
         globalNotes = await response.json();
+
 
         if (DEFAULT_SORT_DESC) {
           globalNotes.sort((a, b) => {
@@ -760,6 +830,12 @@
         timeout = setTimeout(() => func.apply(this, args), wait);
       };
     }
+
+    function initTheme() {
+      // Theme toggle removed: keep default visual style (dark soft).
+      document.body.removeAttribute("data-theme");
+    }
+
   </script>
 </body>
 

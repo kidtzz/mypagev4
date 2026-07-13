@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "title": "Stress Cz work",
+    "title": "Stressed",
     "content": "Dari banyak pengalaman orang di dunia kerja, salah satu alasan mereka bertahan di pekerjaan yang berat justru bukan karena pekerjaannya ringan, melainkan karena mereka punya tim yang saling mendukung. Sebaliknya, ada juga yang memilih resign bukan karena pekerjaannya paling sulit, tetapi karena merasa tidak punya tempat bertanya atau tidak mendapat dukungan dari rekan kerja.",
     "category": "Life",
     "date": "2026-07-13"
@@ -40,5 +40,12 @@
     "content": "Premium interfaces aren't premium because of what's added; they are premium because of what's omitted. Spacing acts as a silent coordinator. If your layout feels crowded, your typography cannot save it.",
     "category": "Ideas",
     "date": "2026-06-28"
-  }
+  },
+    {
+      "id": 8,
+      "title": "hmm",
+      "content": "yey",
+      "category": "Ideas",
+      "date": "2026-06-28"
+    }
 ]

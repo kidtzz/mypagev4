@@ -1,8 +1,8 @@
-# TODO - Rapikan just-note & noted.json
-
-- [x] Kirim plan sudah disetujui oleh user.
-- [x] Rapikan `static/anote/just-note.html`: buang dead stats (CSS/JS), tampilkan emoji jika ada, rapikan format, kurangi bloat `data-full-content`.
-- [x] Rapikan `static/anote/noted.json`: dedupe & normalisasi `tags` per note (lowercase, unique), pastikan semua notes punya `tags`.
-
-- [ ] Quick verification: buka `static/anote/just-note.html` dan cek search/filter/empty state/hover.
+# TODO
+- [ ] Read `static/anote/just-note.html` (done)
+- [ ] Propose and confirm a simple, more readable theme for Android + laptop (contrast, spacing, typography, cards)
+- [ ] Update CSS in `static/anote/just-note.html`
+- [ ] Keep existing JS functionality (search/filter/masonry)
+- [ ] Validate responsive breakpoints and reduced-motion behavior
+- [ ] (Optional) run a quick local open/build check if available
 
