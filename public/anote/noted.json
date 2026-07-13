@@ -4,98 +4,41 @@
     "title": "Stress Cz work",
     "content": "Dari banyak pengalaman orang di dunia kerja, salah satu alasan mereka bertahan di pekerjaan yang berat justru bukan karena pekerjaannya ringan, melainkan karena mereka punya tim yang saling mendukung. Sebaliknya, ada juga yang memilih resign bukan karena pekerjaannya paling sulit, tetapi karena merasa tidak punya tempat bertanya atau tidak mendapat dukungan dari rekan kerja.",
     "category": "Life",
-    "emoji": "ay",
-    "date": "2026-07-13",
-    "tags": [
-      "life",
-      "life"
-    ]
+    "date": "2026-07-13"
   },
   {
     "id": 2,
     "title": "On Quiet Evenings & Loud Minds",
     "content": "Spent the evening debugging my own life direction. Realized that execution without a deeply anchored philosophy is just structured anxiety. Giving myself permission to write code that will never be shipped.",
     "category": "Life",
-    "emoji": "💭",
-    "date": "2026-07-12",
-    "tags": [
-      "mindset",
-      "reflections"
-    ]
-  },
-  {
-    "id": 3,
-    "title": "The Forgotten Art of the Linux Pipeline",
-    "content": "Spent an hour writing a complex script before realizing a sequence of `grep`, `awk`, and `sed` combined via simple pipe operators could have solved it in 12 seconds flat. Never forget core primitives.",
-    "category": "Linux",
-    "emoji": "🐧",
-    "date": "2026-07-10",
-    "tags": [
-      "cli",
-      "automation",
-      "sysadmin"
-    ]
-  },
-  {
-    "id": 4,
-    "title": "Oracle RAC Cache Fusion Magic",
-    "content": "Deep dive into Cache Fusion mechanics. Block transfers directly across the high-speed interconnect without disk I/O are incredibly elegant, yet a single bad network switch will bring down the entire cluster.",
-    "category": "Oracle",
-    "emoji": "💾",
-    "date": "2026-07-08",
-    "tags": [
-      "databases",
-      "clustering",
-      "infrastructure"
-    ]
+    "date": "2026-07-12"
   },
   {
     "id": 5,
     "title": "The Career Infinite Loop",
     "content": "Junior developers chase syntax. Mid-level developers chase patterns. Senior developers chase business outcomes. Staff engineers realize it's all just a communications problem dressed up in tech infrastructure.",
     "category": "Career",
-    "emoji": "📈",
-    "date": "2026-07-05",
-    "tags": [
-      "growth",
-      "leadership"
-    ]
+    "date": "2026-07-05"
   },
   {
     "id": 6,
     "title": "Micro-SaaS Conception Checklist",
     "content": "An idea is premium only if it addresses an existing high-frequency, low-complexity pain point. If you have to educate your core user base about why your product should exist, you are building an uphill battle.",
     "category": "Ideas",
-    "emoji": "💡",
-    "date": "2026-07-02",
-    "tags": [
-      "saas",
-      "indie-hacking"
-    ]
+    "date": "2026-07-02"
   },
   {
     "id": 7,
     "title": "July 13th Daily Checklist",
     "content": "Morning coffee. Refactor the authentication middleware. Delete 300 lines of dead code (best feeling ever). Read two chapters of Designing Data-Intensive Applications. Sleep early.",
     "category": "Daily",
-    "emoji": "📅",
-    "date": "2026-07-13",
-    "tags": [
-      "routine",
-      "productivity"
-    ]
+    "date": "2026-07-13"
   },
   {
     "id": 8,
     "title": "Designing For The Void",
     "content": "Premium interfaces aren't premium because of what's added; they are premium because of what's omitted. Spacing acts as a silent coordinator. If your layout feels crowded, your typography cannot save it.",
     "category": "Ideas",
-    "emoji": "🎨",
-    "date": "2026-06-28",
-    "tags": [
-      "design",
-      "ui",
-      "minimalism"
-    ]
+    "date": "2026-06-28"
   }
 ]

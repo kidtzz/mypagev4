@@ -28,8 +28,6 @@
       /* Category Accent Colors */
       --accent-life: #3ECF8E;
       --accent-programming: #3B82F6;
-      --accent-oracle: #EF4444;
-      --accent-linux: #F59E0B;
       --accent-career: #A855F7;
       --accent-ideas: #06B6D4;
       --accent-daily: #6B7280;
@@ -133,44 +131,7 @@
       margin: 0 auto 40px auto;
     }
 
-    /* --- META & STATISTICS PANEL --- */
-    .metrics-panel {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 16px;
-      max-width: 1100px;
-      margin: 0 auto 50px auto;
-    }
 
-    .metric-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 16px;
-      text-align: left;
-      transition: border-color 0.3s;
-    }
-
-    .metric-card:hover {
-      border-color: rgba(255, 255, 255, 0.15);
-    }
-
-    .metric-title {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-
-    .metric-value {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--text-main);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
 
     /* --- CONTROLS: SEARCH & FILTERS --- */
     .controls-wrapper {
@@ -257,11 +218,12 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 20px;
-      padding: 24px;
+      padding: 22px;
       position: relative;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
+
       transform-origin: center center;
       transition:
         transform 0.25s cubic-bezier(0.33, 1, 0.68, 1),
@@ -314,23 +276,54 @@
       box-shadow: 0 0 8px var(--cat-color, var(--text-muted));
     }
 
-    .card-emoji {
-      font-size: 1.2rem;
-    }
+
 
     .thought-card h3 {
-      font-size: 1.2rem;
+      font-size: 1.12rem;
       font-weight: 700;
       letter-spacing: -0.02em;
-      line-height: 1.4;
+      line-height: 1.35;
       color: #FFFFFF;
+      margin-top: 2px;
     }
 
+
     .thought-card p {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: #C2C2C2;
       word-wrap: break-word;
+      overflow-wrap: anywhere;
+      line-height: 1.7;
     }
+
+    .quote-card {
+      border-color: rgba(255, 255, 255, 0.14);
+      box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.35),
+        0 0 22px rgba(255, 255, 255, 0.03);
+    }
+
+    .quote-card .card-content-preview {
+      font-style: italic;
+    }
+
+
+
+    /* Card content */
+    .card-content-preview {
+      overflow-wrap: anywhere;
+      word-wrap: break-word;
+      line-height: 1.7;
+      color: #C2C2C2;
+    }
+
+
+    .thought-card:focus-visible {
+      outline: 2px solid rgba(62, 207, 142, 0.65);
+      outline-offset: 3px;
+    }
+
+
 
     .card-tags {
       display: flex;
@@ -408,24 +401,18 @@
       .masonry-grid {
         grid-template-columns: repeat(3, 1fr);
       }
-
-      .metrics-panel {
-        grid-template-columns: repeat(3, 1fr);
-      }
     }
+
 
     @media (max-width: 768px) {
       .masonry-grid {
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .metrics-panel {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
       .app-container {
         padding: 40px 20px;
       }
+
 
       header h1 {
         font-size: 2.5rem;
@@ -437,46 +424,68 @@
         grid-template-columns: repeat(1, 1fr);
       }
 
-      .metrics-panel {
-        grid-template-columns: repeat(1, 1fr);
+      .app-container {
+        padding: 28px 14px;
+      }
+
+
+      .controls-wrapper {
+        gap: 14px;
+        margin-bottom: 26px;
+      }
+
+      .search-box input {
+        padding: 12px 18px;
+        font-size: 0.95rem;
+      }
+
+
+      .masonry-col {
+        gap: 16px;
+      }
+
+      .thought-card {
+        padding: 16px;
+        border-radius: 16px;
+      }
+
+
+      .thought-card h3 {
+        font-size: 1.05rem;
+        line-height: 1.35;
+      }
+
+      .thought-card p {
+        font-size: 0.86rem;
+        line-height: 1.65;
+      }
+
+      .card-content-preview {
+        -webkit-line-clamp: 3;
+      }
+
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+
+      .thought-card {
+        transform: none !important;
       }
     }
   </style>
 </head>
 
+
 <body>
 
   <!-- HTML -->
   <div class="app-container">
-    <header>
-      <h1>Nothing Note</h1>
-      <p>A personal collection of ideas, reflections, notes, and random thoughts.</p>
-    </header>
-
-    <!-- METRICS SECTION -->
-    <section class="metrics-panel" id="metricsPanel" aria-label="Brain Statistics">
-      <div class="metric-card">
-        <div class="metric-title">Total Thoughts</div>
-        <div class="metric-value" id="statThoughts">0</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-title">Categories</div>
-        <div class="metric-value" id="statCategories">0</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-title">Unique Tags</div>
-        <div class="metric-value" id="statTags">0</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-title">Newest Entry</div>
-        <div class="metric-value" id="statNewest">—</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-title">Oldest Entry</div>
-        <div class="metric-value" id="statOldest">—</div>
-      </div>
-    </section>
-
     <!-- CONTROLS CONTAINER -->
     <div class="controls-wrapper">
       <div class="search-box">
@@ -486,8 +495,6 @@
         <span class="chip active" data-category="All" role="tab" aria-selected="true">All</span>
         <span class="chip" data-category="Life" role="tab" aria-selected="false">Life</span>
         <span class="chip" data-category="Programming" role="tab" aria-selected="false">Programming</span>
-        <span class="chip" data-category="Oracle" role="tab" aria-selected="false">Oracle</span>
-        <span class="chip" data-category="Linux" role="tab" aria-selected="false">Linux</span>
         <span class="chip" data-category="Career" role="tab" aria-selected="false">Career</span>
         <span class="chip" data-category="Ideas" role="tab" aria-selected="false">Ideas</span>
         <span class="chip" data-category="Daily" role="tab" aria-selected="false">Daily</span>
@@ -511,17 +518,19 @@
     let currentCategory = "All";
     let searchQuery = "";
 
+    const DEFAULT_SORT_DESC = true;
+
+
     const accentMap = {
       "life": "var(--accent-life)",
       "programming": "var(--accent-programming)",
-      "oracle": "var(--accent-oracle)",
-      "linux": "var(--accent-linux)",
       "career": "var(--accent-career)",
       "ideas": "var(--accent-ideas)",
       "daily": "var(--accent-daily)"
     };
 
     // Dom References
+
     const searchInput = document.getElementById("searchInput");
     const filterChips = document.getElementById("filterChips");
     const masonryGrid = document.getElementById("masonryGrid");
@@ -536,10 +545,20 @@
         if (!response.ok) throw new Error("Network schema profile payload unreadable.");
         globalNotes = await response.json();
 
-        calculateMetrics(globalNotes);
+        if (DEFAULT_SORT_DESC) {
+          globalNotes.sort((a, b) => {
+            const da = new Date(a?.date || 0).getTime();
+            const db = new Date(b?.date || 0).getTime();
+            return db - da;
+          });
+        }
+
+
+
         renderGrid();
         setupListeners();
       } catch (error) {
+
         console.error("Critical Failure Loading Second Brain Ecosystem Data Data:", error);
       }
     }
@@ -553,8 +572,7 @@
       const categories = new Set(notes.map(n => n.category));
       document.getElementById("statCategories").textContent = categories.size;
 
-      const tags = new Set(notes.flatMap(n => n.tags));
-      document.getElementById("statTags").textContent = tags.size;
+
 
       const sortedDates = [...notes]
         .map(n => n.date)
@@ -604,23 +622,28 @@
       if (width > 1400) return 5;
       if (width > 1100) return 4;
       if (width > 768) return 3;
-      if (width > 500) return 2;
+      if (width > 520) return 2;
       return 1;
     }
+
 
     // Fluid Filter & Render Core Engine
     function renderGrid() {
       // 1. Filtering Logic Pipeline
       const filtered = globalNotes.filter(note => {
         const matchesCategory = (currentCategory === "All" || note.category === currentCategory);
+        const title = (note.title || "").toLowerCase();
+        const content = (note.content || "").toLowerCase();
+        const category = (note.category || "").toLowerCase();
         const matchesSearch = !searchQuery ||
-          note.title.toLowerCase().includes(searchQuery) ||
-          note.content.toLowerCase().includes(searchQuery) ||
-          note.category.toLowerCase().includes(searchQuery) ||
-          note.tags.some(t => t.toLowerCase().includes(searchQuery));
+          title.includes(searchQuery) ||
+          content.includes(searchQuery) ||
+          category.includes(searchQuery);
 
         return matchesCategory && matchesSearch;
       });
+
+
 
       // Clear existing setup, saving only the empty state element node
       const colsCount = getColumnCount();
@@ -648,39 +671,81 @@
         colElements[targetColIndex].appendChild(card);
 
         // Staggered Micro-Animation Framework trigger via requestAnimationFrame
+        // Cap delay so large datasets don't feel sluggish.
+        const cappedIndex = Math.min(index, 30);
         requestAnimationFrame(() => {
           setTimeout(() => {
             card.classList.add("visible");
-          }, index * 40);
+          }, cappedIndex * 40);
         });
       });
+
     }
 
     // DOM Node Template Component Builder
     function createCardElement(note, index) {
+      const tags = (note.tags || []).map(t => String(t));
+      const tagSet = new Set(tags.map(t => t.toLowerCase()));
+
+      const category = note.category || "";
+      // Card UI simplified (no show more / show less)
+
+      // Meta types preserved only if you want to extend styles later.
+      const metaTypes = [];
+      const hasQuote = tagSet.has('quote') || tagSet.has('quotes');
+      if (tagSet.has('daily') || tagSet.has('routine') || tagSet.has('productivity')) metaTypes.push('Daily');
+      if (tagSet.has('todo') || tagSet.has('task') || tagSet.has('checklist') || tagSet.has('routine')) metaTypes.push('To-do');
+      if (hasQuote) metaTypes.push('Quote');
+      if (metaTypes.length === 0) metaTypes.push('Life');
+
+
+
+
       const card = document.createElement("article");
       card.className = "thought-card";
       card.setAttribute("tabindex", "0");
 
-      const accentColor = accentMap[note.category.toLowerCase()] || "var(--text-muted)";
+      const accentColor = accentMap[(category || "").toLowerCase()] || "var(--text-muted)";
       card.style.setProperty("--cat-color", accentColor);
-      card.style.setProperty("--card-border-glow", accentColor.replace(")", ", 0.25)"));
 
-      const tagHtml = note.tags.map(t => `<span class="tag">#${t}</span>`).join("");
+
+      if (hasQuote) {
+        card.classList.add('quote-card');
+      }
+
+      // accentColor is a CSS var like: var(--accent-life) 
+      // We cannot do a safe string replace without knowing its structure, so use the base glow var fallback.
+      card.style.setProperty("--card-border-glow", "rgba(255,255,255,0.12)");
+
+
+      const tagHtml = tags.map(t => `<span class="tag">#${t}</span>`).join("");
+
 
       card.innerHTML = `
         <div class="card-meta-top">
-          <span class="category-badge">${note.category}</span>
-          <span class="card-emoji" role="img" aria-label="thought icon">${note.emoji || '💭'}</span>
+          <span class="category-badge">${escapeHtml(category)}</span>
         </div>
+
         <h3>${escapeHtml(note.title)}</h3>
-        <p>${escapeHtml(note.content)}</p>
-        <div class="card-tags">${tagHtml}</div>
+
+
+        <p class="card-content-preview">${escapeHtml(note.content || "")}</p>
+
+
+
         <div class="card-date">${formatDateLabel(note.date)}</div>
+
       `;
+
+
+
+
+      // Collapsed default label is already set by HTML template.
+
 
       return card;
     }
+
 
     // Security sanitization utility for handling localized strings safely
     function escapeHtml(str) {
