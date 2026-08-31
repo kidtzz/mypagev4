@@ -67,7 +67,7 @@ params:
   profileMode:
     enabled: true
     title: Rasty
-    subtitle: "Database | Software Product | Software Engineer | IT Service Management | ITIL | ITAM | ITSM | CMDB"
+    subtitle: "Software Product | Software Engineer | IT Service Management | ITIL | ITAM | ITSM | CMDB"
     imageUrl: "coding.gif"
     imageWidth: 150
     imageHeight: 150

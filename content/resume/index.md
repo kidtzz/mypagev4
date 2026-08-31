@@ -14,12 +14,14 @@ title: ""
 - GitHub: https://github.com/kidtzz/
 
 ---
-&nbsp;
+
 
 Hello and welcome!
-
+<!-- 
 Technology enthusiast with a strong interest in databases, programming, Linux, security, infrastructure, artificial intelligence (AI), and IT service management. Passionate about continuous learning and exploring new technologies. Experienced in working with database systems and developing solutions using JavaScript, Python, and Shell scripting. Familiar with ITIL principles and best practices for delivering and managing IT services. Enjoy building projects, solving technical problems, and continuously improving technical and professional skills.
+ -->
 
+ Technology enthusiast with experience in IT Service Management, database systems, infrastructure, and system integration. Experienced in implementing and supporting enterprise technology solutions across various industries. Passionate about learning new technologies, solving technical problems, building solutions, and continuously improving technical and professional skills.
 
 <!-- &nbsp;
 
@@ -73,41 +75,36 @@ Technology enthusiast with a strong interest in databases, programming, Linux, s
 -   Make a website landing page as an advertising service -->
 
 
-&nbsp;
 
 ***---- Experience Project Based in MGS -----***
 
 **PT. Telkomsel**\
-*January 2026*\
     *Product: Oracle ZLDRA*\
-    *Responsibility: Team Member*\
     *Location : Telkomsel Smart Office*
+    <!-- *January 2026*\ -->
 
 - Implemented Zero Data Loss Recovery Appliance (ZDLRA) Modernization in telkomsel
 
 **PT. Bank Negara Indonesia**\
-*January 2026*\
     *Product: Octopai Cloudera & Oracle Database 19c*\
-    *Responsibility: Team Member*\
     *Location : BNI Midplaza 1*
+    <!-- *January 2026*\ -->
 
 - Implemented Octopai metadata management for data governance and lineage
 - Performed stored procedure migration, query tuning, and table partitioning to improve slow-performing queries
 
 
 **PT. Bank Tabungan Negara**\
-*September 2025*\
     *Product: Oracle Database 19c*\
-    *Responsibility: Team Member*\
     *Location : Harmoni BTN*
+    <!-- *September 2025*\ -->
 
 -  Implemented Oracle Restart to support Paylater system availability and resilience
 
 **BPJS Ketenagakerjaan**\
-*Juni 2025*\
     *Product: Oracle Database security*\
-    *Responsibility: Team Member*\
     *Location : BPJS Ketenagakerjaan*
+    <!-- *Juni 2025*\ -->
 
 -  Corrective and Preventive maintance for Oracle Database Security environments
 -  Audit Vault & database firewall (AVDF) and Oracle Key Vault (OKV) for database security and compliance
@@ -117,84 +114,85 @@ Technology enthusiast with a strong interest in databases, programming, Linux, s
 ***---- Experience Project Based in MII -----***
 
 
-**PT. Hana Bank**\
+<!-- **PT. Hana Bank**\
 *April 2025*\
     *Product: oracle data guard (ODG)*\
-    *Responsibility: Team Member*\
     *Location : Hana Bank*
 
 -  Create new oracle data guard and remove old secondary node 
 
 
 **Kantor Pusat PT Pegadaian**\
-*Januari 2025*\
+*January 2025*\
     *Product: Oracle enterprise monitor (OEM)*\
-    *Responsibility: Team Member*\
     *Location : Kantor Pusat PT Pegadaian*
 
--   New installation oracle enterprise monitor for integraton with mysqld
+-   New installation oracle enterprise monitor for integraton with mysqld -->
 
 **SMART Sinarmas**\
-*Maret 2024 – Juni 2024*\
     *Product: BMC Helix Remedy v24.0 Saas Platform, BMC Helix Discovery 23.0 Saas Platform*\
-    *Responsibility: Team Member*\
     *Location : DKI Jakarta*
+    <!-- *March 2024 – December 2024*\ -->
 
 -   Migration to BMC Helix Saas
--   Development of BMC Helix Discovery and Service Model
+-   Development of BMC Helix Discovery and Service Model CMDB
 
 **BPJS Kesehatan**\
-*Januari 2024 – April 2024*\
     *Product: BMC Helix Remedy v24.0, BMC Helix Discovery 23.0*\
-    *Responsibility: Team Member*\
     *Location : DKI Jakarta*
+    <!-- *January 2024 – April 2024*\ -->
 
 -   Procurement of Renewal Maintenance Subscription and ITSM Tools Application Support
+-   Development of BMC Helix Discovery and Service Model CMDB
+
+**PT. Bank Mandiri**\
+    *Product: BMC Remedy*\
+    *Location : Plaza Mandiri*
+    <!-- *October 2023 – December 2023*\ -->
+
+-   IT Asset Management (ITAM) and Configuration Management Database (CMDB) Solutions Phase 2 
 -   Development of BMC Helix Discovery and Service Model
 
 **Direktorat Jendral Pajak (DJP)**\
-*Juli 2023 – Oktober 2023*\
     *Product: BMC Remedy v20.01, BMC Discovery 21.0*\
-    *Responsibility: Team Member*\
     *Location : DKI Jakarta*
+    <!-- *July 2023 – October 2023*\ -->
 
--   Procurement of IT Service Management (ITSM) Solutions
+-   Procurement of IT Service Management (ITSM) and Configuration Management Database (CMDB)
 -   Development of BMC Discovery
 
+
 **PT. Bank Rakyat Indonesia**\
-*August 2022 – juni 2023*\
     *Product: BMC Remedy v20.02, BMC Discovery*\
-    *Responsibility: Team Member*\
     *Location : GTI Ragunan*
+    <!-- *August 2022 – june 2023*\    -->
 
 -   Procurement of IT Asset Management (ITAM) and Configuration Management Database (CMDB) Solutions
 -   Integrate BMC Remedy IT Service Management to the other System using Restful API and SOAP Web Service
 
 **PT. Bank Negara Indonesia**\
-*Desember 2022 – Present*\
     *Product: BMC Remedy v20.02*\
-    *Responsibility: Team Member*\
     *Location : Menara BNI Pejompongan*
+    <!-- *December 2022 – August 2022*\ -->
 
--   Implementasi Piloting IT Asset Management & Configuration Management Database
+-   Implementasi Piloting IT Asset Management & Configuration Management Database(CMDB)
 
 **PT. Bank Mandiri**\
-*July 2022 – Desember 2022*\
     *Product: BMC Remedy IT Service Management Suite v19.08*\
-    *Responsibility: Team Member*\
     *Location : Plaza Mandiri*
+    <!-- *July 2022 – December 2022*\ -->
 
 -   Provide BMC Remedy IT Service Management based on new requirement
 -   Integrate Asset Management to other system
 
 **PT Vale Indonesia**\
-*July 2022 – Desember 2022*\
     *Product: Servicenow*\
-    *Responsibil Sequis Center*
+    *Location : Sequis Center*
+    <!-- *july 2022 – December 2022*\ -->
 
 -  Implemented IT Service Management (ITSM) processes using ServiceNow platform
 
-
+<!-- 
 
 ## Founder Library
 **Manggala Pustaka** - *Since August 2021*
@@ -224,14 +222,14 @@ To foster a culture of reading and lifelong learning while enriching community k
 **Website**:
 [Digital Library Here](https://desasimo.perpustakaan.co.id/)
 
-<!-- ## Organization Experiance
+ ## Organization Experiance
 
 **Dorm Team Telkom University**\
 *November 2017 – April 2018*
 
 -   Develop work programs and activities. 
 -   Carry out the planned program.
--   Coordinate the tasks given by the general chairman -->
+-   Coordinate the tasks given by the general chairman 
 
 ## Additional Skills
 
@@ -260,7 +258,6 @@ To foster a culture of reading and lifelong learning while enriching community k
 -   **Front End Developer in the Digital Talent Scholarship** - *April 2022*
 -   **Cyber Security Operations in Cisco Networking Academy** - *September 2021*
 
---- 
 
 I the undersigned, certify that:
 <br>
@@ -273,4 +270,4 @@ To the best of my knowledge, this curriculum vitae correctly describes myself, m
 
 
 
-
+ -->
